@@ -47,7 +47,7 @@
       <!--<div class="modelName">{{$store.state.title}}</div>-->
       <!--<a-layout-header :style="{ background: '#fff', padding: 0 }" />-->
       <a-layout-content :style="{ margin: '24px 16px 0', overflow: 'initial' }">
-        <div class="conRoom" :style="{ padding: '24px', background: '#fff', textAlign: 'center' }" >
+        <div class="conRoom" :style="{ padding: '24px', background: '#fff', textAlign: 'left' }" >
           <router-view/>
         </div>
 
