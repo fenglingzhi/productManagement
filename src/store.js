@@ -5,13 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-      title:'ADMIN',
+      title:'张三（运营部）',
       shopTableChange:{
           showName:'test',
           shopData:{}
       },
       tabArray:[
-          // { title: "home", content:'test1',key: "home",closable: false ,defaultActiveKey:true}
+          { title: "销售概况", content:'test1',key: "home",closable: false ,defaultActiveKey:true}
           ],
 
       activeKey:'home',

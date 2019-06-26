@@ -6,15 +6,15 @@
       <div class="logo" @click="logo()">
         <img src="../assets/logos.png" width="100" alt="">
       </div>
-      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"      :defaultOpenKeys="['1']" :style="{ textAlign: 'left' }">
+      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"  :selectedKeys="$store.state.activeKey"     :defaultOpenKeys="['1']" :style="{ textAlign: 'left' }">
         <a-sub-menu
                 key="1"
         >
           <span slot="title"><a-icon type="snippets" /><span>报表管理</span></span>
-          <a-menu-item key="1-1" @click="choseWhich('/','test1','a1')" ><a-icon type="reconciliation" />test1</a-menu-item>
-          <a-menu-item key="1-2" @click="choseWhich('/','test2','b1')" ><a-icon type="reconciliation" />test2</a-menu-item>
-          <a-menu-item key="1-3" @click="choseWhich('/','test3','c1')" ><a-icon type="reconciliation" />test3</a-menu-item>
-          <a-menu-item key="1-4" @click="choseWhich('/','test4','d1')" ><a-icon type="reconciliation" />test4</a-menu-item>
+          <a-menu-item key="1-1" @click="choseWhich('商品管理','test1','1-1')" ><a-icon type="reconciliation" />test1</a-menu-item>
+          <a-menu-item key="1-2" @click="choseWhich('财务','test2','1-2')" ><a-icon type="reconciliation" />test2</a-menu-item>
+          <a-menu-item key="1-3" @click="choseWhich('运营','test3','1-3')" ><a-icon type="reconciliation" />test3</a-menu-item>
+          <a-menu-item key="1-4" @click="choseWhich('咋起','test4','1-4')" ><a-icon type="reconciliation" />test4</a-menu-item>
 
         </a-sub-menu>
 
@@ -76,14 +76,22 @@
             }
         },
         methods: {
-            choseWhich(url,title,key){
+            choseWhich(title,content,key){
                 // router.push(url)
                 var oldMenu= this.$store.state.tabArray
-                oldMenu.push({ title: title, content:title,key: key})
-                store.commit('changeStore',{key:'tabArray',val:oldMenu});
+                var isAddTab = true
+                oldMenu.forEach((item, index) => {
+                    if(item.key == key){
+                        isAddTab=false
+                    }
+                })
+                if(isAddTab){
+                    oldMenu.push({ title: title, content:content,key: key})
+                    store.commit('changeStore',{key:'tabArray',val:oldMenu});
+                }
                 store.commit('changeStore',{key:'activeKey',val:key});
-                sessionStorage.setItem("crmMenuKey",key)
-                console.log(this.$store.state.tabArray)
+
+                // sessionStorage.setItem("crmMenuKey",key)
             }
             ,logo(){
                 window.location.href=('http://open-test.kapeixi.cn/#/');
@@ -91,8 +99,16 @@
         },
         mounted() {
             $(".conRoom").css('min-height',$(window).height()-60)
-           this.menuKey.push(sessionStorage.getItem("crmMenuKey"))
-        }
+           // this.menuKey.push(sessionStorage.getItem("crmMenuKey"))
+        },
+        watch: {
+            "$store.state.activeKey"() {
+                this.choseWhich(1,1,this.$store.state.activeKey)
+                this.menuKey.splice(0,this.menuKey,length)
+                // this.menuKey.push(this.$store.state.activeKey)
+            },
+
+        },
     }
 </script>
 <style scoped>
