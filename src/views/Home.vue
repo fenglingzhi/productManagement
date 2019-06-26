@@ -6,7 +6,7 @@
       <div class="logo" @click="logo()">
         <img src="../assets/logos.png" width="100" alt="">
       </div>
-      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"  :selectedKeys="$store.state.activeKey"     :defaultOpenKeys="['1']" :style="{ textAlign: 'left' }">
+      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"  :selectedKeys="$store.state.menuKey"     :defaultOpenKeys="['1']" :style="{ textAlign: 'left' }">
         <a-sub-menu
                 key="1"
         >
@@ -78,6 +78,11 @@
         methods: {
             choseWhich(title,content,key){
                 // router.push(url)
+                var newKey = []
+                newKey.push(key)
+                store.commit('changeStore',{key:'menuKey',val:newKey});
+
+
                 var oldMenu= this.$store.state.tabArray
                 var isAddTab = true
                 oldMenu.forEach((item, index) => {

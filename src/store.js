@@ -15,6 +15,7 @@ export default new Vuex.Store({
           ],
 
       activeKey:'home',
+      menuKey:[],
       basicUrl:'http://erp-test.kapeixi.cn'
 
   },
