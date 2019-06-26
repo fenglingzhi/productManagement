@@ -10,6 +10,7 @@
                       v-model="$store.state.activeKey"
                       type="editable-card"
                       @edit="onEdit"
+                      :tabClick="changeTab"
               >
                   <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closable="pane.closable">
                       <!--{{pane.content}}-->
@@ -17,8 +18,6 @@
                   </a-tab-pane>
               </a-tabs>
           </div>
-          {{$store.state.tabArray}}
-
       </template>
 
 
@@ -57,9 +56,14 @@
         },
         methods: {
             callback (key) {
-                console.log(key)
+
+            },
+            changeTab(key){
+                store.commit('changeStore',{key:'activeKey',val:key});
             },
             onEdit (targetKey, action) {
+                console.log(targetKey)
+
                 this[action](targetKey)
             },
             remove (targetKey) {
@@ -77,25 +81,20 @@
                 }
                 console.log(panes)
                 console.log(activeKey)
+                store.commit('changeStore',{key:'tabArray',val:panes});
+                store.commit('changeStore',{key:'activeKey',val:activeKey});
 
                 this.panes = panes
                 this.activeKey = activeKey
                 store.commit('changeStore',{key:'activeKey',val:activeKey});
 
-                var oldPane = this.$store.state.tabArray
-                console.log(oldPane)
-                oldPane.forEach((item, index) => {
-                    if(item.key == targetKey){
-                        oldPane.splice(index,1)
-                    }
-                })
-                store.commit('changeStore',{key:'tabArray',val:oldPane});
+
             },
         },
         watch: {
-            "$store.state.activeKey"() {
-                this.activeKey =  this.$store.state.activeKey;
-            },
+            // "$store.state.activeKey"() {
+            //     this.activeKey =  this.$store.state.activeKey;
+            // },
             // "$store.state.tabArray"() {
             //     this.panes =  this.$store.state.panes;
             // }

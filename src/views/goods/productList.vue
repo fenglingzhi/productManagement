@@ -113,9 +113,9 @@
               <a-col class="gutter-row" :span="6">
                 <a-button type="primary" @click="choseWhich('/productAdd','新增产品')">新增</a-button>
               </a-col>
-              <a-col class="gutter-row" :span="6">
-                <a-button type="primary">审核</a-button>
-              </a-col>
+              <!--<a-col class="gutter-row" :span="6">-->
+                <!--<a-button type="primary">审核</a-button>-->
+              <!--</a-col>-->
               <a-col class="gutter-row" :span="6">
                 <a-button type="primary">导出</a-button>
               </a-col>
@@ -129,7 +129,7 @@
           <span slot="action" slot-scope="text, record">
               <a href="javascript:;">修改{{text.id}}</a>
               <a-divider type="vertical" />
-              <a href="javascript:;">编辑</a>
+              <a href="javascript:;">删除</a>
           </span>
     </a-table>
   </div>
@@ -169,8 +169,8 @@
                 this.loading = true
                 this.$post('/product/getProductListPage',data).then((reData)=>{
                     console.log('1111111111',reData)
-                    this.productListData=reData.data
-                    this.pagination.total=reData.data.record_count
+                    this.productListData=reData.data.dataList
+                    this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
                 })
             }
@@ -201,7 +201,7 @@
                 columns,
                 loading: false,
                 pagination:{
-                    defaultPageSize:2,
+                    defaultPageSize:10,
                     total:1,
                 }
                 ,fabricList:[]
