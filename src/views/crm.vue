@@ -38,14 +38,14 @@
     import test3 from './ceshi'
     import test4 from './ceshi2'
     import productList from './goods/productList'
+    import productAdd from './goods/productAdd.vue'
 
     export default {
 
         components:{
-            test1,test2,test3,test4,productList
+            test1,test2,test3,test4,productList,productAdd
         },
         data () {
-            // const panes =this.$store.state.tabArray
             return {
                 activeKey: this.$store.state.activeKey,
                 panes:this.$store.state.tabArray,
@@ -62,8 +62,6 @@
                 store.commit('changeStore',{key:'activeKey',val:key});
             },
             onEdit (targetKey, action) {
-                console.log(targetKey)
-
                 this[action](targetKey)
             },
             remove (targetKey) {

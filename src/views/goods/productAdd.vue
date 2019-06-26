@@ -7,7 +7,7 @@
                 <a-col class="gutter-row" :span="3">
                     <a-row>
                         <a-col class="gutter-row" :span="12">
-                            <a-button type="primary">保存</a-button>
+                            <a-button type="primary" @click="saveProductInfor()">保存</a-button>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
                             <a-button >取消</a-button>
@@ -19,47 +19,46 @@
       <a-col class="gutter-row" :span="6">
           <div class="inputPart">
             <a-col class="gutter-row" :span="6">
-              <div class="inputName">*CP号：</div>
+              <div class="inputName">*商品编号：</div>
             </a-col>
             <a-col class="gutter-row" :span="18">
-              <a-input placeholder="请输入产品名称"/>
+              <a-input v-model="postData.goodsId" placeholder=""/>
             </a-col>
           </div>
       </a-col>
       <a-col class="gutter-row" :span="6">
+            <div class="inputPart">
+                <a-col class="gutter-row" :span="6">
+                    <div class="inputName">*商品名称：</div>
+                </a-col>
+                <a-col class="gutter-row" :span="18">
+                    <a-input v-model="postData.goodsName" placeholder=""/>
+                </a-col>
+            </div>
+        </a-col>
+        <a-col class="gutter-row" :span="6">
+            <div class="inputPart">
+                <a-col class="gutter-row" :span="6">
+                    <div class="inputName">*商品UPC码：</div>
+                </a-col>
+                <a-col class="gutter-row" :span="18">
+                    <a-input v-model="postData.goodsUPC" placeholder=""/>
+                </a-col>
+            </div>
+        </a-col>
+      <a-col class="gutter-row" :span="6">
           <div class="inputPart">
               <a-col class="gutter-row" :span="6">
-                  <div class="inputName">单位类型：</div>
+                  <div class="inputName">商品类型：</div>
               </a-col>
               <a-col class="gutter-row" :span="18">
-                  <a-select defaultValue="请选择" style="width: 100%" @change="handleChangeSelect">
-                      <a-select-option value="件">件</a-select-option>
+                  <a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">
+                      <a-select-option value="1">一般商品</a-select-option>
+                      <a-select-option value="2">已存在商品组合</a-select-option>
+                      <a-select-option value="3">虚拟商品（服务，订票，下载的产品，等等）</a-select-option>
                   </a-select>
               </a-col>
           </div>
-      </a-col>
-      <a-col class="gutter-row" :span="6">
-          <div class="inputPart">
-              <a-col class="gutter-row" :span="6">
-                  <div class="inputName">上架时间：</div>
-              </a-col>
-              <a-col class="gutter-row" :span="18">
-                <a-date-picker @change="onChange" :style="{width: '100%'}"/>
-              </a-col>
-          </div>
-      </a-col>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName">设计师 ：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-select defaultValue="请选择" style="width: 100%" @change="handleChangeSelect">
-              <a-select-option value="Jack">Jack</a-select-option>
-              <a-select-option value="Tom">Tom</a-select-option>
-            </a-select>
-          </a-col>
-        </div>
       </a-col>
     </a-row>
 
@@ -67,45 +66,24 @@
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
                   <a-col class="gutter-row" :span="6">
-                      <div class="inputName">面料选择：</div>
+                      <div class="inputName">是否启用：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="18">
-                      <a-select defaultValue="请选择" style="width: 100%" @change="handleChangeSelect">
-                          <a-select-option value="100%纯棉">100%纯棉</a-select-option>
-                          <a-select-option value="80%纯棉">80%纯棉</a-select-option>
-                          <a-select-option value="棉麻混合">棉麻混合</a-select-option>
+                  <a-col class="gutter-row" :span="18" style="line-height: 30px">
+                       <a-radio-group @change="onChangeIsUse" name="radioGroup" :defaultValue="1">
+                              <a-radio :value="0">启用</a-radio>
+                              <a-radio :value="1">禁止</a-radio>
+                       </a-radio-group>
+                  </a-col>
+              </div>
+          </a-col>
 
-                      </a-select>
-                  </a-col>
-              </div>
-          </a-col>
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
                   <a-col class="gutter-row" :span="6">
-                      <div class="inputName">开发时间：</div>
+                      <div class="inputName">*商品标签 ：</div>
                   </a-col>
                   <a-col class="gutter-row" :span="18">
-                      <a-date-picker @change="onChange" :style="{width: '100%'}"/>
-                  </a-col>
-              </div>
-          </a-col>
-          <a-col class="gutter-row" :span="6">
-              <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">*产品名称：</div>
-                  </a-col>
-                  <a-col class="gutter-row" :span="18">
-                      <a-input placeholder="请输入产品名称"/>
-                  </a-col>
-              </div>
-          </a-col>
-          <a-col class="gutter-row" :span="6">
-              <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">尺码：</div>
-                  </a-col>
-                  <a-col class="gutter-row" :span="18">
-                      <a-input placeholder="请输入尺码"/>
+                      <a-input v-model="postData.goodsLabel" placeholder=""/>
                   </a-col>
               </div>
           </a-col>
@@ -116,89 +94,33 @@
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
                   <a-col class="gutter-row" :span="6">
-                      <div class="inputName">研发报价：</div>
+                      <div class="inputName">*商品简介：</div>
                   </a-col>
                   <a-col class="gutter-row" :span="18">
-                      <a-input placeholder="请输入研发报价"/>
-                  </a-col>
-              </div>
-          </a-col>
-          <a-col class="gutter-row" :span="6">
-              <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">颜色：</div>
-                  </a-col>
-                  <a-col class="gutter-row" :span="18">
-                      <a-input placeholder="请输入颜色"/>
-                  </a-col>
-              </div>
-          </a-col>
-          <a-col class="gutter-row" :span="6">
-              <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">净重（kg）：</div>
-                  </a-col>
-                  <a-col class="gutter-row" :span="18">
-                      <a-input placeholder="请输入净重"/>
-                  </a-col>
-              </div>
-          </a-col>
-          <a-col class="gutter-row" :span="6">
-              <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">供应商：</div>
-                  </a-col>
-                  <a-col class="gutter-row" :span="18">
-                      <a-select defaultValue="请选择" style="width: 100%" @change="handleChangeSelect">
-                          <a-select-option value="100%纯棉">卡佩西</a-select-option>
-                          <a-select-option value="80%纯棉">圣罗兰</a-select-option>
-                          <a-select-option value="棉麻混合">zare</a-select-option>
-                      </a-select>
+                      <a-textarea v-model="postData.goodsDesc" placeholder="Basic usage" :rows="4"/>
                   </a-col>
               </div>
           </a-col>
       </a-row>
-
-
 
       <a-row>
-          <a-col class="gutter-row" :span="6">
+          <a-col class="gutter-row" :span="18">
               <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">供应商名称：</div>
+                  <a-col class="gutter-row" :span="2">
+                      <div class="inputName">产品详情：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="18">
-                      <a-input placeholder="请输入供应商名称"/>
-                  </a-col>
-              </div>
-          </a-col>
-          <a-col class="gutter-row" :span="6">
-              <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">尺寸：</div>
-                  </a-col>
-                  <a-col class="gutter-row" :span="6">
-                      <a-input placeholder="请输入长"/>
-                  </a-col>
-                  <a-col class="gutter-row" :span="6">
-                      <a-input placeholder="请输入宽"/>
-                  </a-col>
-                  <a-col class="gutter-row" :span="6">
-                      <a-input placeholder="请输入高"/>
-                  </a-col>
-              </div>
-          </a-col>
-          <a-col class="gutter-row" :span="6">
-              <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">工厂报价：</div>
-                  </a-col>
-                  <a-col class="gutter-row" :span="18">
-                      <a-input placeholder=""/>
+                  <a-col class="gutter-row" :span="22">
+                      <tinymce-editor v-model="postData.goodsDetails"
+                                      :disabled="disabled"
+                                      ref="editor"></tinymce-editor>
+                      <!--<button @click="disabled = true">禁用</button>-->
                   </a-col>
               </div>
           </a-col>
       </a-row>
+
+
+
 
 
       <div class="secondTitle">
@@ -324,13 +246,21 @@
   </div>
 </template>
 <script>
-    import router from '../router';
-    import store from '../store'
+    var vm =this
+    import router from '../../router'
+    import store from '../../store'
     import $ from 'jquery'
+    import TinymceEditor from '../../components/tinymce-editor'
     export default {
+        components:{
+            TinymceEditor
+        },
         methods: {
             handleChangeSelect(value) {
-                console.log(`selected ${value}`);
+                this.postData.goodsType=value
+            },
+            onChangeIsUse(value){
+                this.postData.isDisabled=value
             },
             handleCancel () {
                 this.previewVisible = false
@@ -354,10 +284,39 @@
             },
             onChange(date, dateString) {
                 console.log(date, dateString);
+            },
+            saveProductInfor(){
+                let isAll = false
+                for(let key  in this.postData){
+                    console.log(key + '---' + this.postData[key])
+                    if(this.postData[key]==""){
+                        isAll =false
+                    }else {
+                        isAll =true
+                    }
+                }
+
+                if (isAll){
+                    this.$post('/product/addProduct',this.postData).then((reData)=>{
+                        console.log(reData)
+                    })
+
+
+                    // alert()
+
+                }else {
+                    this.$notification.open({
+                        message: '提醒',
+                        description: '请把信息填写完整再提交！',
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                }
             }
         } ,
         mounted() {
-            store.commit('changeStore',{key:'title',val:'新增产品'});
+
         },
         data() {
             return {
@@ -366,6 +325,17 @@
                 fileList: [],
                 headers: {
                     authorization: 'authorization-text',
+                }
+                ,disabled: false
+                ,postData:{
+                    goodsType:"1",
+                    goodsName:"",
+                    goodsId:"",
+                    goodsUPC:"",
+                    isDisabled:"0",
+                    goodsLabel:"",
+                    goodsDesc:"",
+                    goodsDetails:"",
                 }
             }
         }
