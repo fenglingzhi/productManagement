@@ -18,7 +18,6 @@
                   </a-tab-pane>
               </a-tabs>
           </div>
-{{$store.state.activeKey}}
       </template>
 
 
