@@ -10,8 +10,7 @@
                       v-model="$store.state.activeKey"
                       type="editable-card"
                       @edit="onEdit"
-                      :tabClick="changeTab"
-              >
+                      :tabClick="changeTab">
                   <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closable="pane.closable">
                       <!--{{pane.content}}-->
                       <componet :is="pane.content"></componet>
@@ -33,16 +32,12 @@
     import router from '../router';
     import store from '../store'
     import $ from 'jquery'
-    import test1 from './ceshi'
-    import test2 from './ceshi2'
-    import test3 from './ceshi'
-    import test4 from './ceshi2'
     import productList from './goods/productList'
 
     export default {
 
         components:{
-            test1,test2,test3,test4,productList
+            productList
         },
         data () {
             // const panes =this.$store.state.tabArray

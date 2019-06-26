@@ -11,7 +11,7 @@ export default new Vuex.Store({
           shopData:{}
       },
       tabArray:[
-          { title: "销售概况", content:'test1',key: "home",closable: false ,defaultActiveKey:true}
+          { title: "商品管理", content:'productList',key: "home",closable: false ,defaultActiveKey:true}
           ],
 
       activeKey:'home',
