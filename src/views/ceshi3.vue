@@ -1,33 +1,33 @@
 <template>
-  <div class="crm">
+    <div class="crm">
 
 
-      <template>
-          <div>
+        <template>
+            <div>
 
-              <a-tabs
-                      hideAdd
-                      v-model="$store.state.activeKey"
-                      type="editable-card"
-                      @edit="onEdit"
-              >
-                  <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closable="pane.closable">
-                      <!--{{pane.content}}-->
-                      <componet :is="pane.content"></componet>
-                  </a-tab-pane>
-              </a-tabs>
-          </div>
-          {{$store.state.tabArray}}
+                <a-tabs
+                        hideAdd
+                        v-model="activeKey"
+                        type="editable-card"
+                        @edit="onEdit"
+                >
+                    <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closable="pane.closable">
+                        <!--{{pane.content}}-->
+                        <componet :is="pane.content"></componet>
+                    </a-tab-pane>
+                </a-tabs>
+            </div>
+            {{$store.state.tabArray}}
 
-      </template>
-
-
-
+        </template>
 
 
 
 
-  </div>
+
+
+
+    </div>
 </template>
 <script>
     var vm = this
@@ -55,31 +55,27 @@
 
         },
         methods: {
-            callback (key) {
-                console.log(key)
-            },
+            // callback (key) {
+            //     console.log(key)
+            // },
             onEdit (targetKey, action) {
                 this[action](targetKey)
             },
             remove (targetKey) {
 
-                let activeKey = this.$store.state.activeKey
+                let activeKey = this.activeKey
                 let lastIndex
-                this.$store.state.tabArray.forEach((pane, i) => {
+                this.panes.forEach((pane, i) => {
                     if (pane.key === targetKey) {
                         lastIndex = i - 1
                     }
                 })
-                const panes = this.$store.state.tabArray.filter(pane => pane.key !== targetKey)
+                const panes = this.panes.filter(pane => pane.key !== targetKey)
                 if (lastIndex >= 0 && activeKey === targetKey) {
                     activeKey = panes[lastIndex].key
                 }
-                console.log(panes)
-                console.log(activeKey)
-
                 this.panes = panes
                 this.activeKey = activeKey
-                store.commit('changeStore',{key:'activeKey',val:activeKey});
 
                 var oldPane = this.$store.state.tabArray
                 console.log(oldPane)
@@ -92,9 +88,9 @@
             },
         },
         watch: {
-            "$store.state.activeKey"() {
-                this.activeKey =  this.$store.state.activeKey;
-            },
+            // "$store.state.activeKey"() {
+            //     this.activeKey =  this.$store.state.activeKey;
+            // },
             // "$store.state.tabArray"() {
             //     this.panes =  this.$store.state.panes;
             // }
@@ -102,7 +98,7 @@
     }
 </script>
 <style scoped>
-.ant-tabs-nav *{
-    text-align: left !important;
-}
+    .ant-tabs-nav *{
+        text-align: left !important;
+    }
 </style>

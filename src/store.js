@@ -5,11 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-      title:'产品列表',
+      title:'ADMIN',
       shopTableChange:{
           showName:'test',
           shopData:{}
       },
+      tabArray:[
+          // { title: "home", content:'test1',key: "home",closable: false ,defaultActiveKey:true}
+          ],
+
+      activeKey:'home',
       basicUrl:'http://erp-test.kapeixi.cn'
 
   },

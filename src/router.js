@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import crm from './views/crm.vue'
+import ceshi from './views/ceshi.vue'
 
 
 
@@ -22,7 +23,17 @@ export default new Router({
                 //复购率查询
                 path: '/',
                 name: 'crm',
-                component: crm
+                component: crm,
+                children: [
+                    {
+                        //复购率查询
+                        path: '/ceshi',
+                        name: 'ceshi',
+                        component: ceshi
+                    }
+
+
+                ]
             }
 
 
