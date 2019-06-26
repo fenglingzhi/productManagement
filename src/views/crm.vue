@@ -33,14 +33,14 @@
     import store from '../store'
     import $ from 'jquery'
     import productList from './goods/productList'
+    import productAdd from './goods/productAdd.vue'
 
     export default {
 
         components:{
-            productList
+            productList,productAdd
         },
         data () {
-            // const panes =this.$store.state.tabArray
             return {
                 activeKey: this.$store.state.activeKey,
                 panes:this.$store.state.tabArray,
@@ -57,8 +57,6 @@
                 store.commit('changeStore',{key:'activeKey',val:key});
             },
             onEdit (targetKey, action) {
-                console.log(targetKey)
-
                 this[action](targetKey)
             },
             remove (targetKey) {
