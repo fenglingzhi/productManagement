@@ -11,7 +11,7 @@
                 key="1"
         >
           <span slot="title"><a-icon type="snippets" /><span>报表管理</span></span>
-          <a-menu-item key="1-1" @click="choseWhich('/','test1','a1')" ><a-icon type="reconciliation" />test1</a-menu-item>
+          <a-menu-item key="1-1" @click="choseWhich('/','productList','a1')" ><a-icon type="reconciliation" />商品</a-menu-item>
           <a-menu-item key="1-2" @click="choseWhich('/','test2','b1')" ><a-icon type="reconciliation" />test2</a-menu-item>
           <a-menu-item key="1-3" @click="choseWhich('/','test3','c1')" ><a-icon type="reconciliation" />test3</a-menu-item>
           <a-menu-item key="1-4" @click="choseWhich('/','test4','d1')" ><a-icon type="reconciliation" />test4</a-menu-item>

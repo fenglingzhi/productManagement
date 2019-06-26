@@ -1,8 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL ='http://erp-test.kapeixi.cn';
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.baseURL ='http://192.168.5.100:8081';
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;';
 //http request 拦截器
 axios.interceptors.request.use(
     config => {

@@ -4,6 +4,8 @@ import Home from './views/Home.vue'
 import crm from './views/crm.vue'
 import ceshi from './views/ceshi.vue'
 import login from './views/login.vue'
+import goodslist from './views/goods/goodsList'
+import productList from './views/goods/productList.vue'
 
 
 
@@ -31,6 +33,12 @@ export default new Router({
                         path: '/ceshi',
                         name: 'ceshi',
                         component: ceshi
+                    },
+                    {
+                        //商品列表
+                        path: '/productList',
+                        name: 'productList',
+                        component: productList
                     }
 
 
