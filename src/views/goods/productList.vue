@@ -146,7 +146,7 @@
         },
         { title: '编号', dataIndex: 'goods_seq', key: 'goods_seq'},
         { title: '商品名称', dataIndex: 'goods_name', key: 'goods_name'},
-        { title: '图片', dataIndex: 'img_url', key: 'img_url'},
+        { title: '图片', dataIndex: 'img_url', key: 'img_url',},
         { title: '商品编号', dataIndex: 'goods_id', key: 'goods_id'},
         { title: 'shopify ID', dataIndex: 'shopify_id', key: 'shopify_id'},
         { title: '零售价格', dataIndex: 'retail_price', key: 'retail_price'},

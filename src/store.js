@@ -15,8 +15,7 @@ export default new Vuex.Store({
           ],
 
       activeKey:'home',
-      // basicUrl:'http://erp-test.kapeixi.cn'
-
+      menuKey:[],
   },
   mutations: {
        changeStore(state,data){
