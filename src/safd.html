@@ -115,18 +115,20 @@ p {
 }
 --></style>
 <div class="pc" style="margin: 0 20px;">
-    <p style="font-size: 14px; line-height: 50px; text-align: center;"><strong> Nach der Bestätigung Ihrer Zahlung kann es bis zu 1 Werktag dauern, bis Ihre Bestellung bearbeitet und versendet wird. Wochenenden und Feiertage sind nicht eingeschlossen. </strong></p>
+    <p style="font-size: 14px; line-height: 50px; text-align: center;">
+        <strong>Orders leave our warehouse within 1 business day. Business days are Monday-Friday, excluding public holidys. Delivery Time = Warehouse Processing Time + Shipping Time</strong>
+    </p>
     <div class="table_wrap">
         <div class="left">
-            <div class="shipping_title">Versand Info</div>
-            <div class="list active" onclick="change(this)">Für Deutschland</div>
-            <div class="list" onclick="change(this)">Für die Vereinigten Staaten</div>
-            <div class="list" onclick="change(this)">Für Außengebiete der Vereinigten Staaten</div>
-            <div class="list" onclick="change(this)">Für Kanada</div>
-            <div class="list" onclick="change(this)">Für Australien</div>
-            <div class="list" onclick="change(this)">Für Vereinigtes Königreich</div>
-            <div class="list" onclick="change(this)">Für Frankreich</div>
-            <div class="list" onclick="change(this)">Für Den Rest Der Welt</div>
+            <div class="shipping_title">Shipping Info</div>
+            <div class="list active" onclick="change(this)">For United States</div>
+            <div class="list" onclick="change(this)">For United States Outlying Territories</div>
+            <div class="list" onclick="change(this)">For Canada</div>
+            <div class="list" onclick="change(this)">For Australia</div>
+            <div class="list" onclick="change(this)">For United Kingdom</div>
+            <div class="list" onclick="change(this)">For Germany</div>
+            <div class="list" onclick="change(this)">For France</div>
+            <div class="list" onclick="change(this)">For Rest Of The World</div>
         </div>
         <div class="right">
             <div class="right_warp table_active">
@@ -134,35 +136,41 @@ p {
                     <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                         <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                         <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                            <td>SERVICE</td>
+                            <td>COST$</td>
+                            <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                         </tr>
                         </thead>
-                        <tbody><!--<tr style="background: #fefaf5;">
-                            <td>Standardversand </td>
-                            <td style="font-weight: bold;">KOSTENLOS </td>
-                            <td>AVG 9 Werktage</td>
-                        </tr>-->
-                        <tr>
-                            <td>Expedited Versand</td>
-                            <td>KOSTENLOS</td>
-                            <td>6-8 Werktage</td>
+                        <tbody>
+                        <tr style="background: #fefaf5;">
+                            <td>STANDARD</td>
+                            <td style="font-weight: bold;">FREE</td>
+                            <td>8-11 Business Days</td>
                         </tr>
                         <tr style="background: #fefaf5;">
-                            <td rowspan="2">Expressversand</td>
-                            <td>€4 - €6</td>
-                            <td rowspan="2">3-5 Werktage</td>
+                            <td rowspan="2">EXPEDITED</td>
+                            <td style="background: #f7dfbd;"><span style="font-weight: bold;"> FREE </span> For Order $40+</td>
+                            <td rowspan="2" style="background: #f7dfbd;">6-8 Business Days</td>
                         </tr>
                         <tr style="background: #fefaf5;">
-                            <td><span style="font-weight: bold;">KOSTENLOS</span> FÜR BESTELLUNGEN €100+</td>
+                            <td><span style="font-weight: bold;"> $7</span> For Order $0-$40</td>
+                            <!--<td rowspan="1">5-7 Business Days</td>--></tr>
+                        <tr style="background: #fefaf5;">
+                            <td>EXPRESS</td>
+                            <td>$12 -$15</td>
+                            <td>4 Business Days</td>
+                        </tr>
+                        <tr style="background: #fefaf5;">
+                            <td>PREMIER</td>
+                            <td>$13-$16</td>
+                            <td>2 Business Days</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="text">
-                    <p class="text_title">Beachtung:</p>
-                    <p class="content">Bitte stellen Sie die Gültigkeit und Rechtmäßigkeit der Empfängeradresse sicher.</p>
+                    <p class="text_title">Attention:</p>
+                    <p class="content">For Premier Shipping Only: available to orders placed before 3 p.m PST Mon-Fri. Service areas exclude District of Columbia, Federated States of Micronesia, Marshall Island, Palau. For American Samoa,, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can be chosen, please see details table below.</p>
                 </div>
             </div>
             <div class="right_warp">
@@ -170,214 +178,210 @@ p {
                     <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                         <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                         <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN €</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                            <td>SERVICE</td>
+                            <td>COST</td>
+                            <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr style="background: #fefaf5;">
-                            <td>Standardversand</td>
-                            <td style="font-weight: bold;">KOSTENLOS</td>
-                            <td>7-10 Werktage</td>
-                        </tr>
-                        <tr style="background: #fefaf5;">
-                            <td rowspan="2">Expedited Versand</td>
-                            <td style="background: #f7dfbd;"><span style="font-weight: bold;"> KOSTENLOS </span> FÜR BESTELLUNGEN €40+</td>
-                            <td rowspan="1" style="background: #f7dfbd;">5-7 Werktage</td>
-                        </tr>
-                        <tr style="background: #fefaf5;">
-                            <td><span style="font-weight: bold;"> €7</span> FÜR BESTELLUNGEN €0 -€40</td>
-                            <td rowspan="1">5-7 Werktage</td>
-                        </tr>
-                        <tr style="background: #fefaf5;">
-                            <td>Expressversand</td>
-                            <td>€12 - €15</td>
-                            <td>3 Werktage</td>
+                            <td>EXPRESS</td>
+                            <td>$17~$48</td>
+                            <td>4-6 Business Days</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="text">
-                    <p class="text_title">Beachtung:</p>
-                    <p class="content">Für Alaska, Amerikanisch-Samoa, Guam, Hawaii, Nördliche Marianen, Puerto Rico und die Jungferninseln kann nur Expressversand gewählt werden. Siehe Tabelle unten bitte.</p>
-                </div>
-            </div>
+                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             <div class="right_warp">
                 <div class="table">
                     <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                         <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                         <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr style="background: #fefaf5;">
-                            <td>Expressversand</td>
-                            <td>€17</td>
-                            <td>3-5 Werktage</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="right_warp">
-                <div class="table">
-                    <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
-                        <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
-                        <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                            <td>SERVICE</td>
+                            <td>COST</td>
+                            <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td rowspan="2">Expedited Versand</td>
-                            <td><span style="font-weight: bold;">KOSTENLOS</span> FÜR BESTELLUNGEN €40+</td>
-                            <td rowspan="2">5-7 Werktage</td>
+                            <td rowspan="2">EXPEDITED</td>
+                            <td><span style="font-weight: bold;">FREE</span> For Order Over $40+</td>
+                            <td rowspan="2">6-8 Business Days</td>
                         </tr>
                         <tr><!--<td rowspan="2"></td>-->
-                            <td><span style="font-weight: bold;">€7</span> FÜR BESTELLUNGEN €0 - €40</td>
-                            <!--<td rowspan="2">AVG 6 Werktage</td>--></tr>
+                            <td><span style="font-weight: bold;">$7</span> For Order $0 -$40</td>
+                            <!--<td rowspan="2">AVG 6</td>--></tr>
                         <tr style="background: #fefaf5;">
-                            <td>Expressversand</td>
-                            <td>€0 - €9</td>
-                            <td>3-5 Werktage</td>
+                            <td>EXPRESS</td>
+                            <td>$0 - $10</td>
+                            <td>4-6 Business Days</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             <div class="right_warp">
                 <div class="table">
                     <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                         <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                         <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                            <td>SERVICE</td>
+                            <td>COST</td>
+                            <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr style="background: #fefaf5;">
-                            <td>Standardversand</td>
-                            <td style="font-weight: bold;">KOSTENLOS</td>
-                            <td>9-12 Werktage</td>
+                            <td>STANDARD</td>
+                            <td style="font-weight: bold;">FREE</td>
+                            <td>10-13 Business Days</td>
                         </tr>
                         <tr>
-                            <td rowspan="2">Expedited Versand</td>
-                            <td><span style="font-weight: bold;">€3 </span>FÜR BESTELLUNGEN €0 - €40</td>
-                            <td rowspan="1">6-8 Werktage</td>
+                            <td rowspan="2">EXPEDITED</td>
+                            <td><span style="font-weight: bold;">$3 </span>For Order $0-40</td>
+                            <td rowspan="2">7-9 Business Days</td>
                         </tr>
                         <tr>
-                            <td><span style="font-weight: bold;">KOSTENLOS</span> FÜR BESTELLUNGEN €40+</td>
-                            <td rowspan="1">6-8 Werktage</td>
-                        </tr>
+                            <td><span style="font-weight: bold;">FREE</span> For Order $40+</td>
+                            <!--<td rowspan="1">AVG 7</td>--></tr>
                         <tr style="background: #fefaf5;">
-                            <td>Expressversand</td>
-                            <td>€8 - €9</td>
-                            <td>4 Werktage</td>
+                            <td>EXPRESS</td>
+                            <td>$8 - $9</td>
+                            <td>5 Business Days</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             <div class="right_warp">
                 <div class="table">
                     <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                         <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                         <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                            <td>SERVICE</td>
+                            <td>COST</td>
+                            <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr style="background: #fefaf5;">
-                            <td>Standardversand</td>
-                            <td style="font-weight: bold;">KOSTENLOS</td>
-                            <td>8-10 Werktage</td>
+                            <td>STANDARD</td>
+                            <td style="font-weight: bold;">FREE</td>
+                            <td>9-11 Business Days</td>
                         </tr>
                         <tr>
-                            <td>Expedited Versand</td>
-                            <td>€0 - €1</td>
-                            <td>6-8 Werktage</td>
+                            <td>EXPEDITED</td>
+                            <td>$0 - $1</td>
+                            <td>7-9 Business Days</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             <div class="right_warp">
                 <div class="table">
                     <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                         <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                         <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                            <td>SERVICE</td>
+                            <td>COST</td>
+                            <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr style="background: #fefaf5;">
-                            <td>Expedited Versand</td>
-                            <td><span style="font-weight: bold;">KOSTENLOS</span></td>
-                            <td>6-10 Werktage</td>
-                        </tr>
-                        <!--<tr style="background: #fefaf5;">--> <!--<td><span style="font-weight: bold;">€2</span> FÜR BESTELLUNGEN <span style="font-weight: bold;">€0 - €30</span></td>--> <!--</tr>-->
+                        <tbody><!--<tr style="background: #fefaf5;">--> <!--<td>STANDARD</td>--> <!--<td style="font-weight: bold;">FREE</td>--> <!--<td>AVG 13</td>--> <!--</tr>-->
                         <tr>
-                            <td>Expressversand</td>
-                            <td>€4 -€7</td>
-                            <td>3-5 Werktage</td>
+                            <td rowspan="2">EXPEDITED</td>
+                            <td><span style="font-weight: bold;"> FREE </span>For Order $50+</td>
+                            <td rowspan="2">7-9 Business Days</td>
                         </tr>
-                        <!--<tr>--> <!--<td><span style="font-weight: bold;"> €3</span> FÜR BESTELLUNGEN €0 -€50</td>--> <!--</tr>--> <!--<tr style="background: #fefaf5;">--> <!--<td>Expressversand</td>--> <!--<td>€6 -€11</td>--> <!--<td>AVG 4 Werktage</td>--> <!--</tr>--></tbody>
+                        <tr>
+                            <td><span style="font-weight: bold;"> $4</span> For Order $0 -$50</td>
+                        </tr>
+                        <tr style="background: #fefaf5;">
+                            <td>EXPRESS</td>
+                            <td>$10 - $12</td>
+                            <td>4-6 Business Days</td>
+                        </tr>
+                        </tbody>
                     </table>
                 </div>
-            </div>
+                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             <div class="right_warp">
                 <div class="table">
                     <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                         <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                         <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                            <td>SERVICE</td>
+                            <td>COST</td>
+                            <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                         </tr>
                         </thead>
                         <tbody>
                         <tr style="background: #fefaf5;">
-                            <td>Standardversand</td>
-                            <td>€0 - €4</td>
-                            <td>8-10 Werktage</td>
+                            <td>STANDARD</td>
+                            <td style="font-weight: bold;">FREE</td>
+                            <td>13-16 Business Days</td>
                         </tr>
                         <tr>
-                            <td>Expedited Versand</td>
-                            <td>€13</td>
-                            <td>6-8 Werktage</td>
+                            <td rowspan="2">EXPEDITED</td>
+                            <td><span style="font-weight: bold;"> FREE </span>For Order $50+</td>
+                            <td rowspan="2">7-9 Business Days</td>
+                        </tr>
+                        <tr>
+                            <td><span style="font-weight: bold;"> $4</span> For Order $0 -$50</td>
                         </tr>
                         <tr style="background: #fefaf5;">
-                            <td>Expressversand</td>
-                            <td>€15</td>
-                            <td>4-8 Werktage</td>
+                            <td>EXPRESS</td>
+                            <td>$10 - $12</td>
+                            <td>4-6 Business Days</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+            <div class="right_warp">
+                <div class="table">
+                    <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
+                        <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
+                        <tr>
+                            <td>SERVICE</td>
+                            <td>COST</td>
+                            <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="background: #fefaf5;">
+                            <td>STANDARD</td>
+                            <td>$0 - $4</td>
+                            <td>9-11 Business Days</td>
+                        </tr>
+                        <tr>
+                            <td>EXPEDITED</td>
+                            <td>Average $13</td>
+                            <td>7-9 Business Days</td>
+                        </tr>
+                        <tr style="background: #fefaf5;">
+                            <td>EXPRESS</td>
+                            <td>Average $15</td>
+                            <td>5-9 Business Days</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--<div class="text">--> <!--<p class="text_title">Attention:</p>--> <!--<p class="content">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
         </div>
     </div>
     <div style="width: 1200px; margin: 100px auto;">
         <div class="order" style="clear: both;">
-            <div style="text-align: center; margin: 100px 0;"><img src="https://cdn.shopify.com/s/files/1/0784/0207/files/shipping_large.jpg?v=1512978247" alt="" style="margin: 0; margin-right: 10px; display: inline-block;" width="30px" height="30px" /> <span style="font-weight: bold;">Wo ist meine Bestellung</span></div>
-            <p style="font-size: 14px; color: #222; line-height: 24px;">Ihre Versandbestätigung wird nur erhalten, wenn Ihre Artikel erfüllt sind.Bitte geben Sie sowohl Ihre E-Mail-Adresse als auch Ihre Bestellnummer ein, um den Bestellstatus zu überwachen.Klick <a style="color: #3d85c6;" href="https://www.cupshe.com/apps/trackor/track" title="Track Your Order">hier</a>.</p>
+            <div style="text-align: center; margin: 100px 0;"><img src="https://cdn.shopify.com/s/files/1/0784/0207/files/shipping_large.jpg?v=1512978247" alt="" style="margin: 0; margin-right: 10px; display: inline-block;" width="30px" height="30px" /> <span style="font-weight: bold;">Where is my order</span></div>
+            <p style="font-size: 14px; color: #222; line-height: 24px;">Your shipping confirmation will be received only when your items are fulfilled. Please fill in your both account email and order number in order to monitor order status. Click <a style="color: #3d85c6;" href="https://www.cupshe.com/apps/trackor/track" title="Track Your Order">here</a>.</p>
         </div>
         <div class="tips">
-            <div style="text-align: center; margin: 100px 0;"><img src="https://cdn.shopify.com/s/files/1/0784/0207/files/note_large.jpg?v=1512978699" alt="" style="margin: 0; margin-right: 10px; display: inline-block;" width="30px" height="30px" /> <span style="font-weight: bold;">Tipps zum Versand</span></div>
-            <p style="font-size: 14px; color: #222; line-height: 24px; margin-bottom: 30px;">A) Bitte beachten Sie, dass APO &amp; FPO &amp; Postfächer nicht akzeptiert werden.</p>
-            <p style="font-size: 14px; color: #222; line-height: 24px; margin-bottom: 30px;"><span>B) Das Paket nach Kanada und Großbritannien kann für die Zollabfertigung bei der Abholung bezahlt werden. Für abgelegenere Gebiete in Kanada bitte erlauben Sie die Verlängerung der Lieferung um weitere 1-2 Tage.</span></p>
-            <p style="font-size: 14px; color: #222; line-height: 24px; margin-bottom: 30px;"><span>C)  </span> Wir tun unser Bestes, um die versprochene Zeit einzuhalten. Bitte haben Sie Verständnis dafür, dass unser Lager nur an Werktagen funktioniert. Bitte denken Sie also daran, den Sonnenschein zu genießen, auch wenn in der ETA ein oder zwei Tage Unterschied bestehen. und wir informieren Sie übrigens proaktiv, wenn etwas nicht stimmt. <br /> <br /> <span>D) </span>Für die Zustellung ist eine Telefonnummer erforderlich. Hinterlassen Sie bei Ihrer Bestellung eine korrekte E-Mail-Adresse, damit die Bestellbestätigung und die Versandbestätigung gesendet werden. <br /> <br /> E) Ihre Bestellung kann nur dann detailliert verfolgt werden, wenn sie bei der US-Einrichtung ankommt. Bitte erlauben Sie 2-3 Tage Versand nach USA, auch möglich "nicht gefunden". Danke für Ihre Geduld. Bei Fragen wenden Sie sich bitte an unser Service-Center: <a href="service@decupshe.zendesk.com" style="color: #f5a503;"><span style="text-decoration: underline;">service@decupshe.zendesk.com</span></a>.</p>
+            <div style="text-align: center; margin: 100px 0;"><img src="https://cdn.shopify.com/s/files/1/0784/0207/files/note_large.jpg?v=1512978699" alt="" style="margin: 0; margin-right: 10px; display: inline-block;" width="30px" height="30px" /> <span style="font-weight: bold;">Tips for shipping</span></div>
+            <p style="font-size: 14px; color: #222; line-height: 24px; margin-bottom: 30px;">A) Please take a attention that APO/FPO &amp; PO Boxes are not accepted.</p>
+            <p style="font-size: 14px; color: #222; line-height: 24px; margin-bottom: 30px;"><span>B) Package to Canada and the United Kingdom may be paid for clearance customs tax when you pick it up. For more remote areas in Canada, please allow an additional 1-2 days for delivery.</span></p>
+            <p style="font-size: 14px; color: #222; line-height: 24px; margin-bottom: 30px;"><span>C)  </span> We are doing our best to make the promised time, please understand our warehouse are working only on business days, so please remember to enjoy the sunshine even there's a day or two difference in the ETA, and by the way, we will inform you proactively if something is wrong. <br /> <br /> <span>D) </span>Phone number is required for delivery. Leave correct email address in your order so that order confirmation and shipping confirmation will be sent. <br /> <br />E) Your order can be tracked in details only when it arrives in US Facility. Kindly allow 2-3 days of shipment to US, even possible " not found ". Thanks for your patience. Should you have any question, please reach out to our service center: <a href="service@cupshe.zendesk.com" style="color: #f5a503;"><span style="text-decoration: underline;">service@cupshe.zendesk.com</span></a>.</p>
             <p style="font-size: 14px; color: #222; line-height: 24px;"> </p>
         </div>
     </div>
@@ -444,278 +448,288 @@ function change(index_) {
     }
 }
 --></style>
-<div class="mobile">
-    <p style="font-size: 14px; line-height: 24px; text-align: left; font-weight: bold;">Nach der Bestätigung Ihrer Zahlung kann es bis zu 1 Werktag dauern, bis Ihre Bestellung bearbeitet und versendet wird. Wochenenden und Feiertage sind nicht eingeschlossen.</p>
+<div class="mobile"><meta charset="utf-8" /><meta charset="utf-8" />
+    <p style="font-size: 14px; line-height: 20px; text-align: center;">
+        <strong>Orders leave our warehouse within 1 business day. Business days are Monday-Friday, excluding public holidys. Delivery Time = Warehouse Processing Time + Shipping Time</strong>
+    </p>
     <div class="shippinfo_wrap_mb">
-        <p style="font-size: 20px; line-height: 50px; margin-bottom: 0;">Versand Info</p>
+        <p style="font-size: 20px; line-height: 50px; margin-bottom: 0;">Shipping Info</p>
         <div class="list_wrap_mb">
-            <div class="6">
-                <div class="list_mb active_mb" onclick="change_mb_table(this)">Für Deutschland <i class="iconfont"></i> <i class="iconfont icon_hide"></i></div>
+            <div class="1">
+                <div class="list_mb active_mb" onclick="change_mb_table(this)">For United States <i class="iconfont"></i> <i class="iconfont icon_hide"></i></div>
                 <div class="table_warp_mb table_warp_mb_show">
                     <div class="table">
                         <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                             <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                             <tr>
-                                <td>DIENSTLEISTUNG</td>
-                                <td>KOSTEN</td>
-                                <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
-                            </tr>
-                            </thead>
-                            <tbody><!--<tr style="background: #fefaf5;">
-                            <td>Standardversand </td>
-                            <td style="font-weight: bold;">KOSTENLOS </td>
-                            <td>AVG 9 Werktage</td>
-                        </tr>-->
-                            <tr>
-                                <td>Expedited Versand</td>
-                                <td>KOSTENLOS</td>
-                                <td>6-8 Werktage</td>
-                            </tr>
-                            <tr style="background: #fefaf5;">
-                                <td rowspan="2">Expressversand</td>
-                                <td>€4 - €6</td>
-                                <td rowspan="2">3-5 Werktage</td>
-                            </tr>
-                            <tr style="background: #fefaf5;">
-                                <td><span style="font-weight: bold;">KOSTENLOS</span> FÜR BESTELLUNGEN €100+</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="text">
-                        <p class="text_title">Beachtung:</p>
-                        <p class="content">Bitte stellen Sie die Gültigkeit und Rechtmäßigkeit der Empfängeradresse sicher.</p>
-                    </div>
-                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
-            </div>
-            <div class="1">
-                <div class="list_mb" onclick="change_mb_table(this)">Für die Vereinigten Staaten <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
-                <div class="table_warp_mb">
-                    <div class="table">
-                        <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
-                            <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
-                            <tr>
-                                <td>DIENSTLEISTUNG</td>
-                                <td>KOSTEN €</td>
-                                <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                                <td>SERVICE</td>
+                                <td>COST$</td>
+                                <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr style="background: #fefaf5;">
-                                <td>Standardversand</td>
-                                <td style="font-weight: bold;">KOSTENLOS</td>
-                                <td>7-10 Werktage</td>
+                                <td>STANDARD</td>
+                                <td style="font-weight: bold;">FREE</td>
+                                <td>8-11 Business Days</td>
                             </tr>
                             <tr style="background: #fefaf5;">
-                                <td rowspan="2">Expedited Versand</td>
-                                <td style="background: #f7dfbd;"><span style="font-weight: bold;"> KOSTENLOS </span> FÜR BESTELLUNGEN €40+</td>
-                                <td rowspan="1" style="background: #f7dfbd;">5-7 Werktage</td>
+                                <td rowspan="2">EXPEDITED</td>
+                                <td style="background: #f7dfbd;"><span style="font-weight: bold;"> FREE </span> For Order $40+</td>
+                                <td rowspan="2" style="background: #f7dfbd;">6-8 Business Days</td>
                             </tr>
                             <tr style="background: #fefaf5;">
-                                <td><span style="font-weight: bold;"> €7</span> FÜR BESTELLUNGEN €0 -€40</td>
-                                <td rowspan="1">5-7 Werktage</td>
+                                <td><span style="font-weight: bold;"> $7</span> For Order $0-$40</td>
+                                <!--<td rowspan="1">5-7 Business Days</td>--></tr>
+                            <tr style="background: #fefaf5;">
+                                <td>EXPRESS</td>
+                                <td>$12 -$15</td>
+                                <td>4 Business Days</td>
                             </tr>
                             <tr style="background: #fefaf5;">
-                                <td>Expressversand</td>
-                                <td>€12 - €15</td>
-                                <td>3 Werktage</td>
+                                <td>PREMIER</td>
+                                <td>$13-$16</td>
+                                <td>2 Business Days</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="text_mb">
                         <p class="text_title" style="text-indent: 0; margin: 10px 0; font-weight: bold;">Attention:</p>
-                        <p class="content" style="text-indent: 0;">Für Alaska, Amerikanisch-Samoa, Guam, Hawaii, Nördliche Marianen, Puerto Rico und die Jungferninseln kann nur Expressversand gewählt werden. Siehe Tabelle unten bitte.</p>
+                        <p class="content">For Premier Shipping Only: available to orders placed before 3 p.m PST Mon-Fri. Service areas exclude District of Columbia, Federated States of Micronesia, Marshall Island, Palau. For American Samoa,, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can be chosen, please see details table below.</p>
                     </div>
                 </div>
             </div>
             <div class="2">
-                <div class="list_mb" onclick="change_mb_table(this)">Für Außengebiete der Vereinigten Staaten<i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
+                <div class="list_mb" onclick="change_mb_table(this)">For United States Outlying Territories<i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
                 <div class="table_warp_mb">
-                    <div class="table">
-                        <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
-                            <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
-                            <tr>
-                                <td>DIENSTLEISTUNG</td>
-                                <td>KOSTEN</td>
-                                <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr style="background: #fefaf5;">
-                                <td>Expressversand</td>
-                                <td>€17</td>
-                                <td>3-5 Werktage</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+                    <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
+                        <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
+                        <tr>
+                            <td>SERVICE</td>
+                            <td>COST</td>
+                            <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="background: #fefaf5;">
+                            <td>EXPRESS</td>
+                            <td>$17~$48</td>
+                            <td>4-6 Business Days</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             </div>
             <div class="3">
-                <div class="list_mb" onclick="change_mb_table(this)">Für Kanada <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
+                <div class="list_mb" onclick="change_mb_table(this)">For Canada <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
                 <div class="table_warp_mb">
-                    <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
-                        <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
-                        <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td rowspan="2">Expedited Versand</td>
-                            <td><span style="font-weight: bold;">KOSTENLOS</span> FÜR BESTELLUNGEN €40+</td>
-                            <td rowspan="2">5-7 Werktage</td>
-                        </tr>
-                        <tr><!--<td rowspan="2"></td>-->
-                            <td><span style="font-weight: bold;">€7</span> FÜR BESTELLUNGEN €0 - €40</td>
-                            <!--<td rowspan="2">AVG 6 Werktage</td>--></tr>
-                        <tr style="background: #fefaf5;">
-                            <td>Expressversand</td>
-                            <td>€0 - €9</td>
-                            <td>3-5 Werktage</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+                    <div class="table">
+                        <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
+                            <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
+                            <tr>
+                                <td>SERVICE</td>
+                                <td>COST</td>
+                                <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td rowspan="2">EXPEDITED</td>
+                                <td><span style="font-weight: bold;">FREE</span> For Order Over $40+</td>
+                                <td rowspan="2">6-8 Business Days</td>
+                            </tr>
+                            <tr><!--<td rowspan="2"></td>-->
+                                <td><span style="font-weight: bold;">$7</span> For Order $0 -$40</td>
+                                <!--<td rowspan="2">AVG 6</td>--></tr>
+                            <tr style="background: #fefaf5;">
+                                <td>EXPRESS</td>
+                                <td>$0 - $10</td>
+                                <td>4-6 Business Days</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             </div>
             <div class="4">
-                <div class="list_mb" onclick="change_mb_table(this)">Für Australien <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
+                <div class="list_mb" onclick="change_mb_table(this)">For Australia <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
                 <div class="table_warp_mb">
-                    <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
-                        <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
-                        <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr style="background: #fefaf5;">
-                            <td>Standardversand</td>
-                            <td style="font-weight: bold;">KOSTENLOS</td>
-                            <td>9-12 Werktage</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">Expedited Versand</td>
-                            <td><span style="font-weight: bold;">€3 </span>FÜR BESTELLUNGEN €0 - €40</td>
-                            <td rowspan="1">6-8 Werktage</td>
-                        </tr>
-                        <tr>
-                            <td><span style="font-weight: bold;">KOSTENLOS</span> FÜR BESTELLUNGEN €40+</td>
-                            <td rowspan="1">6-8 Werktage</td>
-                        </tr>
-                        <tr style="background: #fefaf5;">
-                            <td>Expressversand</td>
-                            <td>€8 - €9</td>
-                            <td>4 Werktage</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+                    <div class="table">
+                        <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
+                            <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
+                            <tr>
+                                <td>SERVICE</td>
+                                <td>COST</td>
+                                <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style="background: #fefaf5;">
+                                <td>STANDARD</td>
+                                <td style="font-weight: bold;">FREE</td>
+                                <td>10-13 Business Days</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">EXPEDITED</td>
+                                <td><span style="font-weight: bold;">$3 </span>For Order $0-40</td>
+                                <td rowspan="2">7-9 Business Days</td>
+                            </tr>
+                            <tr>
+                                <td><span style="font-weight: bold;">FREE</span> For Order $40+</td>
+                                <!--<td rowspan="1">AVG 7</td>--></tr>
+                            <tr style="background: #fefaf5;">
+                                <td>EXPRESS</td>
+                                <td>$8 - $9</td>
+                                <td>5 Business Days</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             </div>
             <div class="5">
-                <div class="list_mb" onclick="change_mb_table(this)">Für Vereinigtes Königreich <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
+                <div class="list_mb" onclick="change_mb_table(this)">For United Kingdom <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
                 <div class="table_warp_mb">
                     <div class="table">
                         <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                             <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                             <tr>
-                                <td>DIENSTLEISTUNG</td>
-                                <td>KOSTEN</td>
-                                <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                                <td>SERVICE</td>
+                                <td>COST</td>
+                                <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr style="background: #fefaf5;">
-                                <td>Standardversand</td>
-                                <td style="font-weight: bold;">KOSTENLOS</td>
-                                <td>8-10 Werktage</td>
+                                <td>STANDARD</td>
+                                <td style="font-weight: bold;">FREE</td>
+                                <td>9-11 Business Days</td>
                             </tr>
                             <tr>
-                                <td>Expedited Versand</td>
-                                <td>€0 - €1</td>
-                                <td>6-8 Werktage</td>
+                                <td>EXPEDITED</td>
+                                <td>$0 - $1</td>
+                                <td>7-9 Business Days</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+            </div>
+            <div class="6">
+                <div class="list_mb" onclick="change_mb_table(this)">For Germany <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
+                <div class="table_warp_mb">
+                    <div class="table">
+                        <div class="table">
+                            <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
+                                <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
+                                <tr>
+                                    <td>SERVICE</td>
+                                    <td>COST</td>
+                                    <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
+                                </tr>
+                                </thead>
+                                <tbody><!--<tr style="background: #fefaf5;">--> <!--<td>STANDARD</td>--> <!--<td style="font-weight: bold;">FREE</td>--> <!--<td>AVG 13</td>--> <!--</tr>-->
+                                <tr>
+                                    <td rowspan="2">EXPEDITED</td>
+                                    <td><span style="font-weight: bold;"> FREE </span>For Order $50+</td>
+                                    <td rowspan="2">7-9 Business Days</td>
+                                </tr>
+                                <tr>
+                                    <td><span style="font-weight: bold;"> $4</span> For Order $0 -$50</td>
+                                </tr>
+                                <tr style="background: #fefaf5;">
+                                    <td>EXPRESS</td>
+                                    <td>$10 - $12</td>
+                                    <td>4-6 Business Days</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             </div>
             <div class="7">
-                <div class="list_mb" onclick="change_mb_table(this)">Für Frankreich <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
-                <div class="table_warp_mb">
-                    <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
-                        <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
-                        <tr>
-                            <td>DIENSTLEISTUNG</td>
-                            <td>KOSTEN</td>
-                            <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr style="background: #fefaf5;">
-                            <td>Expedited Versand</td>
-                            <td><span style="font-weight: bold;">KOSTENLOS</span></td>
-                            <td>6-10 Werktage</td>
-                        </tr>
-                        <!--<tr style="background: #fefaf5;">--> <!--<td><span style="font-weight: bold;">€2</span> FÜR BESTELLUNGEN <span style="font-weight: bold;">€0 - €30</span></td>--> <!--</tr>-->
-                        <tr>
-                            <td>Expressversand</td>
-                            <td>€4 -€7</td>
-                            <td>3-5 Werktage</td>
-                        </tr>
-                        <!--<tr>--> <!--<td><span style="font-weight: bold;"> €3</span> FÜR BESTELLUNGEN €0 -€50</td>--> <!--</tr>--> <!--<tr style="background: #fefaf5;">--> <!--<td>Expressversand</td>--> <!--<td>€6 -€11</td>--> <!--<td>AVG 4 Werktage</td>--> <!--</tr>--></tbody>
-                    </table>
-                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
-            </div>
-            <div class="8">
-                <div class="list_mb" onclick="change_mb_table(this)">Für Den Rest Der Welt <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
+                <div class="list_mb" onclick="change_mb_table(this)">For France <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
                 <div class="table_warp_mb">
                     <div class="table">
                         <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
                             <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
                             <tr>
-                                <td>DIENSTLEISTUNG</td>
-                                <td>KOSTEN</td>
-                                <td style="line-height: 20px; padding-top: 10px;">LIEFERDAUER</td>
+                                <td>SERVICE</td>
+                                <td>COST</td>
+                                <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
                             </tr>
                             </thead>
                             <tbody>
                             <tr style="background: #fefaf5;">
-                                <td>Standardversand</td>
-                                <td>€0 - €4</td>
-                                <td>8-10 Werktage</td>
+                                <td>STANDARD</td>
+                                <td style="font-weight: bold;">FREE</td>
+                                <td>13-16 Business Days</td>
                             </tr>
                             <tr>
-                                <td>Expedited Versand</td>
-                                <td>€13</td>
-                                <td>6-8 Werktage</td>
+                                <td rowspan="2">EXPEDITED</td>
+                                <td><span style="font-weight: bold;"> FREE </span>For Order $50+</td>
+                                <td rowspan="2">7-9 Business Days</td>
+                            </tr>
+                            <tr>
+                                <td><span style="font-weight: bold;"> $4</span> For Order $0 -$50</td>
                             </tr>
                             <tr style="background: #fefaf5;">
-                                <td>Expressversand</td>
-                                <td>€15</td>
-                                <td>4-8 Werktage</td>
+                                <td>EXPRESS</td>
+                                <td>$10 - $12</td>
+                                <td>4-6 Business Days</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Expressversand Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
+            </div>
+            <div class="8">
+                <div class="list_mb" onclick="change_mb_table(this)">For Rest Of The World <i class="iconfont icon_hide"></i> <i class="iconfont"></i></div>
+                <div class="table_warp_mb">
+                    <div class="table">
+                        <table style="width: 100%; line-height: 40px; text-align: center; border-collapse: collapse; padding: 2px;">
+                            <thead style="background: #f7dfbd; color: #000; font-weight: bold;">
+                            <tr>
+                                <td>SERVICE</td>
+                                <td>COST</td>
+                                <td style="line-height: 20px; padding-top: 10px;">DELIVERY TIME</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr style="background: #fefaf5;">
+                                <td>STANDARD</td>
+                                <td>$0 - $4</td>
+                                <td>9-11 Business Days</td>
+                            </tr>
+                            <tr>
+                                <td>EXPEDITED</td>
+                                <td>Average $13</td>
+                                <td>7-9 Business Days</td>
+                            </tr>
+                            <tr style="background: #fefaf5;">
+                                <td>EXPRESS</td>
+                                <td>Average $15</td>
+                                <td>5-9 Business Days</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<div class="text_mb">--> <!--<p class="text_title" style="text-indent: 0;margin: .3rem 0;font-weight: bold;">Attention:</p>--> <!--<p class="content" style="text-indent: 0;">For Alaska, American Samoa, Guam, Hawaii, Northern Mariana Islands, Puerto Rico, and the Virgin Islands, only Express Shipping can--> <!--be chosen, please see details table below.</p>--> <!--</div>--></div>
             </div>
         </div>
     </div>
     <div>
         <div class="order" style="clear: both;">
-            <div style="text-align: center; margin: 40px 0;"><img src="https://cdn.shopify.com/s/files/1/0784/0207/files/shipping_large.jpg?v=1512978247" alt="" style="margin-bottom: -20px; margin-right: 10px; width: 20px; height: 20px; display: inline-block; margin-top: 7px;" /> <span style="font-weight: bold; font-size: 20px;">Wo ist meine Bestellung</span></div>
-            <p style="font-size: 14px; color: #222; line-height: 20px; text-align: center;">Your shipping confirmation will be received only when your items are fulfilled. Please fill in your both account email and order number in order to monitor order status. Click <a style="color: #3d85c6;" href="https://www.cupshe.com/apps/trackor/track" title="Track Your Order">hier</a>.</p>
+            <div style="text-align: center; margin: 40px 0;"><img src="https://cdn.shopify.com/s/files/1/0784/0207/files/shipping_large.jpg?v=1512978247" alt="" style="margin-bottom: -20px; margin-right: 10px; width: 20px; height: 20px; display: inline-block; margin-top: 7px;" /> <span style="font-weight: bold; font-size: 20px;">Where is my order</span></div>
+            <p style="font-size: 14px; color: #222; line-height: 20px; text-align: center;">Your shipping confirmation will be received only when your items are fulfilled. Please fill in your both account email and order number in order to monitor order status. Click <a style="color: #3d85c6;" href="https://www.cupshe.com/apps/trackor/track" title="Track Your Order">here</a>.</p>
         </div>
         <div class="tips">
-            <div style="text-align: center; margin: 40px 0;"><img src="https://cdn.shopify.com/s/files/1/0784/0207/files/note_large.jpg?v=1512978699" alt="" style="margin-bottom: -20px; margin-right: 10px; width: 20px; height: 20px; display: inline-block; margin-top: 8px;" /> <span style="font-weight: bold; font-size: 20px;">Tipps zum Versand</span></div>
-            <p style="font-size: 14px; color: #222; line-height: 20px; margin-bottom: 30px;">A) Bitte beachten Sie, dass APO &amp; FPO &amp; Postfächer nicht akzeptiert werden.</p>
-            <p style="font-size: 14px; color: #222; line-height: 20px; margin-bottom: 30px;"><span>B) Das Paket nach Kanada und Großbritannien kann für die Zollabfertigung bei der Abholung bezahlt werden. Für abgelegenere Gebiete in Kanada bitte erlauben Sie die Verlängerung der Lieferung um weitere 1-2 Tage.</span></p>
-            <p style="font-size: 14px; color: #222; line-height: 20px; margin-bottom: 30px;"><span>C)  </span> Wir tun unser Bestes, um die versprochene Zeit einzuhalten. Bitte haben Sie Verständnis dafür, dass unser Lager nur an Werktagen funktioniert. Bitte denken Sie also daran, den Sonnenschein zu genießen, auch wenn in der ETA ein oder zwei Tage Unterschied bestehen. und wir informieren Sie übrigens proaktiv, wenn etwas nicht stimmt. <br /> <br /> <span>D) </span>Für die Zustellung ist eine Telefonnummer erforderlich. Hinterlassen Sie bei Ihrer Bestellung eine korrekte E-Mail-Adresse, damit die Bestellbestätigung und die Versandbestätigung gesendet werden. <br /> <br />E) Ihre Bestellung kann nur dann detailliert verfolgt werden, wenn sie bei der US-Einrichtung ankommt. Bitte erlauben Sie 2-3 Tage Versand nach USA, auch möglich "nicht gefunden". Danke für Ihre Geduld. Bei Fragen wenden Sie sich bitte an unser Service-Center: <a href="service@decupshe.zendesk.com" style="color: #f5a503;"><span style="text-decoration: underline;">service@decupshe.zendesk.com</span></a>.</p>
+            <div style="text-align: center; margin: 40px 0;"><img src="https://cdn.shopify.com/s/files/1/0784/0207/files/note_large.jpg?v=1512978699" alt="" style="margin-bottom: -20px; margin-right: 10px; width: 20px; height: 20px; display: inline-block; margin-top: 8px;" /> <span style="font-weight: bold; font-size: 20px;">Tips for shipping</span></div>
+            <p style="font-size: 14px; color: #222; line-height: 20px; margin-bottom: 30px;">A) Please take a attention that APO/FPO &amp; PO Boxes are not accepted.</p>
+            <p style="font-size: 14px; color: #222; line-height: 20px; margin-bottom: 30px;"><span>B) Package to Canada and the United Kingdom may be paid for clearance customs tax when you pick it up. For more remote areas in Canada, please allow an additional 1-2 days for delivery.</span></p>
+            <p style="font-size: 14px; color: #222; line-height: 20px; margin-bottom: 30px;"><span>C)  </span> We are doing our best to make the promised time, please understand our warehouse are working only on business days, so please remember to enjoy the sunshine even there's a day or two difference in the ETA, and by the way, we will inform you proactively if something is wrong. <br /> <br /> <span>D) </span>Phone number is required for delivery. Leave correct email address in your order so that order confirmation and shipping confirmation will be sent. <br /> <br />E) Your order can be tracked in details only when it arrives in US Facility. Kindly allow 2-3 days of shipment to US, even possible " not found ". Thanks for your patience. Should you have any question, please reach out to our service center: <a href="service@cupshe.zendesk.com" style="color: #f5a503;"><span style="text-decoration: underline;">service@cupshe.zendesk.com</span></a>.</p>
             <p style="font-size: 14px; color: #222; line-height: 20px;"> </p>
         </div>
     </div>
