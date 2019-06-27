@@ -5,25 +5,52 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+      // mjf
       title:'张三（运营部）',
       shopTableChange:{
           showName:'test',
           shopData:{}
       },
-      tabArray:[
-          { title: "商品管理", content:'productList',key: "home",closable: false ,defaultActiveKey:true}
-          ],
-
+      tabArray:[{
+          title: "商品管理",
+          content:'productList',
+          key: "home",
+          closable: false ,
+          defaultActiveKey:true
+      }],
       activeKey:'home',
       menuKey:[],
+      goods_id:'',
+      addProductContent:'productAddInformatica',
+      addProductCurrent:'0',
+      loading:false
+      // mjf
+      // YanM
+
+
+
+
+
+      // YanM
+
+
+
+      // yxj
   },
   mutations: {
+      // mjf
        changeStore(state,data){
             state[data.key] = data.val
        }
        ,shopTableChangeStore(state,data){
           state.shopTableChange[data.key] = data.val
       }
+      // ym
+
+
+
+      // yxj
+
   },
   actions: {
 

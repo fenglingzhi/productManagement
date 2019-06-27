@@ -56,7 +56,7 @@
                     language_url: './tinymce/langs/zh_CN.js',
                     language: 'zh_CN',
                     skin_url: './tinymce/skins/ui/oxide',
-                    height: 200,
+                    height: 400,
                     plugins: this.plugins,
                     toolbar: this.toolbar,
                     branding: false,

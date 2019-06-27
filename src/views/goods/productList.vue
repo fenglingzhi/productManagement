@@ -7,7 +7,7 @@
               <div class="inputName">产品编号：</div>
             </a-col>
             <a-col class="gutter-row" :span="18">
-              <a-input placeholder="请输入产品编号" v-model="productId" />
+              <a-input placeholder="请输入产品编号" v-model="search_data.productId" />
             </a-col>
           </div>
       </a-col>
@@ -17,7 +17,7 @@
             <div class="inputName">产品名称 ：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入产品名称" v-model="productName"/>
+            <a-input placeholder="请输入产品名称" v-model="search_data.productName"/>
           </a-col>
         </div>
       </a-col>
@@ -27,7 +27,20 @@
             <div class="inputName">shopify ID ：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入shopify ID" v-model="shopifyId"/>
+            <a-input placeholder="请输入shopify ID" v-model="search_data.shopifyId"/>
+          </a-col>
+        </div>
+      </a-col>
+      <a-col class="gutter-row" :span="6">
+        <div class="inputPart">
+          <a-col class="gutter-row" :span="6">
+            <div class="inputName">状态：</div>
+          </a-col>
+          <a-col class="gutter-row" :span="18">
+            <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
+              <a-select-option value="100">是</a-select-option>
+              <a-select-option value="200">否</a-select-option>
+            </a-select>
           </a-col>
         </div>
       </a-col>
@@ -39,7 +52,7 @@
             <div class="inputName"> 最大成本价：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入最大成本价" v-model="costPiceMax"/>
+            <a-input placeholder="请输入最大成本价" v-model="search_data.costPiceMax"/>
           </a-col>
         </div>
       </a-col>
@@ -49,7 +62,7 @@
             <div class="inputName"> 最小成本价：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入最小成本价" v-model="costPiceMin"/>
+            <a-input placeholder="请输入最小成本价" v-model="search_data.costPiceMin"/>
           </a-col>
         </div>
       </a-col>
@@ -59,7 +72,7 @@
             <div class="inputName"> 最大零售价：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入最大零售价" v-model="costPiceMax"/>
+            <a-input placeholder="请输入最大零售价" v-model="search_data.retailPriceMax"/>
           </a-col>
         </div>
       </a-col>
@@ -69,37 +82,7 @@
             <div class="inputName"> 最小零售价：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入最小零售价" v-model="costPiceMin"/>
-          </a-col>
-        </div>
-      </a-col>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName">类别 ：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入产品CP"/>
-          </a-col>
-        </div>
-      </a-col>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName">基础价格 ：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入产品CP"/>
-          </a-col>
-        </div>
-      </a-col>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName">最终价格 ：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入产品CP"/>
+            <a-input placeholder="请输入最小零售价" v-model="search_data.retailPriceMin"/>
           </a-col>
         </div>
       </a-col>
@@ -108,13 +91,10 @@
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
-            <div class="inputName">状态：</div>
+            <div class="inputName"> 最小零售价：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
-              <a-select-option value="true">是</a-select-option>
-              <a-select-option value="false">否</a-select-option>
-            </a-select>
+            <a-range-picker @change="onChange" />
           </a-col>
         </div>
       </a-col>
@@ -141,11 +121,23 @@
       </a-col>
     </a-row>
     <div class="hrLine"></div>
-    <a-table :columns="columns" :dataSource="productListData" :pagination="pagination"  :loading="loading"  @change="handleTableChange" :scroll="{ x: 1500 }">
+    <a-table :columns="columns"
+             :dataSource="productListData"
+             :pagination="pagination"
+             :loading="loading"
+             @change="handleTableChange"
+             :rowSelection="rowSelection"
+             :scroll="{ x: 1500 }">
           <span slot="action" slot-scope="text, record">
               <a href="javascript:;">修改{{text.id}}</a>
               <a-divider type="vertical" />
-              <a href="javascript:;">删除</a>
+              <!--<a @click="delete_product({productId:'',status:''})">删除</a>-->
+              <a-popconfirm
+                    v-if="productListData.length"
+                    title="Sure to delete?"
+                    @confirm="() => delete_product(columns)">
+                <a href="javascript:;">Delete</a>
+              </a-popconfirm>
           </span>
           <span slot="img_" slot-scope="text, record">
               <img :src="text.img_url" alt="" height="32px;" style="border:1px solid #ccc;">
@@ -171,11 +163,24 @@
 
     ];
     const productListData = [];
+    //表格复选框
+    const rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        },
+        onSelect: (record, selected, selectedRows) => {
+            console.log(record, selected, selectedRows);
+        },
+        onSelectAll: (selected, selectedRows, changeRows) => {
+            console.log(selected, selectedRows, changeRows);
+        },
+    };
     export default {
         data() {
             return {
                 productListData,
                 columns,
+                rowSelection,
                 loading: false,
                 pagination:{
                     defaultPageSize:10,
@@ -191,17 +196,18 @@
                     ,costPiceMin:''
                     ,retailPriceMax:''
                     ,retailPriceMin:''
-                    ,createTimeMax:''
-                    ,createTimeMin:''
+                    ,createTime:[]
                     ,pageSize:'10'
                 }
             }
         },
         methods: {
+            //状态选择
             handleChange(value) {
                 console.log(`selected ${value}`);
+                this.search_data.status = value
             }
-            , choseWhich(url,title){
+            ,choseWhich(url,title){
                 router.push(url)
                 store.commit('changeStore',{key:'title',val:title});
             }
@@ -214,12 +220,14 @@
                     this.loading = false
                 })
             }
+            //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.getList({page:pagination.current,page_size:pagination.defaultPageSize})
             }
             //搜索产品
             ,search_product(data){
+                console.log('111111111111',data)
                 let vm = this;
                 this.$post('/product/getProductListPage',data).then((reData)=>{
                     this.productListData=reData.data.dataList
@@ -227,6 +235,22 @@
                     this.loading = false
                 })
             }
+            //时间选择
+            ,onChange(date, dateString) {
+                this.search_data.createTime = dateString.slice(0,2)
+                console.log('22222222',this.search_data.createTime)
+            }
+            //删除产品
+            ,delete_product (key,data) {
+                // this.$post('/product/deleteProduct',data).then((reData)=>{
+                //     this.productListData=reData.data.dataList
+                //     this.pagination.total=reData.data.page.totalResultSize
+                //     this.loading = false
+                // })
+                // const productListData = [...this.productListData]
+                // this.productListData = productListData.filter(item => item.key !== key)
+                console.log('sdfasdfasdf',this.productListData)
+            },
 
         },
         mounted() {
