@@ -38,8 +38,8 @@
     import router from '../router';
     import store from '../store'
     import $ from 'jquery'
-    import productList from './goods/productList'
-    import productAdd from './goods/productAdd.vue'
+    import productList from './product/productList'
+    import productAdd from './product/productAdd.vue'
 
     export default {
 
