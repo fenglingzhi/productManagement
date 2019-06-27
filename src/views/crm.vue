@@ -3,20 +3,26 @@
 
 
       <template>
-          <div>
+          <a-spin :spinning="$store.state.loading">
+              <div class="spin-content">
+                  <div>
+                      <a-tabs
+                              hideAdd
+                              v-model="$store.state.activeKey"
+                              type="editable-card"
+                              @edit="onEdit"
+                              :tabClick="changeTab"
+                      >
+                          <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closable="pane.closable">
+                              <!--{{pane.content}}-->
+                              <componet :is="pane.content"></componet>
+                          </a-tab-pane>
+                      </a-tabs>
+                  </div>
+              </div>
+          </a-spin>
 
-              <a-tabs
-                      hideAdd
-                      v-model="$store.state.activeKey"
-                      type="editable-card"
-                      @edit="onEdit"
-                      :tabClick="changeTab">
-                  <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closable="pane.closable">
-                      <!--{{pane.content}}-->
-                      <componet :is="pane.content"></componet>
-                  </a-tab-pane>
-              </a-tabs>
-          </div>
+
       </template>
 
 
