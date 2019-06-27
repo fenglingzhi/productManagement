@@ -11,11 +11,15 @@ export default new Vuex.Store({
           shopData:{}
       },
       tabArray:[
-          { title: "销售概况", content:'test1',key: "home",closable: false ,defaultActiveKey:true}
+          { title: "销售概况", content:'productList',key: "home",closable: false ,defaultActiveKey:true}
           ],
 
       activeKey:'home',
       menuKey:[],
+      goods_id:'',
+      addProductContent:'productAddInformatica',
+      addProductCurrent:'0',
+      loading:false
   },
   mutations: {
        changeStore(state,data){
