@@ -169,9 +169,9 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         let data ={
-            userName:values.userName,
-            password:md5(values.password)
-            // password:values.password
+            loginName:values.userName,
+            // password:md5(values.password)
+            loginPwd:values.password
         }
         if (!err) {
             let that = this;
@@ -181,27 +181,12 @@ export default {
             }else{
                 localStorage.removeItem("cupshe_user")
             }
+            this.$post('/dologin',data).then((reData)=>{
+                console.log(reData);
+            }).then((err)=>{
+                console.log(err);
+            })
 
-            api.login(data).then((response) => {
-                console.log(response)
-                if(response.retcode == 200){
-                    this.$store.commit('setToken', response.data.token);
-                    this.$store.commit('setSystemList', response.data.systemList);
-                    this.$store.commit('setUserName', response.data.userName);
-                    this.$router.push("/")
-                }else if(response.retcode == 3004){
-                    // 显示错误信息
-                    that.err_show = true;
-                }
-                
-
-                
-            }).catch(error=>{
-                console.log(error);
-                if(!error){
-                    
-                }
-            });
         }
       });
       
