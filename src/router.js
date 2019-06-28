@@ -5,7 +5,6 @@ import crm from './views/crm.vue'
 import login from './views/login.vue'
 import productList from './views/product/productList.vue'
 
-
 Vue.use(Router)
 
 export default new Router({
@@ -27,8 +26,6 @@ export default new Router({
                         name: 'productList',
                         component: productList
                     }
-
-
                 ]
             }
 
