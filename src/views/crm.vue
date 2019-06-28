@@ -40,11 +40,12 @@
     import $ from 'jquery'
     import productList from './product/productList'
     import productAdd from './product/productAdd.vue'
+    import classify_list from './classify/classify_list'
 
     export default {
 
         components:{
-            productList,productAdd
+            productList,productAdd,classify_list,
         },
         data () {
             return {

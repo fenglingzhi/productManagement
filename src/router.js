@@ -26,7 +26,8 @@ export default new Router({
                         path: '/productList',
                         name: 'productList',
                         component: productList
-                    }
+                    },
+
 
 
                 ]
