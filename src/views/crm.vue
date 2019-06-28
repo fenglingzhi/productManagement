@@ -14,7 +14,6 @@
                               :tabClick="changeTab"
                       >
                           <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closable="pane.closable">
-                              <!--{{pane.content}}-->
                               <componet :is="pane.content"></componet>
                           </a-tab-pane>
                       </a-tabs>
@@ -40,11 +39,12 @@
     import $ from 'jquery'
     import productList from './product/productList'
     import productAdd from './product/productAdd.vue'
+    import classify_list from './classify/classify_list'
 
     export default {
 
         components:{
-            productList,productAdd
+            productList,productAdd,classify_list,
         },
         data () {
             return {

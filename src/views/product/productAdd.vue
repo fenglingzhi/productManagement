@@ -8,7 +8,9 @@
         <a-col :span="21">
             <!--<componet :is="$store.state.addProductContent"></componet>-->
             <productAddInformatica v-show="$store.state.addProductContent == 'productAddInformatica'"></productAddInformatica>
-            <productAddPrice  v-show="$store.state.addProductContent == 'productAddPrice'"></productAddPrice>
+            <productAddPrice v-show="$store.state.addProductContent == 'productAddPrice'"></productAddPrice>
+            <productAddCollection v-show="$store.state.addProductContent == 'productAddCollection'"></productAddCollection>
+
         </a-col>
 
     </a-row>
@@ -22,12 +24,14 @@
 
     import TinymceEditor from '../../components/tinymce-editor'
     import productAddInformatica from './productAddInformatica'
+    import productAddCollection from '../goods/productAddCollection'
+
     import productAddPrice from './productAddPrice'
 
 
     export default {
         components:{
-            TinymceEditor,productAddInformatica,productAddPrice
+            TinymceEditor,productAddInformatica,productAddPrice,productAddCollection
         },
         methods: {
             handleChangeSelect(value) {
@@ -40,30 +44,6 @@
 
             onChange(date, dateString) {
                 console.log(date, dateString);
-            },
-            saveProductInfor(){
-                let isAll = false
-                for(let key  in this.postData){
-                    console.log(key + '---' + this.postData[key])
-                    if(this.postData[key]==""){
-                        isAll =false
-                    }else {
-                        isAll =true
-                    }
-                }
-                if (isAll){
-                    this.$post('/product/addProduct',this.postData).then((reData)=>{
-                        console.log(reData)
-                    })
-                }else {
-                    this.$notification.open({
-                        message: '提醒',
-                        description: '请把信息填写完整再提交！',
-                        onClick: () => {
-                            console.log('ok');
-                        },
-                    })
-                }
             },
             choseStep(index,key){
                 store.commit('changeStore',{key:'addProductCurrent',val:index});
@@ -83,8 +63,7 @@
                 liList:[
                     {title:'信息',key:'productAddInformatica'},
                     {title:'价格',key:'productAddPrice'},
-                    {title:'搜索优化',key:'TinymceEditor'},
-                    {title:'分类',key:'price'},
+                    {title:'分类',key:'productAddCollection'},
                     {title:'配送',key:'price'},
                     {title:'组合',key:'price'},
                     {title:'数量',key:'price'},
@@ -92,16 +71,7 @@
                     {title:'特性',key:'price'},
                 ]
                 ,disabled: false
-                ,postData:{
-                    goodsType:"1",
-                    goodsName:"",
-                    goodsId:"",
-                    goodsUPC:"",
-                    isDisabled:"0",
-                    goodsLabel:"",
-                    goodsDesc:"",
-                    goodsDetails:"",
-                }
+
             }
         }
     }
