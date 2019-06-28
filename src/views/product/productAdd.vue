@@ -24,7 +24,7 @@
 
     import TinymceEditor from '../../components/tinymce-editor'
     import productAddInformatica from './productAddInformatica'
-    import productAddCollection from './productAddCollection'
+    import productAddCollection from '../goods/productAddCollection'
 
     import productAddPrice from './productAddPrice'
 

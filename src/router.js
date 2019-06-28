@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import crm from './views/crm.vue'
 import login from './views/login.vue'
-import productList from './views/goods/productList.vue'
+import productList from './views/product/productList.vue'
 
 
 Vue.use(Router)
@@ -26,7 +26,8 @@ export default new Router({
                         path: '/productList',
                         name: 'productList',
                         component: productList
-                    }
+                    },
+
 
 
                 ]

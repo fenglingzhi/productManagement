@@ -11,18 +11,27 @@ export default new Vuex.Store({
           showName:'test',
           shopData:{}
       },
-      tabArray:[
-
-          { title: "销售概况", content:'productList',key: "home",closable: false ,defaultActiveKey:true}
-
-          ],
+      tabArray:[{
+          title: "商品管理",
+          content:'productList',
+          key: "home",
+          closable: false ,
+          defaultActiveKey:true
+      }],
       activeKey:'home',
       menuKey:[],
       goods_id:'',
       addProductContent:'productAddInformatica',
       addProductCurrent:'0',
       loading:false
-      // ym
+      // mjf
+      // YanM
+
+
+
+
+
+      // YanM
 
 
 
