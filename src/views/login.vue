@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import router from '../router';
 // import api from "@/utils/api";
 // import md5 from 'js-md5'
 // import axios from 'axios'
@@ -181,12 +182,17 @@ export default {
             }else{
                 localStorage.removeItem("cupshe_user")
             }
+            console.log(data);
             this.$post('/dologin',data).then((reData)=>{
                 console.log(reData);
-            }).then((err)=>{
-                console.log(err);
+                if(reData.code == 0){
+                    sessionStorage.setItem("permissionData",JSON.stringify(reData.data.permissionData))
+                    sessionStorage.setItem("token",reData.data.token)
+                    router.push('/')
+                }else{
+                    this.$message.error(reData.message);
+                }
             })
-
         }
       });
       
