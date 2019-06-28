@@ -7,7 +7,7 @@
               <div class="inputName">产品编号：</div>
             </a-col>
             <a-col class="gutter-row" :span="18">
-              <a-input placeholder="请输入产品编号" v-model="search_data.productId" />
+              <a-input placeholder="请输入产品编号" v-model="search_data.product_code" />
             </a-col>
           </div>
       </a-col>
@@ -17,20 +17,30 @@
             <div class="inputName">产品名称 ：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入产品名称" v-model="search_data.productName"/>
+            <a-input placeholder="请输入产品名称" v-model="search_data.name"/>
           </a-col>
         </div>
       </a-col>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName">shopify ID ：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入shopify ID" v-model="search_data.shopifyId"/>
-          </a-col>
-        </div>
-      </a-col>
+      <!--<a-col class="gutter-row" :span="6">-->
+        <!--<div class="inputPart">-->
+          <!--<a-col class="gutter-row" :span="6">-->
+            <!--<div class="inputName">shopify ID ：</div>-->
+          <!--</a-col>-->
+          <!--<a-col class="gutter-row" :span="18">-->
+            <!--<a-input placeholder="请输入shopify ID" v-model="search_data.shopifyId"/>-->
+          <!--</a-col>-->
+        <!--</div>-->
+      <!--</a-col>-->
+        <a-col class="gutter-row" :span="6">
+            <div class="inputPart">
+                <a-col class="gutter-row" :span="6">
+                    <div class="inputName"> 商品创建时间：</div>
+                </a-col>
+                <a-col class="gutter-row" :span="18">
+                    <a-range-picker @change="onChange" />
+                </a-col>
+            </div>
+        </a-col>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
@@ -38,8 +48,8 @@
           </a-col>
           <a-col class="gutter-row" :span="18">
             <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
-              <a-select-option value="100">是</a-select-option>
-              <a-select-option value="200">否</a-select-option>
+              <a-select-option value="1">是</a-select-option>
+              <a-select-option value="0">否</a-select-option>
             </a-select>
           </a-col>
         </div>
@@ -83,18 +93,6 @@
           </a-col>
           <a-col class="gutter-row" :span="18">
             <a-input placeholder="请输入最小零售价" v-model="search_data.retailPriceMin"/>
-          </a-col>
-        </div>
-      </a-col>
-    </a-row>
-    <a-row>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName"> 最小零售价：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-range-picker @change="onChange" />
           </a-col>
         </div>
       </a-col>
@@ -150,17 +148,25 @@
     import store from '../../store'
     const columns = [
         {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
-        { title: '编号', dataIndex: 'goods_seq', key: 'goods_seq'},
-        { title: '商品名称', dataIndex: 'goods_name', key: 'goods_name'},
-        { title: '图片', key: 'img_url', scopedSlots: { customRender: 'img_' },},
-        { title: '商品编号', dataIndex: 'goods_id', key: 'goods_id'},
-        { title: 'shopify ID', dataIndex: 'shopify_id', key: 'shopify_id'},
-        { title: '零售价格', dataIndex: 'retail_price', key: 'retail_price'},
-        { title: '成本价格', dataIndex: 'cost_price', key: 'cost_price'},
-        { title: '创建时间', dataIndex: 'cTime', key: 'cTime'},
-        { title: '更新时间', dataIndex: 'uTime', key: 'uTime'},
-        { title: '状态', dataIndex: 'status', key: 'status'},
-
+        { title: '商品ID', dataIndex: 'product_id', key: 'product_id'},
+        { title: '商品名称', dataIndex: 'name', key: 'name'},
+        { title: '商品类型', dataIndex: 'product_type', key: 'product_type'},
+        { title: '商品简介', dataIndex: 'description_short', key: 'description_short'},
+        { title: 'upc码', dataIndex: 'upc', key: 'upc'},
+        { title: '商品SKU码', dataIndex: 'product_code', key: 'product_code'},
+        { title: '商品详情', dataIndex: 'description', key: 'description'},
+        { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
+        { title: '是否在售', dataIndex: 'active', key: 'active'},
+        // { title: '编号', dataIndex: 'goods_seq', key: 'goods_seq'},
+        // { title: '商品名称', dataIndex: 'goods_name', key: 'goods_name'},
+        // { title: '图片', key: 'img_url', scopedSlots: { customRender: 'img_' },},
+        // { title: '商品编号', dataIndex: 'goods_id', key: 'goods_id'},
+        // { title: 'shopify ID', dataIndex: 'shopify_id', key: 'shopify_id'},
+        // { title: '零售价格', dataIndex: 'retail_price', key: 'retail_price'},
+        // { title: '成本价格', dataIndex: 'cost_price', key: 'cost_price'},
+        // { title: '创建时间', dataIndex: 'cTime', key: 'cTime'},
+        // { title: '更新时间', dataIndex: 'uTime', key: 'uTime'},
+        // { title: '状态', dataIndex: 'status', key: 'status'},
     ];
     const productListData = [];
     //表格复选框
@@ -188,9 +194,9 @@
                 }
                 ,fabricList:[]
                 ,search_data:{
-                    productId:''
-                    ,productName:''
-                    ,status:''
+                    product_code:''
+                    ,name:''
+                    ,active:''
                     ,shopifyId:''
                     ,costPiceMax:''
                     ,costPiceMin:''
@@ -205,7 +211,7 @@
             //状态选择
             handleChange(value) {
                 console.log(`selected ${value}`);
-                this.search_data.status = value
+                this.search_data.active = value
             }
             ,choseWhich(url,title){
                 router.push(url)
@@ -215,6 +221,7 @@
             ,getList(data){
                 this.loading = true
                 this.$post('/product/getProductListPage',data).then((reData)=>{
+                    console.log(reData.data.dataList)
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
@@ -257,7 +264,7 @@
             var vm = this
             // vm.getProductList();
             store.commit('changeStore',{key:'title',val:'产品列表'});
-            this.getList({page:1,page_size:vm.pagination.defaultPageSize})
+            vm.getList({page:1,page_size:vm.pagination.defaultPageSize})
             // this.getFabricList()
         },
 

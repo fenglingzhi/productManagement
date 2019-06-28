@@ -14,7 +14,6 @@
                               :tabClick="changeTab"
                       >
                           <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closable="pane.closable">
-                              <!--{{pane.content}}-->
                               <componet :is="pane.content"></componet>
                           </a-tab-pane>
                       </a-tabs>
