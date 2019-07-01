@@ -40,11 +40,12 @@
     import productList from './product/productList'
     import productAdd from './product/productAdd.vue'
     import classify_list from './classify/classify_list'
+    import index from './index'
 
     export default {
 
         components:{
-            productList,productAdd,classify_list,
+            productList,productAdd,classify_list,index
         },
         data () {
             return {

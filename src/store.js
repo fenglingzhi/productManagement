@@ -12,12 +12,12 @@ export default new Vuex.Store({
           shopData:{}
       },
       tabArray:[{
-          title: "商品管理",
-          content:'productList',
-          key: "home",
-          closable: false ,
-          defaultActiveKey:true
-      }],
+        title: "首页",
+        content:'index',
+        key: "home",
+        closable: false ,
+        defaultActiveKey:true
+    }],
       activeKey:'home',
       menuKey:[],
       goods_id:'',

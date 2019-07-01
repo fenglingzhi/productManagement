@@ -10,15 +10,7 @@
             @dragenter="onDragEnter"
             @drop="onDrop"
             :treeData="classify_list"
-        >
-        <!-- <a-tree-node :key="item.categoryId" v-for="item in classify_list" >
-
-            <div slot="title">
-                <span v-text="item.name" style="font-weight: 600;"></span>
-            </div>
-        </a-tree-node> -->
-        
-        </a-tree>
+        ></a-tree>
       </a-col>
       <a-col :span="20">col-20</a-col>
     </a-row>
@@ -38,54 +30,7 @@ export default {
         {
           title: "0-0",
           key: "0-0",
-          children: [
-            {
-              title: "0-0-0",
-              key: "0-0-0",
-              children: [
-                { title: "0-0-0-0", key: "0-0-0-0" },
-                { title: "0-0-0-1", key: "0-0-0-1" },
-                { title: "0-0-0-2", key: "0-0-0-2" }
-              ]
-            },
-            {
-              title: "0-0-1",
-              key: "0-0-1",
-              children: [
-                { title: "0-0-1-0", key: "0-0-1-0" },
-                { title: "0-0-1-1", key: "0-0-1-1" },
-                { title: "0-0-1-2", key: "0-0-1-2" }
-              ]
-            },
-            { title: "0-0-2", key: "0-0-2" }
-          ]
         },
-        {
-          title: "0-1",
-          key: "0-1",
-          children: [
-            {
-              title: "0-1-0",
-              key: "0-1-0",
-              children: [
-                { title: "0-1-0-0", key: "0-1-0-0" },
-                { title: "0-1-0-1", key: "0-1-0-1" },
-                { title: "0-1-0-2", key: "0-1-0-2" }
-              ]
-            },
-            {
-              title: "0-1-1",
-              key: "0-1-1",
-              children: [
-                { title: "0-1-1-0", key: "0-1-1-0" },
-                { title: "0-1-1-1", key: "0-1-1-1" },
-                { title: "0-1-1-2", key: "0-1-1-2" }
-              ]
-            },
-            { title: "0-1-2", key: "0-1-2" }
-          ]
-        },
-        { title: "0-2", key: "0-2" }
       ],
       expandedKeys: ["0-0", "0-0-0", "0-0-0-0"]
     };
