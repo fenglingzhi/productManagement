@@ -22,7 +22,7 @@
                                 <div class="inputName">*商品编号：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.goodsId" placeholder=""/>
+                                <a-input v-model="postData.product_id" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
@@ -32,7 +32,7 @@
                                 <div class="inputName">*商品名称：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.goodsName" placeholder=""/>
+                                <a-input v-model="postData.name" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
@@ -42,7 +42,7 @@
                                 <div class="inputName">*UPC码：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.goodsUPC" placeholder=""/>
+                                <a-input v-model="postData.upc" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
@@ -87,6 +87,16 @@
                             </a-col>
                         </div>
                     </a-col>
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">*SKU ：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-input v-model="postData.product_code" placeholder=""/>
+                            </a-col>
+                        </div>
+                    </a-col>
                 </a-row>
 
 
@@ -97,7 +107,7 @@
                                 <div class="inputName">*商品简介：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-textarea v-model="postData.goodsDesc" placeholder="Basic usage" :rows="4"/>
+                                <a-textarea v-model="postData.description_short" placeholder="Basic usage" :rows="4"/>
                             </a-col>
                         </div>
                     </a-col>
@@ -110,7 +120,7 @@
                                 <div class="inputName">*产品详情：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="22">
-                                <tinymce-editor v-model="postData.goodsDetails"
+                                <tinymce-editor v-model="postData.description"
                                                 :disabled="disabled"
                                                 ref="editor"></tinymce-editor>
                             </a-col>
@@ -138,10 +148,10 @@
         },
         methods: {
             handleChangeSelect(value) {
-                this.postData.goodsType=value
+                this.postData.product_type=value
             },
             onChangeIsUse(e){
-                this.postData.isDisabled=String(e.target.value)
+                this.postData.active=String(e.target.value)
             },
             onChange(date, dateString) {
                 console.log(date, dateString);
@@ -198,14 +208,15 @@
                 }
                 ,disabled: false
                 ,postData:{
-                    goodsType:"1",
-                    goodsName:"",
-                    goodsId:"",
-                    goodsUPC:"",
-                    isDisabled:"0",
+                    product_type:"1",
+                    name:"",
+                    product_id:"",
+                    upc:"",
+                    active:'1',
                     goodsLabel:"",
-                    goodsDesc:"",
-                    goodsDetails:"",
+                    description_short:"",
+                    description:"",
+                    product_code:'',
                 }
             }
         }

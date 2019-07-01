@@ -123,23 +123,23 @@
              :dataSource="productListData"
              :pagination="pagination"
              :loading="loading"
+             align="center"
              @change="handleTableChange"
              :rowSelection="rowSelection"
              :scroll="{ x: 1500 }">
           <span slot="action" slot-scope="text, record">
               <a href="javascript:;">修改{{text.id}}</a>
-              <a-divider type="vertical" />
-              <!--<a @click="delete_product({productId:'',status:''})">删除</a>-->
-              <a-popconfirm
-                    v-if="productListData.length"
-                    title="Sure to delete?"
-                    @confirm="() => delete_product(columns)">
-                <a href="javascript:;">Delete</a>
-              </a-popconfirm>
+              <a-divider type="vertical"></a-divider>
+              <a href="javascript:;">删除{{text.id}}</a>
           </span>
           <span slot="img_" slot-scope="text, record">
-              <img :src="text.img_url" alt="" height="32px;" style="border:1px solid #ccc;">
+              <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
           </span>
+          <a slot="active" slot-scope="text, record" style="text-align: center">
+            <!--{{record}}-->
+              <a-icon type="check" style="color: green" v-if="text == '1'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>
+              <a-icon type="close" style="color: red" v-if="text == '0'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>
+          </a>
     </a-table>
   </div>
 </template>
@@ -150,23 +150,17 @@
         {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
         { title: '商品ID', dataIndex: 'product_id', key: 'product_id'},
         { title: '商品名称', dataIndex: 'name', key: 'name'},
+        { title: '图片地址',  key: 'image_url',scopedSlots: { customRender: 'img_' },},
         { title: '商品类型', dataIndex: 'product_type', key: 'product_type'},
-        { title: '商品简介', dataIndex: 'description_short', key: 'description_short'},
+        // { title: '商品简介', dataIndex: 'description_short', key: 'description_short'},
         { title: 'upc码', dataIndex: 'upc', key: 'upc'},
         { title: '商品SKU码', dataIndex: 'product_code', key: 'product_code'},
-        { title: '商品详情', dataIndex: 'description', key: 'description'},
+        // { title: '商品详情', dataIndex: 'description', key: 'description'},
         { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
-        { title: '是否在售', dataIndex: 'active', key: 'active'},
-        // { title: '编号', dataIndex: 'goods_seq', key: 'goods_seq'},
-        // { title: '商品名称', dataIndex: 'goods_name', key: 'goods_name'},
-        // { title: '图片', key: 'img_url', scopedSlots: { customRender: 'img_' },},
-        // { title: '商品编号', dataIndex: 'goods_id', key: 'goods_id'},
-        // { title: 'shopify ID', dataIndex: 'shopify_id', key: 'shopify_id'},
-        // { title: '零售价格', dataIndex: 'retail_price', key: 'retail_price'},
-        // { title: '成本价格', dataIndex: 'cost_price', key: 'cost_price'},
-        // { title: '创建时间', dataIndex: 'cTime', key: 'cTime'},
-        // { title: '更新时间', dataIndex: 'uTime', key: 'uTime'},
-        // { title: '状态', dataIndex: 'status', key: 'status'},
+        { title: '是否在售', dataIndex: 'active', key: 'active', align: 'center' ,scopedSlots: { customRender: 'active' },},
+        { title: '折扣价格', dataIndex: 'sale_price', key: 'sale_price'},
+        { title: '零售价格', dataIndex: 'retail_price', key: 'retail_price'},
+        { title: '原价', dataIndex: 'cost_price', key: 'cost_price'},
     ];
     const productListData = [];
     //表格复选框
@@ -196,7 +190,7 @@
                 ,search_data:{
                     product_code:''
                     ,name:''
-                    ,active:''
+                    ,active:true
                     ,shopifyId:''
                     ,costPiceMax:''
                     ,costPiceMin:''
@@ -204,6 +198,10 @@
                     ,retailPriceMin:''
                     ,createTime:[]
                     ,pageSize:'10'
+                    ,sale_price:''
+                    ,retail_price:''
+                    ,cost_price:''
+                    ,image_url:''
                 }
             }
         },
@@ -219,9 +217,9 @@
             }
             // 获取商品列表
             ,getList(data){
-                this.loading = true
+                this.loading = true;
                 this.$post('/product/getProductListPage',data).then((reData)=>{
-                    console.log(reData.data.dataList)
+                    // console.log('reData',reData.data.dataList[0].active)
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
@@ -247,25 +245,21 @@
                 this.search_data.createTime = dateString.slice(0,2)
                 console.log('22222222',this.search_data.createTime)
             }
-            //删除产品
-            ,delete_product (key,data) {
-                // this.$post('/product/deleteProduct',data).then((reData)=>{
-                //     this.productListData=reData.data.dataList
-                //     this.pagination.total=reData.data.page.totalResultSize
-                //     this.loading = false
-                // })
-                // const productListData = [...this.productListData]
-                // this.productListData = productListData.filter(item => item.key !== key)
-                console.log('sdfasdfasdf',this.productListData)
-            },
+            //更改商品状态
+            ,change_active(data){
+                this.$post('/product/editDisableProduct',data).then((reData)=>{
+                    // console.log('reData',reData.data.dataList[0].active)
+                    // this.productListData=reData.data.dataList
+                    // this.pagination.total=reData.data.page.totalResultSize
+                    // this.loading = false
+                })
+            }
 
         },
         mounted() {
             var vm = this
-            // vm.getProductList();
             store.commit('changeStore',{key:'title',val:'产品列表'});
             vm.getList({page:1,page_size:vm.pagination.defaultPageSize})
-            // this.getFabricList()
         },
 
     }
