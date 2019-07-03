@@ -4,6 +4,10 @@ import Home from './views/Home.vue'
 import crm from './views/crm.vue'
 import login from './views/login.vue'
 import productList from './views/product/productList.vue'
+import attributeList from './views/attribute/attributeList'
+import productAttribute from './views/attribute/productAttribute'
+import addAttribute from './views/attribute/addAttribute'
+import editAttribute from './views/attribute/editAttribute'
 
 Vue.use(Router)
 
@@ -25,6 +29,30 @@ export default new Router({
                         path: '/productList',
                         name: 'productList',
                         component: productList
+                    },
+                    {
+                        //属性父级列表
+                        path: '/productAttribute',
+                        name: 'productAttribute',
+                        component: productAttribute,
+                    },
+                    {
+                        //属性子级列表
+                        path: '/attributeList',
+                        name: 'attributeList',
+                        component: attributeList
+                    },
+                    {
+                        //增加属性
+                        path: '/addAttribute',
+                        name: 'addAttribute',
+                        component: addAttribute
+                    },
+                    {
+                        //修改属性
+                        path: '/editAttribute',
+                        name: 'editAttribute',
+                        component: editAttribute
                     },
                 ]
             }

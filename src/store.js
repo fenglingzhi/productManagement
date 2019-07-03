@@ -23,11 +23,11 @@ export default new Vuex.Store({
       goods_id:'',
       addProductContent:'productAddInformatica',
       addProductCurrent:'0',
-      loading:false
+      loading:false,
       // mjf
       // YanM
-
-
+      attribute_child_id:'',
+      attribute_parent_id:''
 
 
 

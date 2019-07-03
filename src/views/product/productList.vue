@@ -119,28 +119,40 @@
       </a-col>
     </a-row>
     <div class="hrLine"></div>
-    <a-table :columns="columns"
-             :dataSource="productListData"
-             :pagination="pagination"
-             :loading="loading"
-             align="center"
-             @change="handleTableChange"
-             :rowSelection="rowSelection"
-             :scroll="{ x: 1500 }">
+    <div>
+      <!--<div style="margin-bottom: 16px">-->
+        <!--<a-button type="primary">-->
+          <!--Reload-->
+        <!--</a-button>-->
+        <!--<span style="margin-left: 8px">-->
+        <!--&lt;!&ndash;<template v-if="hasSelected">&ndash;&gt;-->
+          <!--&lt;!&ndash;&lt;!&ndash;{{`Selected ${selectedRowKeys.length} items`}}&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;</template>&ndash;&gt;-->
+      <!--</span>-->
+      <!--</div>-->
+      <a-table :columns="columns"
+               :dataSource="productListData"
+               :pagination="pagination"
+               :loading="loading"
+               align="center"
+               @change="handleTableChange"
+               :rowSelection="rowSelection"
+               :scroll="{ x: 1500 }">
           <span slot="action" slot-scope="text, record">
               <a href="javascript:;">修改{{text.id}}</a>
               <a-divider type="vertical"></a-divider>
-              <a href="javascript:;">删除{{text.id}}</a>
+              <a @click="deleteProduct({product_id:record.product_id})">删除{{record.product_id}}</a>
           </span>
-          <span slot="img_" slot-scope="text, record">
+        <span slot="img_" slot-scope="text, record">
               <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
           </span>
-          <a slot="active" slot-scope="text, record" style="text-align: center">
-            <!--{{record}}-->
-              <a-icon type="check" style="color: green" v-if="text == '1'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>
-              <a-icon type="close" style="color: red" v-if="text == '0'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>
-          </a>
-    </a-table>
+        <a slot="active" slot-scope="text, record" style="text-align: center">
+          <!--{{record}}-->
+          <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
+          <a-icon type="close" style="color: red" v-if="text === '0'" @click="change_active({product_id:record.product_id,active:'1'})"></a-icon>
+        </a>
+      </a-table>
+    </div>
   </div>
 </template>
 <script>
@@ -219,7 +231,6 @@
             ,getList(data){
                 this.loading = true;
                 this.$post('/product/getProductListPage',data).then((reData)=>{
-                    // console.log('reData',reData.data.dataList[0].active)
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
@@ -228,13 +239,14 @@
             //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
-                this.getList({page:pagination.current,page_size:pagination.defaultPageSize})
+                this.getList({currentPage:pagination.current,page_size:pagination.defaultPageSize})
             }
             //搜索产品
             ,search_product(data){
-                console.log('111111111111',data)
                 let vm = this;
+                // console.log('111111111111111',this.search_data)
                 this.$post('/product/getProductListPage',data).then((reData)=>{
+
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
@@ -243,23 +255,28 @@
             //时间选择
             ,onChange(date, dateString) {
                 this.search_data.createTime = dateString.slice(0,2)
-                console.log('22222222',this.search_data.createTime)
             }
             //更改商品状态
             ,change_active(data){
                 this.$post('/product/editDisableProduct',data).then((reData)=>{
-                    // console.log('reData',reData.data.dataList[0].active)
-                    // this.productListData=reData.data.dataList
-                    // this.pagination.total=reData.data.page.totalResultSize
-                    // this.loading = false
+                    if(reData.code === '0'){
+                        this.getList({page:1,page_size:this.pagination.defaultPageSize});
+                    }
                 })
             }
-
+            //删除商品
+            ,deleteProduct(data){
+                this.$post('/product/deleteProduct',data).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.getList(data);
+                    }
+                })
+            }
         },
         mounted() {
             var vm = this
             store.commit('changeStore',{key:'title',val:'产品列表'});
-            vm.getList({page:1,page_size:vm.pagination.defaultPageSize})
+            vm.getList({currentPage:1,page_size:vm.pagination.defaultPageSize})
         },
 
     }
