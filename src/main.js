@@ -16,6 +16,7 @@ Vue.prototype.$fetch=fetch;
 Vue.prototype.$patch=patch;
 Vue.prototype.$put=put;
 
+
 Vue.prototype.common=common
 Vue.prototype.axios=axios
 Vue.config.productionTip = false

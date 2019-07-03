@@ -7,7 +7,7 @@
               <div class="inputName">产品编号：</div>
             </a-col>
             <a-col class="gutter-row" :span="18">
-              <a-input placeholder="请输入产品编号" v-model="search_data.productId" />
+              <a-input placeholder="请输入产品编号" v-model="search_data.product_code" />
             </a-col>
           </div>
       </a-col>
@@ -17,20 +17,30 @@
             <div class="inputName">产品名称 ：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入产品名称" v-model="search_data.productName"/>
+            <a-input placeholder="请输入产品名称" v-model="search_data.name"/>
           </a-col>
         </div>
       </a-col>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName">shopify ID ：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入shopify ID" v-model="search_data.shopifyId"/>
-          </a-col>
-        </div>
-      </a-col>
+      <!--<a-col class="gutter-row" :span="6">-->
+        <!--<div class="inputPart">-->
+          <!--<a-col class="gutter-row" :span="6">-->
+            <!--<div class="inputName">shopify ID ：</div>-->
+          <!--</a-col>-->
+          <!--<a-col class="gutter-row" :span="18">-->
+            <!--<a-input placeholder="请输入shopify ID" v-model="search_data.shopifyId"/>-->
+          <!--</a-col>-->
+        <!--</div>-->
+      <!--</a-col>-->
+        <a-col class="gutter-row" :span="6">
+            <div class="inputPart">
+                <a-col class="gutter-row" :span="6">
+                    <div class="inputName"> 商品创建时间：</div>
+                </a-col>
+                <a-col class="gutter-row" :span="18">
+                    <a-range-picker @change="onChange" />
+                </a-col>
+            </div>
+        </a-col>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
@@ -38,8 +48,8 @@
           </a-col>
           <a-col class="gutter-row" :span="18">
             <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
-              <a-select-option value="100">是</a-select-option>
-              <a-select-option value="200">否</a-select-option>
+              <a-select-option value="1">是</a-select-option>
+              <a-select-option value="0">否</a-select-option>
             </a-select>
           </a-col>
         </div>
@@ -91,18 +101,6 @@
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
-            <div class="inputName"> 最小零售价：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-range-picker @change="onChange" />
-          </a-col>
-        </div>
-      </a-col>
-    </a-row>
-    <a-row>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
           </a-col>
           <a-col class="gutter-row" :span="18">
             <a-row>
@@ -125,23 +123,23 @@
              :dataSource="productListData"
              :pagination="pagination"
              :loading="loading"
+             align="center"
              @change="handleTableChange"
              :rowSelection="rowSelection"
              :scroll="{ x: 1500 }">
           <span slot="action" slot-scope="text, record">
               <a href="javascript:;">修改{{text.id}}</a>
-              <a-divider type="vertical" />
-              <!--<a @click="delete_product({productId:'',status:''})">删除</a>-->
-              <a-popconfirm
-                    v-if="productListData.length"
-                    title="Sure to delete?"
-                    @confirm="() => delete_product(columns)">
-                <a href="javascript:;">Delete</a>
-              </a-popconfirm>
+              <a-divider type="vertical"></a-divider>
+              <a href="javascript:;">删除{{text.id}}</a>
           </span>
           <span slot="img_" slot-scope="text, record">
-              <img :src="text.img_url" alt="" height="32px;" style="border:1px solid #ccc;">
+              <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
           </span>
+          <a slot="active" slot-scope="text, record" style="text-align: center">
+            <!--{{record}}-->
+              <a-icon type="check" style="color: green" v-if="text == '1'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>
+              <a-icon type="close" style="color: red" v-if="text == '0'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>
+          </a>
     </a-table>
   </div>
 </template>
@@ -150,17 +148,19 @@
     import store from '../../store'
     const columns = [
         {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
-        { title: '编号', dataIndex: 'goods_seq', key: 'goods_seq'},
-        { title: '商品名称', dataIndex: 'goods_name', key: 'goods_name'},
-        { title: '图片', key: 'img_url', scopedSlots: { customRender: 'img_' },},
-        { title: '商品编号', dataIndex: 'goods_id', key: 'goods_id'},
-        { title: 'shopify ID', dataIndex: 'shopify_id', key: 'shopify_id'},
+        { title: '商品ID', dataIndex: 'product_id', key: 'product_id'},
+        { title: '商品名称', dataIndex: 'name', key: 'name'},
+        { title: '图片地址',  key: 'image_url',scopedSlots: { customRender: 'img_' },},
+        { title: '商品类型', dataIndex: 'product_type', key: 'product_type'},
+        // { title: '商品简介', dataIndex: 'description_short', key: 'description_short'},
+        { title: 'upc码', dataIndex: 'upc', key: 'upc'},
+        { title: '商品SKU码', dataIndex: 'product_code', key: 'product_code'},
+        // { title: '商品详情', dataIndex: 'description', key: 'description'},
+        { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
+        { title: '是否在售', dataIndex: 'active', key: 'active', align: 'center' ,scopedSlots: { customRender: 'active' },},
+        { title: '折扣价格', dataIndex: 'sale_price', key: 'sale_price'},
         { title: '零售价格', dataIndex: 'retail_price', key: 'retail_price'},
-        { title: '成本价格', dataIndex: 'cost_price', key: 'cost_price'},
-        { title: '创建时间', dataIndex: 'cTime', key: 'cTime'},
-        { title: '更新时间', dataIndex: 'uTime', key: 'uTime'},
-        { title: '状态', dataIndex: 'status', key: 'status'},
-
+        { title: '原价', dataIndex: 'cost_price', key: 'cost_price'},
     ];
     const productListData = [];
     //表格复选框
@@ -188,9 +188,9 @@
                 }
                 ,fabricList:[]
                 ,search_data:{
-                    productId:''
-                    ,productName:''
-                    ,status:''
+                    product_code:''
+                    ,name:''
+                    ,active:true
                     ,shopifyId:''
                     ,costPiceMax:''
                     ,costPiceMin:''
@@ -198,6 +198,10 @@
                     ,retailPriceMin:''
                     ,createTime:[]
                     ,pageSize:'10'
+                    ,sale_price:''
+                    ,retail_price:''
+                    ,cost_price:''
+                    ,image_url:''
                 }
             }
         },
@@ -205,7 +209,7 @@
             //状态选择
             handleChange(value) {
                 console.log(`selected ${value}`);
-                this.search_data.status = value
+                this.search_data.active = value
             }
             ,choseWhich(url,title){
                 router.push(url)
@@ -213,8 +217,9 @@
             }
             // 获取商品列表
             ,getList(data){
-                this.loading = true
+                this.loading = true;
                 this.$post('/product/getProductListPage',data).then((reData)=>{
+                    // console.log('reData',reData.data.dataList[0].active)
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
@@ -240,25 +245,21 @@
                 this.search_data.createTime = dateString.slice(0,2)
                 console.log('22222222',this.search_data.createTime)
             }
-            //删除产品
-            ,delete_product (key,data) {
-                // this.$post('/product/deleteProduct',data).then((reData)=>{
-                //     this.productListData=reData.data.dataList
-                //     this.pagination.total=reData.data.page.totalResultSize
-                //     this.loading = false
-                // })
-                // const productListData = [...this.productListData]
-                // this.productListData = productListData.filter(item => item.key !== key)
-                console.log('sdfasdfasdf',this.productListData)
-            },
+            //更改商品状态
+            ,change_active(data){
+                this.$post('/product/editDisableProduct',data).then((reData)=>{
+                    // console.log('reData',reData.data.dataList[0].active)
+                    // this.productListData=reData.data.dataList
+                    // this.pagination.total=reData.data.page.totalResultSize
+                    // this.loading = false
+                })
+            }
 
         },
         mounted() {
             var vm = this
-            // vm.getProductList();
             store.commit('changeStore',{key:'title',val:'产品列表'});
-            this.getList({page:1,page_size:vm.pagination.defaultPageSize})
-            // this.getFabricList()
+            vm.getList({page:1,page_size:vm.pagination.defaultPageSize})
         },
 
     }
