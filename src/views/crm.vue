@@ -41,6 +41,7 @@
     import productAdd from './product/productAdd.vue'
     import classify_list from './classify/classify_list'
     import attributeWrap from './attribute/attributeWrap'
+    import index from './index'
 
     export default {
 
