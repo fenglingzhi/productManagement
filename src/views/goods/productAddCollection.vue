@@ -12,7 +12,7 @@
                 </a-row>
             </a-col>
         </div>
-        <a-row>
+        <a-row class="gutter-row">
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">

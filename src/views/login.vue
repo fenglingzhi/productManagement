@@ -182,7 +182,6 @@ export default {
             }else{
                 localStorage.removeItem("cupshe_user")
             }
-            console.log(data);
             this.$post('/dologin',data).then((reData)=>{
                 console.log(reData);
                 if(reData.code == 0){

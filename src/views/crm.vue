@@ -45,7 +45,7 @@
     export default {
 
         components:{
-            productList,productAdd,classify_list,attributeWrap,
+            productList,productAdd,classify_list,attributeWrap, index
         },
         data () {
             return {

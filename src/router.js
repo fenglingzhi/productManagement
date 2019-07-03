@@ -9,6 +9,7 @@ import productAttribute from './views/attribute/productAttribute'
 import addAttribute from './views/attribute/addAttribute'
 import editAttribute from './views/attribute/editAttribute'
 
+
 Vue.use(Router)
 
 export default new Router({
