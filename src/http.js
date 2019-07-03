@@ -6,6 +6,7 @@ axios.defaults.baseURL ='http://192.168.5.18:8081';
 // axios.defaults.baseURL ='http://192.168.0.18:8081/zorafanERP';
 
 
+
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;';
 //http request 拦截器
 axios.interceptors.request.use(

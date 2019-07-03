@@ -13,23 +13,23 @@ export default new Vuex.Store({
           shopData:{}
       },
       tabArray:[{
-          title: "商品管理",
-          content:'productList',
-          key: "home",
-          closable: false ,
-          defaultActiveKey:true
-      }],
+        title: "首页",
+        content:'index',
+        key: "home",
+        closable: false ,
+        defaultActiveKey:true
+    }],
       activeKey:'home',
       menuKey:[],
       goods_id:'1',
       addProductContent:'productAddInformatica',
       addProductCurrent:'0',
       loading:false,
-      langId:1
+      langId:1,
       // mjf
       // YanM
-
-
+      attribute_child_id:'',
+      attribute_parent_id:''
 
 
 

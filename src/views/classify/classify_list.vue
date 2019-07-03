@@ -1,192 +1,242 @@
 <template>
-  <div class="classify">
+  <div class="classify_list">
     <a-row>
-      <a-col :span="4" style="border-right: 1px solid rgb(232, 232, 232);">
-        <a-input-search style="margin-bottom: 8px" placeholder="Search" @change="onChange"/>
-        <a-tree
-            class="draggable-tree"
+      <a-col :span="5" style="border-right: 1px solid rgb(232, 232, 232);padding:0 8px;">
+        <div>
+          <a-input-search style="margin-bottom:8px;" placeholder="Search" @change="onChange"/>
+          <a-tree
             :defaultExpandedKeys="expandedKeys"
-            draggable
-            @dragenter="onDragEnter"
-            @drop="onDrop"
-            :treeData="classify_list"
-        >
-        <!-- <a-tree-node :key="item.categoryId" v-for="item in classify_list" >
-
-            <div slot="title">
-                <span v-text="item.name" style="font-weight: 600;"></span>
-            </div>
-        </a-tree-node> -->
-        
-        </a-tree>
+            @expand="onExpand"
+            :expandedKeys="expandedKeys"
+            :autoExpandParent="autoExpandParent"
+          >
+            <a-tree-node :key="item.key" v-for="item in classify_list">
+              <div slot="title" @click="onSelect(item)" :style="showOperation == item.key ? 'background:#bae7ff':''">
+                <span v-if="item.title.indexOf(searchValue) > -1">
+                  <span v-text="item.title.substr(0, item.title.indexOf(searchValue))"></span>
+                  <span style="color: #f50" v-text="searchValue"></span>
+                  <span
+                    v-text="item.title.substr(item.title.indexOf(searchValue) + searchValue.length)"
+                  ></span>
+                </span>
+                <span v-else v-text="item.title"></span>
+                <!-- <div
+                  style="display:inline-block;margin-left:25px;"
+                  v-if="showOperation == item.key"
+                >
+                  <a v-on:click.stop="router_edit_classify(item)">编辑</a>
+                </div> -->
+              </div>
+              <a-tree-node :key="item1.key" v-for="item1 in item.children">
+                <div slot="title" @click="onSelect(item1)" :style="showOperation == item1.key ? 'background:#bae7ff':''">
+                  <span v-if="item1.title.indexOf(searchValue) > -1">
+                    <span v-text="item1.title.substr(0, item1.title.indexOf(searchValue))"></span>
+                    <span style="color: #f50" v-text="searchValue"></span>
+                    <span
+                      v-text="item1.title.substr(item1.title.indexOf(searchValue) + searchValue.length)"
+                    ></span>
+                  </span>
+                  <span v-else v-text="item1.title"></span>
+                  <div
+                    style="display:inline-block;margin-left:25px;"
+                    v-if="showOperation == item1.key"
+                  >
+                    <a v-on:click.stop="router_edit_classify(item1)">编辑</a>
+                  </div>
+                </div>
+                <a-tree-node :key="item2.key" v-for="item2 in item1.children">
+                  <div slot="title" @click="onSelect(item2)" :style="showOperation == item2.key ? 'background:#bae7ff':''">
+                    <span v-if="item2.title.indexOf(searchValue) > -1">
+                      <span v-text="item2.title.substr(0, item2.title.indexOf(searchValue))"></span>
+                      <span style="color: #f50" v-text="searchValue"></span>
+                      <span
+                        v-text="item2.title.substr(item2.title.indexOf(searchValue) + searchValue.length)"
+                      ></span>
+                    </span>
+                    <span v-else v-text="item2.title"></span>
+                    <div
+                      style="display:inline-block;margin-left:25px;"
+                      v-if="showOperation == item2.key"
+                    >
+                      <a v-on:click.stop="router_edit_classify(item2)">编辑</a>
+                    </div>
+                  </div>
+                  <a-tree-node :key="item3.key" v-for="item3 in item2.children">
+                    <div slot="title" @click="onSelect(item3)" :style="showOperation == item3.key ? 'background:#bae7ff':''">
+                      <span v-if="item3.title.indexOf(searchValue) > -1">
+                        <span v-text="item3.title.substr(0, item3.title.indexOf(searchValue))"></span>
+                        <span style="color: #f50" v-text="searchValue"></span>
+                        <span
+                          v-text="item3.title.substr(item3.title.indexOf(searchValue) + searchValue.length)"
+                        ></span>
+                      </span>
+                      <span v-else v-text="item3.title"></span>
+                      <div
+                        style="display:inline-block;margin-left:25px;"
+                        v-if="showOperation == item3.key"
+                      >
+                        <a v-on:click.stop="router_edit_classify(item3)">编辑</a>
+                      </div>
+                    </div>
+                    <a-tree-node :key="item4.key" v-for="item4 in item3.children">
+                      <div slot="title" @click="onSelect(item4)" :style="showOperation == item4.key ? 'background:#bae7ff':''">
+                        <span v-if="item4.title.indexOf(searchValue) > -1">
+                          <span v-text="item4.title.substr(0, item4.title.indexOf(searchValue))"></span>
+                          <span style="color: #f50" v-text="searchValue"></span>
+                          <span
+                            v-text="item4.title.substr(item4.title.indexOf(searchValue) + searchValue.length)"
+                          ></span>
+                        </span>
+                        <span v-else v-text="item4.title"></span>
+                        <div
+                          style="display:inline-block;margin-left:25px;"
+                          v-if="showOperation == item4.key"
+                        >
+                          <a v-on:click.stop="router_edit_classify(item4)">编辑</a>
+                        </div>
+                      </div>
+                    </a-tree-node>
+                  </a-tree-node>
+                </a-tree-node>
+              </a-tree-node>
+            </a-tree-node>
+          </a-tree>
+        </div>
       </a-col>
-      <a-col :span="20">col-20</a-col>
+
+      <a-col :span="19" style="padding-left:10px;">
+        <classify_list_table v-on:router_add_classify="router_add_classify" :select_classify ="select_classify" v-if="operation_name =='table'"></classify_list_table>
+        <classify_list_edit :classify_list ="classify_list" :operation_name ="operation_name" :select_classify_all ="select_classify_all" v-if="operation_name =='edit' || operation_name =='add'"></classify_list_edit>
+      </a-col>
     </a-row>
   </div>
 </template>
+
 <script>
+//树形结构筛选
+const getParentKey = (tree, value) => {
+  let parentKey;
+  if (tree.children) {
+    if (tree.children.some(item => item.title.indexOf(value) > -1)) {
+      parentKey = tree.key;
+    } else {
+      for (let i = 0; i < tree.children.length; i++) {
+        let node = tree.children[i];
+        if (getParentKey(node.children, value)) {
+          parentKey = getParentKey(node.children, value);
+        }
+      }
+    }
+  }
+  return parentKey;
+};
 
 import router from "../../router";
 import store from "../../store";
-import $ from "jquery";
+import classify_list_table from './classify_list_table'
+import classify_list_edit from './classify_list_edit'
 
 export default {
-  name: "classify",
+  name: "classify_list",
   data() {
     return {
+      expandedKeys: [],
+      searchValue: "",
+      autoExpandParent: true,
       classify_list: [
         {
-          title: "0-0",
-          key: "0-0",
-          children: [
-            {
-              title: "0-0-0",
-              key: "0-0-0",
-              children: [
-                { title: "0-0-0-0", key: "0-0-0-0" },
-                { title: "0-0-0-1", key: "0-0-0-1" },
-                { title: "0-0-0-2", key: "0-0-0-2" }
-              ]
-            },
-            {
-              title: "0-0-1",
-              key: "0-0-1",
-              children: [
-                { title: "0-0-1-0", key: "0-0-1-0" },
-                { title: "0-0-1-1", key: "0-0-1-1" },
-                { title: "0-0-1-2", key: "0-0-1-2" }
-              ]
-            },
-            { title: "0-0-2", key: "0-0-2" }
-          ]
-        },
-        {
-          title: "0-1",
-          key: "0-1",
-          children: [
-            {
-              title: "0-1-0",
-              key: "0-1-0",
-              children: [
-                { title: "0-1-0-0", key: "0-1-0-0" },
-                { title: "0-1-0-1", key: "0-1-0-1" },
-                { title: "0-1-0-2", key: "0-1-0-2" }
-              ]
-            },
-            {
-              title: "0-1-1",
-              key: "0-1-1",
-              children: [
-                { title: "0-1-1-0", key: "0-1-1-0" },
-                { title: "0-1-1-1", key: "0-1-1-1" },
-                { title: "0-1-1-2", key: "0-1-1-2" }
-              ]
-            },
-            { title: "0-1-2", key: "0-1-2" }
-          ]
-        },
-        { title: "0-2", key: "0-2" }
+          title: "home",
+          key: "0",
+          children: []
+        }
       ],
-      expandedKeys: ["0-0", "0-0-0", "0-0-0-0"]
+      select_classify: [],
+      select_classify_all:{},
+      showOperation: "",
+      operation_name:'',
     };
   },
-  components: {},
+  components: {classify_list_table,classify_list_edit},
   watch: {},
   mounted() {
-      this.classify_data_init();
+    this.classify_data_init();
   },
   methods: {
     // 初始化获取分类数据
-    classify_data_init(){
-        let data = {
-            langId:1,
-        }
-        this.$fetch('/category/getAllCategoryList',data).then((reData)=>{
-            console.log(reData);
-            if(reData.code == 0){
-                this.classify_list = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/childCategoryList/g,"children").replace(/categoryId/g,"key"))
-                console.log(this.classify_list)
-            }else{
-                this.$message.error(reData.message);
-            }
-        })
-    },
-    
-    // 搜索框监听事件
-    onChange() {
-        console.log("searchChange");
-    },
-
-    // 树形结构拖动
-    onDragEnter(info) {
-        console.log("onDragEnter");
-        // console.log(info);
-        // expandedKeys 需要受控时设置
-        // this.expandedKeys = info.expandedKeys
-    },
-
-    // 树形结构拖动结束
-    onDrop(info) {
-        console.log("onDrop");
-        const dropKey = info.node.eventKey;
-        const dragKey = info.dragNode.eventKey;
-        const dropPos = info.node.pos.split("-");
-        const dropPosition =
-            info.dropPosition - Number(dropPos[dropPos.length - 1]);
-        const loop = (data, key, callback) => {
-            data.forEach((item, index, arr) => {
-            if (item.key === key) {
-                return callback(item, index, arr);
-            }
-            if (item.children) {
-                return loop(item.children, key, callback);
-            }
-            });
-        };
-        const data = [...this.classify_list];
-
-        // Find dragObject
-        let dragObj;
-        loop(data, dragKey, (item, index, arr) => {
-            arr.splice(index, 1);
-            dragObj = item;
-        });
-
-        if (!info.dropToGap) {
-            // Drop on the content
-            loop(data, dropKey, item => {
-            item.children = item.children || [];
-            // where to insert 示例添加到尾部，可以是随意位置
-            item.children.push(dragObj);
-            });
-        } else if (
-            (info.node.children || []).length > 0 && // Has children
-            info.node.expanded && // Is expanded
-            dropPosition === 1 // On the bottom gap
-        ) {
-            loop(data, dropKey, item => {
-            item.children = item.children || [];
-            // where to insert 示例添加到尾部，可以是随意位置
-            item.children.unshift(dragObj);
-            });
+    classify_data_init() {
+      let data = {
+        langId: 1
+      };
+      this.$fetch("/category/getAllCategoryTree", data).then(reData => {
+        if (reData.code == 0) {
+            console.log(reData.data)
+            let homeData = [{title:"home",key:"0",children:[]}];
+            reData.data.forEach(function(item){
+                homeData[0].children.push(item)
+            })
+            this.classify_list = homeData
         } else {
-            let ar;
-            let i;
-            loop(data, dropKey, (item, index, arr) => {
-            ar = arr;
-            i = index;
-            });
-            if (dropPosition === -1) {
-            ar.splice(i, 0, dragObj);
-            } else {
-            ar.splice(i + 1, 0, dragObj);
-            }
+          this.$message.error(reData.message);
         }
-        this.classify_list = data;
+      });
     },
+    onExpand(expandedKeys) {
+      this.expandedKeys = expandedKeys;
+      this.autoExpandParent = false;
+    },
+    // 搜索框监听事件
+    onChange(e) {
+      let classify_list = this.classify_list.slice(
+        0,
+        this.classify_list.length
+      );
+      const value = e.target.value;
+      const expandedKeys = classify_list
+        .map(item => {
+          return getParentKey(item, value);
+        })
+        .filter((item, i, self) => item && self.indexOf(item) === i);
+      console.log(expandedKeys);
+      Object.assign(this, {
+        expandedKeys,
+        searchValue: value,
+        autoExpandParent: true
+      });
+    },
+    // 树形结构选中事件
+    onSelect(item) {
+     
+      this.select_classify = item.children.slice(0, item.children.length);
+     this.select_classify_all = item;
+      this.showOperation = item.key;
+      this.operation_name = "table";
+    },
+    // 分类编辑入口
+    router_edit_classify(value){
+       this.operation_name = "";
+       setTimeout(() => {
+           this.operation_name = "edit";
+       }, 500);
+       
+    },
+    // 分类新增入口
+    router_add_classify(){
+        this.operation_name = "add";
+    }
   }
-  
 };
 </script>
-<style scoped>
+<style>
+.secondTitle{
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    border-bottom: 1px solid #999;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    -webkit-box-shadow: 0 0 black;
+    box-shadow: 0 0 black;
+    height: 50px;
+}  
 </style>
