@@ -7,6 +7,9 @@
                 <a-button type="primary" @click="addAttribute(store.state.attribute_child_id)">
                     新增
                 </a-button>
+                <a-button type="primary" @click="deleteAllAttribute({ids:deleteAllData,status:'200'})" style="margin-left: 20px;">
+                    批量删除
+                </a-button>
                 <span style="margin-left: 8px"></span>
             </div>
             <a-table :columns="columns"
@@ -18,9 +21,9 @@
                      :rowSelection="rowSelection"
                      :scroll="{ x: 1500 }">
               <span slot="action" slot-scope="text, record">
-                  <a href="javascript:;">修改{{text.id}}</a>
+                  <a @click="editAttribute(record.attribute_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct({status:0,ids:record.attribute_id})">删除{{record.product_id}}</a>
+                  <a @click="deleteProduct({status:0,ids:record.attribute_id})">删除</a>
               </span>
                 <span slot="redirect" slot-scope="text, record">
                   <a>{{record.attribute_name}}</a>
@@ -43,29 +46,30 @@
         { title: '属性排序值', dataIndex: 'attribute_seq', key: 'attribute_seq'},
     ];
     const attributeList = [];
-    //表格复选框
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        onSelect: (record, selected, selectedRows) => {
-            console.log(record, selected, selectedRows);
-        },
-        onSelectAll: (selected, selectedRows, changeRows) => {
-            console.log(selected, selectedRows, changeRows);
-        },
-    };
+
     export default {
         data() {
             return {
                 attributeList,
                 store,
                 columns,
-                rowSelection,
                 loading: false,
                 pagination:{
                     defaultPageSize:10,
                     total:1,
+                },
+                deleteAllData:'',
+                //表格复选框
+                rowSelection:{
+                    onChange: (selectedRowKeys, selectedRows) => {
+                        // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                        let deleteAllData = '';
+                        selectedRows.forEach(function (val,index) {
+                            deleteAllData += val.attribute_id + (index === selectedRows.length -1 ? '' : ',')
+                        })
+                        this.deleteAllData = deleteAllData;
+                        console.log('111111111111',this.deleteAllData)
+                    },
                 }
             }
         },
@@ -74,6 +78,11 @@
             addAttribute(data){
                 store.commit('changeStore',{key:'attribute_parent_id',val:data});
                 router.push('/addAttribute')
+            }
+            //修改属性
+            ,editAttribute(data){
+                store.commit('changeStore',{key:'attribute_id',val:data});
+                router.push('/editAttribute')
             }
             // 获取商品列表
             ,getList(data){
@@ -102,6 +111,18 @@
             ,deleteProduct(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){
+                        this.getList({parent_id:store.state.attribute_child_id});
+                    } else {
+                        this.$message.error(reData.message);
+                    }
+                })
+            }
+            //批量删除
+            ,deleteAllAttribute(data){
+                this.$post('/property/deleteProperty',data).then((reData)=>{
+                    console.log(data)
+                    if(reData.code === '0'){
+                        this.$message.success(reData.message);
                         this.getList({parent_id:store.state.attribute_child_id});
                     } else {
                         this.$message.error(reData.message);

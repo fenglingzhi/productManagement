@@ -7,7 +7,7 @@
                         <div class="inputName">属性名称：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input placeholder="请输入属性名称" v-model="addAttributeInfo.attributeName" />
+                        <a-input placeholder="请输入属性名称" v-model="addAttributeInfo.attribute_name" />
                     </a-col>
                 </div>
             </a-col>
@@ -19,7 +19,7 @@
                         <div class="inputName">属性值 ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input placeholder="请输入属性值" v-model="addAttributeInfo.attributeVal"/>
+                        <a-input placeholder="请输入属性值" v-model="addAttributeInfo.attribute_val"/>
                     </a-col>
                 </div>
             </a-col>
@@ -31,7 +31,7 @@
                         <div class="inputName">属性排序 ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input placeholder="请输入属性排序" v-model="addAttributeInfo.attributeSeq"/>
+                        <a-input placeholder="请输入属性排序" v-model="addAttributeInfo.attribute_seq"/>
                     </a-col>
                 </div>
             </a-col>
@@ -77,10 +77,10 @@
                 router,
                 store,
                 addAttributeInfo:{
-                    parentId:store.state.attribute_parent_id,
-                    attributeName:'',
-                    attributeSeq:'',
-                    attributeVal:'',
+                    parent_id:store.state.attribute_parent_id,
+                    attribute_name:'',
+                    attribute_seq:'',
+                    attribute_val:'',
                     status:''
                 }
             }

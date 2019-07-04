@@ -29,7 +29,8 @@ export default new Vuex.Store({
       // mjf
       // YanM
       attribute_child_id:'',
-      attribute_parent_id:''
+      attribute_parent_id:'',
+      attribute_id:''
 
 
 

@@ -5,6 +5,9 @@
                 <a-button type="primary" @click="addAttribute('0')">
                     新增
                 </a-button>
+                <a-button type="primary" @click="deleteAllAttribute({ids:deleteAllData,status:'200'})" style="margin-left: 20px;">
+                    批量删除
+                </a-button>
                 <span style="margin-left: 8px"></span>
             </div>
             <a-table :columns="columns"
@@ -16,7 +19,7 @@
                      :rowSelection="rowSelection"
                      :scroll="{ x: 1500 }">
               <span slot="action" slot-scope="text, record">
-                  <a @click="editAttribute()">修改</a>
+                  <a @click="editAttribute(record.attribute_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
 
                   <a @click="deleteProduct({status:0,ids:record.attribute_id})">删除</a>
@@ -42,29 +45,32 @@
     ];
     const attributeList = [];
     //表格复选框
-    const rowSelection = {
-        onChange: (selectedRowKeys, selectedRows) => {
-            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-        },
-        onSelect: (record, selected, selectedRows) => {
-            console.log(record, selected, selectedRows);
-        },
-        onSelectAll: (selected, selectedRows, changeRows) => {
-            console.log(selected, selectedRows, changeRows);
-        },
-    };
+    // const
     export default {
         data() {
             return {
                 attributeList,
                 router,
                 columns,
-                rowSelection,
+                store,
                 loading: false,
                 pagination:{
                     defaultPageSize:10,
                     total:1,
                 },
+                deleteAllData:'',
+                rowSelection:{
+                    onChange: (selectedRowKeys, selectedRows) => {
+                        // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                        let deleteAllData = ''
+                        selectedRows.forEach(function (val,index) {
+                            console.log(val.attribute_id)
+                            deleteAllData += val.attribute_id + (index === selectedRows.length -1 ? '' : ',')
+                        })
+                        this.deleteAllData = deleteAllData
+                        console.log('111111111111',this.deleteAllData)
+                    },
+                }
 
             }
         },
@@ -75,7 +81,8 @@
                 router.push('/addAttribute')
             }
             //修改属性
-            ,editAttribute(){
+            ,editAttribute(data){
+                store.commit('changeStore',{key:'attribute_id',val:data});
                 router.push('/editAttribute')
             }
             // 获取属性列表
@@ -96,6 +103,17 @@
             ,deleteProduct(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){
+                        this.getList({parent_id:0});
+                    } else {
+                        this.$message.error(reData.message);
+                    }
+                })
+            }
+            //批量删除
+            ,deleteAllAttribute(data){
+                this.$post('/property/deleteProperty',data).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.$message.success(reData.message);
                         this.getList({parent_id:0});
                     } else {
                         this.$message.error(reData.message);
