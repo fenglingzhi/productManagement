@@ -7,7 +7,7 @@
                         <div class="inputName">属性名称：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input placeholder="请输入属性名称" v-model="addAttributeInfo.attribute_name" />
+                        <a-input placeholder="请输入属性名称" v-model="editAttributeInfo.attribute_name" />
                     </a-col>
                 </div>
             </a-col>
@@ -19,7 +19,7 @@
                         <div class="inputName">属性值 ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input placeholder="请输入属性值" v-model="addAttributeInfo.attribute_val"/>
+                        <a-input placeholder="请输入属性值" v-model="editAttributeInfo.attribute_val"/>
                     </a-col>
                 </div>
             </a-col>
@@ -31,7 +31,7 @@
                         <div class="inputName">属性排序 ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input placeholder="请输入属性排序" v-model="addAttributeInfo.attribute_seq"/>
+                        <a-input placeholder="请输入属性排序" v-model="editAttributeInfo.attribute_seq"/>
                     </a-col>
                 </div>
             </a-col>
@@ -43,7 +43,7 @@
                         <div class="inputName">属性状态：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-select :defaultValue="{key: addAttributeInfo.status}" style="width: 100%"  @change="handleChange">
+                        <a-select style="width: 100%"  @change="handleChange" :value="editAttributeInfo.status">
                             <a-select-option value="100">启用</a-select-option>
                             <a-select-option value="400">禁用</a-select-option>
                         </a-select>
@@ -59,7 +59,7 @@
                     <a-col class="gutter-row" :span="18">
                         <a-row>
                             <a-col class="gutter-row" :span="6">
-                                <a-button type="primary" @click="addAttributeCommit(addAttributeInfo)">提交</a-button>
+                                <a-button type="primary" @click="commitAttributeCommit(editAttributeInfo)">提交</a-button>
                             </a-col>
                         </a-row>
                     </a-col>
@@ -79,40 +79,44 @@
                 editAttributeInfo:{
                     add_date:'',
                     upd_date:'',
-                    attribute_id:'',
+                    ids:'',
                     parent_id:'',
                     attribute_seq:'',
                     attribute_name:'',
                     attribute_val:'',
                     status:'',
-                }
+                },
             }
         },
         methods: {
             //状态选择
             handleChange(value) {
-                this.addAttributeInfo.status = value
+                this.editAttributeInfo.status = value
             },
             //获取属性信息
-            getAttributeInfo(){
-                this.$post('/property/updateProperty',data).then((reData)=>{
+            getAttributeInfo(data){
+                this.$post('/property/getPropertyById',data).then((reData)=>{
                     if(reData.code === '0'){
-                        addAttributeInfo.attribute_id = reData.code.data.attribute_id;
-                        addAttributeInfo.parent_id = reData.code.data.parent_id;
-                        addAttributeInfo.attribute_name = reData.code.data.attribute_name;
-                        addAttributeInfo.attribute_val = reData.code.data.attribute_val;
-                        addAttributeInfo.attribute_seq = reData.code.data.attribute_seq;
-                        addAttributeInfo.status = reData.code.data.status;
+                        console.log(reData.data)
+                        this.editAttributeInfo.ids = reData.data[0].attribute_id;
+                        this.editAttributeInfo.parent_id = reData.data[0].parent_id;
+                        this.editAttributeInfo.attribute_name = reData.data[0].attribute_name;
+                        this.editAttributeInfo.attribute_val = reData.data[0].attribute_val;
+                        this.editAttributeInfo.attribute_seq = reData.data[0].attribute_seq;
+                        this.editAttributeInfo.status = reData.data[0].status;
+                        store.commit('changeStore',{key:'attribute_parent_id',val:reData.data[0].parent_id});
+                        console.log(this.$store.state.attribute_parent_id)
                     } else {
                         this.$message.error(reData.message);
                     }
                 })
             },
-            //提交属性新增
-            addAttributeCommit(data){
-                this.$post('/property/addProperty',data).then((reData)=>{
+            //提交属性修改
+            commitAttributeCommit(data){
+                this.$post('/property/updateProperty',data).then((reData)=>{
                     if(reData.code === '0'){
-                        if(this.store.state.attribute_parent_id === '0'){
+                        this.$message.success(reData.message);
+                        if(this.$store.state.attribute_parent_id === '0'){
                             router.push('/productAttribute')
                         } else {
                             router.push('/attributeList')
@@ -124,8 +128,8 @@
             }
         },
         mounted() {
-            store.commit('changeStore',{key:'title',val:'新增属性'});
-            this.getAttributeInfo(this.store.state.attribute_parent_id)
+            store.commit('changeStore',{key:'title',val:'修改属性'});
+            this.getAttributeInfo({property_id:store.state.attribute_id})
         },
 
     }
