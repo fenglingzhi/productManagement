@@ -28,18 +28,7 @@
                 </div>
             </a-col>
         </a-row>
-        <!--<a-row>-->
-            <!--<a-col class="gutter-row" :span="6">-->
-                <!--<div class="inputPart">-->
-                    <!--<a-col class="gutter-row" :span="6">-->
-                        <!--<div class="inputName">*默认分类：</div>-->
-                    <!--</a-col>-->
-                    <!--<a-col class="gutter-row" :span="18">-->
-                        <!--<a-input v-model="postData.costPrice" placeholder=""/>-->
-                    <!--</a-col>-->
-                <!--</div>-->
-            <!--</a-col>-->
-        <!--</a-row>-->
+
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
@@ -67,18 +56,6 @@
         </a-row>
 
 
-        <!--<a-row>-->
-            <!--<a-col class="gutter-row" :span="6">-->
-                <!--<div class="inputPart">-->
-                    <!--<a-col class="gutter-row" :span="6">-->
-                        <!--<div class="inputName">*商品标签：</div>-->
-                    <!--</a-col>-->
-                    <!--<a-col class="gutter-row" :span="18">-->
-                        <!--<a-input v-model="postData.rateId" placeholder=""/>-->
-                    <!--</a-col>-->
-                <!--</div>-->
-            <!--</a-col>-->
-        <!--</a-row>-->
 
 
     </div>
@@ -89,41 +66,7 @@
     import store from '../../store'
     import $ from 'jquery'
     import TinymceEditor from '../../components/tinymce-editor'
-    const treeData = [{
-        title: '0-0',
-        key: '0-0',
-        children: [{
-            title: '0-0-0',
-            key: '0-0-0',
-            children: [
-                { title: '0-0-0-0', key: '0-0-0-0' },
-                { title: '0-0-0-1', key: '0-0-0-1' },
-                { title: '0-0-0-2', key: '0-0-0-2' },
-            ],
-        }, {
-            title: '0-0-1',
-            key: '0-0-1',
-            children: [
-                { title: '0-0-1-0', key: '0-0-1-0' },
-                { title: '0-0-1-1', key: '0-0-1-1' },
-                { title: '0-0-1-2', key: '0-0-1-2' },
-            ],
-        }, {
-            title: '0-0-2',
-            key: '0-0-2',
-        }],
-    }, {
-        title: '0-1',
-        key: '0-1',
-        children: [
-            { title: '0-1-0-0', key: '0-1-0-0' },
-            { title: '0-1-0-1', key: '0-1-0-1' },
-            { title: '0-1-0-2', key: '0-1-0-2' },
-        ],
-    }, {
-        title: '0-2',
-        key: '0-2',
-    }]
+    const treeData = []
     export default {
         components:{
             TinymceEditor
@@ -138,7 +81,6 @@
                 this.autoExpandParent = false
             },
             onCheck (checkedKeys) {
-                console.log('onCheck', checkedKeys)
                 this.checkedKeys = checkedKeys
             },
             onSelect (selectedKeys, info) {
@@ -150,20 +92,23 @@
             handleChangeSelect(value) {
                 this.postData.currencyId=value
             },
-            onChange(date, dateString) {
-                console.log(date, dateString);
-            },
             saveProductInfor(){
                 store.commit('changeStore',{key:'loading',val:true});
-                let isAll = true
-                for(let key  in this.postData){
-                    if(this.postData[key]==""){
-                        isAll =false
+
+                if(this.checkedKeys.checked.length>0){
+                    for(let i=0;i<this.checkedKeys.checked.length;i++){
+                        if(i==0){
+                            this.postData.categoryIds=this.checkedKeys.checked[i]
+                        }else {
+                            this.postData.categoryIds=this.postData.categoryIds+','+this.checkedKeys.checked[i]
+
+                        }
                     }
                 }
 
-                if (isAll){
-                    this.$post('/product/updateProductPrice',this.postData).then((reData)=>{
+
+                this.postData.productId=this.$store.state.goods_id;
+                    this.$fetch('/productCategory/updateProductCategory',this.postData).then((reData)=>{
                         console.log(reData)
                         store.commit('changeStore',{key:'loading',val:false});
                         this.$notification.open({
@@ -173,52 +118,62 @@
                                 console.log('ok');
                             },
                         })
-                        if(reData.code == 0){
-                            store.commit('changeStore',{key:'goods_id',val:reData.data.goods_id });
-                            setTimeout(function () {
-                                store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
-                                store.commit('changeStore',{key:'addProductCurrent',val:'2'});
-                            },2000)
 
-                        }
                     })
-                }else {
-                    store.commit('changeStore',{key:'loading',val:false});
 
-                    this.$notification.open({
-                        message: '提醒',
-                        description: '请把信息填写完整再提交！',
-                        onClick: () => {
-                            console.log('ok');
-                        },
-                    })
+            }
+            ,checked(jsontree){
+                var newData = this.checkedKeys
+                if ((typeof jsontree == 'object') && (jsontree.constructor== Object.prototype.constructor)) {
+                    var arrey = [];
+                    arrey.push(jsontree);
                 }
+                else arrey = jsontree;
+                for (var i = 0; i < arrey.length; i++) {
+                    var jn = arrey[i];
+                    if (jn.status == "1") {
+                        newData.push(jn.key)
+                        this.checkedKeys = newData
+                        // return;
+                    }
+                    if (jn.children && jn.children.length > 0) {
+                        this.checked(jn.children);
+                    }
+                }
+            }
+            ,getCollection(){
+                this.$fetch('/category/getAllCategoryTree',{productId:this.$store.state.goods_id,langId:this.$store.state.langId}).then((reData)=>{
+                    // console.log(reData)
+                    this.treeData = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/categoryId/g,"key"))
+                    this.checked(this.treeData)
+
+
+                })
             }
         } ,
         mounted() {
             // alert(this.$store.state.goods_id)
             // this.postData.productId = this.$store.state.goods_id
+            this.getCollection()
+
         },
         data() {
             return {
-                expandedKeys: ['0-0-0', '0-0-1'],
+                expandedKeys: [],
                 autoExpandParent: true,
                 checkedKeys: [],
                 selectedKeys: [],
                 treeData,
                 postData:{
                     productId:'',
-                    currencyId:'1',
-                    costPrice:'',
-                    retailPrice:'',
-                    salePrice:'',
-                    // rateId:'',
+                    categoryIds:''
                 }
             }
         } ,
         watch: {
             "$store.state.goods_id"() {
                 this.postData.productId =  this.$store.state.goods_id;
+                this.getCollection()
             },
             checkedKeys(val) {
                 console.log('onCheck', val)

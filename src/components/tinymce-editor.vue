@@ -1,5 +1,6 @@
 <template>
   <div class="tinymce-editor">
+    <div @click="redata()">刷新</div>
     <editor v-model="myValue"
             :init="init"
             :disabled="disabled"
@@ -72,7 +73,7 @@
             }
         },
         mounted() {
-            tinymce.init({})
+           tinymce.init({})
         },
         methods: {
             //添加相关的事件，可用的事件参照文档=> https://github.com/tinymce/tinymce-vue => All available events
@@ -83,6 +84,9 @@
             //可以添加一些自己的自定义事件，如清空内容
             clear() {
                 this.myValue = ''
+            }
+            ,redata(){
+              tinymce.init({})
             }
         },
         watch: {

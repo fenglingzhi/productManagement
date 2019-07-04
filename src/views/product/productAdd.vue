@@ -10,6 +10,10 @@
             <productAddInformatica v-show="$store.state.addProductContent == 'productAddInformatica'"></productAddInformatica>
             <productAddPrice v-show="$store.state.addProductContent == 'productAddPrice'"></productAddPrice>
             <productAddCollection v-show="$store.state.addProductContent == 'productAddCollection'"></productAddCollection>
+            <productAddPic v-show="$store.state.addProductContent == 'productAddPic'"></productAddPic>
+            <productCombination v-show="$store.state.addProductContent == 'productCombination'"></productCombination>
+            <productEngineOptimization v-show="$store.state.addProductContent == 'productEngineOptimization'"></productEngineOptimization>
+
 
         </a-col>
 
@@ -27,11 +31,17 @@
     import productAddCollection from '../goods/productAddCollection'
 
     import productAddPrice from './productAddPrice'
+    import productAddPic from './productAddPic'
+    import productCombination from './productCombination'
+    import productEngineOptimization from './productEngineOptimization'
+
+
+
 
 
     export default {
         components:{
-            TinymceEditor,productAddInformatica,productAddPrice,productAddCollection
+            TinymceEditor,productAddInformatica,productAddPrice,productAddCollection,productAddPic,productCombination,productEngineOptimization
         },
         methods: {
             handleChangeSelect(value) {
@@ -63,11 +73,12 @@
                 liList:[
                     {title:'信息',key:'productAddInformatica'},
                     {title:'价格',key:'productAddPrice'},
+                    {title:'搜索引擎优化',key:'productEngineOptimization'},
                     {title:'分类',key:'productAddCollection'},
                     {title:'配送',key:'price'},
-                    {title:'组合',key:'price'},
+                    {title:'组合',key:'productCombination'},
                     {title:'数量',key:'price'},
-                    {title:'图片',key:'price'},
+                    {title:'图片',key:'productAddPic'},
                     {title:'特性',key:'price'},
                 ]
                 ,disabled: false

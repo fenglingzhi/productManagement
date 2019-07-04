@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
       // mjf
+      baseURL:'http://192.168.5.18:8081',
       title:'张三（运营部）',
       shopTableChange:{
           showName:'test',
@@ -20,10 +21,11 @@ export default new Vuex.Store({
     }],
       activeKey:'home',
       menuKey:[],
-      goods_id:'',
+      goods_id:'1',
       addProductContent:'productAddInformatica',
       addProductCurrent:'0',
       loading:false,
+      langId:1,
       // mjf
       // YanM
       attribute_child_id:'',
