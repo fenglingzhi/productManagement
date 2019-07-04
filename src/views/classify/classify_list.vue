@@ -3,7 +3,7 @@
     <a-row>
       <a-col :span="5" style="border-right: 1px solid rgb(232, 232, 232);padding:0 8px;">
         <div>
-          <a-input-search style="margin-bottom:8px;" placeholder="Search" @change="onChange"/>
+          <!-- <a-input-search style="margin-bottom:8px;" placeholder="Search" @change="onChange"/> -->
           <a-tree
             :defaultExpandedKeys="expandedKeys"
             @expand="onExpand"
@@ -105,8 +105,8 @@
       </a-col>
 
       <a-col :span="19" style="padding-left:10px;">
-        <classify_list_table v-on:router_add_classify="router_add_classify" :select_classify ="select_classify" v-if="operation_name =='table'"></classify_list_table>
-        <classify_list_edit :classify_list ="classify_list" :operation_name ="operation_name" :select_classify_all ="select_classify_all" v-if="operation_name =='edit' || operation_name =='add'"></classify_list_edit>
+        <classify_list_table v-on:update_classify ="update_classify" v-on:router_add_classify="router_add_classify" :select_classify ="select_classify" v-if="operation_name =='table'"></classify_list_table>
+        <classify_list_edit v-on:update_classify ="update_classify" :classify_list ="classify_list" :operation_name ="operation_name" :select_classify_all ="select_classify_all" v-if="operation_name =='edit' || operation_name =='add'"></classify_list_edit>
       </a-col>
     </a-row>
   </div>
@@ -207,7 +207,7 @@ export default {
     onSelect(item) {
      
       this.select_classify = item.children.slice(0, item.children.length);
-     this.select_classify_all = item;
+      this.select_classify_all = item;
       this.showOperation = item.key;
       this.operation_name = "table";
     },
@@ -222,7 +222,16 @@ export default {
     // 分类新增入口
     router_add_classify(){
         this.operation_name = "add";
-    }
+    },
+    // 数据更新
+    update_classify(value){
+        console.log("数据更新");
+        console.log(value);
+        if(value != 'delete'){
+            this.operation_name = "";
+        }
+        this.classify_data_init();
+    },
   }
 };
 </script>

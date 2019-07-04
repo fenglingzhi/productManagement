@@ -269,7 +269,7 @@ export default {
             data.active = this.active;
             this.$post("/category/update", data).then(reData => {
                 if (reData.code == 0) {
-                   
+                   this.$emit("update_classify","edit");
                 } else {
                 this.$message.error(reData.message);
                 }
@@ -288,7 +288,7 @@ export default {
             data.metaKeywords = this.tags.join(",");
             data.metaDescription = this.metaDescription;
             data.isBanner = this.isBanner;
-            data.position = '99';
+            // data.position = '1';
             if(this.imageUrl != undefined && this.imageUrl != ''){
                 data.categoryImgStr = this.imageUrl;
             }   
@@ -296,7 +296,7 @@ export default {
             console.log(data);
             this.$post("/category/add", data).then(reData => {
                 if (reData.code == 0) {
-                   
+                   this.$emit("update_classify","add");
                 } else {
                 this.$message.error(reData.message);
                 }
