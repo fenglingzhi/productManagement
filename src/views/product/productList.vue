@@ -108,7 +108,7 @@
                 <a-button type="primary" @click="search_product(search_data)">搜索</a-button>
               </a-col>
               <a-col class="gutter-row" :span="6">
-                <a-button type="primary" @click="choseWhich('/productAdd','新增产品')">新增</a-button>
+                <a-button type="primary" @click="add_product()">新增</a-button>
               </a-col>
               <a-col class="gutter-row" :span="6">
                 <a-button type="primary">导出</a-button>
@@ -223,9 +223,10 @@
                 console.log(`selected ${value}`);
                 this.search_data.active = value
             }
-            ,choseWhich(url,title){
-                router.push(url)
-                store.commit('changeStore',{key:'title',val:title});
+            //新增商品
+            ,add_product(){
+                router.push('/productAdd')
+                // store.commit('changeStore',{key:'title',val:title});
             }
             // 获取商品列表
             ,getList(data){

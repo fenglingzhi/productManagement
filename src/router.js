@@ -8,6 +8,7 @@ import attributeList from './views/attribute/attributeList'
 import productAttribute from './views/attribute/productAttribute'
 import addAttribute from './views/attribute/addAttribute'
 import editAttribute from './views/attribute/editAttribute'
+import productAdd from './views/product/productAdd'
 
 
 Vue.use(Router)
@@ -30,6 +31,12 @@ export default new Router({
                         path: '/productList',
                         name: 'productList',
                         component: productList
+                    },
+                    {
+                        //商品列表
+                        path: '/productAdd',
+                        name: 'productAdd',
+                        component: productAdd
                     },
                     {
                         //属性父级列表

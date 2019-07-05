@@ -10,7 +10,7 @@
         <a-menu-item key="0" @click="choseWhich('首页','index','0')"><a-icon type="home" /><span>首页</span></a-menu-item>
         <a-sub-menu key="1">
           <span slot="title"><a-icon type="snippets" /><span>报表管理</span></span>
-          <a-menu-item key="1-1" @click="choseWhich('商品管理','productList','1-1')" ><a-icon type="reconciliation" />商品管理</a-menu-item>
+          <a-menu-item key="1-1" @click="choseWhich('商品管理','productWrap','1-1')" ><a-icon type="reconciliation" />商品管理</a-menu-item>
           <a-menu-item key="1-2" @click="choseWhich('商品添加','productAdd','1-2')" ><a-icon type="reconciliation" />商品添加</a-menu-item>
           <a-menu-item key="1-3" @click="choseWhich('分类','classify_list','1-3')" ><a-icon type="reconciliation" />分类</a-menu-item>
           <a-menu-item key="1-4" @click="choseWhich('属性','attributeWrap','1-4')" ><a-icon type="reconciliation" />属性</a-menu-item>
