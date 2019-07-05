@@ -13,7 +13,7 @@
             <productAddPic v-show="$store.state.addProductContent == 'productAddPic'"></productAddPic>
             <productCombination v-show="$store.state.addProductContent == 'productCombination'"></productCombination>
             <productEngineOptimization v-show="$store.state.addProductContent == 'productEngineOptimization'"></productEngineOptimization>
-
+            <productNum v-show="$store.state.addProductContent == 'productNum'"></productNum>
 
         </a-col>
 
@@ -34,6 +34,7 @@
     import productAddPic from './productAddPic'
     import productCombination from './productCombination'
     import productEngineOptimization from './productEngineOptimization'
+    import productNum from './productNum'
 
 
 
@@ -41,7 +42,14 @@
 
     export default {
         components:{
-            TinymceEditor,productAddInformatica,productAddPrice,productAddCollection,productAddPic,productCombination,productEngineOptimization
+            TinymceEditor,
+            productAddInformatica,
+            productAddPrice,
+            productAddCollection,
+            productAddPic,
+            productCombination,
+            productEngineOptimization,
+            productNum
         },
         methods: {
             handleChangeSelect(value) {
@@ -77,7 +85,7 @@
                     {title:'分类',key:'productAddCollection'},
                     {title:'配送',key:'price'},
                     {title:'组合',key:'productCombination'},
-                    {title:'数量',key:'price'},
+                    {title:'数量',key:'productNum'},
                     {title:'图片',key:'productAddPic'},
                     {title:'特性',key:'price'},
                 ]

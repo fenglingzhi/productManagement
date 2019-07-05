@@ -167,7 +167,7 @@
         // { title: '商品简介', dataIndex: 'description_short', key: 'description_short'},
         { title: 'upc码', dataIndex: 'upc', key: 'upc'},
         { title: '商品SKU码', dataIndex: 'product_code', key: 'product_code'},
-        // { title: '商品详情', dataIndex: 'description', key: 'description'},
+        { title: '商品库存', dataIndex: 'good_qty', key: 'good_qty'},
         { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
         { title: '是否在售', dataIndex: 'active', key: 'active', align: 'center' ,scopedSlots: { customRender: 'active' },},
         { title: '折扣价格', dataIndex: 'sale_price', key: 'sale_price'},
