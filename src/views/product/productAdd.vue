@@ -11,9 +11,10 @@
             <productAddPrice v-show="$store.state.addProductContent == 'productAddPrice'"></productAddPrice>
             <productAddCollection v-show="$store.state.addProductContent == 'productAddCollection'"></productAddCollection>
             <productAddPic v-show="$store.state.addProductContent == 'productAddPic'"></productAddPic>
-            <productCombination v-show="$store.state.addProductContent == 'productCombination'"></productCombination>
+            <productCombination v-show="$store.state.addProductContent == 'productCombination' && $store.state.isEdit"></productCombination>
             <productEngineOptimization v-show="$store.state.addProductContent == 'productEngineOptimization'"></productEngineOptimization>
-
+            <productNum v-show="$store.state.addProductContent == 'productNum'"></productNum>
+            <productCombinationNew v-show="$store.state.addProductContent == 'productCombination' && !$store.state.isEdit"></productCombinationNew>
 
         </a-col>
 
@@ -33,7 +34,10 @@
     import productAddPrice from './productAddPrice'
     import productAddPic from './productAddPic'
     import productCombination from './productCombination'
+    import productCombinationNew from './productCombination1'
+
     import productEngineOptimization from './productEngineOptimization'
+    import productNum from './productNum'
 
 
 
@@ -41,7 +45,15 @@
 
     export default {
         components:{
-            TinymceEditor,productAddInformatica,productAddPrice,productAddCollection,productAddPic,productCombination,productEngineOptimization
+            TinymceEditor,
+            productAddInformatica,
+            productAddPrice,
+            productAddCollection,
+            productAddPic,
+            productCombination,
+            productEngineOptimization,
+            productNum,
+            productCombinationNew
         },
         methods: {
             handleChangeSelect(value) {
@@ -77,7 +89,7 @@
                     {title:'分类',key:'productAddCollection'},
                     {title:'配送',key:'price'},
                     {title:'组合',key:'productCombination'},
-                    {title:'数量',key:'price'},
+                    {title:'数量',key:'productNum'},
                     {title:'图片',key:'productAddPic'},
                     {title:'特性',key:'price'},
                 ]

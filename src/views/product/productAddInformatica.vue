@@ -83,7 +83,7 @@
                                 <div class="inputName">*商品标签 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.goodsLabel" placeholder=""/>
+                                <a-input v-model="postData.product_label" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
@@ -157,7 +157,8 @@
                 console.log(date, dateString);
             },
             saveProductInfor(){
-                store.commit('changeStore',{key:'loading',val:true});
+                // store.commit('changeStore',{key:'loading',val:true});
+                this.postData.lang_id=this.$store.state.langId
                 let isAll = true
                 for(let key  in this.postData){
                     if(this.postData[key]==""){
@@ -213,10 +214,11 @@
                     product_id:"",
                     upc:"",
                     active:'1',
-                    goodsLabel:"",
+                    product_label:"",
                     description_short:"",
                     description:"",
                     product_code:'',
+                    lang_id:''
                 }
             }
         }

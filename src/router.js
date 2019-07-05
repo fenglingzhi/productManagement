@@ -4,12 +4,11 @@ import Home from './views/Home.vue'
 import crm from './views/crm.vue'
 import login from './views/login.vue'
 import productList from './views/product/productList.vue'
-import productAdd from './views/product/productAdd.vue'
-
 import attributeList from './views/attribute/attributeList'
 import productAttribute from './views/attribute/productAttribute'
 import addAttribute from './views/attribute/addAttribute'
 import editAttribute from './views/attribute/editAttribute'
+import productAdd from './views/product/productAdd'
 
 
 Vue.use(Router)
@@ -35,6 +34,7 @@ export default new Router({
                     },
                     {
                         //商品添加
+
                         path: '/productAdd',
                         name: 'productAdd',
                         component: productAdd

@@ -42,11 +42,12 @@
     import classify_list from './classify/classify_list'
     import attributeWrap from './attribute/attributeWrap'
     import index from './index'
+    import productWrap from './product/productWrap'
 
     export default {
 
         components:{
-            productList,productAdd,classify_list,attributeWrap, index
+            productList,productAdd,classify_list,attributeWrap, index,productWrap
         },
         data () {
             return {

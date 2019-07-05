@@ -108,7 +108,7 @@
                 <a-button type="primary" @click="search_product(search_data)">搜索</a-button>
               </a-col>
               <a-col class="gutter-row" :span="6">
-                <a-button type="primary" @click="choseWhich('/productAdd','新增产品')">新增</a-button>
+                <a-button type="primary" @click="add_product()">新增</a-button>
               </a-col>
               <a-col class="gutter-row" :span="6">
                 <a-button type="primary">导出</a-button>
@@ -139,7 +139,8 @@
                :rowSelection="rowSelection"
                :scroll="{ x: 1500 }">
           <span slot="action" slot-scope="text, record">
-              <a href="javascript:;">修改{{text.id}}</a>
+              <a @click="edit(record.product_id)">修改</a>
+
               <a-divider type="vertical"></a-divider>
               <a @click="deleteProduct({product_id:record.product_id})">删除{{record.product_id}}</a>
           </span>
@@ -167,7 +168,7 @@
         // { title: '商品简介', dataIndex: 'description_short', key: 'description_short'},
         { title: 'upc码', dataIndex: 'upc', key: 'upc'},
         { title: '商品SKU码', dataIndex: 'product_code', key: 'product_code'},
-        // { title: '商品详情', dataIndex: 'description', key: 'description'},
+        { title: '商品库存', dataIndex: 'good_qty', key: 'good_qty'},
         { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
         { title: '是否在售', dataIndex: 'active', key: 'active', align: 'center' ,scopedSlots: { customRender: 'active' },},
         { title: '折扣价格', dataIndex: 'sale_price', key: 'sale_price'},
@@ -223,9 +224,11 @@
                 console.log(`selected ${value}`);
                 this.search_data.active = value
             }
-            ,choseWhich(url,title){
-                router.push(url)
-                store.commit('changeStore',{key:'title',val:title});
+            //新增商品
+            ,add_product(){
+                router.push('/productAdd')
+                store.commit('changeStore',{key:'isEdit',val:false});
+
             }
             // 获取商品列表
             ,getList(data){
@@ -251,6 +254,13 @@
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
                 })
+            }
+            //编辑
+            ,edit(id) {
+                router.push('/productAdd')
+                store.commit('changeStore',{key:'goods_id',val:id});
+                store.commit('changeStore',{key:'isEdit',val:true});
+
             }
             //时间选择
             ,onChange(date, dateString) {
