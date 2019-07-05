@@ -4,6 +4,8 @@ import Home from './views/Home.vue'
 import crm from './views/crm.vue'
 import login from './views/login.vue'
 import productList from './views/product/productList.vue'
+import productAdd from './views/product/productAdd.vue'
+
 import attributeList from './views/attribute/attributeList'
 import productAttribute from './views/attribute/productAttribute'
 import addAttribute from './views/attribute/addAttribute'
@@ -30,6 +32,12 @@ export default new Router({
                         path: '/productList',
                         name: 'productList',
                         component: productList
+                    },
+                    {
+                        //商品添加
+                        path: '/productAdd',
+                        name: 'productAdd',
+                        component: productAdd
                     },
                     {
                         //属性父级列表
