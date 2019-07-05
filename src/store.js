@@ -26,6 +26,7 @@ export default new Vuex.Store({
       addProductCurrent:'0',
       loading:false,
       langId:1,
+      isEdit:true,
       // mjf
       // YanM
       attribute_child_id:'',
