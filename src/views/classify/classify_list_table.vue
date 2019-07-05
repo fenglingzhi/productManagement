@@ -14,14 +14,18 @@
           :loading="loading"
           :pagination="pagination"
           :childrenColumnName="childrenColumnName"
+          
         >
-             <span slot="active" slot-scope="active">
-                <span v-if="active == 0">隐藏</span>
-                <span v-if="active == 1">显示</span>
+             <span slot="position" slot-scope="record">
+                <input type="text" v-model="record.position" @blur="change_position(record)" style="text-align:center;border:1px solid #ccc;">
             </span>
-            <span slot="isBanner" slot-scope="isBanner">
-                <span v-if="isBanner == 0">否</span>
-                <span v-if="isBanner == 1">是</span>
+             <span slot="active" slot-scope="record">
+                <span v-if="record.active == 0" style="cursor: pointer;" @click="show_active(record)"><a-icon type="close" /></span>
+                <span v-if="record.active == 1" style="cursor: pointer;" @click="show_active(record)"><a-icon type="check" /></span>
+            </span>
+            <span slot="isBanner" slot-scope="record">
+                <span v-if="record.isBanner == 0" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="close" /></span>
+                <span v-if="record.isBanner == 1" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="check" /></span>
             </span>
             <span slot="operation" slot-scope="record">
                 <a @click="del_classify(record)">删除</a>
@@ -35,29 +39,33 @@ const columns = [
   {
     title: "编号",
     dataIndex: "key",
+    align:"center",
     width: "10%"
   },
   {
     title: "名称",
     dataIndex: "title",
-    width: "20%"
+    align:"center",
+    width: "15%"
   },
   {
     title: "描述",
+    align:"center",
     dataIndex: "description"
   },
   {
     title: "位置",
-    dataIndex: "position"
+    align:"center",
+    scopedSlots: { customRender: 'position' },
   },
   {
     title: "显示",
-    dataIndex: "active",
+    align:"center",
     scopedSlots: { customRender: 'active' },
   },
   {
     title: "是否为banner活动",
-    dataIndex: "isBanner",
+    align:"center",
     scopedSlots: { customRender: 'isBanner' },
   },
   {
@@ -84,21 +92,102 @@ export default {
     
     },
     methods: {
+        // 修改position参数
+        change_position(value){
+            console.log(value)
+            console.log(event)
+            this.loading = true;
+            let data ={};
+            data.categoryId = value.categoryId
+            data.position = value.position;
+            data.langId = 1;
+            this.$post("/category/update", data).then(reData => {
+                if (reData.code == 0) {
+                    this.$message.success("修改成功");
+                     this.loading = false;
+                    this.$emit("update_classify","delete");
+                } else {
+                    this.$message.error(reData.message);
+                    this.loading = false;
+                }
+            });
+        },
+        // 新增
         addNew_classify(){
             this.$emit("router_add_classify")
         },
+        // 删除
         del_classify(value){
-            console.log("删除1");
+            this.loading = true;
             let data ={};
             data.categoryId = value.categoryId
             this.$post("/category/remove", data).then(reData => {
                 if (reData.code == 0) {
-                   
+                    this.$emit("update_classify","delete");
+                    this.select_classify.splice(this.select_classify.indexOf(value),1)
+                    this.$message.success("删除成功");
+                    this.loading = false;
                 } else {
-                this.$message.error(reData.message);
+                    this.$message.error(reData.message);
+                    this.loading = false;
+                }
+            });
+        },
+        // 修改显示
+        show_active(value){
+            this.loading = true;
+            let data ={};
+            data.categoryId = value.key;
+            data.langId = 1;
+            if(value.active){
+                data.active = 0;
+            }else{
+                data.active = 1;
+            }
+            this.$post("/category/update", data).then(reData => {
+                if (reData.code == 0) {
+                    if(value.active){
+                        value.active = 0;
+                    }else{
+                        value.active = 1;
+                    }
+                    this.$message.success("修改成功");
+                     this.loading = false;
+                //    this.$emit("update_classify","edit");
+                } else {
+                    this.$message.error(reData.message);
+                    this.loading = false;
+                }
+            });
+        },
+        // 修改 是否为banner活动
+        show_isBanner(value){
+            this.loading = true;
+            let data ={};
+            data.categoryId = value.key;
+            data.langId = 1;
+            if(value.isBanner){
+                data.isBanner = 0;
+            }else{
+                data.isBanner = 1;
+            }
+            this.$post("/category/update", data).then(reData => {
+                if (reData.code == 0) {
+                    if(value.isBanner){
+                        value.isBanner = 0;
+                    }else{
+                        value.isBanner = 1;
+                    }
+                    this.$message.success("修改成功");
+                     this.loading = false;
+                //    this.$emit("update_classify","edit");
+                } else {
+                    this.$message.error(reData.message);
+                    this.loading = false;
                 }
             });
         }
+
     }
 }
 </script>

@@ -13,70 +13,69 @@
             </a-col>
         </div>
         <a-row>
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">*货币种类：</div>
+                        <div class="inputName">*语言：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
                         <a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">
-                            <a-select-option value="1">美元</a-select-option>
-                            <a-select-option value="2">欧元</a-select-option>
-                            <a-select-option value="3">港币</a-select-option>
+                            <a-select-option value="1">美</a-select-option>
                         </a-select>
                     </a-col>
                 </div>
             </a-col>
         </a-row>
         <a-row>
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">*成本价格：</div>
+                        <div class="inputName">*友好链接 ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input v-model="postData.costPrice" placeholder=""/>
+                        <a-input v-model="postData.linkRewrite" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
         </a-row>
         <a-row>
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">*零售价格：</div>
+                        <div class="inputName">*meta标题：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input v-model="postData.retailPrice" placeholder=""/>
+                        <a-input v-model="postData.metaTitle" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
         </a-row>
         <a-row>
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">*折扣价格：</div>
+                        <div class="inputName">*meta关键字：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input v-model="postData.salePrice" placeholder=""/>
+                        <a-input v-model="postData.metaKeyword" placeholder=""/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+            <a-col class="gutter-row" :span="8">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName">*meta详情：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-textarea v-model="postData.metaDescription" placeholder="Basic usage" :rows="4"/>
                     </a-col>
                 </div>
             </a-col>
 
         </a-row>
-        <!--<a-row>-->
-            <!--<a-col class="gutter-row" :span="6">-->
-                <!--<div class="inputPart">-->
-                    <!--<a-col class="gutter-row" :span="6">-->
-                        <!--<div class="inputName">*商品标签：</div>-->
-                    <!--</a-col>-->
-                    <!--<a-col class="gutter-row" :span="18">-->
-                        <!--<a-input v-model="postData.rateId" placeholder=""/>-->
-                    <!--</a-col>-->
-                <!--</div>-->
-            <!--</a-col>-->
-        <!--</a-row>-->
+
 {{postData}}
     </div>
 </template>
@@ -92,22 +91,24 @@
         },
         methods: {
             handleChangeSelect(value) {
-                this.postData.currencyId=value
+                this.postData.langId=value
             },
             onChange(date, dateString) {
                 console.log(date, dateString);
             },
+            getData(){
+
+            },
             saveProductInfor(){
-                store.commit('changeStore',{key:'loading',val:true});
                 let isAll = true
                 for(let key  in this.postData){
                     if(this.postData[key]==""){
                         isAll =false
                     }
                 }
-
+                this.postData.productId =  this.$store.state.goods_id;
                 if (isAll){
-                    this.$post('/product/updateProductPrice',this.postData).then((reData)=>{
+                    this.$post('/product/editProductSeo',this.postData).then((reData)=>{
                         console.log(reData)
                         store.commit('changeStore',{key:'loading',val:false});
                         this.$notification.open({
@@ -118,11 +119,8 @@
                             },
                         })
                         if(reData.code == 0){
-                            store.commit('changeStore',{key:'goods_id',val:reData.data.goods_id });
-                            setTimeout(function () {
-                                store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
-                                store.commit('changeStore',{key:'addProductCurrent',val:'2'});
-                            },2000)
+
+
 
                         }
                     })
