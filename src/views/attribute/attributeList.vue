@@ -68,7 +68,6 @@
                             deleteAllData += val.attribute_id + (index === selectedRows.length -1 ? '' : ',')
                         })
                         this.deleteAllData = deleteAllData;
-                        console.log('111111111111',this.deleteAllData)
                     },
                 }
             }
@@ -95,7 +94,6 @@
             }
             //表格分页
             ,handleTableChange(pagination){
-                console.log(pagination.defaultPageSize)
                 this.getList({page:pagination.current,page_size:pagination.defaultPageSize})
             }
 
@@ -120,7 +118,6 @@
             //批量删除
             ,deleteAllAttribute(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
-                    console.log(data)
                     if(reData.code === '0'){
                         this.$message.success(reData.message);
                         this.getList({parent_id:store.state.attribute_child_id});

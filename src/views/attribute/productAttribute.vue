@@ -64,11 +64,9 @@
                         // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                         let deleteAllData = ''
                         selectedRows.forEach(function (val,index) {
-                            console.log(val.attribute_id)
                             deleteAllData += val.attribute_id + (index === selectedRows.length -1 ? '' : ',')
                         })
                         this.deleteAllData = deleteAllData
-                        console.log('111111111111',this.deleteAllData)
                     },
                 }
 

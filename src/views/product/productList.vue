@@ -160,7 +160,7 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
+        {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '商品ID', dataIndex: 'product_id', key: 'product_id'},
         { title: '商品名称', dataIndex: 'name', key: 'name'},
         { title: '图片地址',  key: 'image_url',scopedSlots: { customRender: 'img_' },},
