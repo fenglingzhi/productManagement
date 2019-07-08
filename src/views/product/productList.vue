@@ -218,6 +218,8 @@
             }
             //新增商品
             ,add_product(){
+                store.commit('changeStore',{key:'addProductContent',val:'productAddInformatica'});
+                store.commit('changeStore',{key:'addProductCurrent',val:'0'});
                 router.push('/productAdd')
                 store.commit('changeStore',{key:'isEdit',val:false});
 
@@ -241,6 +243,7 @@
                 let vm = this;
                 // console.log('111111111111111',this.search_data)
                 this.$post('/product/getProductListPage',data).then((reData)=>{
+
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
@@ -248,9 +251,22 @@
             }
             //编辑
             ,edit(id) {
-                router.push('/productAdd')
-                store.commit('changeStore',{key:'goods_id',val:id});
-                store.commit('changeStore',{key:'isEdit',val:true});
+
+                store.commit('changeStore',{key:'addProductContent',val:'productAddInformatica'});
+                store.commit('changeStore',{key:'addProductCurrent',val:'0'});
+                let data={
+                    product_id:id,
+                    lang_id:this.$store.state.langId
+                }
+                this.$post('/product/getProductInfoById',data).then((reData)=>{
+
+                    store.commit('changeStore',{key:'oldData',val:reData.data});
+                    router.push('/productAdd')
+                    store.commit('changeStore',{key:'goods_id',val:id});
+                    store.commit('changeStore',{key:'isEdit',val:true});
+                })
+
+
 
             }
             //时间选择

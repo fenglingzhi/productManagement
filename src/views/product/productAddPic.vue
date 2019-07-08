@@ -107,14 +107,10 @@
               <a-divider type="vertical"></a-divider>
               <a href="javascript:;">删除{{text.id}}</a>
           </span>
-          <span slot="img_" slot-scope="text, record">
-              <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
+          <span slot="image" slot-scope="text, record">
+              <img :src="text.image_visit_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_visit_url !== ''">
           </span>
-          <a slot="active" slot-scope="text, record" style="text-align: center">
-              <!--{{record}}-->
-              <a-icon type="check" style="color: green" v-if="text == '1'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>
-              <a-icon type="close" style="color: red" v-if="text == '0'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>
-          </a>
+
       </a-table>
 
 {{fileList}}
@@ -128,14 +124,15 @@
 
 
     const columns = [
-        {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
-        { title: '图片',  key: 'image_cdn',scopedSlots: { customRender: 'img_' },},
-        { title: '商品ID', dataIndex: 'product_id', key: 'product_id'},
-        { title: '商品名称', dataIndex: 'name', key: 'name'},
-        { title: 'upc码', dataIndex: 'upc', key: 'upc'},
-        { title: '是否启用', dataIndex: 'active', key: 'active', align: 'center' ,scopedSlots: { customRender: 'active' },},
+        // {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
+        { title: '图片',  key: 'image',scopedSlots: { customRender: 'image' },},
+        { title: 'Caption', dataIndex: 'caption', key: 'caption'},
+        { title: '位置', dataIndex: 'position', key: 'position'},
+
     ];
-    const productListData = [];
+    const productListData = [
+
+    ];
 
     export default {
         methods: {
@@ -199,8 +196,8 @@
 
                             store.commit('changeStore',{key:'goods_id',val:reData.data.id });
                             setTimeout(function () {
-                                store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
-                                store.commit('changeStore',{key:'addProductCurrent',val:'1'});
+                                // store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
+                                // store.commit('changeStore',{key:'addProductCurrent',val:'1'});
                             },1000)
                         }
                         store.commit('changeStore',{key:'loading',val:false});

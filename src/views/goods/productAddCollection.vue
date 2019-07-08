@@ -112,7 +112,7 @@
                         console.log(reData)
                         store.commit('changeStore',{key:'loading',val:false});
                         store.commit('changeStore',{key:'addProductContent',val:'productCombination'});
-                        store.commit('changeStore',{key:'addProductCurrent',val:'5'});
+                        store.commit('changeStore',{key:'addProductCurrent',val:'4'});
 
                         this.$notification.open({
                             message: '提醒',

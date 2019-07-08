@@ -134,7 +134,7 @@
                         if(reData.code == 0){
 
                             store.commit('changeStore',{key:'addProductContent',val:'productAddCollection'});
-                            store.commit('changeStore',{key:'addProductCurrent',val:'4'});
+                            store.commit('changeStore',{key:'addProductCurrent',val:'3'});
 
                         }
                     })

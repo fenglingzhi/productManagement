@@ -282,8 +282,9 @@
         } ,
         mounted() {
             if(this.$store.state.isEdit){
-               var Data = this.$store.state.oldData.prdBase
-                console.log('wwwwwwwwwwwwwwwwwwwwwww',Data.name)
+
+
+                var Data = this.$store.state.oldData.prdBase
                 this.postData.product_type = Data.product_type
                 this.postData.name = Data.name
                 this.postData.product_id = Data.product_id
@@ -295,6 +296,7 @@
                 this.postData.product_code = Data.product_code
                 this.postData.lang_id = Data.lang_id
                 store.commit('changeStore',{key:'langId',val: Data.lang_id});
+
 
             }
         },

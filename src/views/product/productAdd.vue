@@ -56,20 +56,20 @@
             productCombinationNew
         },
         methods: {
-            handleChangeSelect(value) {
-                this.postData.goodsType=value
-            },
-            onChangeIsUse(value){
-                this.postData.isDisabled=value
-            },
+            // handleChangeSelect(value) {
+            //     this.postData.goodsType=value
+            // },
+            // onChangeIsUse(value){
+            //     this.postData.isDisabled=value
+            // },
             getOldData(){
-                let data={
-                    product_id:this.$store.state.goods_id,
-                    lang_id:this.$store.state.langId
-                }
-                this.$post('/product/getProductInfoById',data).then((reData)=>{
-                    store.commit('changeStore',{key:'oldData',val:reData.data});
-                })
+                // let data={
+                //     product_id:this.$store.state.goods_id,
+                //     lang_id:this.$store.state.langId
+                // }
+                // this.$post('/product/getProductInfoById',data).then((reData)=>{
+                //     store.commit('changeStore',{key:'oldData',val:reData.data});
+                // })
 
 
             },
