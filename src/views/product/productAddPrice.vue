@@ -35,7 +35,7 @@
                         <div class="inputName">*成本价格：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input v-model="postData.costPrice" placeholder=""/>
+                        <a-input v-model="postData.cost_price" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
@@ -47,7 +47,7 @@
                         <div class="inputName">*零售价格：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input v-model="postData.retailPrice" placeholder=""/>
+                        <a-input v-model="postData.retail_price" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
@@ -59,7 +59,7 @@
                         <div class="inputName">*折扣价格：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input v-model="postData.salePrice" placeholder=""/>
+                        <a-input v-model="postData.sale_price" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
@@ -92,14 +92,14 @@
         },
         methods: {
             handleChangeSelect(value) {
-                this.postData.currencyId=value
+                this.postData.currency_Id=value
             },
             onChange(date, dateString) {
                 console.log(date, dateString);
             },
             saveProductInfor(){
                 // store.commit('changeStore',{key:'loading',val:true});
-                this.postData.productId=this.$store.state.goods_id
+                this.postData.product_id=this.$store.state.goods_id
                 console.log()
                 let isAll = true
                 // for(let key  in this.postData){
@@ -122,9 +122,9 @@
                         if(reData.code == 0){
                             // store.commit('changeStore',{key:'goods_id',val:reData.data.goods_id });
                             setTimeout(function () {
-                                store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
+                                store.commit('changeStore',{key:'addProductContent',val:'productEngineOptimization'});
                                 store.commit('changeStore',{key:'addProductCurrent',val:'2'});
-                            },2000)
+                            },1000)
 
                         }
                     })
@@ -145,22 +145,22 @@
             if(this.$store.state.isEdit){
                 var Data = this.$store.state.oldData.prdBase
                 console.log(Data)
-                // // this.postData.currencyId = Data.currencyId
-                // this.postData.costPrice = Data.cost_price
-                // this.postData.retailPrice = Data.retail_price
-                // this.postData.salePrice = Data.sale_price
-                // store.commit('changeStore',{key:'langId',val: Data.lang_id});
+                // this.postData.currency_Id = Data.currencyId
+                this.postData.cost_price = Data.cost_price
+                this.postData.retail_price = Data.retail_price
+                this.postData.sale_price = Data.sale_price
+                store.commit('changeStore',{key:'langId',val: Data.lang_id});
 
             }
         },
         data() {
             return {
                 postData:{
-                    productId:'',
-                    currencyId:'1',
-                    costPrice:'',
-                    retailPrice:'',
-                    salePrice:'',
+                    product_id:'',
+                    currency_id:'1',
+                    cost_price:'',
+                    retail_price:'',
+                    sale_price:'',
                     // rateId:'',
                 }
             }

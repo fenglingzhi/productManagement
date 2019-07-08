@@ -95,7 +95,7 @@
             saveProductInfor(){
                 store.commit('changeStore',{key:'loading',val:true});
 
-                if(this.checkedKeys.checked.length>0){
+                // if(this.checkedKeys.checked.length>0){
                     for(let i=0;i<this.checkedKeys.checked.length;i++){
                         if(i==0){
                             this.postData.categoryIds=this.checkedKeys.checked[i]
@@ -104,13 +104,16 @@
 
                         }
                     }
-                }
+                // }
 
 
                 this.postData.productId=this.$store.state.goods_id;
                     this.$fetch('/productCategory/updateProductCategory',this.postData).then((reData)=>{
                         console.log(reData)
                         store.commit('changeStore',{key:'loading',val:false});
+                        store.commit('changeStore',{key:'addProductContent',val:'productCombination'});
+                        store.commit('changeStore',{key:'addProductCurrent',val:'5'});
+
                         this.$notification.open({
                             message: '提醒',
                             description: reData.message,

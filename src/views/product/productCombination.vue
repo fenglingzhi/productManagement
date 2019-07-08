@@ -355,6 +355,10 @@
                                     console.log('ok');
                                 },
                             })
+                            store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
+                            store.commit('changeStore',{key:'addProductCurrent',val:'6'});
+
+
                         } ,
 
                     });

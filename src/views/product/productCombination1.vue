@@ -180,7 +180,7 @@
                     });
                 })
 
-                this.getTabData()
+                // this.getTabData()
 
             },
             getTabData(){
@@ -250,6 +250,8 @@
                                     console.log('ok');
                                 },
                             })
+                            store.commit('changeStore',{key:'addProductContent',val:'productNum'});
+                            store.commit('changeStore',{key:'addProductCurrent',val:'6'});
                         } ,
 
                     });

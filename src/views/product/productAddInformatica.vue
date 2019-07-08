@@ -61,6 +61,50 @@
                         </div>
                     </a-col>
                 </a-row>
+                <a-row>
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">*商品标签 ：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-input v-model="postData.product_label" placeholder=""/>
+
+                                <!--<template>-->
+                                    <!--<div>-->
+                                        <!--<template v-for="(tag, index) in postData.product_label">-->
+                                            <!--<a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">-->
+                                                <!--<a-tag :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">-->
+                                                    <!--{{`${tag.slice(0, 20)}...`}}-->
+                                                <!--</a-tag>-->
+                                            <!--</a-tooltip>-->
+                                            <!--<a-tag v-else :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">-->
+                                                <!--{{tag}}-->
+                                            <!--</a-tag>-->
+                                        <!--</template>-->
+                                        <!--<a-input-->
+                                                <!--v-if="inputVisible"-->
+                                                <!--ref="input"-->
+                                                <!--type="text"-->
+                                                <!--size="small"-->
+                                                <!--:style="{ width: '78px' }"-->
+                                                <!--:value="inputValue"-->
+                                                <!--@change="handleInputChange"-->
+                                                <!--@blur="handleInputConfirm"-->
+                                                <!--@keyup.enter="handleInputConfirm"-->
+                                        <!--/>-->
+                                        <!--<a-tag v-else @click="showInput" style="background: #fff; borderStyle: dashed;">-->
+                                            <!--<a-icon type="plus" /> New Tag-->
+                                        <!--</a-tag>-->
+                                    <!--</div>-->
+                                <!--</template>-->
+
+
+                            </a-col>
+                        </div>
+                    </a-col>
+
+                </a-row>
 
                 <a-row>
                     <a-col class="gutter-row" :span="6">
@@ -77,16 +121,6 @@
                         </div>
                     </a-col>
 
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*商品标签 ：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.product_label" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
 
                 </a-row>
 
@@ -191,7 +225,7 @@
                                 },
                             })
                             if(reData.code == 0){
-                                store.commit('changeStore',{key:'goods_id',val:reData.data.id });
+                                store.commit('changeStore',{key:'goods_id',val:reData.data.product_id });
                                 setTimeout(function () {
                                     store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
                                     store.commit('changeStore',{key:'addProductCurrent',val:'1'});
@@ -212,7 +246,39 @@
                         },
                     })
                 }
+            },
+
+
+            handleClose (removedTag) {
+                const tags = this.postData.product_label.filter(tag => tag !== removedTag)
+                console.log(tags)
+                this.postData.product_label = tags
+            },
+
+            showInput () {
+                this.inputVisible = true
+                this.$nextTick(function () {
+                    this.$refs.input.focus()
+                })
+            },
+            handleInputChange (e) {
+                this.inputValue = e.target.value
+            },
+            handleInputConfirm () {
+                const inputValue = this.inputValue
+                let tags = this.postData.product_label
+                if (inputValue && tags.indexOf(inputValue) === -1) {
+                    tags = [...tags, inputValue]
+                }
+                console.log(tags)
+                Object.assign(this, {
+                    tags,
+                    inputVisible: false,
+                    inputValue: '',
+                })
             }
+
+
         } ,
         mounted() {
             if(this.$store.state.isEdit){
@@ -239,7 +305,12 @@
                 fileList: [],
                 headers: {
                     authorization: 'authorization-text',
-                }
+                },
+
+
+                tags: ['Unremovable', 'Tag 2', 'Tag 3Tag 3Tag 3Tag 3Tag 3Tag 3Tag 3'],
+                inputVisible: false,
+                inputValue: ''
                 ,disabled: false
                 ,postData:{
                     product_type:"1",
@@ -247,7 +318,7 @@
                     product_id:"",
                     upc:"",
                     active:'1',
-                    product_label:"",
+                    product_label:[],
                     description_short:"",
                     description:"",
                     product_code:'',
