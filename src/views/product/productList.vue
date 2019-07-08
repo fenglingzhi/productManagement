@@ -21,26 +21,16 @@
           </a-col>
         </div>
       </a-col>
-      <!--<a-col class="gutter-row" :span="6">-->
-        <!--<div class="inputPart">-->
-          <!--<a-col class="gutter-row" :span="6">-->
-            <!--<div class="inputName">shopify ID ：</div>-->
-          <!--</a-col>-->
-          <!--<a-col class="gutter-row" :span="18">-->
-            <!--<a-input placeholder="请输入shopify ID" v-model="search_data.shopifyId"/>-->
-          <!--</a-col>-->
-        <!--</div>-->
-      <!--</a-col>-->
-        <a-col class="gutter-row" :span="6">
-            <div class="inputPart">
-                <a-col class="gutter-row" :span="6">
-                    <div class="inputName"> 商品创建时间：</div>
-                </a-col>
-                <a-col class="gutter-row" :span="18">
-                    <a-range-picker @change="onChange" />
-                </a-col>
-            </div>
-        </a-col>
+      <a-col class="gutter-row" :span="6">
+        <div class="inputPart">
+          <a-col class="gutter-row" :span="6">
+            <div class="inputName">库存数量 ：</div>
+          </a-col>
+          <a-col class="gutter-row" :span="18">
+            <a-input placeholder="请输入库存数量" v-model="search_data.good_qty"/>
+          </a-col>
+        </div>
+      </a-col>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
@@ -59,40 +49,42 @@
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
-            <div class="inputName"> 最大成本价：</div>
+            <div class="inputName"> 商品创建时间：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入最大成本价" v-model="search_data.costPiceMax"/>
+            <a-range-picker @change="onChange" />
           </a-col>
         </div>
       </a-col>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
-            <div class="inputName"> 最小成本价：</div>
+            <div class="inputName"> 成本价：</div>
           </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入最小成本价" v-model="search_data.costPiceMin"/>
+          <a-col class="gutter-row" :span="8">
+            <a-input placeholder="最大成本价" v-model="search_data.costPiceMax"/>
           </a-col>
-        </div>
-      </a-col>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName"> 最大零售价：</div>
+          <a-col class="gutter-row" :span="2" style="text-align: center">
+            —
           </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入最大零售价" v-model="search_data.retailPriceMax"/>
+          <a-col class="gutter-row" :span="8">
+            <a-input placeholder="最小成本价" v-model="search_data.costPiceMin"/>
           </a-col>
         </div>
       </a-col>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
-            <div class="inputName"> 最小零售价：</div>
+            <div class="inputName"> 零售价：</div>
           </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入最小零售价" v-model="search_data.retailPriceMin"/>
+          <a-col class="gutter-row" :span="8">
+            <a-input placeholder="最大零售价" v-model="search_data.retailPriceMax"/>
+          </a-col>
+          <a-col class="gutter-row" :span="2" style="text-align: center">
+            —
+          </a-col>
+          <a-col class="gutter-row" :span="8">
+            <a-input placeholder="最小零售价" v-model="search_data.retailPriceMin"/>
           </a-col>
         </div>
       </a-col>
@@ -165,7 +157,6 @@
         { title: '商品名称', dataIndex: 'name', key: 'name'},
         { title: '图片地址',  key: 'image_url',scopedSlots: { customRender: 'img_' },},
         { title: '商品类型', dataIndex: 'product_type', key: 'product_type'},
-        // { title: '商品简介', dataIndex: 'description_short', key: 'description_short'},
         { title: 'upc码', dataIndex: 'upc', key: 'upc'},
         { title: '商品SKU码', dataIndex: 'product_code', key: 'product_code'},
         { title: '商品库存', dataIndex: 'good_qty', key: 'good_qty'},
@@ -203,7 +194,7 @@
                 ,search_data:{
                     product_code:''
                     ,name:''
-                    ,active:true
+                    ,active:''
                     ,shopifyId:''
                     ,costPiceMax:''
                     ,costPiceMin:''
@@ -215,6 +206,7 @@
                     ,retail_price:''
                     ,cost_price:''
                     ,image_url:''
+                    ,good_qty:''
                 }
             }
         },
@@ -249,7 +241,6 @@
                 let vm = this;
                 // console.log('111111111111111',this.search_data)
                 this.$post('/product/getProductListPage',data).then((reData)=>{
-
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
