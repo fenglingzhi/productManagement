@@ -43,11 +43,12 @@
     import attributeWrap from './attribute/attributeWrap'
     import index from './index'
     import productWrap from './product/productWrap'
+    import reviewList from './review/reviewList'
 
     export default {
 
         components:{
-            productList,productAdd,classify_list,attributeWrap, index,productWrap
+            productList,productAdd,classify_list,attributeWrap, index,productWrap,reviewList
         },
         data () {
             return {
