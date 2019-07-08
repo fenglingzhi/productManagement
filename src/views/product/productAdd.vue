@@ -62,7 +62,17 @@
             onChangeIsUse(value){
                 this.postData.isDisabled=value
             },
+            getOldData(){
+                let data={
+                    product_id:this.$store.state.goods_id,
+                    lang_id:this.$store.state.langId
+                }
+                this.$post('/product/getProductInfoById',data).then((reData)=>{
+                    store.commit('changeStore',{key:'oldData',val:reData.data});
+                })
 
+
+            },
 
             onChange(date, dateString) {
                 console.log(date, dateString);
@@ -73,7 +83,9 @@
             }
         } ,
         mounted() {
-
+            if(this.$store.state.isEdit){
+                this.getOldData()
+            }
         },
         data() {
             return {

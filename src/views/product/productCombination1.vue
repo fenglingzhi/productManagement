@@ -165,14 +165,14 @@
 
             getData(){
                 var vm = this
-                this.$fetch('/property/getPropertyById',{property_id:1}).then((reData)=>{
+                this.$fetch('/property/getPropertyById',{property_id:1,parent_id:1}).then((reData)=>{
                     reData.data.forEach(function(val, indexc) {
                         if(val.parent_id!=0){
                             vm.colorListO.push(val)
                         }
                     });
                 })
-                this.$fetch('/property/getPropertyById',{property_id:2}).then((reData)=>{
+                this.$fetch('/property/getPropertyById',{property_id:2,parent_id:2}).then((reData)=>{
                     reData.data.forEach(function(val, indexc) {
                         if(val.parent_id!=0){
                             vm.sizeListO.push(val)

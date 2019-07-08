@@ -22,7 +22,7 @@
                                 <div class="inputName">*商品编号：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.product_id" placeholder=""/>
+                                <a-input v-model="postData.product_code" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
@@ -87,16 +87,7 @@
                             </a-col>
                         </div>
                     </a-col>
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*SKU ：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.product_code" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
+
                 </a-row>
 
 
@@ -158,32 +149,59 @@
             },
             saveProductInfor(){
                 // store.commit('changeStore',{key:'loading',val:true});
-                this.postData.lang_id=this.$store.state.langId
+                this.postData.lang_id=this.$store.state.langId;
+                this.postData.product_id = this.$store.state.goods_id;
+
                 let isAll = true
-                for(let key  in this.postData){
-                    if(this.postData[key]==""){
-                        isAll =false
-                    }
-                }
+                // for(let key  in this.postData){
+                //     if(this.postData[key]==""){
+                //         isAll =false
+                //     }
+                // }
                 if (isAll){
-                    this.$post('/product/addProduct',this.postData).then((reData)=>{
-                        console.log(reData)
-                        this.$notification.open({
-                            message: '提醒',
-                            description: reData.message,
-                            onClick: () => {
-                                console.log('ok');
-                            },
+                    if(this.$store.state.isEdit){
+                        this.$post('/product/editProduct',this.postData).then((reData)=>{
+                            console.log(reData)
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            if(reData.code == 0){
+
+                                setTimeout(function () {
+                                    store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
+                                    store.commit('changeStore',{key:'addProductCurrent',val:'1'});
+                                },1000)
+                            }
+                            store.commit('changeStore',{key:'loading',val:false});
                         })
-                        if(reData.code == 0){
-                            store.commit('changeStore',{key:'goods_id',val:reData.data.id });
-                            setTimeout(function () {
-                                store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
-                                store.commit('changeStore',{key:'addProductCurrent',val:'1'});
-                            },1000)
-                        }
-                        store.commit('changeStore',{key:'loading',val:false});
-                    })
+
+                    }else {
+                        delete this.postData.product_id
+                        this.$post('/product/addProduct',this.postData).then((reData)=>{
+                            console.log(reData)
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            if(reData.code == 0){
+                                store.commit('changeStore',{key:'goods_id',val:reData.data.id });
+                                setTimeout(function () {
+                                    store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
+                                    store.commit('changeStore',{key:'addProductCurrent',val:'1'});
+                                },1000)
+                            }
+                            store.commit('changeStore',{key:'loading',val:false});
+                        })
+
+                    }
+
                 }else {
                     store.commit('changeStore',{key:'loading',val:false});
                     this.$notification.open({
@@ -197,7 +215,22 @@
             }
         } ,
         mounted() {
+            if(this.$store.state.isEdit){
+               var Data = this.$store.state.oldData.prdBase
+                console.log('wwwwwwwwwwwwwwwwwwwwwww',Data.name)
+                this.postData.product_type = Data.product_type
+                this.postData.name = Data.name
+                this.postData.product_id = Data.product_id
+                this.postData.upc = Data.upc
+                this.postData.active = Data.active
+                this.postData.product_label = Data.product_label
+                this.postData.description_short = Data.description_short
+                this.postData.description = Data.description
+                this.postData.product_code = Data.product_code
+                this.postData.lang_id = Data.lang_id
+                store.commit('changeStore',{key:'langId',val: Data.lang_id});
 
+            }
         },
         data() {
             return {
