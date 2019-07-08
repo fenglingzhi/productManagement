@@ -27,6 +27,7 @@ export default new Vuex.Store({
       loading:false,
       langId:1,
       isEdit:true,
+      oldData:{},
       // mjf
       // YanM
       attribute_child_id:'',

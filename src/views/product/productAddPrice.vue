@@ -98,13 +98,15 @@
                 console.log(date, dateString);
             },
             saveProductInfor(){
-                store.commit('changeStore',{key:'loading',val:true});
+                // store.commit('changeStore',{key:'loading',val:true});
+                this.postData.productId=this.$store.state.goods_id
+                console.log()
                 let isAll = true
-                for(let key  in this.postData){
-                    if(this.postData[key]==""){
-                        isAll =false
-                    }
-                }
+                // for(let key  in this.postData){
+                //     if(this.postData[key]==""){
+                //         isAll =false
+                //     }
+                // }
 
                 if (isAll){
                     this.$post('/product/updateProductPrice',this.postData).then((reData)=>{
@@ -118,7 +120,7 @@
                             },
                         })
                         if(reData.code == 0){
-                            store.commit('changeStore',{key:'goods_id',val:reData.data.goods_id });
+                            // store.commit('changeStore',{key:'goods_id',val:reData.data.goods_id });
                             setTimeout(function () {
                                 store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
                                 store.commit('changeStore',{key:'addProductCurrent',val:'2'});
@@ -140,8 +142,16 @@
             }
         } ,
         mounted() {
-            // alert(this.$store.state.goods_id)
-            // this.postData.productId = this.$store.state.goods_id
+            if(this.$store.state.isEdit){
+                var Data = this.$store.state.oldData.prdBase
+                console.log(Data)
+                // // this.postData.currencyId = Data.currencyId
+                // this.postData.costPrice = Data.cost_price
+                // this.postData.retailPrice = Data.retail_price
+                // this.postData.salePrice = Data.sale_price
+                // store.commit('changeStore',{key:'langId',val: Data.lang_id});
+
+            }
         },
         data() {
             return {
@@ -157,7 +167,7 @@
         } ,
         watch: {
             "$store.state.goods_id"() {
-                this.postData.productId =  this.$store.state.goods_id;
+                // this.postData.productId =  this.$store.state.goods_id;
             }
         },
     }

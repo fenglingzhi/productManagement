@@ -1,6 +1,5 @@
 <template>
   <div class="tinymce-editor">
-    <div @click="redata()">刷新</div>
     <editor v-model="myValue"
             :init="init"
             :disabled="disabled"
