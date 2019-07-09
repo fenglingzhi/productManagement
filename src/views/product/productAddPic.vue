@@ -126,7 +126,7 @@
     const columns = [
         // {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '图片',  key: 'image',scopedSlots: { customRender: 'image' },},
-        { title: 'Caption', dataIndex: 'caption', key: 'caption'},
+        { title: 'Caption', dataIndex: 'legend', key: 'legend'},
         { title: '位置', dataIndex: 'position', key: 'position'},
 
     ];
@@ -154,7 +154,7 @@
             }
             ,getdata(){
 
-                this.$post('/productImage/getProductImage',{productId:this.$store.state.goods_id}).then((reData)=>{
+                this.$post('/productImage/getProductImage',{productId:this.$store.state.goods_id,langId:this.$store.state.langId}).then((reData)=>{
                     console.log(reData)
                     this.productListData=reData.data
                     for(let b=0;b<reData.data.length;b++ ){
