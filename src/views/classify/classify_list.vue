@@ -105,7 +105,7 @@
       </a-col>
 
       <a-col :span="19" style="padding-left:10px;">
-        <classify_list_table v-on:update_classify ="update_classify" v-on:router_add_classify="router_add_classify" :select_classify ="select_classify" v-if="operation_name =='table'"></classify_list_table>
+        <classify_list_table :select_classify_key="select_classify_key" v-on:update_classify ="update_classify" v-on:router_add_classify="router_add_classify" :select_classify ="select_classify" v-if="operation_name =='table'"></classify_list_table>
         <classify_list_edit v-on:update_classify ="update_classify" :classify_list ="classify_list" :operation_name ="operation_name" :select_classify_all ="select_classify_all" v-if="operation_name =='edit' || operation_name =='add'"></classify_list_edit>
       </a-col>
     </a-row>
@@ -151,30 +151,36 @@ export default {
         }
       ],
       select_classify: [],
+      select_classify_key:0,
       select_classify_all:{},
-      showOperation: "",
+      showOperation: "0",
       operation_name:'',
     };
   },
   components: {classify_list_table,classify_list_edit},
   watch: {},
   mounted() {
-    this.classify_data_init();
+    this.classify_data_init("init");
   },
   methods: {
     // 初始化获取分类数据
-    classify_data_init() {
+    classify_data_init(value) {
       let data = {
         langId: 1
       };
       this.$fetch("/category/getAllCategoryTree", data).then(reData => {
         if (reData.code == 0) {
-            console.log(reData.data)
-            let homeData = [{title:"home",key:"0",children:[]}];
+            let homeData = [{title:"home",key:0,children:[]}];
             reData.data.forEach(function(item){
                 homeData[0].children.push(item)
             })
-            this.classify_list = homeData
+            this.classify_list = homeData;
+            if(value == "init"){
+              this.select_classify = this.classify_list[0].children;
+              this.operation_name = "table";
+              this.select_classify_all = this.classify_list.slice(0,this.classify_list.length)[0];
+            }
+            
         } else {
           this.$message.error(reData.message);
         }
@@ -196,7 +202,6 @@ export default {
           return getParentKey(item, value);
         })
         .filter((item, i, self) => item && self.indexOf(item) === i);
-      console.log(expandedKeys);
       Object.assign(this, {
         expandedKeys,
         searchValue: value,
@@ -205,9 +210,9 @@ export default {
     },
     // 树形结构选中事件
     onSelect(item) {
-     
       this.select_classify = item.children.slice(0, item.children.length);
       this.select_classify_all = item;
+      this.select_classify_key = item.key;
       this.showOperation = item.key;
       this.operation_name = "table";
     },
@@ -225,12 +230,10 @@ export default {
     },
     // 数据更新
     update_classify(value){
-        console.log("数据更新");
-        console.log(value);
         if(value != 'delete'){
-            this.operation_name = "";
+            this.operation_name = "table";
         }
-        this.classify_data_init();
+        this.classify_data_init(value);
     },
   }
 };

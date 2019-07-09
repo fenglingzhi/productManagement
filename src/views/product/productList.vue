@@ -21,16 +21,16 @@
           </a-col>
         </div>
       </a-col>
-      <a-col class="gutter-row" :span="6">
-        <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
-            <div class="inputName">库存数量 ：</div>
-          </a-col>
-          <a-col class="gutter-row" :span="18">
-            <a-input placeholder="请输入库存数量" v-model="search_data.good_qty"/>
-          </a-col>
-        </div>
-      </a-col>
+      <!--<a-col class="gutter-row" :span="6">-->
+        <!--<div class="inputPart">-->
+          <!--<a-col class="gutter-row" :span="6">-->
+            <!--<div class="inputName">库存数量 ：</div>-->
+          <!--</a-col>-->
+          <!--<a-col class="gutter-row" :span="18">-->
+            <!--<a-input placeholder="请输入库存数量" v-model="search_data.good_qty"/>-->
+          <!--</a-col>-->
+        <!--</div>-->
+      <!--</a-col>-->
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
@@ -38,6 +38,7 @@
           </a-col>
           <a-col class="gutter-row" :span="18">
             <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
+              <a-select-option value="">请选择</a-select-option>
               <a-select-option value="1">是</a-select-option>
               <a-select-option value="0">否</a-select-option>
             </a-select>
