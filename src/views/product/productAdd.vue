@@ -56,13 +56,23 @@
             productCombinationNew
         },
         methods: {
-            handleChangeSelect(value) {
-                this.postData.goodsType=value
-            },
-            onChangeIsUse(value){
-                this.postData.isDisabled=value
-            },
+            // handleChangeSelect(value) {
+            //     this.postData.goodsType=value
+            // },
+            // onChangeIsUse(value){
+            //     this.postData.isDisabled=value
+            // },
+            getOldData(){
+                // let data={
+                //     product_id:this.$store.state.goods_id,
+                //     lang_id:this.$store.state.langId
+                // }
+                // this.$post('/product/getProductInfoById',data).then((reData)=>{
+                //     store.commit('changeStore',{key:'oldData',val:reData.data});
+                // })
 
+
+            },
 
             onChange(date, dateString) {
                 console.log(date, dateString);
@@ -73,7 +83,9 @@
             }
         } ,
         mounted() {
-
+            if(this.$store.state.isEdit){
+                this.getOldData()
+            }
         },
         data() {
             return {
@@ -87,11 +99,9 @@
                     {title:'价格',key:'productAddPrice'},
                     {title:'搜索引擎优化',key:'productEngineOptimization'},
                     {title:'分类',key:'productAddCollection'},
-                    {title:'配送',key:'price'},
                     {title:'组合',key:'productCombination'},
                     {title:'数量',key:'productNum'},
                     {title:'图片',key:'productAddPic'},
-                    {title:'特性',key:'price'},
                 ]
                 ,disabled: false
 

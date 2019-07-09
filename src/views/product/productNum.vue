@@ -56,6 +56,9 @@
                     data: {unitList:JSON.stringify(vm.tabList)} ,
                     // traditional: true,
                     success: function (reData) {
+                        store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
+                        store.commit('changeStore',{key:'addProductCurrent',val:'7'});
+
                         vm.$notification.open({
                             message: '提醒',
                             description: reData.message,

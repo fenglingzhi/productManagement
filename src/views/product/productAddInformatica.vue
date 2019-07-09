@@ -22,7 +22,7 @@
                                 <div class="inputName">*商品编号：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.product_id" placeholder=""/>
+                                <a-input v-model="postData.product_code" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
@@ -61,6 +61,50 @@
                         </div>
                     </a-col>
                 </a-row>
+                <a-row>
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">*商品标签 ：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-input v-model="postData.product_label" placeholder=""/>
+
+                                <!--<template>-->
+                                    <!--<div>-->
+                                        <!--<template v-for="(tag, index) in postData.product_label">-->
+                                            <!--<a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">-->
+                                                <!--<a-tag :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">-->
+                                                    <!--{{`${tag.slice(0, 20)}...`}}-->
+                                                <!--</a-tag>-->
+                                            <!--</a-tooltip>-->
+                                            <!--<a-tag v-else :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">-->
+                                                <!--{{tag}}-->
+                                            <!--</a-tag>-->
+                                        <!--</template>-->
+                                        <!--<a-input-->
+                                                <!--v-if="inputVisible"-->
+                                                <!--ref="input"-->
+                                                <!--type="text"-->
+                                                <!--size="small"-->
+                                                <!--:style="{ width: '78px' }"-->
+                                                <!--:value="inputValue"-->
+                                                <!--@change="handleInputChange"-->
+                                                <!--@blur="handleInputConfirm"-->
+                                                <!--@keyup.enter="handleInputConfirm"-->
+                                        <!--/>-->
+                                        <!--<a-tag v-else @click="showInput" style="background: #fff; borderStyle: dashed;">-->
+                                            <!--<a-icon type="plus" /> New Tag-->
+                                        <!--</a-tag>-->
+                                    <!--</div>-->
+                                <!--</template>-->
+
+
+                            </a-col>
+                        </div>
+                    </a-col>
+
+                </a-row>
 
                 <a-row>
                     <a-col class="gutter-row" :span="6">
@@ -77,26 +121,7 @@
                         </div>
                     </a-col>
 
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*商品标签 ：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.product_label" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*SKU ：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.product_code" placeholder=""/>
-                            </a-col>
-                        </div>
-                    </a-col>
+
                 </a-row>
 
 
@@ -158,32 +183,59 @@
             },
             saveProductInfor(){
                 // store.commit('changeStore',{key:'loading',val:true});
-                this.postData.lang_id=this.$store.state.langId
+                this.postData.lang_id=this.$store.state.langId;
+                this.postData.product_id = this.$store.state.goods_id;
+
                 let isAll = true
-                for(let key  in this.postData){
-                    if(this.postData[key]==""){
-                        isAll =false
-                    }
-                }
+                // for(let key  in this.postData){
+                //     if(this.postData[key]==""){
+                //         isAll =false
+                //     }
+                // }
                 if (isAll){
-                    this.$post('/product/addProduct',this.postData).then((reData)=>{
-                        console.log(reData)
-                        this.$notification.open({
-                            message: '提醒',
-                            description: reData.message,
-                            onClick: () => {
-                                console.log('ok');
-                            },
+                    if(this.$store.state.isEdit){
+                        this.$post('/product/editProduct',this.postData).then((reData)=>{
+                            console.log(reData)
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            if(reData.code == 0){
+
+                                setTimeout(function () {
+                                    store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
+                                    store.commit('changeStore',{key:'addProductCurrent',val:'1'});
+                                },1000)
+                            }
+                            store.commit('changeStore',{key:'loading',val:false});
                         })
-                        if(reData.code == 0){
-                            store.commit('changeStore',{key:'goods_id',val:reData.data.id });
-                            setTimeout(function () {
-                                store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
-                                store.commit('changeStore',{key:'addProductCurrent',val:'1'});
-                            },1000)
-                        }
-                        store.commit('changeStore',{key:'loading',val:false});
-                    })
+
+                    }else {
+                        delete this.postData.product_id
+                        this.$post('/product/addProduct',this.postData).then((reData)=>{
+                            console.log(reData)
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            if(reData.code == 0){
+                                store.commit('changeStore',{key:'goods_id',val:reData.data.product_id });
+                                setTimeout(function () {
+                                    store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
+                                    store.commit('changeStore',{key:'addProductCurrent',val:'1'});
+                                },1000)
+                            }
+                            store.commit('changeStore',{key:'loading',val:false});
+                        })
+
+                    }
+
                 }else {
                     store.commit('changeStore',{key:'loading',val:false});
                     this.$notification.open({
@@ -194,10 +246,59 @@
                         },
                     })
                 }
+            },
+
+
+            handleClose (removedTag) {
+                const tags = this.postData.product_label.filter(tag => tag !== removedTag)
+                console.log(tags)
+                this.postData.product_label = tags
+            },
+
+            showInput () {
+                this.inputVisible = true
+                this.$nextTick(function () {
+                    this.$refs.input.focus()
+                })
+            },
+            handleInputChange (e) {
+                this.inputValue = e.target.value
+            },
+            handleInputConfirm () {
+                const inputValue = this.inputValue
+                let tags = this.postData.product_label
+                if (inputValue && tags.indexOf(inputValue) === -1) {
+                    tags = [...tags, inputValue]
+                }
+                console.log(tags)
+                Object.assign(this, {
+                    tags,
+                    inputVisible: false,
+                    inputValue: '',
+                })
             }
+
+
         } ,
         mounted() {
+            if(this.$store.state.isEdit){
 
+
+                var Data = this.$store.state.oldData.prdBase
+                this.postData.product_type = Data.product_type
+                this.postData.name = Data.name
+                this.postData.product_id = Data.product_id
+                this.postData.upc = Data.upc
+                this.postData.active = Data.active
+                this.postData.product_label = Data.product_label
+                this.postData.description_short = Data.description_short
+                this.postData.description = Data.description
+                this.postData.product_code = Data.product_code
+                this.postData.lang_id = Data.lang_id
+                store.commit('changeStore',{key:'langId',val: Data.lang_id});
+
+
+            }
         },
         data() {
             return {
@@ -206,7 +307,12 @@
                 fileList: [],
                 headers: {
                     authorization: 'authorization-text',
-                }
+                },
+
+
+                tags: ['Unremovable', 'Tag 2', 'Tag 3Tag 3Tag 3Tag 3Tag 3Tag 3Tag 3'],
+                inputVisible: false,
+                inputValue: ''
                 ,disabled: false
                 ,postData:{
                     product_type:"1",
@@ -214,7 +320,7 @@
                     product_id:"",
                     upc:"",
                     active:'1',
-                    product_label:"",
+                    product_label:[],
                     description_short:"",
                     description:"",
                     product_code:'',

@@ -1,84 +1,121 @@
 <template>
-  <!--<div class="producetAdd">-->
-    <!--<div class="secondTitle">-->
-                <!--<a-col class="gutter-row" :span="21" style="padding-top: 13px;">-->
-                    <!--图片：-->
-                <!--</a-col>-->
-                <!--<a-col class="gutter-row" :span="3">-->
-                    <!--<a-row>-->
-                        <!--<a-col class="gutter-row" :span="12">-->
-                            <!--<a-button type="primary">保存</a-button>-->
-                        <!--</a-col>-->
-                        <!--<a-col class="gutter-row" :span="12">-->
-                            <!--<a-button >取消</a-button>-->
-                        <!--</a-col>-->
-                    <!--</a-row>-->
-                <!--</a-col>-->
-    <!--</div>-->
+  <div class="producetAdd">
+    <div class="secondTitle">
+                <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
+                    图片：
+                </a-col>
+                <a-col class="gutter-row" :span="3">
+                    <a-row>
+                        <a-col class="gutter-row" :span="12">
+                          <!--<a-button >取消</a-button>-->
+                        </a-col>
+                        <a-col class="gutter-row" :span="12">
+                          <a-button type="primary" @click="save" >保存</a-button>
+                        </a-col>
+                    </a-row>
+                </a-col>
+    </div>
 
 
 
-      <!--<a-row>-->
-          <!--<a-col class="gutter-row" :span="8">-->
-              <!--<div class="inputPart">-->
-                  <!--<a-col class="gutter-row" :span="4">-->
-                      <!--<div class="inputName">研发样图：</div>-->
-                  <!--</a-col>-->
-                  <!--<a-col class="gutter-row" :span="20">-->
-                      <!--<div class="clearfix">-->
-                          <!--<a-upload-->
-                                  <!--action="//jsonplaceholder.typicode.com/posts/"-->
-                                  <!--listType="picture-card"-->
-                                  <!--:fileList="fileList"-->
-                                  <!--@preview="handlePreview"-->
-                                  <!--@change="handleChange"-->
-                          <!--&gt;-->
-                              <!--<div v-if="fileList.length < 1">-->
-                                  <!--<a-icon type="plus" />-->
-                                  <!--<div class="ant-upload-text">Upload</div>-->
-                              <!--</div>-->
-                          <!--</a-upload>-->
-                          <!--<a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">-->
-                              <!--<img alt="example" style="width: 100%" :src="previewImage" />-->
-                          <!--</a-modal>-->
-                      <!--</div>-->
-                  <!--</a-col>-->
-              <!--</div>-->
-          <!--</a-col>-->
+      <a-row>
+          <a-col class="gutter-row" :span="8">
+              <div class="inputPart">
+                  <a-col class="gutter-row" :span="4">
+                      <div class="inputName">研发样图：</div>
+                  </a-col>
+                  <a-col class="gutter-row" :span="20">
+                      <div class="clearfix">
+                          <a-upload
+                                  action="//jsonplaceholder.typicode.com/posts/"
+                                  listType="picture-card"
+                                  :fileList="fileList"
+                                  @preview="handlePreview"
+                                  @change="handleChange"
+                          >
+                              <div v-if="fileList.length < 1">
+                                  <a-icon type="plus" />
+                                  <div class="ant-upload-text">Upload</div>
+                              </div>
+                          </a-upload>
+                          <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                              <img alt="example" style="width: 100%" :src="previewImage" />
+                          </a-modal>
+                      </div>
+                  </a-col>
+              </div>
+          </a-col>
 
-      <!--</a-row>-->
+      </a-row>
+      <a-row>
+        <a-col class="gutter-row" :span="6">
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="6">
+              <div class="inputName">*位置：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="18">
+              <a-select  style="width: 100%" defaultValue="0" @change="handleChangeSelect">
+                <a-select-option value="0">all</a-select-option>
+                <a-select-option v-for='item in selectData' :value="item">{{item}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-col>
+      </a-row>
+    <a-row>
+      <a-col class="gutter-row" :span="6">
+        <div class="inputPart">
+          <a-col class="gutter-row" :span="6">
+            <div class="inputName">*是否展示：</div>
+          </a-col>
+          <a-col class="gutter-row" :span="18">
+            <a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">
+              <a-select-option value="1">是</a-select-option>
+              <a-select-option value="0">否</a-select-option>
 
-      <!--<div class="secondTitle">-->
-          <!--<a-col class="gutter-row" :span="21" style="padding-top: 13px;">-->
-              <!--图片列表：-->
-          <!--</a-col>-->
-      <!--</div>-->
-      <!--<a-table :columns="columns"-->
-               <!--:dataSource="productListData"-->
-               <!--:pagination="pagination"-->
-               <!--:loading="loading"-->
-               <!--align="center"-->
-               <!--@change="handleTableChange"-->
-               <!--:rowSelection="rowSelection"-->
-               <!--:scroll="{ x: 1500 }">-->
-          <!--<span slot="action" slot-scope="text, record">-->
-              <!--<a href="javascript:;">修改{{text.id}}</a>-->
-              <!--<a-divider type="vertical"></a-divider>-->
-              <!--<a href="javascript:;">删除{{text.id}}</a>-->
-          <!--</span>-->
-          <!--<span slot="img_" slot-scope="text, record">-->
-              <!--<img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">-->
-          <!--</span>-->
-          <!--<a slot="active" slot-scope="text, record" style="text-align: center">-->
-              <!--&lt;!&ndash;{{record}}&ndash;&gt;-->
-              <!--<a-icon type="check" style="color: green" v-if="text == '1'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>-->
-              <!--<a-icon type="close" style="color: red" v-if="text == '0'" @click="change_active({product_id:record.product_id,status:'100'})"></a-icon>-->
-          <!--</a>-->
-      <!--</a-table>-->
+            </a-select>
+          </a-col>
+        </div>
+      </a-col>
+    </a-row>
+        <a-row>
+          <a-col class="gutter-row" :span="6">
+            <div class="inputPart">
+              <a-col class="gutter-row" :span="6">
+                <div class="inputName">*Caption：</div>
+              </a-col>
+              <a-col class="gutter-row" :span="18">
+                <a-input  v-model="postData.legend" placeholder=""/>
+              </a-col>
+            </div>
+          </a-col>
+        </a-row>
 
-<!--{{fileList}}-->
+      <div class="secondTitle">
+          <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
+              图片列表：
+          </a-col>
+      </div>
+      <a-table :columns="columns"
+               :dataSource="productListData"
+               :pagination="pagination"
+               :loading="loading"
+               align="center"
+               >
+          <span slot="action" slot-scope="text, record">
+              <a href="javascript:;">修改{{text.id}}</a>
+              <a-divider type="vertical"></a-divider>
+              <a href="javascript:;">删除{{text.id}}</a>
+          </span>
+          <span slot="image" slot-scope="text, record">
+              <img :src="text.image_visit_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_visit_url !== ''">
+          </span>
 
-  <!--</div>-->
+      </a-table>
+
+{{fileList}}
+
+  </div>
 </template>
 <script>
     import router from '../../router'
@@ -87,32 +124,20 @@
 
 
     const columns = [
-        {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
-        { title: '图片',  key: 'image_url',scopedSlots: { customRender: 'img_' },},
+        // {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
+        { title: '图片',  key: 'image',scopedSlots: { customRender: 'image' },},
+        { title: 'Caption', dataIndex: 'caption', key: 'caption'},
+        { title: '位置', dataIndex: 'position', key: 'position'},
 
-        { title: '商品ID', dataIndex: 'product_id', key: 'product_id'},
-        { title: '商品名称', dataIndex: 'name', key: 'name'},
-        { title: 'upc码', dataIndex: 'upc', key: 'upc'},
-        { title: '是否在售', dataIndex: 'active', key: 'active', align: 'center' ,scopedSlots: { customRender: 'active' },},
     ];
-    const productListData = [{
-        active: "1",
-        add_date: "2019-06-28",
-        description: "123",
-        description_short: "123",
-        image_url: "https://image1.zorafan.com/o_img/2019/06/11/1-4-mini.jpg",
-        name: "新增商品名称",
-        product_code: "CAT0001",
-        product_id: 6,
-        product_type: "1",
-        upc: "UPC0001",
-        upd_date: "2019-06-28",
-    }];
+    const productListData = [
+
+    ];
 
     export default {
         methods: {
             handleChangeSelect(value) {
-                console.log(`selected ${value}`);
+                this.postData.position=value
             },
             handleCancel () {
                 this.previewVisible = false
@@ -127,19 +152,87 @@
             onChange(date, dateString) {
                 console.log(date, dateString);
             }
+            ,getdata(){
+
+                this.$post('/productImage/getProductImage',{productId:this.$store.state.goods_id}).then((reData)=>{
+                    console.log(reData)
+                    this.productListData=reData.data
+                    for(let b=0;b<reData.data.length;b++ ){
+                        this.selectData.push(b+1)
+                    }
+
+                })
+            }
+            ,save(){
+                store.commit('changeStore',{key:'loading',val:true });
+
+                this.postData.langId=this.$store.state.langId
+                this.postData.productId=this.$store.state.goods_id
+                this.postData.imageBaseStr=this.fileList[0].thumbUrl
+                if(this.fileList[0].size>5242880){
+                    this.$notification.open({
+                        message: '图片超出5M',
+                        description: reData.message,
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                    store.commit('changeStore',{key:'loading',val:false });
+
+                }else {
+                    this.$post('/productImage/addProductImage',this.postData).then((reData)=>{
+                        console.log(reData)
+                        store.commit('changeStore',{key:'loading',val:false });
+
+                        this.$notification.open({
+                            message: '提醒',
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        this.getdata()
+                        if(reData.code == 0){
+
+                            store.commit('changeStore',{key:'goods_id',val:reData.data.id });
+                            setTimeout(function () {
+                                // store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
+                                // store.commit('changeStore',{key:'addProductCurrent',val:'1'});
+                            },1000)
+                        }
+                        store.commit('changeStore',{key:'loading',val:false});
+                    })
+                }
+
+            }
         } ,
         mounted() {
             store.commit('changeStore',{key:'title',val:'新增产品'});
+            this.getdata()
         },
         data() {
             return {
                 productListData,
                 columns,
+                selectData:[],
                 previewVisible: false,
                 previewImage: '',
                 fileList: [],
                 headers: {
                     authorization: 'authorization-text',
+                },
+                postData:{
+                    productId:'',
+                    position:'0',
+                    imageBaseStr:'',
+                    cover:'1',
+                    legend:'',
+                    langId:''
+                },
+                loading: false,
+                pagination:{
+                    defaultPageSize:10,
+                    total:1,
                 }
             }
         }

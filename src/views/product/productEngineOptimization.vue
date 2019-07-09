@@ -97,15 +97,28 @@
                 console.log(date, dateString);
             },
             getData(){
+                    let data={
+                        productId:this.$store.state.goods_id,
+                        langId:this.$store.state.langId
+                    }
+                    this.$post('/product/getProductSeo',data).then((reData)=>{
+                        this.postData.productId = reData.data[0].product_id
+                        this.postData.langId = reData.data[0].lang_id
+                        this.postData.linkRewrite = reData.data[0].link_rewrite
+                        this.postData.metaTitle = reData.data[0].meta_title
+                        this.postData.metaKeyword= reData.data[0].meta_keyword
+                        this.postData.metaDescription = reData.data[0].meta_description
+                        store.commit('changeStore',{key:'langId',val: reData.data[0].lang_id});
 
+                    })
             },
             saveProductInfor(){
                 let isAll = true
-                for(let key  in this.postData){
-                    if(this.postData[key]==""){
-                        isAll =false
-                    }
-                }
+                // for(let key  in this.postData){
+                //     if(this.postData[key]==""){
+                //         isAll =false
+                //     }
+                // }
                 this.postData.productId =  this.$store.state.goods_id;
                 if (isAll){
                     this.$post('/product/editProductSeo',this.postData).then((reData)=>{
@@ -120,7 +133,8 @@
                         })
                         if(reData.code == 0){
 
-
+                            store.commit('changeStore',{key:'addProductContent',val:'productAddCollection'});
+                            store.commit('changeStore',{key:'addProductCurrent',val:'3'});
 
                         }
                     })
@@ -140,6 +154,9 @@
         mounted() {
             // alert(this.$store.state.goods_id)
             // this.postData.productId = this.$store.state.goods_id
+            if(this.$store.state.isEdit){
+                    this.getData()
+            }
         },
         data() {
             return {
