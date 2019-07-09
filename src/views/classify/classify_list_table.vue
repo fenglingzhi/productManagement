@@ -10,7 +10,7 @@
         </a-row>
         <a-table
           :columns="columns"
-          :dataSource="select_classify"
+          :dataSource="table_data"
           :loading="loading"
           :pagination="pagination"
           :childrenColumnName="childrenColumnName"
@@ -20,12 +20,12 @@
                 <input type="text" v-model="record.position" @blur="change_position(record)" style="text-align:center;border:1px solid #ccc;">
             </span>
              <span slot="active" slot-scope="record">
-                <span v-if="record.active == 0" style="cursor: pointer;" @click="show_active(record)"><a-icon type="close" /></span>
-                <span v-if="record.active == 1" style="cursor: pointer;" @click="show_active(record)"><a-icon type="check" /></span>
+                <span v-if="record.active == '0'" style="cursor: pointer;" @click="show_active(record)"><a-icon type="close" /></span>
+                <span v-if="record.active == '1'" style="cursor: pointer;" @click="show_active(record)"><a-icon type="check" /></span>
             </span>
             <span slot="isBanner" slot-scope="record">
-                <span v-if="record.isBanner == 0" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="close" /></span>
-                <span v-if="record.isBanner == 1" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="check" /></span>
+                <span v-if="record.isBanner == '0'" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="close" /></span>
+                <span v-if="record.isBanner == '1'" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="check" /></span>
             </span>
             <span slot="operation" slot-scope="record">
                 <a @click="del_classify(record)">删除</a>
@@ -38,13 +38,13 @@
 const columns = [
   {
     title: "编号",
-    dataIndex: "key",
+    dataIndex: "categoryId",
     align:"center",
     width: "10%"
   },
   {
     title: "名称",
-    dataIndex: "title",
+    dataIndex: "name",
     align:"center",
     width: "15%"
   },
@@ -84,18 +84,42 @@ export default {
             columns,
             pagination: false,
             childrenColumnName: "false",
+            table_data:[],
         }
     },
-    props:["select_classify"],
-    watch: {},
+    props:["select_classify","select_classify_key"],
+    watch: {
+        select_classify_key(newVal,oldVal){
+            this.select_classify_table_init();
+        }
+    },
     mounted() {
-    
+        setTimeout(() => {
+            this.select_classify_table_init();
+        }, 500);
+        
     },
     methods: {
+        select_classify_table_init(){
+            let data ={
+                lang_id:1,
+                parent_id:this.select_classify_key,
+            };
+            this.$post("/category/getCategoryList", data).then(reData => {
+                if (reData.code == 0) {
+                    console.log(reData)
+                    this.table_data = reData.data.slice(0,reData.data.length);
+                    this.table_data.forEach(function(item){
+                        item.key =item.categoryId;
+                    })
+                } else {
+                    this.$message.error(reData.message);
+                    this.loading = false;
+                }
+            });
+        },
         // 修改position参数
         change_position(value){
-            console.log(value)
-            console.log(event)
             this.loading = true;
             let data ={};
             data.categoryId = value.categoryId
@@ -126,6 +150,7 @@ export default {
                     this.$emit("update_classify","delete");
                     this.select_classify.splice(this.select_classify.indexOf(value),1)
                     this.$message.success("删除成功");
+                    this.select_classify_table_init();
                     this.loading = false;
                 } else {
                     this.$message.error(reData.message);
@@ -137,7 +162,7 @@ export default {
         show_active(value){
             this.loading = true;
             let data ={};
-            data.categoryId = value.key;
+            data.categoryId = value.categoryId;
             data.langId = 1;
             if(value.active){
                 data.active = 0;
@@ -164,7 +189,7 @@ export default {
         show_isBanner(value){
             this.loading = true;
             let data ={};
-            data.categoryId = value.key;
+            data.categoryId = value.categoryId;
             data.langId = 1;
             if(value.isBanner){
                 data.isBanner = 0;
