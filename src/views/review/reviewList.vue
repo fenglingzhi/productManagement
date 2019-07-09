@@ -38,6 +38,7 @@
                     </a-col>
                     <a-col class="gutter-row" :span="18">
                         <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
+                            <a-select-option value="">请选择</a-select-option>
                             <a-select-option value="1">显示</a-select-option>
                             <a-select-option value="0">隐藏</a-select-option>
                         </a-select>
