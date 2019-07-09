@@ -28,7 +28,8 @@
                 <span v-if="record.isBanner == '1'" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="check" /></span>
             </span>
             <span slot="operation" slot-scope="record">
-                <a @click="del_classify(record)">删除</a>
+                <a @click="del_classify(record)" disabled v-if="record.child_num">删除</a>
+                <a @click="del_classify(record)" v-if="!record.child_num">删除</a>
             </span>
         </a-table>
     </div>
