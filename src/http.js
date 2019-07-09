@@ -1,8 +1,8 @@
 import axios from 'axios';
 import qs from 'qs';
 axios.defaults.timeout = 5000000;
-// axios.defaults.baseURL ='http://192.168.0.18:8081/zorafanERP';
-axios.defaults.baseURL ='http://192.168.5.125:8081';
+axios.defaults.baseURL ='http://192.168.0.18:8081/zorafanERP';
+// axios.defaults.baseURL ='http://192.168.5.125:8081';
 // axios.defaults.baseURL ='http://192.168.5.18:8081';
 
 
