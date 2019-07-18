@@ -17,10 +17,10 @@
         </a-sub-menu>
         <a-sub-menu key="2">
           <span slot="title"><a-icon type="snippets" /><span>客户管理</span></span>
-          <a-menu-item key="2-1" @click="choseWhich('客户信息','productWrap','1-1')" ><a-icon type="reconciliation" />客户信息</a-menu-item>
-          <a-menu-item key="2-3" @click="choseWhich('分类管理','classify_list','1-3')" ><a-icon type="reconciliation" />分类管理</a-menu-item>
-          <a-menu-item key="2-4" @click="choseWhich('属性管理','attributeWrap','1-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>
-          <a-menu-item key="2-5" @click="choseWhich('评论管理','reviewList','1-5')" ><a-icon type="reconciliation" />评论管理</a-menu-item>
+          <a-menu-item key="2-1" @click="choseWhich('客户信息','customerList','2-1')" ><a-icon type="reconciliation" />客户信息</a-menu-item>
+          <a-menu-item key="2-3" @click="choseWhich('分类管理','classify_list','2-3')" ><a-icon type="reconciliation" />分类管理</a-menu-item>
+          <a-menu-item key="2-4" @click="choseWhich('属性管理','attributeWrap','2-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>
+          <a-menu-item key="2-5" @click="choseWhich('评论管理','reviewList','2-5')" ><a-icon type="reconciliation" />评论管理</a-menu-item>
         </a-sub-menu>
 
 
