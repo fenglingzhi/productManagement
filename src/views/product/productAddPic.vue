@@ -59,6 +59,7 @@
                 <a-select-option v-for='item in selectData' :value="item">{{item}}</a-select-option>
               </a-select>
             </a-col>
+              {{selectData}}
           </div>
         </a-col>
       </a-row>
@@ -103,14 +104,16 @@
                align="center"
                >
           <span slot="action" slot-scope="text, record">
-              <a href="javascript:;">修改{{text.id}}</a>
-              <a-divider type="vertical"></a-divider>
-              <a href="javascript:;">删除{{text.id}}</a>
-          </span>
+              <a @click="delPic(text.position)">删除{{text.position}}</a>
+           </span>
           <span slot="image" slot-scope="text, record">
               <img :src="text.image_visit_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_visit_url !== ''">
           </span>
-
+          <a slot="isShow" slot-scope="text, record" style="text-align: center">
+              <!--{{record}}-->
+              <a-icon type="check" style="color: green" v-if="text.cover" @click="change_active()"></a-icon>
+              <a-icon type="close" style="color: red" v-if="!text.cover" @click="change_active()"></a-icon>
+          </a>
       </a-table>
 
 {{fileList}}
@@ -124,10 +127,12 @@
 
 
     const columns = [
-        // {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
+        {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '图片',  key: 'image',scopedSlots: { customRender: 'image' },},
         { title: 'Caption', dataIndex: 'legend', key: 'legend'},
         { title: '位置', dataIndex: 'position', key: 'position'},
+        { title: '是否展示',  key: 'isShow',scopedSlots: { customRender: 'isShow' },},
+
 
     ];
     const productListData = [
@@ -136,8 +141,21 @@
 
     export default {
         methods: {
+            delPic(postion){
+                this.$post('/productImage/removeProductImage',
+                    {
+                        productId:this.$store.state.goods_id,
+                        position:postion
+                        // langId:this.$store.state.langId
+                    }).then((reData)=>{
+                   this.getdata()
+                })
+            },
+            change_active(){
+
+            },
             handleChangeSelect(value) {
-                this.postData.position=value
+                this.postData.cover=value
             },
             handleCancel () {
                 this.previewVisible = false
@@ -157,6 +175,7 @@
                 this.$post('/productImage/getProductImage',{productId:this.$store.state.goods_id,langId:this.$store.state.langId}).then((reData)=>{
                     console.log(reData)
                     this.productListData=reData.data
+                    this.selectData=[]
                     for(let b=0;b<reData.data.length;b++ ){
                         this.selectData.push(b+1)
                     }

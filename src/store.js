@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
       // mjf
+      // baseURL:'http://192.168.0.18:8081/zorafanERP',
       baseURL:'http://192.168.5.18:8081',
       title:'张三（运营部）',
       shopTableChange:{
