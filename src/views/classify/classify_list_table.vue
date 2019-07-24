@@ -108,7 +108,6 @@ export default {
             };
             this.$post("/category/getCategoryList", data).then(reData => {
                 if (reData.code == 0) {
-                    console.log(reData)
                     this.table_data = reData.data.slice(0,reData.data.length);
                     this.table_data.forEach(function(item){
                         item.key =item.categoryId;
