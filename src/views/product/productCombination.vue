@@ -2,7 +2,7 @@
     <div class="producetAdd">
         <div class="secondTitle">
             <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
-                产品属性：11
+                产品属性:
             </a-col>
             <a-col class="gutter-row" :span="3">
                 <a-row>
@@ -62,12 +62,17 @@
             <span slot="unit_code" slot-scope="text, record">
               <a-input v-model="text.unit_code" placeholder=""/>
           </span>
+
+            <span slot="unit_weight" slot-scope="text, record">
+              <a-input v-model="text.unit_weight" placeholder=""/>
+          </span>
             <span slot="ean13" slot-scope="text, record">
               <a-input v-model="text.ean13" placeholder=""/>
           </span>
             <span slot="unit_code" slot-scope="text, record">
               <a-input v-model="text.unit_code" placeholder=""/>
           </span>
+
             <span slot="upc" slot-scope="text, record">
               <a-input v-model="text.upc" placeholder=""/>
           </span>
@@ -100,6 +105,9 @@
           </span>
             <span slot="unit_code" slot-scope="text, record">
               <a-input v-model="text.unit_code" placeholder=""/>
+          </span>
+            <span slot="unit_weight" slot-scope="text, record">
+              <a-input v-model="text.unit_weight" placeholder=""/>
           </span>
             <span slot="ean13" slot-scope="text, record">
               <a-input v-model="text.ean13" placeholder=""/>
@@ -138,6 +146,7 @@
         {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '属性商品名称', dataIndex: 'unit_name', key: 'unit_name'},
         { title: '属性商品码', key: 'unit_code', scopedSlots: { customRender: 'unit_code' }},
+        { title: '商品重量(kg)', key: 'unit_weight', scopedSlots: { customRender: 'unit_weight' }},
         { title: 'ean13', key: 'ean13', scopedSlots: { customRender: 'ean13' }},
         { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
         { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
@@ -154,20 +163,21 @@
             handleChangeSelect(value) {
                 this.postData.currencyId=value
             },
-
             onChangeSize (checkedValues) {
                 var vm =this
-                vm.sizeList=[]
+
+                let sizeData = []
                 vm.sizeListO.forEach(function(val, index) {
                     checkedValues.forEach(function(valB, indexB) {
                         if(val.value==valB){
-                            vm.sizeList.push({
+                            sizeData.push({
                                 value:valB,
                                 label:val.label
                             })
                         }
                     });
                 });
+                vm.sizeList=vm.sizeListCopy.concat(sizeData)
                 // this.sizeList.push(checkedValues)
                 console.log('checked = ', checkedValues)
 
@@ -176,17 +186,18 @@
             },
             onChangeColor (checkedValues) {
                 var vm =this
-                vm.colorList=[]
+                let colorData = []
                 vm.colorListO.forEach(function(val, index) {
                     checkedValues.forEach(function(valB, indexB) {
                         if(val.value==valB){
-                            vm.colorList.push({
+                            colorData.push({
                                 value:valB,
                                 label:val.label
                             })
                         }
                     });
                 });
+                vm.colorList=vm.colorListCopy.concat(colorData)
                 // this.colorList.push(checkedValues)
                 this.makeList()
             },
@@ -219,6 +230,7 @@
                                     product_id:vm.$store.state.goods_id,
                                     unit_name:val.label+"-"+valc.label,
                                     unit_code:'',
+                                    unit_weight:'',
                                     ean13:'',
                                     upc:'',
                                     good_qty:'',
@@ -227,12 +239,34 @@
                                     size_id:val.value,
                                 }
                             )
-
-
                         }
 
                     });
                 });
+                // vm.tabListCopy.forEach(function(vala, indexa) {
+                //     vm.tabList.forEach(function(valb, indexb) {
+                //         console.log("tabListCopy  +"+vala.unit_name, indexa)
+                //         console.log("tabList      +"+valb.unit_name, indexb)
+                //
+                //         if(vala.unit_name==valb.unit_name){
+                //                 vm.tabListCopy.splice(indexa,1)
+                //         }
+                //     })
+                // })
+                let a = vm.tabListCopy
+                let b = vm.tabList
+                let objb = {};
+                b.forEach((e,i) =>{
+                    objb[e.unit_name] = e;
+                })
+                let result = a.reduce((acc, e, i) => {
+                    if (!objb[e.unit_name]){
+                        acc.push(e);
+                    }
+                    return acc;
+                },[])
+                vm.tabListCopy = result
+
 
                 // if(vm.tabList.length!=0){
                 //     vm.tabList[0].is_default=1
@@ -260,7 +294,7 @@
                 setTimeout(function () {
                     vm.getTabData()
                 },1000)
-
+                this.makeList()
             },
             getTabData(){
                 this.$post('/productUnit/getProductUnitList',{product_id:this.$store.state.goods_id}).then((reData)=>{
@@ -301,6 +335,8 @@
 
                             }
                         }
+                        this.sizeListCopy=  this.sizeList
+                        this.colorListCopy=  this.colorList
 
                         this.tabList.push({
                             ean13: dataF[i].ean13,
@@ -308,6 +344,7 @@
                             is_default: dataF[i].is_default,
                             product_id:dataF[i].product_id,
                             unit_code:dataF[i].unit_code,
+                            unit_weight:dataF[i].unit_weight,
                             unit_id: dataF[i].unit_id,
                             size_id:dataF[i].size_id,
                             good_qty:dataF[i].good_qty,
@@ -442,6 +479,8 @@
                 colorListO:[],
                 sizeList:[],
                 colorList:[],
+                sizeListCopy:[],
+                colorListCopy:[],
                 tabListCopy:[],
                 tabList:[
                     // {

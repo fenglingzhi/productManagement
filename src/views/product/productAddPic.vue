@@ -70,7 +70,7 @@
             <div class="inputName">*是否展示：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
-            <a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">
+            <a-select  style="width: 100%" defaultValue="1" @change="handleChangeCoverSelect">
               <a-select-option value="1">是</a-select-option>
               <a-select-option value="0">否</a-select-option>
 
@@ -155,6 +155,9 @@
 
             },
             handleChangeSelect(value) {
+                this.postData.position=value
+            },
+            handleChangeCoverSelect(value) {
                 this.postData.cover=value
             },
             handleCancel () {

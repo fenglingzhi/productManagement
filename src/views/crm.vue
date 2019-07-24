@@ -1,7 +1,6 @@
 <template>
   <div class="crm">
 
-      {{$store.state.goods_id}}
       <template>
           <a-spin :spinning="$store.state.loading">
               <div class="spin-content">
