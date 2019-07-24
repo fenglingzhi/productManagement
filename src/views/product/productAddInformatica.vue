@@ -46,6 +46,8 @@
                             </a-col>
                         </div>
                     </a-col>
+                </a-row>
+                <a-row>
                     <a-col class="gutter-row" :span="6">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
@@ -60,6 +62,7 @@
                             </a-col>
                         </div>
                     </a-col>
+
                 </a-row>
                 <a-row>
                     <a-col class="gutter-row" :span="6">
@@ -68,36 +71,36 @@
                                 <div class="inputName">*商品标签 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.product_label" placeholder=""/>
+                                <!--<a-input v-model="postData.product_label" placeholder=""/>-->
 
-                                <!--<template>-->
-                                    <!--<div>-->
-                                        <!--<template v-for="(tag, index) in postData.product_label">-->
-                                            <!--<a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">-->
-                                                <!--<a-tag :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">-->
-                                                    <!--{{`${tag.slice(0, 20)}...`}}-->
-                                                <!--</a-tag>-->
-                                            <!--</a-tooltip>-->
-                                            <!--<a-tag v-else :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">-->
-                                                <!--{{tag}}-->
-                                            <!--</a-tag>-->
-                                        <!--</template>-->
-                                        <!--<a-input-->
-                                                <!--v-if="inputVisible"-->
-                                                <!--ref="input"-->
-                                                <!--type="text"-->
-                                                <!--size="small"-->
-                                                <!--:style="{ width: '78px' }"-->
-                                                <!--:value="inputValue"-->
-                                                <!--@change="handleInputChange"-->
-                                                <!--@blur="handleInputConfirm"-->
-                                                <!--@keyup.enter="handleInputConfirm"-->
-                                        <!--/>-->
-                                        <!--<a-tag v-else @click="showInput" style="background: #fff; borderStyle: dashed;">-->
-                                            <!--<a-icon type="plus" /> New Tag-->
-                                        <!--</a-tag>-->
-                                    <!--</div>-->
-                                <!--</template>-->
+                                <template>
+                                    <div>
+                                        <template v-for="(tag, index) in tags">
+                                            <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                                                <a-tag :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">
+                                                    {{`${tag.slice(0, 20)}...`}}
+                                                </a-tag>
+                                            </a-tooltip>
+                                            <a-tag v-else :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">
+                                                {{tag}}
+                                            </a-tag>
+                                        </template>
+                                        <a-input
+                                                v-if="inputVisible"
+                                                ref="input"
+                                                type="text"
+                                                size="small"
+                                                :style="{ width: '78px' }"
+                                                :value="inputValue"
+                                                @change="handleInputChange"
+                                                @blur="handleInputConfirm"
+                                                @keyup.enter="handleInputConfirm"
+                                        />
+                                        <a-tag v-else @click="showInput" style="background: #fff; borderStyle: dashed;">
+                                            <a-icon type="plus" /> New Tag
+                                        </a-tag>
+                                    </div>
+                                </template>
 
 
                             </a-col>
@@ -172,6 +175,16 @@
             TinymceEditor
         },
         methods: {
+            acTiveArrStringFun(obj) {
+                var arr = [];
+                if (obj != null && obj.length != 0) {
+                    for (var i = 0; i < obj.length; i++) {
+                        arr.push(obj[i]);
+                    }
+                }
+                return arr.toString();
+            },
+
             handleChangeSelect(value) {
                 this.postData.product_type=value
             },
@@ -185,6 +198,7 @@
                 // store.commit('changeStore',{key:'loading',val:true});
                 this.postData.lang_id=this.$store.state.langId;
                 this.postData.product_id = this.$store.state.goods_id;
+                this.postData.product_label = this.acTiveArrStringFun(this.tags);
 
                 let isAll = true
                 // for(let key  in this.postData){
@@ -250,9 +264,9 @@
 
 
             handleClose (removedTag) {
-                const tags = this.postData.product_label.filter(tag => tag !== removedTag)
+                const tags = this.tags.filter(tag => tag !== removedTag)
                 console.log(tags)
-                this.postData.product_label = tags
+                this.tags = tags
             },
 
             showInput () {
@@ -261,12 +275,15 @@
                     this.$refs.input.focus()
                 })
             },
+
             handleInputChange (e) {
                 this.inputValue = e.target.value
             },
+
+
             handleInputConfirm () {
                 const inputValue = this.inputValue
-                let tags = this.postData.product_label
+                let tags = this.tags
                 if (inputValue && tags.indexOf(inputValue) === -1) {
                     tags = [...tags, inputValue]
                 }
@@ -281,6 +298,7 @@
 
         } ,
         mounted() {
+            var vm=this;
             if(this.$store.state.isEdit){
 
 
@@ -295,6 +313,12 @@
                 this.postData.description = Data.description
                 this.postData.product_code = Data.product_code
                 this.postData.lang_id = Data.lang_id
+               var tagList =  this.$store.state.oldData.tagList
+
+                tagList.forEach(function(val, index) {
+                    vm.tags.push(val.name)
+                });
+
                 store.commit('changeStore',{key:'langId',val: Data.lang_id});
 
 
@@ -310,7 +334,7 @@
                 },
 
 
-                tags: ['Unremovable', 'Tag 2', 'Tag 3Tag 3Tag 3Tag 3Tag 3Tag 3Tag 3'],
+                tags: [],
                 inputVisible: false,
                 inputValue: ''
                 ,disabled: false

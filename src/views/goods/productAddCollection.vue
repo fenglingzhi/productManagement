@@ -39,6 +39,7 @@
 
                         <template>
                             <a-tree
+
                                     checkable
                                     @expand="onExpand"
                                     :expandedKeys="expandedKeys"
@@ -48,6 +49,7 @@
                                     @select="onSelect"
                                     :selectedKeys="selectedKeys"
                                     :treeData="treeData"
+                                    :defaultExpandAll="true"
                             />
                         </template>
                     </a-col>
@@ -72,6 +74,15 @@
             TinymceEditor
         },
         methods: {
+            acTiveArrStringFun(obj) {
+                var arr = [];
+                if (obj != null && obj.length != 0) {
+                    for (var i = 0; i < obj.length; i++) {
+                        arr.push(obj[i]);
+                    }
+                }
+                return arr.toString();
+            },
 
             onExpand (expandedKeys) {
                 console.log('onExpand', expandedKeys)
@@ -126,7 +137,7 @@
 
             }
             ,checked(jsontree){
-                var newData = this.checkedKeys
+                var newData = this.checkedKeys.checked
                 if ((typeof jsontree == 'object') && (jsontree.constructor== Object.prototype.constructor)) {
                     var arrey = [];
                     arrey.push(jsontree);
@@ -136,7 +147,7 @@
                     var jn = arrey[i];
                     if (jn.status == "1") {
                         newData.push(jn.key)
-                        this.checkedKeys = newData
+                        this.checkedKeys.checked = newData
                         // return;
                     }
                     if (jn.children && jn.children.length > 0) {
@@ -148,7 +159,10 @@
                 this.$fetch('/category/getAllCategoryTree',{productId:this.$store.state.goods_id,langId:this.$store.state.langId}).then((reData)=>{
                     // console.log(reData)
                     this.treeData = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/categoryId/g,"key"))
-                    this.checked(this.treeData)
+                    if(this.$store.state.isEdit){
+                        this.checked(this.treeData)
+                    }
+
 
 
                 })
@@ -164,7 +178,7 @@
             return {
                 expandedKeys: [],
                 autoExpandParent: true,
-                checkedKeys: [],
+                checkedKeys: {checked:[]},
                 selectedKeys: [],
                 treeData,
                 postData:{

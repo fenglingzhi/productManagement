@@ -2,7 +2,7 @@
     <div class="producetAdd">
         <div class="secondTitle">
             <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
-                产品属性：
+                产品属性：11
             </a-col>
             <a-col class="gutter-row" :span="3">
                 <a-row>
@@ -71,7 +71,9 @@
             <span slot="upc" slot-scope="text, record">
               <a-input v-model="text.upc" placeholder=""/>
           </span>
-
+            <span slot="good_qty" slot-scope="text, record">
+              <a-input v-model="text.good_qty" placeholder=""/>
+          </span>
             <a slot="isDefault" slot-scope="text, record,index" style="text-align: center">
                 <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active('0',index)"></a-icon>
                 <a-icon type="close" style="color: red" v-if="text.is_default == '0'" @click="change_active('1',index)"></a-icon>
@@ -108,6 +110,10 @@
             <span slot="upc" slot-scope="text, record">
               <a-input v-model="text.upc" placeholder=""/>
           </span>
+            <span slot="good_qty" slot-scope="text, record">
+              <a-input v-model="text.good_qty" placeholder=""/>
+          </span>
+
 
             <a slot="isDefault" slot-scope="text, record,index" style="text-align: center">
                 <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active('0',index)"></a-icon>
@@ -134,6 +140,7 @@
         { title: '属性商品码', key: 'unit_code', scopedSlots: { customRender: 'unit_code' }},
         { title: 'ean13', key: 'ean13', scopedSlots: { customRender: 'ean13' }},
         { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
+        { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
         { title: '是否默认', align: 'center' ,scopedSlots: { customRender: 'isDefault' },},
         { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
         { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
@@ -214,6 +221,7 @@
                                     unit_code:'',
                                     ean13:'',
                                     upc:'',
+                                    good_qty:'',
                                     is_default:'0',
                                     color_id:valc.value,
                                     size_id:val.value,
@@ -302,6 +310,7 @@
                             unit_code:dataF[i].unit_code,
                             unit_id: dataF[i].unit_id,
                             size_id:dataF[i].size_id,
+                            good_qty:dataF[i].good_qty,
                             color_id:dataF[i].color_id,
                             upc: dataF[i].upc,
                         })

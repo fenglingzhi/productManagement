@@ -18,10 +18,31 @@
         <a-sub-menu key="2">
           <span slot="title"><a-icon type="snippets" /><span>客户管理</span></span>
           <a-menu-item key="2-1" @click="choseWhich('客户信息','customerList','2-1')" ><a-icon type="reconciliation" />客户信息</a-menu-item>
-          <a-menu-item key="2-3" @click="choseWhich('分类管理','classify_list','2-3')" ><a-icon type="reconciliation" />分类管理</a-menu-item>
-          <a-menu-item key="2-4" @click="choseWhich('属性管理','attributeWrap','2-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>
-          <a-menu-item key="2-5" @click="choseWhich('评论管理','reviewList','2-5')" ><a-icon type="reconciliation" />评论管理</a-menu-item>
+          <!--<a-menu-item key="2-3" @click="choseWhich('客户地址','classify_list','2-3')" ><a-icon type="reconciliation" />客户地址</a-menu-item>-->
+          <!--<a-menu-item key="2-4" @click="choseWhich('客户组','attributeWrap','2-4')" ><a-icon type="reconciliation" />客户组</a-menu-item>-->
+          <!--<a-menu-item key="2-5" @click="choseWhich('客户购物车','reviewList','2-5')" ><a-icon type="reconciliation" />客户购物车</a-menu-item>-->
         </a-sub-menu>
+        <!--<a-sub-menu key="3">-->
+          <!--<span slot="title"><a-icon type="snippets" /><span>价格规则</span></span>-->
+          <!--<a-menu-item key="3-1" @click="choseWhich('购物车规则','customerList','3-1')" ><a-icon type="reconciliation" />购物车规则</a-menu-item>-->
+          <!--<a-menu-item key="3-3" @click="choseWhich('COD设置','classify_list','3-3')" ><a-icon type="reconciliation" />COD设置</a-menu-item>-->
+          <!--<a-menu-item key="3-4" @click="choseWhich('商场规则','attributeWrap','3-4')" ><a-icon type="reconciliation" />商场规则</a-menu-item>-->
+          <!--<a-menu-item key="3-5" @click="choseWhich('分类定价规则','reviewList','3-5')" ><a-icon type="reconciliation" />分类定价规则</a-menu-item>-->
+        <!--</a-sub-menu>-->
+        <!--<a-sub-menu key="2">-->
+          <!--<span slot="title"><a-icon type="snippets" /><span>客户管理</span></span>-->
+          <!--<a-menu-item key="2-1" @click="choseWhich('客户信息','customerList','2-1')" ><a-icon type="reconciliation" />客户信息</a-menu-item>-->
+          <!--<a-menu-item key="2-3" @click="choseWhich('客户地址','classify_list','2-3')" ><a-icon type="reconciliation" />分类管理</a-menu-item>-->
+          <!--<a-menu-item key="2-4" @click="choseWhich('客户组','attributeWrap','2-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>-->
+          <!--<a-menu-item key="2-5" @click="choseWhich('客户购物车','reviewList','2-5')" ><a-icon type="reconciliation" />评论管理</a-menu-item>-->
+        <!--</a-sub-menu>-->
+        <!--<a-sub-menu key="2">-->
+          <!--<span slot="title"><a-icon type="snippets" /><span>客户管理</span></span>-->
+          <!--<a-menu-item key="2-1" @click="choseWhich('客户信息','customerList','2-1')" ><a-icon type="reconciliation" />客户信息</a-menu-item>-->
+          <!--<a-menu-item key="2-3" @click="choseWhich('客户地址','classify_list','2-3')" ><a-icon type="reconciliation" />分类管理</a-menu-item>-->
+          <!--<a-menu-item key="2-4" @click="choseWhich('客户组','attributeWrap','2-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>-->
+          <!--<a-menu-item key="2-5" @click="choseWhich('客户购物车','reviewList','2-5')" ><a-icon type="reconciliation" />评论管理</a-menu-item>-->
+        <!--</a-sub-menu>-->
 
 
 

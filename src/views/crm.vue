@@ -44,11 +44,12 @@
     import index from './index'
     import productWrap from './product/productWrap'
     import reviewList from './review/reviewList'
+    import customerList from './customer/customerList'
 
     export default {
 
         components:{
-            productList,productAdd,classify_list,attributeWrap, index,productWrap,reviewList
+            productList,productAdd,classify_list,attributeWrap, index,productWrap,reviewList,customerList
         },
         data () {
             return {

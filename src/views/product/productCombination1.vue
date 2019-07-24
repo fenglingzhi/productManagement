@@ -67,6 +67,9 @@
           <span slot="upc" slot-scope="text, record">
               <a-input v-model="text.upc" placeholder=""/>
           </span>
+        <span slot="good_qty" slot-scope="text, record">
+              <a-input v-model="text.good_qty" placeholder=""/>
+          </span>
 
       <a slot="isDefault" slot-scope="text, record,index" style="text-align: center">
         <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active('0',index)"></a-icon>
@@ -90,6 +93,7 @@
         { title: '属性商品码', key: 'unit_code', scopedSlots: { customRender: 'unit_code' }},
         { title: 'ean13', key: 'ean13', scopedSlots: { customRender: 'ean13' }},
         { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
+        { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
         { title: '是否默认', align: 'center' ,scopedSlots: { customRender: 'isDefault' },},
         { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
         { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
@@ -144,6 +148,7 @@
                                     unit_code:'',
                                     ean13:'',
                                     upc:'',
+                                    good_qty:'',
                                     is_default:'0',
                                     color_id:valc,
                                     size_id:val,
