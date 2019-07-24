@@ -15,11 +15,11 @@ export default new Vuex.Store({
       tabArray:[{
         title: "首页",
         content:'index',
-        key: "home",
+        key: "0",
         closable: false ,
         defaultActiveKey:true
     }],
-      activeKey:'home',
+      activeKey:'0',
       menuKey:[],
       goods_id:'1',
       addProductContent:'productAddInformatica',

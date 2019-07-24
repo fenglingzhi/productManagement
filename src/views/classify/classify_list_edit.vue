@@ -175,7 +175,6 @@ export default {
     components:{TinymceEditor},
     mounted(){
         if(this.operation_name == 'edit'){
-            console.log(this.select_classify_all)
             this.name = this.select_classify_all.title;
             this.active = this.select_classify_all.active.toString();
             this.parentId = this.select_classify_all.parentId;
@@ -187,7 +186,6 @@ export default {
             this.linkRewrite = this.select_classify_all.linkRewrite;
             this.tags = this.select_classify_all.metaKeywords == '' ? [] : this.select_classify_all.metaKeywords .split(",");
         }else if(this.operation_name == 'add'){
-            console.log(this.select_classify_all)
             this.parentId = this.select_classify_all.key;
             this.value = this.select_classify_all.key.toString();
         }
@@ -196,9 +194,7 @@ export default {
     methods:{
         // 属性选择修改选择
         onChange (value) {
-            console.log(value)
             this.value = value
-            console.log(this.select_classify_all.parentId)
         },
         // 图片上传之前
         beforeUpload (file) {
@@ -221,7 +217,6 @@ export default {
         },
         handleClose (removedTag) {
             const tags = this.tags.filter(tag => tag !== removedTag)
-            console.log(tags)
             this.tags = tags
         },
 
@@ -233,7 +228,6 @@ export default {
         },
 
         handleInputChange (e) {
-            console.log(e.target.value)
             this.inputValue = e.target.value
         },
 
@@ -243,7 +237,6 @@ export default {
             if (inputValue && tags.indexOf(inputValue) === -1) {
                 tags = [...tags, inputValue]
             }
-            console.log(tags)
             Object.assign(this, {
                 tags,
                 inputVisible: false,
@@ -252,7 +245,6 @@ export default {
         },
         // 编辑保存分类
         save_classify(){
-            console.log("保存");
             let data = {};
             data.categoryId = this.select_classify_all.key;
             data.parentId = this.value;
@@ -277,7 +269,6 @@ export default {
         },
         // 新增分类
         add_classify(){
-            console.log("新增");
             let data = {};
             data.parentId = this.value;
             data.langId = 1;
@@ -293,7 +284,6 @@ export default {
                 data.categoryImgStr = this.imageUrl;
             }   
             data.active = this.active;
-            console.log(data);
             this.$post("/category/add", data).then(reData => {
                 if (reData.code == 0) {
                    this.$emit("update_classify","add");

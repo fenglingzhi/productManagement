@@ -58,6 +58,9 @@
           <span slot="unit_code" slot-scope="text, record">
               <a-input v-model="text.unit_code" placeholder=""/>
           </span>
+        <span slot="unit_weight" slot-scope="text, record">
+              <a-input v-model="text.unit_weight" placeholder=""/>
+          </span>
           <span slot="ean13" slot-scope="text, record">
               <a-input v-model="text.ean13" placeholder=""/>
           </span>
@@ -91,6 +94,7 @@
         {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '属性商品名称', dataIndex: 'unit_name', key: 'unit_name'},
         { title: '属性商品码', key: 'unit_code', scopedSlots: { customRender: 'unit_code' }},
+        { title: '商品重量（kg）', key: 'unit_weight', scopedSlots: { customRender: 'unit_weight' }},
         { title: 'ean13', key: 'ean13', scopedSlots: { customRender: 'ean13' }},
         { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
         { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
@@ -146,6 +150,7 @@
                                     product_id:vm.$store.state.goods_id,
                                     unit_name:colorName+"-"+sizeName,
                                     unit_code:'',
+                                    unit_weight:'',
                                     ean13:'',
                                     upc:'',
                                     good_qty:'',
@@ -201,6 +206,8 @@
                             is_default: dataF[i].is_default,
                             product_id:dataF[i].product_id,
                             unit_code:dataF[i].unit_code,
+                            unit_weight:dataF[i].unit_weight,
+
                             unit_id: dataF[i].unit_id,
                             size_id:dataF[i].size_id,
                             color_id:dataF[i].color_id,
