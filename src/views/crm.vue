@@ -1,7 +1,6 @@
 <template>
   <div class="crm">
 
-      {{$store.state.goods_id}}
       <template>
           <a-spin :spinning="$store.state.loading">
               <div class="spin-content">
@@ -45,11 +44,16 @@
     import productWrap from './product/productWrap'
     import reviewList from './review/reviewList'
     import banner_set from './banner_set/banner_set'
+    import customerList from './customer/customerList'
+    import customerGender from './customer/customerGender'
+
 
     export default {
 
         components:{
-            productList,productAdd,classify_list,attributeWrap, index,productWrap,reviewList,banner_set
+
+            productList,productAdd,classify_list,attributeWrap, index,productWrap,reviewList,customerList,customerGender,banner_set
+
         },
         data () {
             return {
