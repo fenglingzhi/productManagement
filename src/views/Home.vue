@@ -18,7 +18,7 @@
         <a-sub-menu key="2">
           <span slot="title"><a-icon type="snippets" /><span>客户管理</span></span>
           <a-menu-item key="2-1" @click="choseWhich('客户信息','customerList','2-1')" ><a-icon type="reconciliation" />客户信息</a-menu-item>
-          <!--<a-menu-item key="2-3" @click="choseWhich('客户地址','classify_list','2-3')" ><a-icon type="reconciliation" />客户地址</a-menu-item>-->
+          <a-menu-item key="2-3" @click="choseWhich('客户称呼','customerGender','2-3')" ><a-icon type="reconciliation" />客户称呼</a-menu-item>
           <!--<a-menu-item key="2-4" @click="choseWhich('客户组','attributeWrap','2-4')" ><a-icon type="reconciliation" />客户组</a-menu-item>-->
           <!--<a-menu-item key="2-5" @click="choseWhich('客户购物车','reviewList','2-5')" ><a-icon type="reconciliation" />客户购物车</a-menu-item>-->
         </a-sub-menu>
