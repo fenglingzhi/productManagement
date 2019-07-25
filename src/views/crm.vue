@@ -44,11 +44,12 @@
     import index from './index'
     import productWrap from './product/productWrap'
     import reviewList from './review/reviewList'
+    import banner_set from './banner_set/banner_set'
 
     export default {
 
         components:{
-            productList,productAdd,classify_list,attributeWrap, index,productWrap,reviewList
+            productList,productAdd,classify_list,attributeWrap, index,productWrap,reviewList,banner_set
         },
         data () {
             return {
