@@ -11,7 +11,7 @@
         <a-row class="row-padding">
             <a-col :span="5"><span class="must_fill" style="color:red;">*</span>是否显示</a-col>
             <a-col :span="19">
-                <a-select v-model="active" style="width:100%;">
+                <a-select v-model="category_id_active" style="width:100%;">
                     <a-select-option value="0">不显示</a-select-option>
                     <a-select-option value="1">显示</a-select-option>
                 </a-select>
@@ -20,12 +20,14 @@
         <a-row class="row-padding">
             <a-col :span="5"><span class="must_fill" style="color:red;">*</span>分类</a-col>
             <a-col :span="19">
-                <a-select v-model="active" style="width:100%;">
-                    <a-select-option value="0">不显示</a-select-option>
-                    <a-select-option value="1">显示</a-select-option>
+                <a-select v-model="category_id" style="width:100%;" >
+                    <a-select-option v-for="item in all_classify" :value="item.category_id"><span v-text="item.name"></span></a-select-option>
                 </a-select>
             </a-col>
         </a-row>
+        <div style="text-align:right;padding:10px 0;">
+            <a-button type="primary" @click="save_banner_footer">保存</a-button>
+        </div>
       </a-collapse-panel>
     </a-collapse>
 
@@ -157,6 +159,10 @@ export default {
       show_banner_map:false,
       edit_banner_id:'',
       error_fill:[],
+      category_id_active:'1',   //底部分类推荐是否显示
+      category_id:'0',          //底部分类推荐id
+      all_classify:[{name:"home",category_id:0}],          //所有分类
+
     };
   },
   components: {
@@ -180,6 +186,8 @@ export default {
       setTimeout(() => {
           this.image_type = 1;
       }, 500);
+      this.get_allClassify();
+      this.get_banner_footer();
   },
   methods: {
     showModal(value,item) {
@@ -294,6 +302,52 @@ export default {
             this.show_banner_map=false;
         }
     },
+    // 获取底部分类推荐
+    get_banner_footer(){
+        let data ={};
+        data.image_type = 16;
+        this.$post("/banner/getBannerList", data).then(reData => {
+            if (reData.code == 0) {
+                if(reData.data.length !=0){
+                    this.category_id_active = reData.data[0].active;
+                    this.category_id = reData.data[0].category_id;
+                }else{
+                    this.category_id_active = 1;
+                     this.category_id = 0;
+                }
+                
+            } else {
+                this.$message.error(reData.message);
+            }
+        });
+    },
+    // 获取所有分类
+    get_allClassify(){
+        let data ={};
+        data.lang_id = 1;
+        this.$post("/category/getCategoryAllList", data).then(reData => {
+            if (reData.code == 0) {
+                this.all_classify = this.all_classify.concat(reData.data);
+            } else {
+                this.$message.error(reData.message);
+            }
+        });
+    },
+    // 修改底部分类推荐
+    save_banner_footer(){
+        let data ={};
+        data.image_type = 16;
+        data.active = this.category_id_active;
+        data.category_id = this.category_id;
+        this.$post("/banner/updateBottomBannerInfo", data).then(reData => {
+            if (reData.code == 0) {
+                this.$message.success("修改成功");
+                this.get_banner_footer();
+            } else {
+                this.$message.error(reData.message);
+            }
+        });
+    }
   }
 };
 </script>
