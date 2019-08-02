@@ -43,6 +43,7 @@
     import index from './index'
     import productWrap from './product/productWrap'
     import reviewList from './review/reviewList'
+    import banner_set from './banner_set/banner_set'
     import customerList from './customer/customerList'
     import customerGender from './customer/customerGender'
     import currencyList from './localization/currencyList'
@@ -51,6 +52,7 @@
     import stateList from './localization/stateList'
     import langList from './localization/langList'
     import cityList from './localization/cityList'
+
 
 
 
@@ -73,6 +75,7 @@
             stateList,
             langList,
             cityList
+
 
         },
         data () {
