@@ -45,11 +45,35 @@
     import reviewList from './review/reviewList'
     import customerList from './customer/customerList'
     import customerGender from './customer/customerGender'
+    import currencyList from './localization/currencyList'
+    import areaList from './localization/areaList'
+    import countryList from './localization/countryList'
+    import stateList from './localization/stateList'
+    import langList from './localization/langList'
+    import cityList from './localization/cityList'
+
+
+
 
     export default {
 
         components:{
-            productList,productAdd,classify_list,attributeWrap, index,productWrap,reviewList,customerList,customerGender
+            productList,
+            productAdd,
+            classify_list,
+            attributeWrap,
+            index,
+            productWrap,
+            reviewList,
+            customerList,
+            customerGender,
+            currencyList,
+            areaList,
+            countryList,
+            stateList,
+            langList,
+            cityList
+
         },
         data () {
             return {
