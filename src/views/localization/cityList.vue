@@ -16,7 +16,7 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :scroll="{ x: 1500 }">
+                    >
               <span slot="action" slot-scope="text, record">
                   <a @click="editAttribute(text.state_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
@@ -48,7 +48,7 @@
                                 <div class="inputName">是否启用：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-select defaultValue="1" style="width: 100%"  @change="handleChangeAdd">
+                                <a-select defaultValue="1" style="width: 100%"   @change="handleChangeAdd">
                                     <a-select-option value="1">启用</a-select-option>
                                     <a-select-option value="0">不启用</a-select-option>
                                 </a-select>
@@ -72,18 +72,21 @@
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="请选择国家" style="width: 100%"  @change="handleChangeZoneAdd">
-                                    <a-select-option v-for="item in countryList" :value="{country_id:item.country_id,zone_id:item.zone_id}">{{item.name}}</a-select-option>
+                                    <a-select-option v-for="item in countryList" :value="item.country_id">{{item.name}}</a-select-option>
                                 </a-select>
                             </a-col>
                         </div>
                     </a-row>
+
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国际码 ：</div>
+                                <div class="inputName">省/州：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="addCurrency.iso_code" />
+                                <a-select defaultValue="请选择省/州" style="width: 100%"  @change="handleChangeStateAdd">
+                                    <a-select-option v-for="item in stateList" :value="item.state_id">{{item.name}}</a-select-option>
+                                </a-select>
                             </a-col>
                         </div>
                     </a-row>
@@ -168,6 +171,7 @@
     export default {
         data() {
             return {
+                stateList:[],
                 countryList:[],
                 editCurrency:{
                     zone_id:'',
@@ -180,10 +184,8 @@
                 },
                 addCurrency:{
                     name:'',
-                    zone_id:'',
-                    iso_code:'',
-                    country_id:'',
-                    lang_id:'1',
+                    state_id:'',
+                    lang_id:this.$store.state.langId,
                     active:'1'
             },
                 visible_add:false,
@@ -227,9 +229,10 @@
 
             },
             handleChangeZoneAdd(value){
-                this.addCurrency.zone_id = value.zone_id
-                this.addCurrency.country_id	 = value.country_id
-
+                this.getStateList(value)
+            },
+            handleChangeStateAdd(value){
+                this.addCurrency.state_id = value
             },
             handleChangeEdit(value){
                 this.editCurrency.active = value
@@ -239,16 +242,14 @@
             },
         //添加提交
         submitAdd() {
-            this.$post('/state/addState',this.addCurrency).then((reData)=>{
+            this.$post('/city/addCity',this.addCurrency).then((reData)=>{
                 if(reData.code === '0'){
                     this.$message.success(reData.message, 3);
                     this.visible_add = false
                     this.addCurrency={
                         name:'',
-                        zone_id:'',
-                        iso_code:'',
-                        country_id:'',
-                        lang_id:'1',
+                        state_id:'',
+                        lang_id:this.$store.state.langId,
                         active:'1'
                     },
                     this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
@@ -278,7 +279,7 @@
             }
             ,  // 获取单条数据
             getData(data){
-                this.$post('/state/getStateInfo',data).then((reData)=>{
+                this.$post('/city/getCityInfo',data).then((reData)=>{
                     this.editCurrency = reData.data.stateInfo
                     // this.editCurrency.lang_id = data.lang_id
                     this.editCurrency.country_id= reData.data.stateInfo.country_id
@@ -288,8 +289,11 @@
                 })
             }
             //修改属性
-            ,editAttribute(state_id){
-               this.getData({state_id:state_id,lang_id:this.$store.state.langId})
+            ,editAttribute(city_id){
+               this.getData({city_id:city_id
+                   // ,lang_id:this.$store.state.langId
+
+               })
 
             }
             // 获取列表
@@ -305,6 +309,12 @@
             ,getCountryList(){
                 this.$post('/country/getCountryList',{lang_id:this.$store.state.langId}).then((reData)=>{
                     this.countryList=reData.data
+                })
+            }
+            // 根据国家获取省
+            ,getStateList(country_id){
+                this.$post('/state/getStateList',{country_id:country_id}).then((reData)=>{
+                    this.stateList=reData.data
                 })
             }
             //表格分页

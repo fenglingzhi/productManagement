@@ -159,7 +159,7 @@
                                 <div class="inputName">区域：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-select :defaultValue="editCurrency.zone_id | toString" style="width: 100%"  @change="handleChangeZoneEdit">
+                                <a-select :defaultValue="editCurrency.zone_id " style="width: 100%"  @change="handleChangeZoneEdit">
                                     <a-select-option v-for="item in zoneList" :value="item.zone_id">{{item.name}}</a-select-option>
                                 </a-select>
                             </a-col>

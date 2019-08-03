@@ -52,9 +52,11 @@
           <a-menu-item key="6-4" @click="choseWhich('省/州','stateList','6-4')" ><a-icon type="reconciliation" />省/州</a-menu-item>
           <a-menu-item key="6-5" @click="choseWhich('城市','cityList','6-5')" ><a-icon type="reconciliation" />城市</a-menu-item>
           <a-menu-item key="6-6" @click="choseWhich('语言','langList','6-6')" ><a-icon type="reconciliation" />语言</a-menu-item>
-
         </a-sub-menu>
-
+          <a-sub-menu key="7">
+              <span slot="title"><a-icon type="snippets" /><span>物流</span></span>
+              <a-menu-item key="7-1" @click="choseWhich('物流列表','logisticList','7-1')" ><a-icon type="reconciliation" />物流列表</a-menu-item>
+          </a-sub-menu>
 
       </a-menu>
     </a-layout-sider>

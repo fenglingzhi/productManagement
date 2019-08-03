@@ -52,6 +52,8 @@
     import stateList from './localization/stateList'
     import langList from './localization/langList'
     import cityList from './localization/cityList'
+    import logisticList from './logistics/logisticList'
+
 
 
 
@@ -69,14 +71,13 @@
             reviewList,
             customerList,
             customerGender,
+        banner_set,
             currencyList,
             areaList,
             countryList,
             stateList,
             langList,
-            cityList
-
-
+            cityList,logisticList
         },
         data () {
             return {
