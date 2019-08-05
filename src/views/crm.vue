@@ -45,11 +45,23 @@
     import reviewList from './review/reviewList'
     import customerList from './customer/customerList'
     import customerGender from './customer/customerGender'
+    import customerCart from './customer/customerCart'
+    import customerAddress from './customer/customerAddress'
 
     export default {
 
         components:{
-            productList,productAdd,classify_list,attributeWrap, index,productWrap,reviewList,customerList,customerGender
+            productList,
+            productAdd,
+            classify_list,
+            attributeWrap,
+            index,
+            productWrap,
+            reviewList,
+            customerList,
+            customerGender,
+            customerCart,
+            customerAddress
         },
         data () {
             return {
