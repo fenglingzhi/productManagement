@@ -18,9 +18,9 @@
                      @change="handleTableChange"
                     >
               <span slot="action" slot-scope="text, record">
-                  <a @click="editAttribute(text.state_id)">修改</a>
+                  <a @click="editAttribute(text.city_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct(text.state_id)">删除</a>
+                  <a @click="deleteProduct(text.city_id)">删除</a>
               </span>
 
                 <span slot="contains_states" slot-scope="text, record" style="text-align: center">
