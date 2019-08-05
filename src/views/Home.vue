@@ -6,7 +6,7 @@
       <div class="logo" @click="logo()">
         <img src="../assets/logos.png" width="100" alt="">
       </div>
-      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"  :selectedKeys="$store.state.menuKey"     :defaultOpenKeys="['1']" :style="{ textAlign: 'left' }">
+      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"  :selectedKeys="$store.state.menuKey"     :defaultOpenKeys="['2']" :style="{ textAlign: 'left' }">
         <a-menu-item key="0" @click="choseWhich('首页','index','0')"><a-icon type="home" /><span>首页</span></a-menu-item>
         <a-sub-menu key="1">
           <span slot="title"><a-icon type="snippets" /><span>商品管理</span></span>
@@ -19,31 +19,10 @@
         <a-sub-menu key="2">
           <span slot="title"><a-icon type="snippets" /><span>客户管理</span></span>
           <a-menu-item key="2-1" @click="choseWhich('客户信息','customerList','2-1')" ><a-icon type="reconciliation" />客户信息</a-menu-item>
-          <a-menu-item key="2-3" @click="choseWhich('客户称呼','customerGender','2-3')" ><a-icon type="reconciliation" />客户称呼</a-menu-item>
-          <!--<a-menu-item key="2-4" @click="choseWhich('客户组','attributeWrap','2-4')" ><a-icon type="reconciliation" />客户组</a-menu-item>-->
-          <!--<a-menu-item key="2-5" @click="choseWhich('客户购物车','reviewList','2-5')" ><a-icon type="reconciliation" />客户购物车</a-menu-item>-->
+          <a-menu-item key="2-2" @click="choseWhich('客户称呼','customerGender','2-2')" ><a-icon type="reconciliation" />客户称呼</a-menu-item>
+          <a-menu-item key="2-3" @click="choseWhich('客户购物车','customerCart','2-3')" ><a-icon type="reconciliation" />客户购物车</a-menu-item>
+          <a-menu-item key="2-4" @click="choseWhich('客户地址','customerAddress','2-4')" ><a-icon type="reconciliation" />客户地址</a-menu-item>
         </a-sub-menu>
-        <!--<a-sub-menu key="3">-->
-          <!--<span slot="title"><a-icon type="snippets" /><span>价格规则</span></span>-->
-          <!--<a-menu-item key="3-1" @click="choseWhich('购物车规则','customerList','3-1')" ><a-icon type="reconciliation" />购物车规则</a-menu-item>-->
-          <!--<a-menu-item key="3-3" @click="choseWhich('COD设置','classify_list','3-3')" ><a-icon type="reconciliation" />COD设置</a-menu-item>-->
-          <!--<a-menu-item key="3-4" @click="choseWhich('商场规则','attributeWrap','3-4')" ><a-icon type="reconciliation" />商场规则</a-menu-item>-->
-          <!--<a-menu-item key="3-5" @click="choseWhich('分类定价规则','reviewList','3-5')" ><a-icon type="reconciliation" />分类定价规则</a-menu-item>-->
-        <!--</a-sub-menu>-->
-        <!--<a-sub-menu key="2">-->
-          <!--<span slot="title"><a-icon type="snippets" /><span>客户管理</span></span>-->
-          <!--<a-menu-item key="2-1" @click="choseWhich('客户信息','customerList','2-1')" ><a-icon type="reconciliation" />客户信息</a-menu-item>-->
-          <!--<a-menu-item key="2-3" @click="choseWhich('客户地址','classify_list','2-3')" ><a-icon type="reconciliation" />分类管理</a-menu-item>-->
-          <!--<a-menu-item key="2-4" @click="choseWhich('客户组','attributeWrap','2-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>-->
-          <!--<a-menu-item key="2-5" @click="choseWhich('客户购物车','reviewList','2-5')" ><a-icon type="reconciliation" />评论管理</a-menu-item>-->
-        <!--</a-sub-menu>-->
-        <!--<a-sub-menu key="2">-->
-          <!--<span slot="title"><a-icon type="snippets" /><span>客户管理</span></span>-->
-          <!--<a-menu-item key="2-1" @click="choseWhich('客户信息','customerList','2-1')" ><a-icon type="reconciliation" />客户信息</a-menu-item>-->
-          <!--<a-menu-item key="2-3" @click="choseWhich('客户地址','classify_list','2-3')" ><a-icon type="reconciliation" />分类管理</a-menu-item>-->
-          <!--<a-menu-item key="2-4" @click="choseWhich('客户组','attributeWrap','2-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>-->
-          <!--<a-menu-item key="2-5" @click="choseWhich('客户购物车','reviewList','2-5')" ><a-icon type="reconciliation" />评论管理</a-menu-item>-->
-        <!--</a-sub-menu>-->
         <a-sub-menu key="6">
         <span slot="title"><a-icon type="snippets" /><span>本地化</span></span>
         <a-menu-item key="6-1" @click="choseWhich('币种','currencyList','6-1')" ><a-icon type="reconciliation" />币种</a-menu-item>
@@ -57,7 +36,6 @@
               <span slot="title"><a-icon type="snippets" /><span>物流</span></span>
               <a-menu-item key="7-1" @click="choseWhich('物流列表','logisticList','7-1')" ><a-icon type="reconciliation" />物流列表</a-menu-item>
           </a-sub-menu>
-
       </a-menu>
     </a-layout-sider>
     <a-layout :style="{ marginLeft: '200px' }">

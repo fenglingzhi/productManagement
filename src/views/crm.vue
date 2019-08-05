@@ -46,6 +46,8 @@
     import banner_set from './banner_set/banner_set'
     import customerList from './customer/customerList'
     import customerGender from './customer/customerGender'
+    import customerCart from './customer/customerCart'
+    import customerAddress from './customer/customerAddress'
     import currencyList from './localization/currencyList'
     import areaList from './localization/areaList'
     import countryList from './localization/countryList'
@@ -53,11 +55,6 @@
     import langList from './localization/langList'
     import cityList from './localization/cityList'
     import logisticList from './logistics/logisticList'
-
-
-
-
-
 
     export default {
 
@@ -71,13 +68,16 @@
             reviewList,
             customerList,
             customerGender,
-        banner_set,
+            customerCart,
+            customerAddress,
+            banner_set,
             currencyList,
             areaList,
             countryList,
             stateList,
             langList,
-            cityList,logisticList
+            cityList,
+            logisticList
         },
         data () {
             return {

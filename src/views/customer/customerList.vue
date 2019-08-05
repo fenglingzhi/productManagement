@@ -45,6 +45,7 @@
           <a-modal
                   title="新增客户信息"
                   v-model="visible_add"
+                  :destroyOnClose="true"
                   @ok="submitAdd"
           >
               <a-row>
@@ -155,6 +156,7 @@
                   title="修改客户信息"
                   v-model="visible_edit"
                   @ok="submitEdit"
+                  :destroyOnClose="true"
           >
               <a-row>
                   <div class="inputPart">
@@ -263,20 +265,23 @@
               </a-row>
           </a-modal>
       </div>
-      <div class="searchCustomerGender">
+      <div class="editCustomerGender">
           <a-modal
                   title="查看客户信息"
                   v-model="visible_search"
+                  @ok="submitSearch"
+                  :destroyOnClose="true"
           >
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
                           <div class="inputName">称呼：</div>
                       </a-col>
-                      <a-col class="gutter-row" :span="18">
-                          <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
-                              <a-select-option  v-for="item in genderIdList" :value=item.gender_id>{{item.name}}</a-select-option>
-                          </a-select>
+                      <a-col class="gutter-row show_text" :span="18">
+                          <!--<a-select defaultValue="请选择" style="width: 100%" disabled="disabled" @change="handleChange" :value="addCustomerInfo.genderId">-->
+                              <!--<a-select-option  v-for="item in genderIdList" :value=item.gender_id>{{item.name}}</a-select-option>-->
+                          <!--</a-select>-->
+                          <span v-for="item in genderIdList" v-if="item.gender_id == addCustomerInfo.genderId" v-text="item.name"></span>
                       </a-col>
                   </div>
               </a-row>
@@ -285,8 +290,8 @@
                       <a-col class="gutter-row" :span="6">
                           <div class="inputName">名：</div>
                       </a-col>
-                      <a-col class="gutter-row" :span="18">
-                          <a-input placeholder="请输入名" v-model="addCustomerInfo.firstname" />
+                      <a-col class="gutter-row show_text" :span="18">
+                          {{addCustomerInfo.firstname}}
                       </a-col>
                   </div>
               </a-row>
@@ -295,8 +300,8 @@
                       <a-col class="gutter-row" :span="6">
                           <div class="inputName">姓：</div>
                       </a-col>
-                      <a-col class="gutter-row" :span="18">
-                          <a-input placeholder="请输入姓" v-model="addCustomerInfo.lastname" />
+                      <a-col class="gutter-row show_text" :span="18">
+                          {{addCustomerInfo.lastname}}
                       </a-col>
                   </div>
               </a-row>
@@ -305,18 +310,8 @@
                       <a-col class="gutter-row" :span="6">
                           <div class="inputName">邮箱地址：</div>
                       </a-col>
-                      <a-col class="gutter-row" :span="18">
-                          <a-input placeholder="请输入邮箱地址" v-model="addCustomerInfo.email" />
-                      </a-col>
-                  </div>
-              </a-row>
-              <a-row>
-                  <div class="inputPart">
-                      <a-col class="gutter-row" :span="6">
-                          <div class="inputName">密码：</div>
-                      </a-col>
-                      <a-col class="gutter-row" :span="18">
-                          <a-input placeholder="请输入密码" type="password" v-model="addCustomerInfo.passwd" />
+                      <a-col class="gutter-row show_text" :span="18">
+                          {{addCustomerInfo.email}}
                       </a-col>
                   </div>
               </a-row>
@@ -325,8 +320,8 @@
                       <a-col class="gutter-row" :span="6">
                           <div class="inputName">生日：</div>
                       </a-col>
-                      <a-col class="gutter-row" :span="18">
-                          <a-date-picker @change="onChange" />
+                      <a-col class="gutter-row show_text" :span="18">
+                          {{addCustomerInfo.birthday}}
                       </a-col>
                   </div>
               </a-row>
@@ -335,11 +330,8 @@
                       <a-col class="gutter-row" :span="6">
                           <div class="inputName">状态：</div>
                       </a-col>
-                      <a-col class="gutter-row" :span="18">
-                          <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_s">
-                              <a-select-option  value="1">是</a-select-option>
-                              <a-select-option  value="0">否</a-select-option>
-                          </a-select>
+                      <a-col class="gutter-row show_text" :span="18">
+                          <span v-text="addCustomerInfo.active == 1 ? '是' : '否'"></span>
                       </a-col>
                   </div>
               </a-row>
@@ -348,11 +340,8 @@
                       <a-col class="gutter-row" :span="6">
                           <div class="inputName">接受电子订阅：</div>
                       </a-col>
-                      <a-col class="gutter-row" :span="18">
-                          <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_e">
-                              <a-select-option  value="1">是</a-select-option>
-                              <a-select-option  value="0">否</a-select-option>
-                          </a-select>
+                      <a-col class="gutter-row show_text" :span="18">
+                          <span v-text="addCustomerInfo.newsletter == 1 ? '是' : '否'"></span>
                       </a-col>
                   </div>
               </a-row>
@@ -361,11 +350,8 @@
                       <a-col class="gutter-row" :span="6">
                           <div class="inputName">接受推销：</div>
                       </a-col>
-                      <a-col class="gutter-row" :span="18">
-                          <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_p">
-                              <a-select-option  value="1">是</a-select-option>
-                              <a-select-option  value="0">否</a-select-option>
-                          </a-select>
+                      <a-col class="gutter-row show_text" :span="18">
+                          <span v-text="addCustomerInfo.optin == 1 ? '是' : '否'"></span>
                       </a-col>
                   </div>
               </a-row>
@@ -436,6 +422,7 @@
                     ,active:''
                     ,newsletter:''
                     ,optin:''
+                    ,customerId:''
                 }
             }
         },
@@ -467,8 +454,21 @@
             }
             //编辑
             ,editFun(data) {
-                this.visible_edit = true;
-                this.getListDetail(data);
+                this.$post('/customer/getCustomerList',data).then((reData)=>{
+                    this.addCustomerInfo.genderId=reData.data[0].gender_id;
+                    this.addCustomerInfo.firstname=reData.data[0].firstname;
+                    this.addCustomerInfo.lastname=reData.data[0].lastname;
+                    this.addCustomerInfo.email=reData.data[0].email;
+                    this.addCustomerInfo.passwd=reData.data[0].passwd;
+                    this.addCustomerInfo.birthday=reData.data[0].birthday.toString();
+                    this.addCustomerInfo.active=reData.data[0].active;
+                    this.addCustomerInfo.newsletter=reData.data[0].newsletter;
+                    this.addCustomerInfo.optin=reData.data[0].optin;
+                    this.addCustomerInfo.customerId = data.customer_id;
+                    console.log(this.addCustomerInfo.birthday)
+                    this.visible_edit = true;
+                })
+
             }
             //查看详情
             ,searchFun(data){
@@ -490,16 +490,19 @@
             }
             //修改提交
             ,submitEdit() {
-                // console.log(this.addCustomerInfo);
-                // this.$post('/customer/updateCustomerInfo',this.addCustomerInfo).then((reData)=>{
-                //     if(reData.code === '0'){
-                //         this.visible_add = false
-                //         this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize});
-                //     } else {
-                //         this.$message.error(reData.message);
-                //         this.visible_add = false
-                //     }
-                // })
+                console.log(this.addCustomerInfo);
+                this.$post('/customer/updateCustomerInfo',this.addCustomerInfo).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.visible_edit = false
+                        this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize});
+                    } else {
+                        this.$message.error(reData.message);
+                        this.visible_add = false
+                    }
+                })
+            }
+            ,submitSearch(){
+                this.visible_search = false
             }
             // 获取客户信息列表
             ,getList(data){
@@ -590,4 +593,7 @@
     margin-left: -30px;
     background: #f0f2f5;
   }
+    .show_text{
+        line-height: 32px;
+    }
 </style>
