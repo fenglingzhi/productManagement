@@ -9,6 +9,9 @@ import productAttribute from './views/attribute/productAttribute'
 import addAttribute from './views/attribute/addAttribute'
 import editAttribute from './views/attribute/editAttribute'
 import productAdd from './views/product/productAdd'
+import currencyList from './views/localization/currencyList'
+import areaList from './views/localization/areaList'
+
 
 
 Vue.use(Router)
@@ -62,6 +65,17 @@ export default new Router({
                         path: '/editAttribute',
                         name: 'editAttribute',
                         component: editAttribute
+                    },
+                    {
+                        //货币
+                        path: '/currencyList',
+                        name: 'currencyList',
+                        component: currencyList
+                    },{
+                        //区域
+                        path: '/areaList',
+                        name: 'areaList',
+                        component: areaList
                     },
                 ]
             }

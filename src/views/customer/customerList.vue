@@ -217,7 +217,7 @@
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-date-picker
-                                  :defaultValue="moment(addCustomerInfo.birthday, dateFormat)"
+                                  :defaultValue="moment('2019-6-9', dateFormat)"
                                   @change="onChange"
                                   :format="dateFormat" />
                           <!--<a-date-picker :defaultValue="moment(addCustomerInfo.birthday, dateFormat)" :format="dateFormat" />-->

@@ -8,7 +8,7 @@ axios.defaults.baseURL ='http://192.168.0.18:8081/zorafanERP';
 // wangzhen
 // axios.defaults.baseURL ='http://192.168.5.18:8081';
 
-// axios.defaults.headers.common['token'] ='11122';
+axios.defaults.headers.common['token'] ='11122';
 
 
 

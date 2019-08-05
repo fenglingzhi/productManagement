@@ -14,6 +14,7 @@
           <a-menu-item key="1-3" @click="choseWhich('分类管理','classify_list','1-3')" ><a-icon type="reconciliation" />分类管理</a-menu-item>
           <a-menu-item key="1-4" @click="choseWhich('属性管理','attributeWrap','1-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>
           <a-menu-item key="1-5" @click="choseWhich('评论管理','reviewList','1-5')" ><a-icon type="reconciliation" />评论管理</a-menu-item>
+          <a-menu-item key="1-6" @click="choseWhich('Banner设置','banner_set','1-6')" ><a-icon type="reconciliation" />Banner设置</a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="2">
           <span slot="title"><a-icon type="snippets" /><span>客户管理</span></span>
@@ -22,6 +23,19 @@
           <a-menu-item key="2-3" @click="choseWhich('客户购物车','customerCart','2-3')" ><a-icon type="reconciliation" />客户购物车</a-menu-item>
           <a-menu-item key="2-4" @click="choseWhich('客户地址','customerAddress','2-4')" ><a-icon type="reconciliation" />客户地址</a-menu-item>
         </a-sub-menu>
+        <a-sub-menu key="6">
+        <span slot="title"><a-icon type="snippets" /><span>本地化</span></span>
+        <a-menu-item key="6-1" @click="choseWhich('币种','currencyList','6-1')" ><a-icon type="reconciliation" />币种</a-menu-item>
+          <a-menu-item key="6-2" @click="choseWhich('区域','areaList','6-2')" ><a-icon type="reconciliation" />区域</a-menu-item>
+          <a-menu-item key="6-3" @click="choseWhich('国家','countryList','6-3')" ><a-icon type="reconciliation" />国家</a-menu-item>
+          <a-menu-item key="6-4" @click="choseWhich('省/州','stateList','6-4')" ><a-icon type="reconciliation" />省/州</a-menu-item>
+          <a-menu-item key="6-5" @click="choseWhich('城市','cityList','6-5')" ><a-icon type="reconciliation" />城市</a-menu-item>
+          <a-menu-item key="6-6" @click="choseWhich('语言','langList','6-6')" ><a-icon type="reconciliation" />语言</a-menu-item>
+        </a-sub-menu>
+          <a-sub-menu key="7">
+              <span slot="title"><a-icon type="snippets" /><span>物流</span></span>
+              <a-menu-item key="7-1" @click="choseWhich('物流列表','logisticList','7-1')" ><a-icon type="reconciliation" />物流列表</a-menu-item>
+          </a-sub-menu>
       </a-menu>
     </a-layout-sider>
     <a-layout :style="{ marginLeft: '200px' }">
