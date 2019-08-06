@@ -55,6 +55,9 @@
     import langList from './localization/langList'
     import cityList from './localization/cityList'
     import logisticList from './logistics/logisticList'
+    import productIntroduction from './goods/productIntroduction'
+
+    import codList from './cart/codList'
 
     export default {
 
@@ -77,7 +80,9 @@
             stateList,
             langList,
             cityList,
-            logisticList
+            logisticList,
+            productIntroduction,
+            codList
         },
         data () {
             return {
