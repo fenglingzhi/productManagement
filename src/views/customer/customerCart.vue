@@ -10,12 +10,9 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :rowSelection="rowSelection"
-                     :scroll="{ x: 2400 }">
+                     :scroll="{ x: 1600 }">
               <span slot="action" slot-scope="text, record">
-                  <a @click="searchFun({address_id:record.address_id,lang_id:$store.state.langId})">修改</a>
-                  <a-divider type="vertical"></a-divider>
-                  <a @click="deleteFun({address_id:record.address_id})">删除</a>
+                  <a @click="searchFun({cart_id:record.cart_id,lang_id:$store.state.langId})">查看</a>
               </span>
                 <span slot="img_" slot-scope="text, record">
                   <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
@@ -334,24 +331,20 @@
     const columns = [
         {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '沙特身份证', dataIndex: 'national_id', key: 'national_id'},
-        { title: '名', dataIndex: 'firstname', key: 'firstname'},
-        { title: '姓', dataIndex: 'lastname', key: 'lastname'},
-        { title: '中间名', dataIndex: 'middlename', key: 'middlename'},
-        { title: '国家', dataIndex: 'country_name', key: 'country_name'},
-        { title: '省/州', dataIndex: 'state_name', key: 'state_name'},
-        { title: '城市', dataIndex: 'city', key: 'city'},
-        { title: '街道', dataIndex: 'street', key: 'street'},
-        { title: '地址1', dataIndex: 'address1', key: 'address1'},
-        { title: '地址2', dataIndex: 'address2', key: 'address2'},
-        { title: '邮政编码', dataIndex: 'postcode', key: 'postcode'},
-        // { title: '状态', dataIndex: 'active', key: 'active'},
-        // { title: '是否默认', dataIndex: 'is_default', key: 'is_default'},
-        { title: '联系电话', dataIndex: 'phone', key: 'phone'},
-        // { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
-        // { title: '更新时间', dataIndex: 'upd_date', key: 'upd_date'},
-        { title: '别名', dataIndex: 'alias', key: 'alias'},
-        { title: '公司', dataIndex: 'company', key: 'company'},
-        { title: '备用电话', dataIndex: 'alertnate_phone', key: 'alertnate_phone'},
+        { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
+        { title: '平台类型', dataIndex: 'mobile_type', key: 'mobile_type'},
+        { title: '货币sign', dataIndex: 'sign', key: 'sign'},
+        { title: '语言id', dataIndex: 'lang_id', key: 'lang_id'},
+        { title: '物流id', dataIndex: 'carrier_id', key: 'carrier_id'},
+        { title: '购物车id', dataIndex: 'city', key: 'city'},
+        { title: '更新时间', dataIndex: 'upd_date', key: 'upd_date'},
+        { title: '总价', dataIndex: 'total_amount', key: 'total_amount'},
+        { title: '小数点保留几位', dataIndex: 'decimals', key: 'decimals'},
+        { title: '客户id', dataIndex: 'customer_id', key: 'customer_id'},
+        { title: '汇率', dataIndex: 'conversion_rate', key: 'conversion_rate'},
+        { title: '订单id', dataIndex: 'order_id', key: 'order_id'},
+        { title: '币种id', dataIndex: 'currency_id', key: 'currency_id'},
+        { title: '用户邮件', dataIndex: 'email', key: 'email'},
     ];
     const productListData = [];
     //表格复选框
@@ -405,52 +398,12 @@
             }
         },
         methods: {
-            //更新地址详情
+            //产看购物车详情
             searchFun(data){
-                this.addCustomerAddressData.address_id = data.address_id
-                this.$post('/country/getCountryListPage',{lang_id:store.state.langId,pageSize:'10000'}).then((reData)=>{
-                    this.country = reData.data.dataList.slice(0)
-                }).then(()=>{
-                    this.$post('/address/getAddressInfoList',data).then((reData)=>{
-                        if(reData.code === '0'){
-                            this.addCustomerAddressData.phone=reData.data[0].phone;
-                            this.addCustomerAddressData.email=reData.data[0].email;
-                            this.addCustomerAddressData.national_id=reData.data[0].national_id;
-                            this.addCustomerAddressData.alias=reData.data[0].alias;
-                            this.addCustomerAddressData.firstname=reData.data[0].firstname;
-                            this.addCustomerAddressData.lastname=reData.data[0].lastname;
-                            this.addCustomerAddressData.company=reData.data[0].company;
-                            this.addCustomerAddressData.address1=reData.data[0].address1;
-                            this.addCustomerAddressData.address2=reData.data[0].address2;
-                            this.addCustomerAddressData.city=reData.data[0].city;
-                            this.addCustomerAddressData.postcode=reData.data[0].postcode;
-                            this.addCustomerAddressData.state_id=reData.data[0].state_id;
-                            this.addCustomerAddressData.country_id=reData.data[0].country_id;
-                            this.addCustomerAddressData.email=reData.data[0].email;
-                            this.addCustomerAddressData.other=reData.data[0].other;
-                        }
-                    })
-                }).then(()=>{
-                    this.$post('/state/getStateListPage',{country_id:this.addCustomerAddressData.country_id,pageSize:'10000'}).then((reData)=>{
-                        if(reData.data.dataList == null){
-                            this.state_flag = true;
-                            this.city_flag = true;
-                        } else {
-                            this.state_flag = false;
-                            this.state = reData.data.dataList.slice(0)
-                        }
-                    });
-                }).then(()=>{
-                    this.$post('/city/getCityListPage',{state_id:this.addCustomerAddressData.state_id,pageSize:'10000'}).then((reData)=>{
-                        if(reData.data.dataList == null){
-                            this.city_flag = true;
-                        } else {
-                            this.city_flag = false;
-                            this.city = reData.data.dataList.slice(0)
-                        }
-                    });
-                });
-                this.visible_update = true;
+                this.$post('/cart/getCartDetailInfo',data).then((reData)=>{
+                    console.log(reData.data)
+                })
+                // this.visible_update = true;
             }
             //新增地址
             ,add_product(){
@@ -500,12 +453,12 @@
                 console.log(this.addCustomerGenderData)
                 this.visible_edit = true;
             }
-            // 获取地址列表
+            // 获取购物车列表
             ,getList(data){
                 this.loading = true;
-                this.$post('/address/getAddressPage',data).then((reData)=>{
+                this.$post('/cart/getCartInfoPage',data).then((reData)=>{
                     this.productListData=reData.data.dataList;
-                    // this.pagination.total=reData.data.page.totalResultSize
+                    this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
                 })
             }
@@ -555,7 +508,7 @@
         mounted() {
             var vm = this
             store.commit('changeStore',{key:'title',val:'产品列表'});
-            vm.getList({lang_id:store.state.langId})
+            vm.getList()
         },
 
     }
