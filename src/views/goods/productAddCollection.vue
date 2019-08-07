@@ -156,16 +156,23 @@
                 }
             }
             ,getCollection(){
-                this.$fetch('/category/getAllCategoryTree',{productId:this.$store.state.goods_id,langId:this.$store.state.langId}).then((reData)=>{
-                    // console.log(reData)
-                    this.treeData = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/categoryId/g,"key"))
-                    if(this.$store.state.isEdit){
-                        this.checked(this.treeData)
-                    }
+
+                if(this.$store.state.isEdit){
+                    this.$fetch('/category/getAllCategoryTree',{product_id:this.$store.state.goods_id,lang_id:this.$store.state.langId}).then((reData)=>{
+                        // console.log(reData)
+                        this.treeData = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/categoryId/g,"key"))
+                        // if(this.$store.state.isEdit){
+                            this.checked(this.treeData)
+                        // }
+                    })
+                }else {
+                    this.$fetch('/category/getAllCategoryTree',{lang_id:this.$store.state.langId}).then((reData)=>{
+                        this.treeData = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/categoryId/g,"key"))
+                    })
+                }
 
 
 
-                })
             }
         } ,
         mounted() {

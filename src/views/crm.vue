@@ -57,7 +57,8 @@
     import logisticList from './logistics/logisticList'
     import cartCoupon from './priceDiscipline/cartCoupon'
     import COD from './priceDiscipline/COD'
-
+    import productIntroduction from './goods/productIntroduction'
+    import codList from './cart/codList'
     export default {
 
         components:{
@@ -81,7 +82,9 @@
             cityList,
             logisticList,
             cartCoupon,
-            COD
+            COD,
+            productIntroduction,
+            codList
         },
         data () {
             return {

@@ -37,7 +37,7 @@
 
             <div class="addCurrency">
                 <a-modal
-                        title="新增省/州"
+                        title="新增城市"
                         v-model="visible_add"
                         :destroyOnClose = "true"
                         @ok="submitAdd"
@@ -124,30 +124,37 @@
                                 </a-col>
                             </div>
                         </a-row>
+
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
                                 <div class="inputName">国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-select  :defaultValue="editCurrency.country_id"  style="width: 100%"  @change="handleChangeZoneEdit">
+                                <a-select :defaultValue="editCurrency.country_id" style="width: 100%"  @change="handleChangeZoneAdd">
                                     <a-select-option v-for="item in countryList" :value="item.country_id">{{item.name}}</a-select-option>
                                 </a-select>
                             </a-col>
                         </div>
                     </a-row>
-                        <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">国际码 ：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-input placeholder="" v-model="editCurrency.iso_code" />
-                                </a-col>
-                            </div>
-                        </a-row>
 
-                    </a-modal>
+                    <a-row>
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">省/州：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-select :defaultValue="editCurrency.state_id" style="width: 100%"  @change="handleChangeStatEdit">
+                                    <a-select-option v-for="item in stateList" :value="item.state_id">{{item.name}}</a-select-option>
+                                </a-select>
+                            </a-col>
+                        </div>
+                    </a-row>
+
+
+
+
+                </a-modal>
             </div>
 
 
@@ -174,12 +181,10 @@
                 stateList:[],
                 countryList:[],
                 editCurrency:{
-                    zone_id:'',
-                    country_id:'',
+                    city_id:'',
                     name:'',
-                    iso_code:'',
-                    call_prefix:'',
-                    lang_id:'',
+                    state_id:'',
+                    lang_id:this.$store.state.langId,
                     active:'1'
                 },
                 addCurrency:{
@@ -234,6 +239,9 @@
             handleChangeStateAdd(value){
                 this.addCurrency.state_id = value
             },
+            handleChangeStatEdit(value){
+                this.editCurrency.state_id = value
+            },
             handleChangeEdit(value){
                 this.editCurrency.active = value
             },
@@ -280,10 +288,11 @@
             ,  // 获取单条数据
             getData(data){
                 this.$post('/city/getCityInfo',data).then((reData)=>{
-                    this.editCurrency = reData.data.stateInfo
+                    this.getStateList(reData.data.country_id)
+                    this.editCurrency = reData.data
                     // this.editCurrency.lang_id = data.lang_id
-                    this.editCurrency.country_id= reData.data.stateInfo.country_id
-                    this.editCurrency.active= reData.data.stateInfo.active.toString()
+                    this.editCurrency.state_id= reData.data.state_id.toString()
+                    this.editCurrency.active= reData.data.active.toString()
                     this.visible_edit = true
 
                 })
