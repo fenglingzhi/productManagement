@@ -4,7 +4,7 @@
         <!--<div class="hrLine"></div>-->
         <div>
             <div style="margin-bottom: 16px">
-                <a-button type="primary" @click="addAttribute(store.state.attribute_child_id)">
+                <a-button type="primary" @click="addCodM()">
                     新增
                 </a-button>
 
@@ -18,90 +18,111 @@
                      @change="handleTableChange"
                      :scroll="{ x: 1500 }">
               <span slot="action" slot-scope="text, record">
-                  <a @click="editAttribute(text.lang_id)">修改</a>
+                  <a @click="editCod(text.cart_cod_id)">修改</a>
                   <!--<a-divider type="vertical"></a-divider>-->
-                  <!--<a @click="deleteProduct(text.lang_id)">删除</a>-->
+                  <!-- <a @click="deleteProduct(text.cart_cod_id)">删除</a> -->
               </span>
-                <a slot="isUse" slot-scope="text, record" style="text-align: center">
-                    <div style="width: 100%;text-align: left" v-if="text.decimals == 1">是</div>
-                    <div style="width: 100%;text-align: left" v-if="text.decimals == 0">否</div>
-                </a>
                 <a slot="active" slot-scope="text, record" style="text-align: center">
-                    <a-icon type="check" style="color: green" v-if="text.active == '1'" @click="change_active({lang_id:text.lang_id,active:'0'})"></a-icon>
-                    <a-icon type="close" style="color: red" v-if="text.active == '0'" @click="change_active({lang_id:text.lang_id,active:'1'})"></a-icon>
+                    <a-icon type="check" style="color: green" v-if="text.active == '1'"></a-icon>
+                    <a-icon type="close" style="color: red" v-if="text.active == '0'"></a-icon>
                 </a>
             </a-table>
 
-
+            <!--新增修改弹框-->
             <div class="addCurrency">
                 <a-modal
-                        title="新增语言"
-                        v-model="visible_add"
-                        :destroyOnClose = "true"
-                        @ok="submitAdd"
+                    title="COD信息"
+                    v-model="visible_add"
+                    :destroyOnClose = "true"
+                    @ok="submitAdd(addCod.edit)"
                 >
-                    <a-row>
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">是否启用：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-select defaultValue="1" style="width: 100%"  @change="handleChangeAdd">
-                                    <a-select-option value="1">启用</a-select-option>
-                                    <a-select-option value="0">不启用</a-select-option>
-                                </a-select>
-                            </a-col>
-                        </div>
-                    </a-row>
-                    <a-row>
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">语言名称：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="addCurrency.name" />
-                            </a-col>
-                        </div>
-                    </a-row>
-
-                </a-modal>
-            </div>
-            <div class="editCurrency">
-                <a-modal
-                        title="修改信息"
-                        v-model="visible_edit"
-                        :destroyOnClose = "true"
-                        @ok="submitEdit"
-                >
-
                         <a-row>
                             <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">是否启用：</div>
+                                <a-col class="gutter-row" :span="9">
+                                    <div class="inputName">国家/地区：</div>
                                 </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-select :defaultValue="editCurrency.active" style="width: 100%"  @change="handleChangeEdit">
-                                        <a-select-option value="1">启用</a-select-option>
-                                        <a-select-option value="0">不启用</a-select-option>
+                                <a-col class="gutter-row" :span="15">
+                                    <a-select :defaultValue="addCod.country_id" style="width: 100%"  @change="getAddcountry">
+                                       <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}{{item.country_id}}</a-select-option>
                                     </a-select>
                                 </a-col>
                             </div>
                         </a-row>
 
-                    <a-row>
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">语言名称：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="editCurrency.name" />
-                            </a-col>
-                        </div>
-                    </a-row>
-                    </a-modal>
+                         <a-row>
+                            <div class="inputPart">
+                                <a-col class="gutter-row" :span="9">
+                                    <div class="inputName">价格范围货币：</div>
+                                </a-col>
+                                <a-col class="gutter-row" :span="15">
+                                    <a-select :defaultValue="addCod.currency_id" style="width: 100%"  @change="getAddcurrency">
+                                      <a-select-option v-for="item in currency" :value=item.currency_id>
+                                          {{item.name}}{{item.currency_id}}
+                                      </a-select-option>
+                                    </a-select>
+                                </a-col>
+                            </div>
+                        </a-row>
+
+                        <a-row>
+                            <div class="inputPart">
+                                <a-col class="gutter-row" :span="9">
+                                    <div class="inputName">价格范围（min）：</div>
+                                </a-col>
+                                <a-col class="gutter-row" :span="15">
+                                    <a-input placeholder="" v-model="addCod.price_min" />
+                                </a-col>
+                            </div>
+                        </a-row>
+                        <a-row>
+                            <div class="inputPart">
+                                <a-col class="gutter-row" :span="9">
+                                    <div class="inputName">价格范围（max）：</div>
+                                </a-col>
+                                <a-col class="gutter-row" :span="15">
+                                    <a-input placeholder="" v-model="addCod.price_max"/>
+                                </a-col>
+                            </div>
+                        </a-row>
+
+                        <a-row>
+                            <div class="inputPart">
+                                <a-col class="gutter-row" :span="9">
+                                    <div class="inputName">PayPal折扣（百分比%）：</div>
+                                </a-col>
+                                <a-col class="gutter-row" :span="15">
+                                    <a-input placeholder="" v-model="addCod.paypal_rate" />
+                                </a-col>
+                            </div>
+                        </a-row>
+
+                        <a-row>
+                            <div class="inputPart">
+                                <a-col class="gutter-row" :span="9">
+                                    <div class="inputName">信用卡折扣（百分比%）：</div>
+                                </a-col>
+                                <a-col class="gutter-row" :span="15">
+                                    <a-input placeholder="" v-model="addCod.cc_rate" />
+                                </a-col>
+                            </div>
+                        </a-row>
+
+                        <a-row>
+                            <div class="inputPart">
+                                <a-col class="gutter-row" :span="9">
+                                    <div class="inputName">是否显示：</div>
+                                </a-col>
+                                <a-col class="gutter-row" :span="15">
+                                    <a-select :defaultValue="addCod.active" style="width: 100%"  @change="getAddactive">
+                                        <a-select-option value="1">是</a-select-option>
+                                        <a-select-option value="0">否</a-select-option>
+                                    </a-select>
+                                </a-col>
+                            </div>
+                        </a-row>
+
+                </a-modal>
             </div>
-
-
         </div>
     </div>
 </template>
@@ -109,27 +130,34 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
-        { title: '币种名称', dataIndex: 'name', key: 'name'},
+        {title: 'id', key: 'cart_cod_id', dataIndex: 'cart_cod_id', fixed: 'left'},
+        { title: '国家/地区', dataIndex: 'country_name', key: 'country_name'},
+        { title: '货币', dataIndex: 'currency_name', key: 'currency_name'},
+        { title: '价格范围（min）', dataIndex: 'price_min', key: 'price_min'},
+        { title: '价格范围（max）', dataIndex: 'price_max', key: 'price_max'},
+        { title: 'paypal折扣(%)', dataIndex: 'paypal_rate', key: 'paypal_rate'},
+        { title: '信用卡折扣(%)', dataIndex: 'cc_rate', key: 'cc_rate'},
+        { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
         { title: '是否启用', key: 'active',scopedSlots: { customRender: 'active' },},
-
-
-
+        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
     ];
     const attributeList = [];
 
     export default {
         data() {
             return {
-                editCurrency:{
-                    lang_id:'',
-                    name:''
-                    ,active:'1'
+                country:[],
+                currency:[],
+                addCod:{
+                    country_id:'',
+                    currency_id:'',
+                    price_min:'',
+                    price_max:'',
+                    paypal_rate:'',
+                    cc_rate:'',
+                    active:'1',
+                    edit:false
                 },
-                addCurrency:{
-                    name:''
-                    ,active:'1'
-            },
                 visible_add:false,
                 visible_edit:false,
 
@@ -141,82 +169,113 @@
                     currentPage:1,
                     defaultPageSize:10,
                     total:1,
-                },
+                }, 
                 deleteAllData:'',
-                //表格复选框
-                rowSelection:{
-                    onChange: (selectedRowKeys, selectedRows) => {
-                        // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-                        let deleteAllData = '';
-                        selectedRows.forEach(function (val,index) {
-                            deleteAllData += val.attribute_id + (index === selectedRows.length -1 ? '' : ',')
-                        })
-                        this.deleteAllData = deleteAllData;
-                    },
-                }
             }
         },
         methods: {
-            // 获取单条数据
-            getData(data){
-                this.$post('/lang/getLangInfo',data).then((reData)=>{
-                    this.editCurrency = reData.data
-                    this.editCurrency.lang_id = data.lang_id
-                    this.editCurrency.active= reData.data.active.toString()
-                    this.visible_edit = true
+            // 添加Cod
+            addCodM(mm){
+                this.visible_add = true;
+                if(mm){
+
+                }else{
+                    this.addCod = {
+                        country_id:'',
+                        currency_id:'',
+                        price_min:'',
+                        price_max:'',
+                        paypal_rate:'',
+                        cc_rate:'',
+                        active:'1',
+                        edit:false
+                    }
+                }
+                this.get_counrtys();
+                this.get_currency();
+            },
+
+            // 获取国家信息
+            get_counrtys(){
+                let vm = this;
+                this.$post('/country/getCountryListPage',{lang_id:store.state.langId,pageSize:'10000'}).then((reData)=>{
+                    vm.country = reData.data.dataList.slice(0)
+                });
+            },
+            // 获取币种信息
+            get_currency(){
+                let vm = this;
+                this.$post('/currency/getCurrencyListPage',{pageSize:'10000'}).then((reData)=>{
+                    vm.currency = reData.data.dataList.slice(0)
+                });
+            },
+            getAddcurrency(value){
+                this.addCod.currency_id = value
+            },
+
+            //国家选择
+            getAddcountry(value) {
+                this.addCod.country_id = value
+            },
+            getAddactive(value){
+                this.addCod.active = value
+            },
+            // 修改cod内容
+            editCod(id){
+                var that = this;
+                this.$post('/cartCod/getCartCODInfoOne',{cart_cod_id:id}).then((reData)=>{
+                   console.log(reData)
+                   this.addCod = reData.data;
+                   this.addCod.edit = true;
+                   this.addCod.active= reData.data.active.toString()
+                   this.addCodM(this.addCod.edit)
                 })
             },
 
-
-            handleChangeEdit(value){
-                this.editCurrency.active = value
-            },
-            handleChangeAdd(value){
-                this.addCurrency.active = value
-            },
-        //添加提交
-        submitAdd() {
-            this.$post('/lang/addLang',this.addCurrency).then((reData)=>{
-                if(reData.code === '0'){
-                    this.$message.success(reData.message, 3);
-                    this.visible_add = false
-                    this.addCurrency={
-                            name:''
-                            ,active:'1'
-                    },
-                    this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
-
+            //添加提交
+            submitAdd(edit) {
+                if (edit) {
+                    this.submitEdit()
                 } else {
-                    this.$message.error(reData.message);
-                    this.visible_add = false
+                    this.$post('/cartCod/addCartCODInfo',this.addCod).then((reData)=>{
+                        console.log("返回结果",reData)
+                        if(reData.code === '0'){
+                            this.$message.success(reData.message, 3);
+                            this.visible_add = false
+                            this.addCod={
+                                active:'1'
+                            }
+                            this.getList({lang_id:store.state.langId,currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+    
+                        } else {
+                            this.$message.error(reData.message);
+                            this.visible_add = false
+                        }
+                    })
                 }
-            })
-        }
-        //修改提交
-        ,submitEdit() {
-                this.$post('/lang/editLang',this.editCurrency).then((reData)=>{
+            }
+            //修改提交
+            ,submitEdit() {
+                this.$post('/cartCod/updateCartCODInfo',this.addCod).then((reData)=>{
                     if(reData.code === '0'){
                         this.$message.success(reData.message, 3);
-                        this.visible_edit = false
-                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        this.visible_add = false
+                        this.addCod={
+                            active:'1'
+                        }
+                        this.getList({lang_id:store.state.langId,currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+
                     } else {
                         this.$message.error(reData.message);
-                        this.visible_edit = false
+                        this.visible_add = false
                     }
                 })
-        },
-            //新增属性
-            addAttribute(){
-                this.visible_add = true
-            }
-            //修改属性
-            ,editAttribute(lang_id){
-               this.getData({lang_id:lang_id})
-            }
+            },
             // 获取商品列表
-            ,getList(data){
+            getList(data){
                 this.loading = true;
-                this.$post('/lang/getLangListPage',data).then((reData)=>{
+                this.$post('/cartCod/getCartCODInfoPage',data).then((reData)=>{
+                    console.log(reData)
                     this.attributeList=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
@@ -228,16 +287,6 @@
                 this.getList({currentPage:pagination.current,pageSize:pagination.defaultPageSize})
             }
 
-            //更改商品状态
-            ,change_active(data){
-                this.$post('/lang/editActiveLang',data).then((reData)=>{
-                    if(reData.code === '0'){
-                        this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize});
-                    }else {
-                        this.$message.error(reData.message);
-                    }
-                })
-            }
             //删除商品
             ,deleteProduct(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
@@ -253,7 +302,7 @@
         mounted() {
             var vm = this;
             store.commit('changeStore',{key:'title',val:'币种列表'});
-            vm.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize})
+            vm.getList({lang_id:store.state.langId,currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize})
         },
 
     }
