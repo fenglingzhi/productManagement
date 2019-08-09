@@ -708,7 +708,7 @@
                             reduction_tax:'0',
                             reduction_currency:'',
                         }
-                      this.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize});
+                        this.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize});
 
                     } else {
                         this.$message.error(reData.message);
@@ -748,27 +748,28 @@
             },
             // 添加时的校验数据
             checkRes(data){
-                if(data.name == '' || data.name == null){
+                if(data.name === '' || data.name === null){
                     this.$message.error("请填写名称");
                     return false
                 }
-                if(data.code == '' || data.code == null){
+                if(data.code === '' || data.code === null){  
                     this.$message.error("请填写唯一折扣码");
                     return false
                 }
-                if(data.minimum_amout == '' || data.minimum_amout == null){
+                if(data.minimum_amount === '' || data.minimum_amount === null){
+                    console.log(data,data.minimum_amount)
                     this.$message.error("请填写满足金额使用数据");
                     return false
                 }
-                if(data.minimum_amount_currency == '' || data.minimum_amount_currency == null){
+                if(data.minimum_amount_currency === '' || data.minimum_amount_currency === null){
                     this.$message.error("请填写币种");
                     return false
                 }
-                if(data.quantity == '' || data.quantity == null){
+                if(data.quantity === '' || data.quantity === null){
                     this.$message.error("请填写折扣劵总量");
                     return false
                 }
-                if(data.quantity_per_user == '' || data.quantity_per_user == null){
+                if(data.quantity_per_user === '' || data.quantity_per_user === null){
                     this.$message.error("请填写每个用户可用数量");
                     return false
                 }
