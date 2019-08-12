@@ -55,14 +55,17 @@
     import langList from './localization/langList'
     import cityList from './localization/cityList'
     import logisticList from './logistics/logisticList'
-    import cartCoupon from './priceDiscipline/cartCoupon'
-    import COD from './priceDiscipline/COD'
     import productIntroduction from './goods/productIntroduction'
+
     import codList from './cart/codList'
+<<<<<<< HEAD
     import setBannerIndex from './appSet/setBannerIndex'
     import hotWords from './appSet/hotWords'
     import classify from './appSet/classify'
     import countDown from './appSet/countDown'
+=======
+    import cartRules from './cart/cartRules'
+>>>>>>> 7fac6a3fcc3ef60315808e74ef61414b857aa2f0
     export default {
 
         components:{
@@ -85,14 +88,16 @@
             langList,
             cityList,
             logisticList,
-            cartCoupon,
-            COD,
             productIntroduction,
             codList,
+<<<<<<< HEAD
             setBannerIndex,
             hotWords,
             classify,
             countDown
+=======
+            cartRules
+>>>>>>> 7fac6a3fcc3ef60315808e74ef61414b857aa2f0
         },
         data () {
             return {
