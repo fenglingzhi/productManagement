@@ -48,6 +48,13 @@
           <span slot="title"><a-icon type="snippets" /><span>购物车</span></span>
           <a-menu-item key="8-1" @click="choseWhich('COD设置','codList','8-1')" ><a-icon type="reconciliation" />COD设置</a-menu-item>
         </a-sub-menu>
+        <a-sub-menu key="9">
+          <span slot="title"><a-icon type="snippets" /><span>App</span></span>
+          <a-menu-item key="9-1" @click="choseWhich('App首页banner','setBannerIndex','9-1')" ><a-icon type="reconciliation" />App首页banner</a-menu-item>
+          <a-menu-item key="9-2" @click="choseWhich('App搜索热门词','hotWords','9-2')" ><a-icon type="reconciliation" />App搜索热门词</a-menu-item>
+          <a-menu-item key="9-3" @click="choseWhich('App首页热门分类','classify','9-3')" ><a-icon type="reconciliation" />App首页热门分类</a-menu-item>
+          <a-menu-item key="9-4" @click="choseWhich('APP首页促销倒计时信息','countDown','9-4')" ><a-icon type="reconciliation" />APP首页促销倒计时信息</a-menu-item>
+        </a-sub-menu>
       </a-menu>
     </a-layout-sider>
     <a-layout :style="{ marginLeft: '200px' }">

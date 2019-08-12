@@ -59,6 +59,10 @@
     import COD from './priceDiscipline/COD'
     import productIntroduction from './goods/productIntroduction'
     import codList from './cart/codList'
+    import setBannerIndex from './appSet/setBannerIndex'
+    import hotWords from './appSet/hotWords'
+    import classify from './appSet/classify'
+    import countDown from './appSet/countDown'
     export default {
 
         components:{
@@ -84,7 +88,11 @@
             cartCoupon,
             COD,
             productIntroduction,
-            codList
+            codList,
+            setBannerIndex,
+            hotWords,
+            classify,
+            countDown
         },
         data () {
             return {
