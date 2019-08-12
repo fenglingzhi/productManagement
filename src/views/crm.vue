@@ -58,14 +58,11 @@
     import productIntroduction from './goods/productIntroduction'
 
     import codList from './cart/codList'
-<<<<<<< HEAD
     import setBannerIndex from './appSet/setBannerIndex'
     import hotWords from './appSet/hotWords'
     import classify from './appSet/classify'
     import countDown from './appSet/countDown'
-=======
     import cartRules from './cart/cartRules'
->>>>>>> 7fac6a3fcc3ef60315808e74ef61414b857aa2f0
     export default {
 
         components:{
@@ -90,14 +87,11 @@
             logisticList,
             productIntroduction,
             codList,
-<<<<<<< HEAD
             setBannerIndex,
             hotWords,
             classify,
-            countDown
-=======
+            countDown,
             cartRules
->>>>>>> 7fac6a3fcc3ef60315808e74ef61414b857aa2f0
         },
         data () {
             return {
