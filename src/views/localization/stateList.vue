@@ -15,8 +15,7 @@
                      :pagination="pagination"
                      :loading="loading"
                      align="center"
-                     @change="handleTableChange"
-                     :scroll="{ x: 1500 }">
+                     @change="handleTableChange">
               <span slot="action" slot-scope="text, record">
                   <a @click="editAttribute(text.state_id)">修改</a>
                   <!--<a-divider type="vertical"></a-divider>-->
