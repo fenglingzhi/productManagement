@@ -1,6 +1,6 @@
 <template>
     <div class="producetAdd">
-        <form action="http://192.168.0.18:8081/zorafanERP/import/importActivityCategoryProduct" id="form1" method="post"  enctype="multipart/form-data">
+        <form :action="$store.state.baseURL+'/import/importActivityCategoryProduct'" id="form1" method="post"  enctype="multipart/form-data">
             <div class="secondTitle">
                 <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
                     BANNER活动分类产品导入：
@@ -9,7 +9,7 @@
                     <a-row>
                         <a-col class="gutter-row" :offset="12" :span="12">
                             <!--<a-button type="primary"  @click="saveProductInfor()">保存</a-button>-->
-                            <input type="submit" class="subForm" value="上传">
+                            <input type="submit" @click="subForm1()" class="subForm" value="上传">
                         </a-col>
                     </a-row>
                 </a-col>
@@ -35,7 +35,7 @@
                             <div class="inputName">*选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
-                                <input type="file" name="myFile" ><br/>
+                                <input type="file" class="file1" name="myFile" ><br/>
                                 <input type="hidden" v-model="categoryId" name="category_id" ><br/>
                                 <a href="#">csv文件模板下载</a>
                         </a-col>
@@ -45,7 +45,7 @@
         </form>
 <div style="height: 80px;"></div>
 
-        <form action="http://192.168.0.18:8081/zorafanERP/import/importGeneralCategoryProduct" id="form2" method="post"  enctype="multipart/form-data">
+        <form :action="$store.state.baseURL+'/import/importGeneralCategoryProduct'" id="form2" method="post"  enctype="multipart/form-data">
             <div class="secondTitle">
                 <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
                     普通分类产品导入 ：
@@ -53,7 +53,7 @@
                 <a-col class="gutter-row" :span="3">
                     <a-row>
                         <a-col class="gutter-row" :offset="12" :span="12">
-                            <input type="submit" class="subForm"  value="上传">
+                            <input type="submit" class="subForm" @click="subForm2()" value="上传">
                         </a-col>
                     </a-row>
                 </a-col>
@@ -86,7 +86,7 @@
                             <div class="inputName">*选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
-                            <input type="file" name="myFile" ><br/>
+                            <input type="file" class="file2" name="myFile" ><br/>
                             <input type="hidden" v-model="selectedKeys" name="category_id" ><br/>
                             <a href="#">csv文件模板下载</a>
                         </a-col>
@@ -96,9 +96,84 @@
         </form>
 
 
+        <div style="height: 80px;"></div>
+
+        <form :action="$store.state.baseURL+'/import/importModifyProduct'" id="form3" method="post"  enctype="multipart/form-data">
+            <div class="secondTitle">
+                <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
+                    更新产品表 ：
+                </a-col>
+                <a-col class="gutter-row" :span="3">
+                    <a-row>
+                        <a-col class="gutter-row" :offset="12" :span="12">
+                            <input type="submit" class="subForm" @click="subForm3()" value="上传">
+                        </a-col>
+                    </a-row>
+                </a-col>
+            </div>
+            <a-row>
+                <a-col class="gutter-row" :span="6">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">*选择文件：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="12">
+                            <input type="file" class="file3" name="myFile"><br/>
+                            <a href="#">csv文件模板下载</a>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+        </form>
+        <div style="height: 80px;"></div>
+
+        <form :action="$store.state.baseURL+'/import/importProductTag'" id="form4" method="post"  enctype="multipart/form-data">
+            <div class="secondTitle">
+                <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
+                    TAG标签产品导入：
+                </a-col>
+                <a-col class="gutter-row" :span="3">
+                    <a-row>
+                        <a-col class="gutter-row" :offset="12" :span="12">
+                            <input type="submit" @click="subForm4()" class="subForm" value="上传">
+                        </a-col>
+                    </a-row>
+                </a-col>
+            </div>
+            <a-row class="gutter-row">
+                <a-col class="gutter-row" :span="6">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">*Tag标签：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-select  style="width: 100%" defaultValue="请选择标签" @change="handleChangeSelect4">
+                                <a-select-option v-for="item in tagList" :value="item.tag_id">{{item.name}}</a-select-option>
+                            </a-select>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+            <a-row>
+                <a-col class="gutter-row" :span="6">
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">*选择文件：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="12">
+                            <input type="file" class="file1" name="myFile" ><br/>
+                            <input type="hidden" v-model="tagId" name="tag_id" ><br/>
+                            <a href="#">csv文件模板下载</a>
+                        </a-col>
+                    </div>
+                </a-col>
+            </a-row>
+        </form>
+
     </div>
 </template>
 <script>
+
     var vm =this
     import router from '../../router'
     import store from '../../store'
@@ -110,6 +185,34 @@
         components:{
         },
         methods: {
+            subForm1(){
+                if(this.categoryId ==''){
+                    this.$message.error('请先选择分类');
+
+                }else if($(".file1").val()==''){
+                    this.$message.error('请选择文件');
+                }
+            },
+            subForm2(){
+                if(this.selectedKeys ==''){
+                    this.$message.error('请先选择分类');
+
+                }else if($(".file2").val()==''){
+                    this.$message.error('请选择文件');
+                }
+            },
+            subForm3(){
+                if($(".file3").val()==''){
+                    this.$message.error('请选择文件');
+                }
+            },
+            subForm4(){
+                if(this.tagId ==''){
+                    this.$message.error('请先选择分类');
+                }else if($(".file4").val()==''){
+                    this.$message.error('请选择文件');
+                }
+            },
             onExpand (expandedKeys) {
                 this.expandedKeys = expandedKeys
                 this.autoExpandParent = false
@@ -120,7 +223,9 @@
             },
 
 
-
+            handleChangeSelect4(val){
+                this.tagId= val
+            },
             handleChangeSelect(val){
                 this.categoryId = val
             }
@@ -128,6 +233,17 @@
                 this.$post('/category/getCategoryAllList',data).then((reData)=>{
                     if(reData.code=="0"){
                        this.categoryList = reData.data
+                    }else {
+                        this.$message.error(reData.message);
+                    }
+                })
+
+            }
+            ,getTagAllList(data){
+
+                this.$post('/productTag/getProductTagList',data).then((reData)=>{
+                    if(reData.code=="0"){
+                        this.tagList = reData.data
                     }else {
                         this.$message.error(reData.message);
                     }
@@ -148,18 +264,26 @@
             $("#form2").ajaxForm(function(data){
                 vm.$message.success(data.message);
             });
-
+            $("#form3").ajaxForm(function(data){
+                vm.$message.success(data.message);
+            });
+            $("#form4").ajaxForm(function(data){
+                vm.$message.success(data.message);
+            });
             this.getCategoryAllList({lang_id:this.$store.state.langId,is_banner:1})
+            this.getTagAllList({lang_id:this.$store.state.langId})
             this.getCollection()
         },
         data() {
             return {
+                tagList:[],
                 expandedKeys: [],
                 autoExpandParent: true,
                 selectedKeys: '',
                 treeData,
                 categoryList:[]
                 ,categoryId:''
+                ,tagId:''
             }
         } ,
         watch: {
