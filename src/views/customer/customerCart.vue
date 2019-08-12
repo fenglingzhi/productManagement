@@ -1,329 +1,158 @@
 <template>
     <div class="customerAddress">
         <div>
-            <div style="margin: 16px 0">
-                <a-button type="primary" @click="add_product($store.state.langId)">新增</a-button>
-            </div>
             <a-table :columns="columns"
                      :dataSource="productListData"
                      :pagination="pagination"
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :rowSelection="rowSelection"
-                     :scroll="{ x: 2400 }">
+                     :scroll="{ x: 1600 }">
               <span slot="action" slot-scope="text, record">
-                  <a @click="searchFun({address_id:record.address_id,lang_id:$store.state.langId})">修改</a>
-                  <a-divider type="vertical"></a-divider>
-                  <a @click="deleteFun({address_id:record.address_id})">删除</a>
+                  <a @click="searchFun({cart_id:record.cart_id,lang_id:$store.state.langId})">查看</a>
               </span>
                 <span slot="img_" slot-scope="text, record">
                   <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
               </span>
             </a-table>
         </div>
-        <div class="addCustomerAddress">
-            <a-modal
-                    title="新增客户地址"
-                    :destroyOnClose="true"
-                    v-model="visible_add"
-                    @ok="submitAddress"
-            >
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">联系电话：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输联系电话" v-model="addCustomerAddressData.phone" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">客户邮箱：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输客户邮箱" v-model="addCustomerAddressData.email" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">身份证：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="沙特身份证" v-model="addCustomerAddressData.national_id" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">地址别名：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输地址别名" v-model="addCustomerAddressData.alias" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">名：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输名" v-model="addCustomerAddressData.firstname" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">姓：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输姓" v-model="addCustomerAddressData.lastname" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">公司：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输公司" v-model="addCustomerAddressData.company" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">国家id：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-select defaultValue="请选择" style="width: 100%" @change="handleChangeCountry">
-                                <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}{{item.country_id}}</a-select-option>
-                            </a-select>
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">州id：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-select defaultValue="请选择" v-if="!state_flag" style="width: 100%" @change="handleChangeState">
-                                <a-select-option v-for="item in state" :value=item.state_id>{{item.name}}</a-select-option>
-                            </a-select>
-                            <a-input placeholder="请输城省/州" v-model="addCustomerAddressData.state_id" v-if="state_flag" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">城市：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-select defaultValue="请选择" v-if="!city_flag" style="width: 100%" @change="handleChangeCity">
-                                <a-select-option v-for="item in city" :value=item.city_id>{{item.name}}</a-select-option>
-                            </a-select>
-                            <a-input placeholder="请输城市" v-if="city_flag" v-model="addCustomerAddressData.city" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">地址1：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输地址1" v-model="addCustomerAddressData.address1" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">地址2：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输地址2" v-model="addCustomerAddressData.address2" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">邮件编码：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输邮件编码" v-model="addCustomerAddressData.postcode" />
-                        </a-col>
-                    </div>
-                </a-row>
-            </a-modal>
-        </div>
         <div class="updateCustomerAddress">
             <a-modal
-                    title="更新客户地址"
+                    title="产看客户购物车"
                     v-model="visible_update"
                     @ok="submitAddressUpdate"
             >
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">联系电话：</div>
+                <a-card title="购物车信息"
+                        :bordered="false"
+                        headStyle="padding: 0;font-size: 16px;"
+                        bodyStyle="padding: 15px;"
+                        style="margin-top: -20px;font-size: 14px;">
+                    <a-row>
+                        <a-col :span="12">
+                            <p>添加时间：{{customerCartInfo.cartInfo.add_date}}</p>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输联系电话" v-model="addCustomerAddressData.phone" />
+                        <a-col :span="12">
+                            <p>平台类型：{{customerCartInfo.cartInfo.mobile_type}}</p>
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">客户邮箱：</div>
+                        <a-col :span="12">
+                            <p>币种标识：{{customerCartInfo.cartInfo.sign}}</p>
+
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输客户邮箱" v-model="addCustomerAddressData.email" />
+                        <a-col :span="12">
+                            <p>收货地址id：{{customerCartInfo.cartInfo.address_delivery_id}}</p>
+
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">身份证：</div>
+                        <a-col :span="12">
+                            <p>物流id：{{customerCartInfo.cartInfo.carrier_id}}</p>
+
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="沙特身份证" v-model="addCustomerAddressData.national_id" />
+                        <a-col :span="12">
+                            <p>购物车id：{{customerCartInfo.cartInfo.cart_id}}</p>
+
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">地址别名：</div>
+                        <a-col :span="12">
+                            <p>更新时间：{{customerCartInfo.cartInfo.upd_date}}</p>
+
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输地址别名" v-model="addCustomerAddressData.alias" />
+                        <a-col :span="12">
+                            <p>发票地址id：{{customerCartInfo.cartInfo.address_invoice_id}}</p>
+
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">名：</div>
+                        <a-col :span="12">
+                            <p>是否启用小数点：{{customerCartInfo.cartInfo.decimals}}</p>
+
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输名" v-model="addCustomerAddressData.firstname" />
+                        <a-col :span="12">
+                            <p>客户id：{{customerCartInfo.cartInfo.customer_id}}</p>
+
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">姓：</div>
+                        <a-col :span="12">
+                            <p>汇率：{{customerCartInfo.cartInfo.conversion_rate}}</p>
+
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输姓" v-model="addCustomerAddressData.lastname" />
+                        <a-col :span="12">
+                            <p>订单id：{{customerCartInfo.cartInfo.order_id}}</p>
+
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">公司：</div>
+                        <a-col :span="12">
+                            <p>币种id：{{customerCartInfo.cartInfo.currency_id}}</p>
+
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输公司" v-model="addCustomerAddressData.company" />
+                        <a-col :span="12">
+                            <p>下单时间：{{customerCartInfo.cartInfo.order_date}}</p>
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">国家id：</div>
+                    </a-row>
+                </a-card>
+                <a-card title="客户详情信息"
+                        :bordered="false"
+                        headStyle="padding: 0;font-size: 16px;"
+                        bodyStyle="padding: 15px;"
+                        style="margin-top: -20px;font-size: 14px;">
+                    <a-row>
+                        <a-col :span="12">
+                            <p>有效订单设置：{{customerCartInfo.customerDetail.valid_order_sum}}</p>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-select :defaultValue="addCustomerAddressData.country_name"
-                                      style="width: 100%"
-                                      :value="addCustomerAddressData.country_id"
-                                      @change="handleChangeCountry">
-                                <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}{{item.country_id}}</a-select-option>
-                            </a-select>
+                        <a-col :span="12">
+                            <p>注册以来所有花销：{{customerCartInfo.customerDetail.total_amount}}</p>
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">州id：</div>
+                        <a-col :span="12">
+                            <p>最后下单时间：{{customerCartInfo.customerDetail.Account_registration_date}}</p>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-select defaultValue="请选择"
-                                      v-if="!state_flag"
-                                      style="width: 100%"
-                                      :value="addCustomerAddressData.state_id"
-                                      @change="handleChangeState">
-                                <a-select-option v-for="item in state" :value=item.state_id>{{item.name}}</a-select-option>
-                            </a-select>
-                            <a-input placeholder="请输城省/州" v-model="addCustomerAddressData.state_name" v-if="state_flag" />
+                        <a-col :span="12">
+                            <p>客户id：{{customerCartInfo.customerDetail.customer_id}}</p>
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">城市：</div>
+                    </a-row>
+                </a-card>
+                <a-card title="产品详情信息"
+                        :bordered="false"
+                        headStyle="padding: 0;font-size: 16px;"
+                        bodyStyle="padding: 15px;"
+                        style="margin-top: -20px;font-size: 14px;">
+                    <a-row v-for="item in customerCartInfo.productDetail">
+                        <!--{{item}}-->
+                        <a-col :span="12">
+                            <p>库存：{{item.good_qty}}</p>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-select defaultValue="请选择"
-                                      v-if="!city_flag"
-                                      style="width: 100%"
-                                      :value="addCustomerAddressData.city_id"
-                                      @change="handleChangeCity">
-                                <a-select-option v-for="item in city" :value=item.city_id>{{item.name}}</a-select-option>
-                            </a-select>
-                            <a-input placeholder="请输城市" v-if="city_flag" v-model="addCustomerAddressData.city" />
+                        <a-col :span="12">
+                            <p>购物车id：{{item.cart_id}}</p>
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">地址1：</div>
+                        <a-col :span="12">
+                            <p>数量：{{item.quantity}}</p>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输地址1" v-model="addCustomerAddressData.address1" />
+                        <a-col :span="12">
+                            <p>商品数量id：{{item.product_unit_id}}</p>
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">地址2：</div>
+                        <!--<a-col :span="12">-->
+                            <!--<p>：{{customerCartInfo.cartInfo.active}}</p>-->
+                        <!--</a-col>-->
+                        <!--<a-col :span="12">-->
+                            <!--<p>：{{customerCartInfo.cartInfo.bad_qty}}</p>-->
+                        <!--</a-col>-->
+                        <!--<a-col :span="12">-->
+                            <!--<p>：{{customerCartInfo.cartInfo.id}}</p>-->
+                        <!--</a-col>-->
+                        <a-col :span="12">
+                            <p>折扣价（实际售价）：{{item.sale_price}}</p>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输地址2" v-model="addCustomerAddressData.address2" />
+                        <!--<a-col :span="12">-->
+                            <!--<p>：{{customerCartInfo.cartInfo.retail_price}}</p>-->
+                        <!--</a-col>-->
+                        <!--<a-col :span="12">-->
+                            <!--<p>：{{customerCartInfo.cartInfo.cost_price}}</p>-->
+                        <!--</a-col>-->
+                    </a-row>
+                </a-card>
+                <a-card title="订单总价"
+                        :bordered="false"
+                        headStyle="padding: 0;font-size: 16px;"
+                        bodyStyle="padding: 15px;"
+                        style="margin-top: -20px;font-size: 14px;">
+                    <a-row>
+                        <a-col :span="12">
+                            <p>总价：{{customerCartInfo.total_amount}}</p>
                         </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">邮件编码：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输邮件编码" v-model="addCustomerAddressData.postcode" />
-                        </a-col>
-                    </div>
-                </a-row>
+                    </a-row>
+                </a-card>
             </a-modal>
         </div>
     </div>
@@ -334,24 +163,20 @@
     const columns = [
         {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '沙特身份证', dataIndex: 'national_id', key: 'national_id'},
-        { title: '名', dataIndex: 'firstname', key: 'firstname'},
-        { title: '姓', dataIndex: 'lastname', key: 'lastname'},
-        { title: '中间名', dataIndex: 'middlename', key: 'middlename'},
-        { title: '国家', dataIndex: 'country_name', key: 'country_name'},
-        { title: '省/州', dataIndex: 'state_name', key: 'state_name'},
-        { title: '城市', dataIndex: 'city', key: 'city'},
-        { title: '街道', dataIndex: 'street', key: 'street'},
-        { title: '地址1', dataIndex: 'address1', key: 'address1'},
-        { title: '地址2', dataIndex: 'address2', key: 'address2'},
-        { title: '邮政编码', dataIndex: 'postcode', key: 'postcode'},
-        // { title: '状态', dataIndex: 'active', key: 'active'},
-        // { title: '是否默认', dataIndex: 'is_default', key: 'is_default'},
-        { title: '联系电话', dataIndex: 'phone', key: 'phone'},
-        // { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
-        // { title: '更新时间', dataIndex: 'upd_date', key: 'upd_date'},
-        { title: '别名', dataIndex: 'alias', key: 'alias'},
-        { title: '公司', dataIndex: 'company', key: 'company'},
-        { title: '备用电话', dataIndex: 'alertnate_phone', key: 'alertnate_phone'},
+        { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
+        { title: '平台类型', dataIndex: 'mobile_type', key: 'mobile_type'},
+        { title: '货币sign', dataIndex: 'sign', key: 'sign'},
+        { title: '语言id', dataIndex: 'lang_id', key: 'lang_id'},
+        { title: '物流id', dataIndex: 'carrier_id', key: 'carrier_id'},
+        { title: '购物车id', dataIndex: 'city', key: 'city'},
+        { title: '更新时间', dataIndex: 'upd_date', key: 'upd_date'},
+        { title: '总价', dataIndex: 'total_amount', key: 'total_amount'},
+        { title: '小数点保留几位', dataIndex: 'decimals', key: 'decimals'},
+        { title: '客户id', dataIndex: 'customer_id', key: 'customer_id'},
+        { title: '汇率', dataIndex: 'conversion_rate', key: 'conversion_rate'},
+        { title: '订单id', dataIndex: 'order_id', key: 'order_id'},
+        { title: '币种id', dataIndex: 'currency_id', key: 'currency_id'},
+        { title: '用户邮件', dataIndex: 'email', key: 'email'},
     ];
     const productListData = [];
     //表格复选框
@@ -402,54 +227,56 @@
                 ,state_flag:false
                 ,city:[]
                 ,city_flag:false
+                ,customerCartInfo:{
+                    cartInfo:{
+                        add_date:'',
+                        mobile_type:'',
+                        sign:'',
+                        address_delivery_id:'',
+                        carrier_id:'',
+                        cart_id:'',
+                        upd_date:'',
+                        address_invoice_id:'',
+                        decimals:'',
+                        customer_id:'',
+                        conversion_rate:'',
+                        order_id:'',
+                        currency_id:'',
+                        order_date:'',
+                    },
+                    customerDetail:{
+                        valid_order_sum:'',
+                        total_amount:'',
+                        Account_registration_date:'',
+                        customer_id:'',
+                    },
+                    total_amount:'',
+                    productDetail:{
+                        // productDetail:'',
+                        // cart_id:'',
+                        // quantity:'',
+                        // product_unit_id:'',
+                        // active:'',
+                        // bad_qty:'',
+                        // id:'',
+                        // sale_price:'',
+                        // retail_price:'',
+                        // cost_price:'',
+                    }
+                }
             }
         },
         methods: {
-            //更新地址详情
+            //产看购物车详情
             searchFun(data){
-                this.addCustomerAddressData.address_id = data.address_id
-                this.$post('/country/getCountryListPage',{lang_id:store.state.langId,pageSize:'10000'}).then((reData)=>{
-                    this.country = reData.data.dataList.slice(0)
-                }).then(()=>{
-                    this.$post('/address/getAddressInfoList',data).then((reData)=>{
-                        if(reData.code === '0'){
-                            this.addCustomerAddressData.phone=reData.data[0].phone;
-                            this.addCustomerAddressData.email=reData.data[0].email;
-                            this.addCustomerAddressData.national_id=reData.data[0].national_id;
-                            this.addCustomerAddressData.alias=reData.data[0].alias;
-                            this.addCustomerAddressData.firstname=reData.data[0].firstname;
-                            this.addCustomerAddressData.lastname=reData.data[0].lastname;
-                            this.addCustomerAddressData.company=reData.data[0].company;
-                            this.addCustomerAddressData.address1=reData.data[0].address1;
-                            this.addCustomerAddressData.address2=reData.data[0].address2;
-                            this.addCustomerAddressData.city=reData.data[0].city;
-                            this.addCustomerAddressData.postcode=reData.data[0].postcode;
-                            this.addCustomerAddressData.state_id=reData.data[0].state_id;
-                            this.addCustomerAddressData.country_id=reData.data[0].country_id;
-                            this.addCustomerAddressData.email=reData.data[0].email;
-                            this.addCustomerAddressData.other=reData.data[0].other;
-                        }
-                    })
-                }).then(()=>{
-                    this.$post('/state/getStateListPage',{country_id:this.addCustomerAddressData.country_id,pageSize:'10000'}).then((reData)=>{
-                        if(reData.data.dataList == null){
-                            this.state_flag = true;
-                            this.city_flag = true;
-                        } else {
-                            this.state_flag = false;
-                            this.state = reData.data.dataList.slice(0)
-                        }
-                    });
-                }).then(()=>{
-                    this.$post('/city/getCityListPage',{state_id:this.addCustomerAddressData.state_id,pageSize:'10000'}).then((reData)=>{
-                        if(reData.data.dataList == null){
-                            this.city_flag = true;
-                        } else {
-                            this.city_flag = false;
-                            this.city = reData.data.dataList.slice(0)
-                        }
-                    });
-                });
+                this.$post('/cart/getCartDetailInfo',data).then((reData)=>{
+                    this.customerCartInfo.cartInfo = reData.data.cartInfo
+                    this.customerCartInfo.customerDetail = reData.data.customerDetail
+                    this.customerCartInfo.total_amount = reData.data.total_amount
+                    this.customerCartInfo.productDetail = reData.data.productDetail
+
+                    console.log(this.customerCartInfo.customerDetail )
+                })
                 this.visible_update = true;
             }
             //新增地址
@@ -500,12 +327,12 @@
                 console.log(this.addCustomerGenderData)
                 this.visible_edit = true;
             }
-            // 获取地址列表
+            // 获取购物车列表
             ,getList(data){
                 this.loading = true;
-                this.$post('/address/getAddressPage',data).then((reData)=>{
+                this.$post('/cart/getCartInfoPage',data).then((reData)=>{
                     this.productListData=reData.data.dataList;
-                    // this.pagination.total=reData.data.page.totalResultSize
+                    this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
                 })
             }
@@ -555,23 +382,11 @@
         mounted() {
             var vm = this
             store.commit('changeStore',{key:'title',val:'产品列表'});
-            vm.getList({lang_id:store.state.langId})
+            vm.getList()
         },
 
     }
 </script>
 <style scoped>
-    .inputName{
-        text-align: right;
-        line-height: 34px;
-    }
-    .ant-row{
-        margin: 10px 0;
-    }
-    .hrLine{
-        width: 120%;
-        height: 30px;
-        margin-left: -30px;
-        background: #f0f2f5;
-    }
+
 </style>

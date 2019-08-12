@@ -58,7 +58,7 @@
     import productIntroduction from './goods/productIntroduction'
 
     import codList from './cart/codList'
-
+    import cartRules from './cart/cartRules'
     export default {
 
         components:{
@@ -82,7 +82,8 @@
             cityList,
             logisticList,
             productIntroduction,
-            codList
+            codList,
+            cartRules
         },
         data () {
             return {
