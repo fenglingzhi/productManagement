@@ -59,6 +59,8 @@
     import COD from './priceDiscipline/COD'
     import productIntroduction from './goods/productIntroduction'
     import codList from './cart/codList'
+    import orderList from './order/orderList'
+    import orderStatus from './order/orderStatus'
     export default {
 
         components:{
@@ -84,7 +86,9 @@
             cartCoupon,
             COD,
             productIntroduction,
-            codList
+            codList,
+            orderList,
+            orderStatus
         },
         data () {
             return {

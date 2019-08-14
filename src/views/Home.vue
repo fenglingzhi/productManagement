@@ -31,6 +31,11 @@
           <a-menu-item key="3-1" @click="choseWhich('购物车规则','cartCoupon','3-1')" ><a-icon type="reconciliation" />购物车规则</a-menu-item>
           <a-menu-item key="3-2" @click="choseWhich('COD规则','COD','3-2')" ><a-icon type="reconciliation" />COD规则</a-menu-item>
         </a-sub-menu>
+        <a-sub-menu key="4">
+          <span slot="title"><a-icon type="snippets" /><span>订单管理</span></span>
+          <a-menu-item key="4-1" @click="choseWhich('订单列表','orderList','4-1')" ><a-icon type="reconciliation" />订单列表</a-menu-item>
+          <a-menu-item key="4-2" @click="choseWhich('订单状态','orderStatus','4-2')" ><a-icon type="reconciliation" />订单状态</a-menu-item>
+        </a-sub-menu>
         <a-sub-menu key="6">
         <span slot="title"><a-icon type="snippets" /><span>本地化</span></span>
         <a-menu-item key="6-1" @click="choseWhich('币种','currencyList','6-1')" ><a-icon type="reconciliation" />币种</a-menu-item>
