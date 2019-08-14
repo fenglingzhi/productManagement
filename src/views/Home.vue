@@ -55,6 +55,8 @@
           <a-menu-item key="9-2" @click="choseWhich('App搜索热门词','hotWords','9-2')" ><a-icon type="reconciliation" />App搜索热门词</a-menu-item>
           <a-menu-item key="9-3" @click="choseWhich('App首页热门分类','classify','9-3')" ><a-icon type="reconciliation" />App首页热门分类</a-menu-item>
           <a-menu-item key="9-4" @click="choseWhich('APP首页促销倒计时信息','countDown','9-4')" ><a-icon type="reconciliation" />APP首页促销倒计时信息</a-menu-item>
+          <a-menu-item key="9-5" @click="choseWhich('APP首页公告banner','setBannerNotice','9-5')" ><a-icon type="reconciliation" />APP首页公告banner</a-menu-item>
+          <a-menu-item key="9-6" @click="choseWhich('APP首页瀑布流推荐','waterFall','9-6')" ><a-icon type="reconciliation" />APP首页瀑布流推荐</a-menu-item>
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>

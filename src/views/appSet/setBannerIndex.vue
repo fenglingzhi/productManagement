@@ -1,6 +1,6 @@
 <template>
   <div class="banner">
-    <a-button type="primary" @click="visible_add=true">新增</a-button>
+    <a-button type="primary" @click="visible_add=true" id="add">新增</a-button>
     <a-table
       :columns="columns"
       :dataSource="attributeList"
@@ -25,17 +25,21 @@
         <a-row>
           <div class="inputPart">
             <a-col class="gutter-row" :span="6">
-              <div class="inputName">*选择图片：</div>
+              <div class="inputName">
+                <span>*</span>选择图片：
+              </div>
             </a-col>
             <a-col class="gutter-row" :span="18">
-              <input type="file" id="image"/>
+              <input type="file" id="image" />
             </a-col>
           </div>
         </a-row>
         <a-row>
           <div class="inputPart">
             <a-col class="gutter-row" :span="6">
-              <div class="inputName">*是否显示：</div>
+              <div class="inputName">
+                <span>*</span>是否显示：
+              </div>
             </a-col>
             <a-col class="gutter-row" :span="18">
               <a-select defaultValue="1" style="width: 100%" v-model="form_add.active">
@@ -48,7 +52,9 @@
         <a-row>
           <div class="inputPart">
             <a-col class="gutter-row" :span="6">
-              <div class="inputName">*图片类型：</div>
+              <div class="inputName">
+                <span>*</span>图片类型：
+              </div>
             </a-col>
             <a-col class="gutter-row" :span="18">
               <a-select defaultValue="1" style="width: 100%" v-model="form_add.image_type">
@@ -64,10 +70,12 @@
         <a-row>
           <div class="inputPart">
             <a-col class="gutter-row" :span="6">
-              <div class="inputName">*分类：</div>
+              <div class="inputName">
+                <span>*</span>分类：
+              </div>
             </a-col>
             <a-col class="gutter-row" :span="18">
-              <a-select style="width: 120px" v-model="form_add.category_id">
+              <a-select style="width: 100%" v-model="form_add.category_id">
                 <a-select-option
                   :value="item.category_id"
                   v-for="(item,index) in typeArr"
@@ -80,7 +88,9 @@
         <a-row>
           <div class="inputPart">
             <a-col class="gutter-row" :span="6">
-              <div class="inputName">*排序：</div>
+              <div class="inputName">
+                <span>*</span>排序：
+              </div>
             </a-col>
             <a-col class="gutter-row" :span="18">
               <a-input placeholder v-model="form_add.position" />
@@ -111,7 +121,7 @@
           align="center"
         >
           <span slot="action_detail" slot-scope="text">
-            <a>修改</a>
+            <a @click="goChange(text)">修改</a>
             <a-divider type="vertical"></a-divider>
             <a @click="goDel(text)">删除</a>
           </span>
@@ -125,37 +135,99 @@
         </a-table>
       </a-modal>
     </div>
-    <!-- 
-    <div class="modify">
-      <a-modal title="banner修改" v-model="visible_modify" :destroyOnClose="true" width="900px">
-        <a-table
-          :columns="columns_detail"
-          :dataSource="attributeList_detail"
-          :pagination="false"
-          :loading="loading"
-          align="center"
-        >
-          <span slot="action_detail" slot-scope="text, record">
-            <a>修改</a>
-            <a-divider type="vertical"></a-divider>
-            <a @click="goDel(text)">删除</a>
-          </span>
-          <a slot="image_url" slot-scope="text" :href="text.image_url" target="_blank">
-            <img :src="text.image_url" alt />
-          </a>
-          <a slot="active" slot-scope="text, record" style="text-align: center">
-            <a-icon type="check" style="color: green" v-if="text.active==true"></a-icon>
-            <a-icon type="close" style="color: red" v-if="text.active!=true"></a-icon>
-          </a>
-        </a-table>
+    <!-- 修改的模态框 -->
+    <div class="change">
+      <a-modal
+        title="banner修改"
+        v-model="visible_change"
+        :destroyOnClose="true"
+        width="900px"
+        @ok="submitChange"
+      >
+        <!-- <a-row>
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="6">
+              <div class="inputName">*选择图片：</div>
+            </a-col>
+            <a-col class="gutter-row" :span="18">
+              <input type="file" id="image2" />
+            </a-col>
+          </div>
+        </a-row>-->
+        <a-row>
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="6">
+              <div class="inputName">
+                <span>*</span>是否显示：
+              </div>
+            </a-col>
+            <a-col class="gutter-row" :span="18">
+              <a-select defaultValue="1" style="width: 100%" v-model="form_change.active">
+                <a-select-option value="1">是</a-select-option>
+                <a-select-option value="0">否</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-row>
+        <a-row>
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="6">
+              <div class="inputName">
+                <span>*</span>图片类型：
+              </div>
+            </a-col>
+            <a-col class="gutter-row" :span="18">
+              <a-select defaultValue="1" style="width: 100%" v-model="form_change.image_type">
+                <a-select-option
+                  :value="item.image_type"
+                  v-for="(item,index) in attributeList"
+                  :key="index"
+                >{{item.content}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-row>
+        <a-row>
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="6">
+              <div class="inputName">
+                <span>*</span>分类：
+              </div>
+            </a-col>
+            <a-col class="gutter-row" :span="18">
+              <a-select style="width: 100%" v-model="form_change.category_id">
+                <a-select-option
+                  :value="item.category_id"
+                  v-for="(item,index) in typeArr"
+                  :key="index"
+                >{{item.meta_title}}</a-select-option>
+              </a-select>
+            </a-col>
+          </div>
+        </a-row>
+        <a-row>
+          <div class="inputPart">
+            <a-col class="gutter-row" :span="6">
+              <div class="inputName">
+                <span>*</span>排序：
+              </div>
+            </a-col>
+            <a-col class="gutter-row" :span="18">
+              <a-input placeholder v-model="form_change.position" />
+            </a-col>
+          </div>
+        </a-row>
+        <a-row v-if="!isAllRight">
+          <div class="inputPart">
+            <p class="worning">请填写相应内容</p>
+          </div>
+        </a-row>
       </a-modal>
-    </div>-->
+    </div>
   </div>
 </template>
 
 <script>
-import { Promise } from "q";
-import func from "../../../vue-temp/vue-editor-bridge";
 export default {
   name: "setBannerIndex",
   data() {
@@ -231,10 +303,10 @@ export default {
       loading: false,
       // banner详情模态框控制
       visible_detail: false,
-      // 修改的模态框
-      visible_modify: false,
       // 新增的模态框
       visible_add: false,
+      // 修改的模态框
+      visible_change: false,
       // 添加图片的表单
       form_add: {
         image_base_str: "",
@@ -245,7 +317,15 @@ export default {
       },
       typeArr: [], //分类的数组
       // 控制提示信息显示
-      isAllRight: true
+      isAllRight: true,
+      // 修改的表单
+      form_change: {
+        active: "",
+        image_type: "",
+        category_id: "",
+        position: "",
+        mobile_banner_id: ""
+      }
     };
   },
   mounted() {
@@ -314,19 +394,48 @@ export default {
     },
     // 确定提交
     submitAdd() {
-      const ele = document.getElementById("image");
-      // this.fileTransform(ele);
-      // 验证成功之后发请求
-      // if (this.checking(this.form_add)) {
-      //   this.isAllRight = true;
-      //   this.$post("/mobileBanner/addMobileBannerInfo", this.form_add).then(
-      //     res => {
-      //       console.log(res);
-      //     }
-      //   );
-      // } else {
-      //   this.isAllRight = false;
-      // }
+      // 上传的文件转换
+      let reader = new FileReader();
+      let allowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
+      let file = document.getElementById("image").files[0];
+      let _this = this;
+      if (file) {
+        // 转换成base64
+        let imgUrlBase64 = reader.readAsDataURL(file);
+        reader.onload = function() {
+          if (
+            allowImgFileSize != 0 &&
+            allowImgFileSize < reader.result.length
+          ) {
+            alert("上传失败，请上传不大于2M的图片！");
+          } else {
+            //将编码写入表单
+            _this.form_add.image_base_str = reader.result;
+            // 验证成功之后发请求
+            if (_this.checking(_this.form_add)) {
+              _this.isAllRight = true;
+              _this
+                .$post("/mobileBanner/addMobileBannerInfo", _this.form_add)
+                .then(res => {
+                  if (res.code == "0") {
+                    _this.visible_add = false;
+                    // 清空表单
+                    _this.form_add.image_base_str = "";
+                    _this.form_add.active = "1";
+                    _this.form_add.image_type = "";
+                    _this.form_add.category_id = "";
+                    _this.form_add.position = "";
+                    alert("添加成功！");
+                  }
+                });
+            } else {
+              _this.isAllRight = false;
+            }
+          }
+        };
+      } else {
+        this.isAllRight = false;
+      }
     },
     // 验证
     checking(obj) {
@@ -357,31 +466,52 @@ export default {
       }
       return true;
     },
-    // 上传的文件转换
-    // fileTransform(ele) {
-    //   // 上传的文件转换
-    //   let reader = new FileReader();
-    //   let allowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
-    //   let file = ele.files[0];
-    //   let _this = this;
-    //   if (file) {
-    //     // 转换成base64
-    //     let imgUrlBase64 = reader.readAsDataURL(file);
-    //     reader.onload = function() {
-    //       if (
-    //         allowImgFileSize != 0 &&
-    //         allowImgFileSize < reader.result.length
-    //       ) {
-    //         alert("上传失败，请上传不大于2M的图片！");
-    //       } else {
-    //         //将编码写入表单
-    //         _this.form_add.image_base_str = reader.result;
-    //       }
-    //     };
-    //   }
-    // },
+    goChange(text) {
+      this.form_change.active = text.active == false ? "0" : "1";
+      this.form_change.image_type = text.image_type;
+      this.form_change.category_id = text.category_id;
+      this.form_change.position = text.position;
+      this.form_change.mobile_banner_id = text.mobile_banner_id;
+      this.visible_change = true;
+    },
+    submitChange() {
+      this.$post("/mobileBanner/updateMobileBannerInfo", this.form_change).then(
+        res => {
+          if (res.code == "0") {
+            this.visible_change = false;
+            // 改本地的状态
+            this.attributeList_detail.forEach((item, index) => {
+              if (item.mobile_banner_id == this.form_change.mobile_banner_id) {
+                let newObj = Object.assign(
+                  {},
+                  this.attributeList_detail[index],
+                  this.form_change
+                );
+                this.$set(this.attributeList_detail, index, newObj);
+              }
+            });
+          }
+        }
+      );
+    }
   }
 };
 </script>
 
-
+<style scoped>
+.worning {
+  text-align: center;
+  color: red;
+}
+#add {
+  margin-bottom: 15px;
+}
+.inputPart {
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.inputName span {
+  color: red;
+  margin-right: 5px;
+}
+</style>

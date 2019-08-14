@@ -1,7 +1,7 @@
 <template>
   <div class="hotwords">
     <div class="add-btn">
-      <a-button type="primary" @click="visible_add=true">新增</a-button>
+      <a-button type="primary" @click="visible_add=true" id="add">新增</a-button>
       <a-table
         :columns="columns"
         :dataSource="attributeList"
@@ -9,12 +9,12 @@
         :loading="loading"
         align="center"
       >
-        <span slot="action" slot-scope="text, record">
+        <span slot="action" slot-scope="text">
           <a @click="change(text)">修改</a>
           <a-divider type="vertical"></a-divider>
           <a @click="submitDel(text)">删除</a>
         </span>
-        <a slot="active" slot-scope="text, record" style="text-align: center">
+        <a slot="active" slot-scope="text" style="text-align: center">
           <a-icon type="check" style="color: green" v-if="text.active==true"></a-icon>
           <a-icon type="close" style="color: red" v-if="text.active!=true"></a-icon>
         </a>
@@ -25,7 +25,9 @@
           <a-row>
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
-                <div class="inputName">*是否显示：</div>
+                <div class="inputName">
+                  <span>*</span>是否显示：
+                </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
                 <a-select defaultValue="1" style="width: 100%" v-model="form_add.active">
@@ -38,10 +40,12 @@
           <a-row>
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
-                <div class="inputName">*分类：</div>
+                <div class="inputName">
+                  <span>*</span>分类：
+                </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
-                <a-select style="width: 120px" v-model="form_add.category_id">
+                <a-select style="width: 100%" v-model="form_add.category_id">
                   <a-select-option
                     :value="item.category_id"
                     v-for="(item,index) in typeArr"
@@ -54,7 +58,9 @@
           <a-row>
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
-                <div class="inputName">排序：</div>
+                <div class="inputName">
+                  <span>*</span>排序：
+                </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
                 <a-input placeholder v-model="form_add.position" />
@@ -74,7 +80,9 @@
           <a-row>
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
-                <div class="inputName">*是否显示：</div>
+                <div class="inputName">
+                  <span>*</span>是否显示：
+                </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
                 <a-select defaultValue="1" style="width: 100%" v-model="form_change.active">
@@ -87,10 +95,12 @@
           <a-row>
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
-                <div class="inputName">*分类：</div>
+                <div class="inputName">
+                  <span>*</span>分类：
+                </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
-                <a-select style="width: 120px" v-model="form_change.category_id">
+                <a-select style="width: 100%" v-model="form_change.category_id">
                   <a-select-option
                     :value="item.category_id"
                     v-for="(item,index) in typeArr"
@@ -103,7 +113,9 @@
           <a-row>
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
-                <div class="inputName">排序：</div>
+                <div class="inputName">
+                  <span>*</span>排序：
+                </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
                 <a-input placeholder v-model="form_change.position" />
@@ -198,14 +210,15 @@ export default {
         return false;
       }
       this.isAllRight = true;
-      this.$post("/mobileHomeCategory/addMobileHomeCategoryInfo", this.form_add).then(
-        res => {
-          if (res.data == 1) {
-            this.visible_add = false;
-            this.getList(); 
-          }
+      this.$post(
+        "/mobileHomeCategory/addMobileHomeCategoryInfo",
+        this.form_add
+      ).then(res => {
+        if (res.data == 1) {
+          this.visible_add = false;
+          this.getList();
         }
-      );
+      });
     },
     change(text) {
       console.log(text);
@@ -274,11 +287,13 @@ export default {
       let data = {
         mobile_home_category_id: text.mobile_home_category_id
       };
-      this.$post("/mobileHomeCategory/removeMobileHomeCategory", data).then(res => {
-        if (res.data == 1) {
-          this.getList();
+      this.$post("/mobileHomeCategory/removeMobileHomeCategory", data).then(
+        res => {
+          if (res.data == 1) {
+            this.getList();
+          }
         }
-      });
+      );
     }
   }
 };
@@ -287,6 +302,17 @@ export default {
 .worning {
   text-align: center;
   color: red;
+}
+#add {
+  margin-bottom: 15px;
+}
+.inputPart {
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.inputName span {
+  color: red;
+  margin-right: 5px;
 }
 </style>
 

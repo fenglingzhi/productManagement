@@ -61,6 +61,8 @@
     import setBannerIndex from './appSet/setBannerIndex'
     import hotWords from './appSet/hotWords'
     import classify from './appSet/classify'
+    import setBannerNotice from './appSet/setBannerNotice'
+    import waterFall from './appSet/waterFall'
     import countDown from './appSet/countDown'
     import cartRules from './cart/cartRules'
     export default {
@@ -90,6 +92,8 @@
             setBannerIndex,
             hotWords,
             classify,
+            setBannerNotice,
+            waterFall,
             countDown,
             cartRules
         },

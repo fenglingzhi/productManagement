@@ -20,8 +20,13 @@
         </a>
       </a-table>
 
-      <div class="addCountDown">
-        <a-modal title="新增APP首页促销倒计时" v-model="visible_add" :destroyOnClose="true" @ok="submitAdd">
+      <div class="addNoticeBanner">
+        <a-modal
+          title="新增APP首页公告banner"
+          v-model="visible_add"
+          :destroyOnClose="true"
+          @ok="submitAdd"
+        >
           <a-row>
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
@@ -44,33 +49,11 @@
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
                 <div class="inputName">
-                  <span>*</span>开始时间：
+                  <span>*</span>title：
                 </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
-                <a-date-picker
-                  format="YYYY-MM-DD HH:mm:ss"
-                  showTime
-                  @change="start_stamp_onchange"
-                  style="width:100%;"
-                />
-              </a-col>
-            </div>
-          </a-row>
-          <a-row>
-            <div class="inputPart">
-              <a-col class="gutter-row" :span="6">
-                <div class="inputName">
-                  <span>*</span>结束时间：
-                </div>
-              </a-col>
-              <a-col class="gutter-row" :span="18">
-                <a-date-picker
-                  format="YYYY-MM-DD HH:mm:ss"
-                  showTime
-                  @change="end_stamp_onchange"
-                  style="width:100%;"
-                />
+                <a-input placeholder="输入title" v-model="form_add.title" />
               </a-col>
             </div>
           </a-row>
@@ -89,6 +72,18 @@
               </a-col>
             </div>
           </a-row>
+          <a-row>
+            <div class="inputPart">
+              <a-col class="gutter-row" :span="6">
+                <div class="inputName">
+                  <span>*</span>排序：
+                </div>
+              </a-col>
+              <a-col class="gutter-row" :span="18">
+                <a-input placeholder="排序" v-model="form_add.position" />
+              </a-col>
+            </div>
+          </a-row>
           <a-row v-if="!isAllRight">
             <div class="inputPart">
               <p class="worning">请填写相应内容</p>
@@ -97,9 +92,9 @@
         </a-modal>
       </div>
 
-      <div class="changeCountDown">
+      <div class="changeNoticeBanner">
         <a-modal
-          title="新增APP首页促销倒计时"
+          title="修改APP首页公告banner"
           v-model="visible_change"
           :destroyOnClose="true"
           @ok="submitChange"
@@ -112,7 +107,7 @@
                 </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
-                <a-select style="width: 100%" v-model="form_change.category_id">
+                <a-select style="width: 120px" v-model="form_change.category_id">
                   <a-select-option
                     :value="item.category_id"
                     v-for="(item,index) in typeArr"
@@ -126,35 +121,11 @@
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
                 <div class="inputName">
-                  <span>*</span>开始时间：
+                  <span>*</span>title：
                 </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
-                <a-date-picker
-                  format="YYYY-MM-DD HH:mm:ss"
-                  showTime
-                  style="width:100%;"
-                  :defaultValue="moment(form_change.start_stamp,'x')"
-                  @change="start_stamp_onchange_change"
-                />
-              </a-col>
-            </div>
-          </a-row>
-          <a-row>
-            <div class="inputPart">
-              <a-col class="gutter-row" :span="6">
-                <div class="inputName">
-                  <span>*</span>结束时间：
-                </div>
-              </a-col>
-              <a-col class="gutter-row" :span="18">
-                <a-date-picker
-                  format="YYYY-MM-DD HH:mm:ss"
-                  showTime
-                  style="width:100%;"
-                  :defaultValue="moment(form_change.end_stamp,'x')"
-                  @change="end_stamp_onchange_change"
-                />
+                <a-input placeholder="输入title" v-model="form_change.title" />
               </a-col>
             </div>
           </a-row>
@@ -173,6 +144,18 @@
               </a-col>
             </div>
           </a-row>
+          <a-row>
+            <div class="inputPart">
+              <a-col class="gutter-row" :span="6">
+                <div class="inputName">
+                  <span>*</span>排序：
+                </div>
+              </a-col>
+              <a-col class="gutter-row" :span="18">
+                <a-input placeholder="排序" v-model="form_change.position" />
+              </a-col>
+            </div>
+          </a-row>
           <a-row v-if="!isAllRight">
             <div class="inputPart">
               <p class="worning">请填写相应内容</p>
@@ -185,7 +168,6 @@
 </template>
 
 <script>
-import moment from "moment";
 export default {
   name: "countDown",
   data() {
@@ -199,11 +181,11 @@ export default {
         },
         {
           title: "id",
-          dataIndex: "mobile_home_promotion_countdown_id",
-          key: "mobile_home_promotion_countdown_id"
+          dataIndex: "mobile_home_notice_id",
+          key: "mobile_home_notice_id"
         },
-        { title: "开始时间", dataIndex: "start_stamp_string", key: "start_stamp_string" },
-        { title: "结束时间", dataIndex: "end_stamp_string", key: "end_stamp_string" },
+        { title: "排序", dataIndex: "position", key: "position" },
+        { title: "title", dataIndex: "title", key: "title" },
         { title: "分类", dataIndex: "category_name", key: "category_name" },
         {
           title: "是否显示",
@@ -228,21 +210,19 @@ export default {
       form_add: {
         category_id: "",
         active: "1",
-        end_stamp: "",
-        start_stamp: ""
+        position: "",
+        title: ""
       },
       // 是否显示校验提示
       isAllRight: true,
       // 修改的表单
       form_change: {
-        start_stamp: "",
-        end_stamp: "",
+        position: "",
         category_id: "",
         active: "",
-        mobile_home_promotion_countdown_id: ""
-      },
-      start_stamp_default: "",
-      end_stamp_default: ""
+        title: "",
+        mobile_home_notice_id: ""
+      }
     };
   },
   mounted() {
@@ -250,7 +230,6 @@ export default {
     this.getList();
   },
   methods: {
-    moment,
     // 确定添加
     submitAdd() {
       if (this.form_add.category_id == "") {
@@ -261,18 +240,17 @@ export default {
         this.isAllRight = false;
         return false;
       }
-      if (this.form_add.start_stamp == "") {
+      if (this.form_add.title == "") {
         this.isAllRight = false;
         return false;
       }
-      if (this.form_add.end_stamp == "") {
+      if (this.form_add.position == "") {
         this.isAllRight = false;
         return false;
       }
       this.isAllRight = true;
-      // console.log(this.form_add);
       this.$post(
-        "/mobilePromotionCountdown/addMobilePromotionCountdownInfo",
+        "/mobileHomeNotice/addMobileHomeNoticeInfo",
         this.form_add
       ).then(res => {
         // console.log(res);
@@ -283,14 +261,11 @@ export default {
       });
     },
     change(text) {
-      // console.log(text)
-      this.form_change.start_stamp = text.start_stamp;
-      this.form_change.end_stamp =text.end_stamp;
+      this.form_change.position = text.position;
       this.form_change.category_id = text.category_id;
+      this.form_change.title = text.title;
       this.form_change.active = text.active == false ? "0" : "1";
-      this.form_change.mobile_home_promotion_countdown_id =
-        text.mobile_home_promotion_countdown_id;
-      console.log(this.form_change);
+      this.form_change.mobile_home_notice_id = text.mobile_home_notice_id;
       this.visible_change = true;
     },
     submitChange() {
@@ -302,9 +277,17 @@ export default {
         this.isAllRight = false;
         return false;
       }
+      if (this.form_change.title == "") {
+        this.isAllRight = false;
+        return false;
+      }
+      if (this.form_change.position == "") {
+        this.isAllRight = false;
+        return false;
+      }
       this.isAllRight = true;
       this.$post(
-        "/mobilePromotionCountdown/updateMobilePromotionCountdownInfo",
+        "/mobileHomeNotice/updateMobileHomeNoticeInfo",
         this.form_change
       ).then(res => {
         if (res.code == "0") {
@@ -327,54 +310,37 @@ export default {
       let data = {
         lang_id: this.$store.state.langId
       };
-      this.$post(
-        "/mobilePromotionCountdown/getMobilePromotionCountdownList",
-        data
-      ).then(res => {
-        console.log(res);
-        let arr = JSON.parse(JSON.stringify(res.data));
-        arr.forEach(element => {
-          element.add_date = this.timeParse(element.add_date);
-          element.start_stamp_string = this.timeParse(element.start_stamp);
-          element.end_stamp_string = this.timeParse(element.end_stamp);
-        });
-        this.attributeList = arr;
-      });
+      this.$post("/mobileHomeNotice/getMobileHomeNoticeList", data).then(
+        res => {
+          // console.log(res);
+          if (res.code == "0") {
+            let arr = JSON.parse(JSON.stringify(res.data));
+            arr.forEach(element => {
+              element.add_date = this.timeParse(element.add_date);
+            });
+            this.attributeList = arr;
+          }
+        }
+      );
     },
     // 获取分类信息
     getTypeInfo() {
       this.$post("/category/getCategoryAllList", {
         lang_id: this.$store.state.langId
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         this.typeArr = res.data;
       });
     },
     submitDel(text) {
       let data = {
-        mobile_home_promotion_countdown_id:
-          text.mobile_home_promotion_countdown_id
+        mobile_home_notice_id: text.mobile_home_notice_id
       };
-      this.$post(
-        "/mobilePromotionCountdown/removeMobilePromotionCountdown",
-        data
-      ).then(res => {
+      this.$post("/mobileHomeNotice/removeMobileHomeNotice", data).then(res => {
         if (res.code == "0") {
           this.getList();
         }
       });
-    },
-    start_stamp_onchange(date, dateString) {
-      this.form_add.start_stamp = Date.parse(dateString);
-    },
-    end_stamp_onchange(date, dateString) {
-      this.form_add.end_stamp = Date.parse(dateString);
-    },
-    start_stamp_onchange_change(date, dateString) {
-      this.form_change.start_stamp = Date.parse(dateString);
-    },
-    end_stamp_onchange_change(date, dateString) {
-      this.form_change.end_stamp = Date.parse(dateString);
     }
   }
 };
