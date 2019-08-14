@@ -56,7 +56,6 @@
     import cityList from './localization/cityList'
     import logisticList from './logistics/logisticList'
     import productIntroduction from './goods/productIntroduction'
-
     import codList from './cart/codList'
     import setBannerIndex from './appSet/setBannerIndex'
     import hotWords from './appSet/hotWords'
@@ -64,7 +63,12 @@
     import setBannerNotice from './appSet/setBannerNotice'
     import waterFall from './appSet/waterFall'
     import countDown from './appSet/countDown'
+    import orderList from './order/orderList'
+    import orderStatus from './order/orderStatus'
     import cartRules from './cart/cartRules'
+
+    import employee from './administration/employee'
+    import role from './administration/role'
     export default {
 
         components:{
@@ -95,6 +99,11 @@
             setBannerNotice,
             waterFall,
             countDown,
+            cartRules,
+            role,
+            employee,
+            orderList,
+            orderStatus,
             cartRules
         },
         data () {

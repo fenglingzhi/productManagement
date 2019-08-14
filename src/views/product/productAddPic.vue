@@ -59,7 +59,6 @@
                 <a-select-option v-for='item in selectData' :value="item">{{item}}</a-select-option>
               </a-select>
             </a-col>
-              {{selectData}}
           </div>
         </a-col>
       </a-row>
@@ -107,7 +106,7 @@
               <a @click="delPic(text.position)">删除{{text.position}}</a>
            </span>
           <span slot="image" slot-scope="text, record">
-              <img :src="text.image_visit_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_visit_url !== ''">
+              <img @click="showPic(text.image_visit_url)" :src="text.image_visit_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_visit_url !== ''">
           </span>
           <a slot="isShow" slot-scope="text, record" style="text-align: center">
               <!--{{record}}-->
@@ -116,7 +115,6 @@
           </a>
       </a-table>
 
-{{fileList}}
 
   </div>
 </template>
@@ -141,6 +139,11 @@
 
     export default {
         methods: {
+            showPic(url){
+               this.previewImage=url
+                this.previewVisible=true
+
+            },
             delPic(postion){
                 this.$post('/productImage/removeProductImage',
                     {
@@ -215,7 +218,7 @@
                         })
                         this.getdata()
                         if(reData.code == 0){
-
+                            this.fileList=[]
                             store.commit('changeStore',{key:'goods_id',val:reData.data.id });
                             setTimeout(function () {
                                 // store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});

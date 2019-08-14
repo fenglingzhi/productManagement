@@ -26,10 +26,10 @@
           <a-menu-item key="2-3" @click="choseWhich('客户购物车','customerCart','2-3')" ><a-icon type="reconciliation" />客户购物车</a-menu-item>
           <a-menu-item key="2-4" @click="choseWhich('客户地址','customerAddress','2-4')" ><a-icon type="reconciliation" />客户地址</a-menu-item>
         </a-sub-menu>
-        <a-sub-menu key="3">
-          <span slot="title"><a-icon type="snippets" /><span>价格规则</span></span>
-          <a-menu-item key="3-1" @click="choseWhich('购物车规则','cartCoupon','3-1')" ><a-icon type="reconciliation" />购物车规则</a-menu-item>
-          <a-menu-item key="3-2" @click="choseWhich('COD规则','COD','3-2')" ><a-icon type="reconciliation" />COD规则</a-menu-item>
+        <a-sub-menu key="4">
+          <span slot="title"><a-icon type="snippets" /><span>订单管理</span></span>
+          <a-menu-item key="4-1" @click="choseWhich('订单列表','orderList','4-1')" ><a-icon type="reconciliation" />订单列表</a-menu-item>
+          <a-menu-item key="4-2" @click="choseWhich('订单状态','orderStatus','4-2')" ><a-icon type="reconciliation" />订单状态</a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="6">
         <span slot="title"><a-icon type="snippets" /><span>本地化</span></span>
@@ -57,6 +57,9 @@
           <a-menu-item key="9-4" @click="choseWhich('APP首页促销倒计时信息','countDown','9-4')" ><a-icon type="reconciliation" />APP首页促销倒计时信息</a-menu-item>
           <a-menu-item key="9-5" @click="choseWhich('APP首页公告banner','setBannerNotice','9-5')" ><a-icon type="reconciliation" />APP首页公告banner</a-menu-item>
           <a-menu-item key="9-6" @click="choseWhich('APP首页瀑布流推荐','waterFall','9-6')" ><a-icon type="reconciliation" />APP首页瀑布流推荐</a-menu-item>
+          <span slot="title"><a-icon type="snippets" /><span>行政</span></span>
+          <a-menu-item key="9-1" @click="choseWhich('雇员','employee','9-1')" ><a-icon type="reconciliation" />雇员</a-menu-item>
+          <a-menu-item key="9-2" @click="choseWhich('角色','role','9-2')" ><a-icon type="reconciliation" />角色</a-menu-item>
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>
