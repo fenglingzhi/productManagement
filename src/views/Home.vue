@@ -49,6 +49,11 @@
           <a-menu-item key="8-1" @click="choseWhich('COD设置','codList','8-1')" ><a-icon type="reconciliation" />COD设置</a-menu-item>
           <a-menu-item key="8-2" @click="choseWhich('购物车规则','cartRules','8-2')" ><a-icon type="reconciliation" />购物车规则</a-menu-item>
         </a-sub-menu>
+        <a-sub-menu key="9">
+          <span slot="title"><a-icon type="snippets" /><span>行政</span></span>
+          <a-menu-item key="9-1" @click="choseWhich('雇员','employee','9-1')" ><a-icon type="reconciliation" />雇员</a-menu-item>
+          <a-menu-item key="9-2" @click="choseWhich('角色','role','9-2')" ><a-icon type="reconciliation" />角色</a-menu-item>
+        </a-sub-menu>
       </a-menu>
     </a-layout-sider>
     <a-layout :style="{ marginLeft: '200px' }">

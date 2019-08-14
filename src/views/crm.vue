@@ -60,6 +60,9 @@
     import orderList from './order/orderList'
     import orderStatus from './order/orderStatus'
     import cartRules from './cart/cartRules'
+
+    import employee from './administration/employee'
+    import role from './administration/role'
     export default {
 
         components:{
@@ -84,6 +87,9 @@
             logisticList,
             productIntroduction,
             codList,
+            cartRules,
+            role,
+            employee,
             orderList,
             orderStatus,
             cartRules
