@@ -56,8 +56,9 @@
     import cityList from './localization/cityList'
     import logisticList from './logistics/logisticList'
     import productIntroduction from './goods/productIntroduction'
-
     import codList from './cart/codList'
+    import orderList from './order/orderList'
+    import orderStatus from './order/orderStatus'
     import cartRules from './cart/cartRules'
     export default {
 
@@ -83,6 +84,8 @@
             logisticList,
             productIntroduction,
             codList,
+            orderList,
+            orderStatus,
             cartRules
         },
         data () {
