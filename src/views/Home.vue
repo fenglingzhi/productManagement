@@ -26,11 +26,6 @@
           <a-menu-item key="2-3" @click="choseWhich('客户购物车','customerCart','2-3')" ><a-icon type="reconciliation" />客户购物车</a-menu-item>
           <a-menu-item key="2-4" @click="choseWhich('客户地址','customerAddress','2-4')" ><a-icon type="reconciliation" />客户地址</a-menu-item>
         </a-sub-menu>
-        <a-sub-menu key="3">
-          <span slot="title"><a-icon type="snippets" /><span>价格规则</span></span>
-          <a-menu-item key="3-1" @click="choseWhich('购物车规则','cartCoupon','3-1')" ><a-icon type="reconciliation" />购物车规则</a-menu-item>
-          <a-menu-item key="3-2" @click="choseWhich('COD规则','COD','3-2')" ><a-icon type="reconciliation" />COD规则</a-menu-item>
-        </a-sub-menu>
         <a-sub-menu key="4">
           <span slot="title"><a-icon type="snippets" /><span>订单管理</span></span>
           <a-menu-item key="4-1" @click="choseWhich('订单列表','orderList','4-1')" ><a-icon type="reconciliation" />订单列表</a-menu-item>
@@ -52,6 +47,7 @@
         <a-sub-menu key="8">
           <span slot="title"><a-icon type="snippets" /><span>购物车</span></span>
           <a-menu-item key="8-1" @click="choseWhich('COD设置','codList','8-1')" ><a-icon type="reconciliation" />COD设置</a-menu-item>
+          <a-menu-item key="8-2" @click="choseWhich('购物车规则','cartRules','8-2')" ><a-icon type="reconciliation" />购物车规则</a-menu-item>
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>

@@ -16,7 +16,7 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :scroll="{ x: 1500 }">
+                    >
               <span slot="action" slot-scope="text, record">
                   <a @click="editAttribute(text.currency_id)">修改</a>
                   <a-divider type="vertical"></a-divider>

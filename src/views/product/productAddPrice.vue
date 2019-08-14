@@ -149,7 +149,7 @@
                 this.postData.cost_price = Data.cost_price
                 this.postData.retail_price = Data.retail_price
                 this.postData.sale_price = Data.sale_price
-                store.commit('changeStore',{key:'langId',val: Data.lang_id});
+                // store.commit('changeStore',{key:'langId',val: Data.lang_id});
 
             }
         },

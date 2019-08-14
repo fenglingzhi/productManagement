@@ -157,7 +157,6 @@
                 </a-row>
 
 
-{{postData}}
 
 
 
