@@ -20,7 +20,7 @@
 
         },
         mounted() {
-            this.router.push('/productAttribute')
+            // this.router.push('/productAttribute')
         },
 
     }

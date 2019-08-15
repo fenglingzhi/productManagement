@@ -2,11 +2,14 @@
     <div class="productAttribute">
         <div>
             <div style="margin-bottom: 16px">
-                <a-button type="primary" @click="addAttribute('0')">
+                <a-button type="primary" @click="addAttribute()">
                     新增
                 </a-button>
                 <a-button type="primary" @click="deleteAllAttribute({ids:deleteAllData,status:'200'})" style="margin-left: 20px;">
                     批量删除
+                </a-button>
+                <a-button type="primary" @click="returnAttribute()" style="margin-left: 20px;" v-show="addAttributeInfo.parent_id != 0">
+                    返回
                 </a-button>
                 <span style="margin-left: 8px"></span>
             </div>
@@ -33,6 +36,110 @@
                 </a>
             </a-table>
         </div>
+        <div class="addproductAttribute">
+            <a-modal
+                    title="新增属性信息"
+                    v-model="visible_add"
+                    :destroyOnClose="true"
+                    @ok="addAttributeCommit(addAttributeInfo)"
+            >
+                <a-row>
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">属性名称：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input placeholder="请输入属性名称" v-model="addAttributeInfo.attribute_name" />
+                        </a-col>
+                    </div>
+                </a-row>
+                <a-row>
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">属性值 ：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input placeholder="请输入属性值" v-model="addAttributeInfo.attribute_val"/>
+                        </a-col>
+                    </div>
+                </a-row>
+                <a-row>
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">属性排序 ：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input placeholder="请输入属性排序" v-model="addAttributeInfo.attribute_seq"/>
+                        </a-col>
+                    </div>
+                </a-row>
+                <a-row>
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">属性状态：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-select defaultValue="请选择" style="width: 100%"  @change="handleChangeadd">
+                                <a-select-option value="100">启用</a-select-option>
+                                <a-select-option value="400">禁用</a-select-option>
+                            </a-select>
+                        </a-col>
+                    </div>
+                </a-row>
+            </a-modal>
+        </div>
+        <div class="editproductAttribute">
+            <a-modal
+                    title="新增属性信息"
+                    v-model="visible_add"
+                    :destroyOnClose="true"
+                    @ok="editAttributeCommit(addAttributeInfo)"
+            >
+                <a-row>
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">属性名称：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input placeholder="请输入属性名称" v-model="addAttributeInfo.attribute_name" />
+                        </a-col>
+                    </div>
+                </a-row>
+                <a-row>
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">属性值 ：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input placeholder="请输入属性值" v-model="addAttributeInfo.attribute_val"/>
+                        </a-col>
+                    </div>
+                </a-row>
+                <a-row>
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">属性排序 ：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input placeholder="请输入属性排序" v-model="addAttributeInfo.attribute_seq"/>
+                        </a-col>
+                    </div>
+                </a-row>
+                <a-row>
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName">属性状态：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-select defaultValue="请选择" style="width: 100%"  @change="handleChangeEdit" :value="addAttributeInfo.status">
+                                <a-select-option value="100">启用</a-select-option>
+                                <a-select-option value="400">禁用</a-select-option>
+                            </a-select>
+                        </a-col>
+                    </div>
+                </a-row>
+            </a-modal>
+        </div>
     </div>
 </template>
 <script>
@@ -53,6 +160,9 @@
                 router,
                 columns,
                 store,
+                visible_add: false,
+                visible_edit: false,
+                visible_search: false,
                 loading: false,
                 pagination:{
                     defaultPageSize:10,
@@ -68,20 +178,72 @@
                         })
                         this.deleteAllData = deleteAllData
                     },
-                }
-
+                },
+                addAttributeInfo:{
+                    parent_id:'0',
+                    attribute_name:'',
+                    attribute_seq:'',
+                    attribute_val:'',
+                    status:'',
+                    lang_id:store.state.langId
+                },
+                flag:0
             }
         },
         methods: {
             //新增属性
-            addAttribute(data){
-                store.commit('changeStore',{key:'attribute_parent_id',val:data});
-                router.push('/addAttribute')
+            addAttribute(){
+                this.visible_add = true;
+            }
+            //新增属性选择
+            ,handleChangeadd(value) {
+                this.addAttributeInfo.status = value
+            }
+            ,handleChangeEdit(){
+                this.addAttributeInfo.status = value
+            }
+            //提交属性新增
+            ,addAttributeCommit(data){
+                this.$post('/property/addProperty',data).then((reData)=>{
+                    if(reData.code === '0'){
+                        if(this.addAttributeInfo.parent_id === 0){
+                            this.visible_add = false;
+                            this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                        } else {
+                            this.visible_add = false;
+                            this.getList({parent_id:this.addAttributeInfo.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                        }
+
+                    } else {
+                        this.$message.error(reData.message);
+                    }
+                })
             }
             //修改属性
             ,editAttribute(data){
-                store.commit('changeStore',{key:'attribute_id',val:data});
-                router.push('/editAttribute')
+                this.visible_edit = true;
+                this.$post('/property/getPropertyById',{
+                    property_id:data,
+                    parent_id:this.addAttributeInfo.parent_id,
+                    lang_id:store.state.langId
+                }).then((reData)=>{
+                    if(reData.code === '0'){
+                        console.log(reData.data)
+                        // this.editAttributeInfo.ids = reData.data[0].attribute_id;
+                        // this.editAttributeInfo.parent_id = reData.data[0].parent_id;
+                        // this.editAttributeInfo.attribute_name = reData.data[0].attribute_name;
+                        // this.editAttributeInfo.attribute_val = reData.data[0].attribute_val;
+                        // this.editAttributeInfo.attribute_seq = reData.data[0].attribute_seq;
+                        // this.editAttributeInfo.status = reData.data[0].status;
+                        // store.commit('changeStore',{key:'attribute_parent_id',val:reData.data[0].parent_id});
+                        console.log(this.$store.state.attribute_parent_id)
+                    } else {
+                        this.$message.error(reData.message);
+                    }
+                })
+            }
+            ,editAttributeCommit(){
+
             }
             // 获取属性列表
             ,getList(data){
@@ -101,7 +263,7 @@
             ,deleteProduct(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({parent_id:0});
+                        this.getList({parent_id:0,lang_id:store.state.langId});
                     } else {
                         this.$message.error(reData.message);
                     }
@@ -112,7 +274,7 @@
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){
                         this.$message.success(reData.message);
-                        this.getList({parent_id:0});
+                        this.getList({parent_id:0,lang_id:store.state.langId});
                     } else {
                         this.$message.error(reData.message);
                     }
@@ -120,18 +282,43 @@
             }
             //选择子属性
             ,select_attribute_child(data){
-                store.commit('changeStore',{key:'attribute_child_id',val:data});
-                this.router.push('/attributeList')
+                this.addAttributeInfo.parent_id = data;
+                console.log(data)
+                if(this.flag === 0){
+                    this.getList({parent_id:data,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                    this.flag = 1;
+                }
+            }
+            //返回父属性列表
+            ,returnAttribute(){
+                this.flag = 0;
+                this.addAttributeInfo.parent_id = 0;
+                this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
             }
         },
         mounted() {
             var vm = this;
             store.commit('changeStore',{key:'title',val:'属性列表'});
-            vm.getList({parent_id:0,pageSize:vm.pagination.defaultPageSize})
+            vm.getList({parent_id:0,pageSize:vm.pagination.defaultPageSize,lang_id:store.state.langId})
         },
 
     }
 </script>
 <style scoped>
-
+    .inputName{
+        text-align: right;
+        line-height: 34px;
+    }
+    .ant-row{
+        margin: 10px 0;
+    }
+    .hrLine{
+        width: 120%;
+        height: 30px;
+        margin-left: -30px;
+        background: #f0f2f5;
+    }
+    .show_text{
+        line-height: 32px;
+    }
 </style>

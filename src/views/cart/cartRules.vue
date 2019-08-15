@@ -61,7 +61,7 @@
             <!--新增修改弹框-->
             <div class="addCurrency">
                 <a-modal
-                    title="COD信息"
+                    title="购物车信息"
                     width="800px" 
                     v-model="visible_add"
                     :destroyOnClose = "true"
