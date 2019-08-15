@@ -6,15 +6,14 @@
       <div class="logo" @click="logo()">
         <img src="../assets/logos.png" width="100" alt="">
       </div>
-      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"  :selectedKeys="$store.state.menuKey"     :defaultOpenKeys="['2']" :style="{ textAlign: 'left' }">
+      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"  :selectedKeys="$store.state.menuKey"     :defaultOpenKeys="['1']" :style="{ textAlign: 'left' }">
         <a-menu-item key="0" @click="choseWhich('首页','index','0')"><a-icon type="home" /><span>首页</span></a-menu-item>
         <a-sub-menu key="1">
           <span slot="title"><a-icon type="snippets" /><span>商品管理</span></span>
           <a-menu-item key="1-1" @click="choseWhich('商品管理','productWrap','1-1')" ><a-icon type="reconciliation" />商品管理</a-menu-item>
           <a-menu-item key="1-3" @click="choseWhich('分类管理','classify_list','1-3')" ><a-icon type="reconciliation" />分类管理</a-menu-item>
-          <a-menu-item key="1-4" @click="choseWhich('属性管理','attributeWrap','1-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>
+          <a-menu-item key="1-4" @click="choseWhich('属性管理','productAttribute','1-4')" ><a-icon type="reconciliation" />属性管理</a-menu-item>
           <a-menu-item key="1-5" @click="choseWhich('评论管理','reviewList','1-5')" ><a-icon type="reconciliation" />评论管理</a-menu-item>
-
           <a-menu-item key="1-6" @click="choseWhich('Banner设置','banner_set','1-6')" ><a-icon type="reconciliation" />Banner设置</a-menu-item>
           <a-menu-item key="1-7" @click="choseWhich('分类商品导入','productIntroduction','1-7')" ><a-icon type="reconciliation" />分类商品导入</a-menu-item>
 

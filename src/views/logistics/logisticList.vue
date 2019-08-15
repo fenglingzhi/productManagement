@@ -69,7 +69,7 @@
                  @change="handleTableChange"
         >
           <span slot="action" slot-scope="text, record">
-              <a @click="edit(record.carrier_id)">编辑</a>
+              <a @click="edit5(record.carrier_id)">编辑</a>
                  <a-divider type="vertical"></a-divider>
               <a @click="edit(record.carrier_id)">删除</a>
           </span>
@@ -260,7 +260,6 @@
                     </div>
                 </a-col>
             </a-row>
-
 
 
         </a-modal>
@@ -651,12 +650,15 @@
                 this.visible5 = false
             },
             add(){
+                this.isEdit=false
                 this.visible = true
                 this.checkedList=[]
                 this.indeterminate=false
 
             },
             add2(){
+                this.isEdit=false
+
                 this.addCountry={
                     country_id:'',
                     name:'',
@@ -671,6 +673,8 @@
                 this.visible2 = true
             },
             add3(){
+                this.isEdit=false
+
                 this.checkedList=[]
                 this.getCountryList()
                 this.visible3 = true
@@ -685,8 +689,10 @@
                 }
             },
             add4(){
+                this.isEdit=false
+
                 this.addZone={
-                    zone_id:'',
+                    zone_ids:'',
                     name:'',
                     c_min:'',
                     c_max:'',
@@ -695,10 +701,13 @@
                 }
                 this.whichDo = "addZone"
                 this.checkedList=[]
+                this.checkAll=false
                 this.indeterminate=false
                 this.visible4 = true
             },
             add5(){
+                this.isEdit=false
+
                 this.addOtherCountry={
                     name:'',
                     c_min:'',
@@ -712,7 +721,50 @@
                 this.visible5 = true
             },
             edit(id){
+                this.checkAll=false
+                this.indeterminate=false
+                this.checkedList=[]
+                this.isEdit=true
+                this.$post('/carrier/getCarrierInfo',{carrier_id:id}).then((reData)=>{
+                    if(reData.code=="0"){
+                        // this.checkedList=reData.data.zone_id
+                        this.checkedList=[4,5]
 
+                        this.addZone = reData.data
+                        this.addZone.c_type = reData.data.c_type.toString()
+
+                        this.visible4 = true
+                    }else {
+                        this.$notification.open({
+                            message: '提醒',
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                    }
+                })
+            },
+            edit5(id){
+                this.checkAll=false
+                this.indeterminate=false
+                this.checkedList=[]
+                this.isEdit=true
+                this.$post('/carrier/getCarrierInfo',{carrier_id:id}).then((reData)=>{
+                    if(reData.code=="0"){
+                        this.checkedList=reData.data.zone_id
+                        this.addOtherCountry = reData.data
+                        this.visible5 = true
+                    }else {
+                        this.$notification.open({
+                            message: '提醒',
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                    }
+                })
             },
             handleOk(){
                 this.$post('/carrier/addCarrierState',this.addState).then((reData)=>{
@@ -751,35 +803,71 @@
 
             },
             handleOk4(){
-                this.$post('/carrier/addCarrierZone',this.addZone).then((reData)=>{
-                    if(reData.code=="0"){
-                        this.getCarrierZoneAndOtherList()
 
-                    }else {
-                        this.$notification.open({
-                            message: '提醒',
-                            description: reData.message,
-                            onClick: () => {
-                                console.log('ok');
-                            },
-                        })
-                    }
-                })
+                 this.addZone.zone_ids= this.addZone.zone_ids.toString().replace('[','').replace(']','')
+                if(this.isEdit){
+                    this.$post('/carrier/editCarrierZone',this.addZone).then((reData)=>{
+                        if(reData.code=="0"){
+                            this.getCarrierZoneAndOtherList()
+                        }else {
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }
+                    })
+                }else {
+                    this.$post('/carrier/addCarrierZone',this.addZone).then((reData)=>{
+                        if(reData.code=="0"){
+                            this.getCarrierZoneAndOtherList()
+
+                        }else {
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }
+                    })
+                }
+
             },
             handleOk5(){
-                this.$post('/carrier/addCarrierOther',this.addOtherCountry).then((reData)=>{
-                    if(reData.code=="0"){
-                        this.getCarrierZoneAndOtherList()
-                    }else {
-                        this.$notification.open({
-                            message: '提醒',
-                            description: reData.message,
-                            onClick: () => {
-                                console.log('ok');
-                            },
-                        })
-                    }
-                })
+                if(this.isEdit){
+                    this.$post('/carrier/editCarrierOther',this.addOtherCountry).then((reData)=>{
+                        if(reData.code=="0"){
+                            this.getCarrierZoneAndOtherList()
+                        }else {
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }
+                    })
+                }else {
+                    this.$post('/carrier/addCarrierOther',this.addOtherCountry).then((reData)=>{
+                        if(reData.code=="0"){
+                            this.getCarrierZoneAndOtherList()
+                        }else {
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }
+                    })
+                }
+
             },
 
             getCarrierZoneAndOtherList(){
@@ -846,7 +934,7 @@
             onChange3 (checkedList) {
                 this.indeterminate = !!checkedList.length && (checkedList.length < this.zoneList.length)
                 this.checkAll = checkedList.length ===  this.zoneList.length
-                    this.addZone.zone_id = JSON.stringify(checkedList)
+                    this.addZone.zone_ids = JSON.stringify(checkedList)
                     // this.addZone.zone_id = '4'
             },
             onCheckAllChange (e) {
@@ -889,7 +977,7 @@
                     checkAll: e.target.checked,
                 })
                 console.log(this.checkedList)
-                this.addZone.zone_id = JSON.stringify(this.checkedList)
+                this.addZone.zone_ids = JSON.stringify(this.checkedList)
 
             },
 
@@ -901,6 +989,7 @@
         },
         data() {
             return {
+                isEdit:false,
                 whichDo:'',
                 addState:{
                     state_id:'',
@@ -919,7 +1008,7 @@
                     shipping_price:'',
                 },
                 addZone:{
-                    zone_id:'',
+                    zone_ids:'',
                     name:'',
                     c_min:'',
                     c_max:'',
