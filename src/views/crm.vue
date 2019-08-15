@@ -66,7 +66,7 @@
     import orderList from './order/orderList'
     import orderStatus from './order/orderStatus'
     import cartRules from './cart/cartRules'
-
+    import productAttribute from './attribute/productAttribute'
     import employee from './administration/employee'
     import role from './administration/role'
     export default {
@@ -99,12 +99,12 @@
             setBannerNotice,
             waterFall,
             countDown,
-            cartRules,
             role,
             employee,
             orderList,
             orderStatus,
-            cartRules
+            cartRules,
+            productAttribute
         },
         data () {
             return {
