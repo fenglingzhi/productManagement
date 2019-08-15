@@ -110,7 +110,7 @@
     import store from '../../store'
     const columns = [
         {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
-        { title: '币种名称', dataIndex: 'name', key: 'name'},
+        { title: '语言名称', dataIndex: 'name', key: 'name'},
         { title: '是否启用', key: 'active',scopedSlots: { customRender: 'active' },},
 
 

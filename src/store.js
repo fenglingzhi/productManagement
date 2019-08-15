@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
       // mjf
       baseURL:'http://192.168.0.18:8081/zorafanERP',
-      title:'张三（运营部）',
+      title:'运营部',
       shopTableChange:{
           showName:'test',
           shopData:{}
