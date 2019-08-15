@@ -121,6 +121,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "hotWords",
   data() {
@@ -231,15 +232,6 @@ export default {
         }
       });
     },
-    // 时间格式化
-    timeParse(time) {
-      var commonTime = "";
-      if (time) {
-        var unixTimestamp = new Date(time * 1);
-        commonTime = unixTimestamp.toLocaleString();
-      }
-      return commonTime;
-    },
     // 获取列表
     getList() {
       let data = {
@@ -249,7 +241,9 @@ export default {
         // console.log(res);
         let arr = JSON.parse(JSON.stringify(res.data));
         arr.forEach(element => {
-          element.add_date = this.timeParse(element.add_date);
+          element.add_date = moment(element.add_date).format(
+            "YYYY-MM-DD hh:mm:ss"
+          );
         });
         this.attributeList = arr;
       });

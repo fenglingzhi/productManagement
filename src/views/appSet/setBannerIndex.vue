@@ -144,16 +144,6 @@
         width="900px"
         @ok="submitChange"
       >
-        <!-- <a-row>
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">*选择图片：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="18">
-              <input type="file" id="image2" />
-            </a-col>
-          </div>
-        </a-row>-->
         <a-row>
           <div class="inputPart">
             <a-col class="gutter-row" :span="6">
@@ -228,6 +218,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "setBannerIndex",
   data() {
@@ -340,7 +331,9 @@ export default {
         if (res.message === "查询成功") {
           let arr = JSON.parse(JSON.stringify(res.data));
           arr.forEach(element => {
-            element.add_date = this.timeParse(element.add_date);
+            element.add_date = moment(element.add_date).format(
+              "YYYY-MM-DD hh:mm:ss"
+            );
           });
           this.attributeList_detail = arr;
           this.visible_detail = true;
@@ -355,15 +348,6 @@ export default {
         banner_id: id
       };
       return this.$post("/mobileBanner/getMobileBannerList", data);
-    },
-    // 时间格式化
-    timeParse(time) {
-      var commonTime = "";
-      if (time) {
-        var unixTimestamp = new Date(time * 1);
-        commonTime = unixTimestamp.toLocaleString();
-      }
-      return commonTime;
     },
     // 删除具体图片
     goDel(text) {
