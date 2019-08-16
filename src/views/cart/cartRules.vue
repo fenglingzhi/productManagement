@@ -18,7 +18,7 @@
                      :scroll="{ x: 2500 }">
               <span slot="action" slot-scope="text, record">
                   <a @click="editCod(text.discount_id)">修改</a>
-                  <!--<a-divider type="vertical"></a-divider>-->
+                  <a-divider type="vertical"></a-divider>
                   <a @click="deleteProduct(text.discount_id,text)">删除</a>
               </span>
                 <!-- 状态 -->
@@ -381,7 +381,8 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        {title: '编号', key: 'discount_id', dataIndex: 'discount_id', fixed: 'left'},
+        { title: '编号', key: 'discount_id', dataIndex: 'discount_id', fixed: 'left'},
+        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
         { title: '名称', dataIndex: 'name', key: 'name'},
         { title: '用户可用数量', dataIndex: 'quantity_per_user', key: 'quantity_per_user'},
         { title: '折扣劵总量', dataIndex: 'quantity', key: 'quantity'},
@@ -401,7 +402,7 @@
         { title: '优惠券是否包含税', scopedSlots: { customRender: 'reductionTax' }, key: 'reduction_tax'},
         { title: '金额是否包含运费', scopedSlots: { customRender: 'amount' }, key: 'minimum_amount_shipping'},
         { title: '状态', key: 'active',scopedSlots: { customRender: 'active' },},
-        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
+       
     ];
     const attributeList = [];
     //表格复选框
@@ -809,5 +810,8 @@
     .btnGroup button{
       margin: 10px
     }
-
+    /* .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td{
+        text-align:center;
+    } */
 </style>
