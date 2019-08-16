@@ -37,7 +37,7 @@
                         <a-col class="gutter-row" :span="12">
                                 <input type="file" class="file1" name="myFile" ><br/>
                                 <input type="hidden" v-model="categoryId" name="category_id" ><br/>
-                                <a href="#">csv文件模板下载</a>
+                                <a target="_blank" href="http://ar-test.kapeixi.cn/admincpx2018/import/category_product_import.csv">csv文件模板下载</a>
                         </a-col>
                     </div>
                 </a-col>
@@ -88,7 +88,7 @@
                         <a-col class="gutter-row" :span="12">
                             <input type="file" class="file2" name="myFile" ><br/>
                             <input type="hidden" v-model="selectedKeys" name="category_id" ><br/>
-                            <a href="#">csv文件模板下载</a>
+                            <a target="_blank" href="http://ar-test.kapeixi.cn/admincpx2018/import/category_product_import.csv">csv文件模板下载</a>
                         </a-col>
                     </div>
                 </a-col>
@@ -119,7 +119,7 @@
                         </a-col>
                         <a-col class="gutter-row" :span="12">
                             <input type="file" class="file3" name="myFile"><br/>
-                            <a href="#">csv文件模板下载</a>
+                            <a target="_blank" href="http://ar-test.kapeixi.cn/admincpx2018/import/product_import.xls">csv文件模板下载</a>
                         </a-col>
                     </div>
                 </a-col>
@@ -163,7 +163,7 @@
                         <a-col class="gutter-row" :span="12">
                             <input type="file" class="file1" name="myFile" ><br/>
                             <input type="hidden" v-model="tagId" name="tag_id" ><br/>
-                            <a href="#">csv文件模板下载</a>
+                            <a href="http://ar-test.kapeixi.cn/admincpx2018/import/category_product_import.csv">csv文件模板下载</a>
                         </a-col>
                     </div>
                 </a-col>

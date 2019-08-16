@@ -232,8 +232,13 @@
             }
         } ,
         mounted() {
-            store.commit('changeStore',{key:'title',val:'新增产品'});
-            this.getdata()
+            if(this.$store.state.isEdit){
+              this.getdata()
+                store.commit('changeStore',{key:'title',val:'修改商品'});
+            }else {
+                store.commit('changeStore',{key:'title',val:'新增商品'});
+
+            }
         },
         data() {
             return {

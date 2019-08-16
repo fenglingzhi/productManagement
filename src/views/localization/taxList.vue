@@ -3,12 +3,19 @@
 
         <!--<div class="hrLine"></div>-->
         <div>
-            <div style="margin-bottom: 16px">
-                <a-button type="primary" @click="addAttribute(store.state.attribute_child_id)">
-                    新增
-                </a-button>
-
-                <span style="margin-left: 8px"></span>
+            <div class="secondTitle">
+                <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
+                    国家税列表 ：
+                </a-col>
+                <a-col class="gutter-row" :span="3">
+                    <a-row>
+                        <a-col class="gutter-row" :offset="12" :span="12">
+                            <a-button type="primary" @click="addAttribute(store.state.attribute_child_id)">
+                                新增
+                            </a-button>
+                        </a-col>
+                    </a-row>
+                </a-col>
             </div>
             <a-table :columns="columns"
                      :dataSource="attributeList"
@@ -33,9 +40,46 @@
             </a-table>
 
 
+            <div class="hrLine"></div>
+            <div class="secondTitle">
+                <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
+                    省/州税列表 ：
+                </a-col>
+                <a-col class="gutter-row" :span="3">
+                    <a-row>
+                        <a-col class="gutter-row" :offset="12" :span="12">
+                            <a-button type="primary" @click="addAttribute(store.state.attribute_child_id)">
+                                新增
+                            </a-button>
+                        </a-col>
+                    </a-row>
+                </a-col>
+            </div>
+            <a-table :columns="columns"
+                     :dataSource="attributeList"
+                     :pagination="pagination"
+                     :loading="loading"
+                     align="center"
+                     @change="handleTableChange"
+            >
+              <span slot="action" slot-scope="text, record">
+                  <a @click="editAttribute(text.currency_id)">修改</a>
+                  <a-divider type="vertical"></a-divider>
+                  <a @click="deleteProduct(text.currency_id)">删除</a>
+              </span>
+                <a slot="isUse" slot-scope="text, record" style="text-align: center">
+                    <div style="width: 100%;text-align: left" v-if="text.decimals == 1">是</div>
+                    <div style="width: 100%;text-align: left" v-if="text.decimals == 0">否</div>
+                </a>
+                <a slot="active" slot-scope="text, record" style="text-align: center">
+                    <a-icon type="check" style="color: green" v-if="text.active == '1'" @click="change_active({currency_id:text.currency_id,active:'0'})"></a-icon>
+                    <a-icon type="close" style="color: red" v-if="text.active == '0'" @click="change_active({currency_id:text.currency_id,active:'1'})"></a-icon>
+                </a>
+            </a-table>
+
             <div class="addCurrency">
                 <a-modal
-                        title="新增货币"
+                        title="新增"
                         v-model="visible_add"
                         :destroyOnClose = "true"
                         @ok="submitAdd"
@@ -108,18 +152,6 @@
                             </a-col>
                         </div>
                     </a-row>
-
-
-                    <!--<a-row>-->
-                        <!--<div class="inputPart">-->
-                            <!--<a-col class="gutter-row" :span="6">-->
-                                <!--<div class="inputName">小数保留几位：</div>-->
-                            <!--</a-col>-->
-                            <!--<a-col class="gutter-row" :span="18">-->
-                                <!--<a-input placeholder="" v-model="addCurrency.decimals" />-->
-                            <!--</a-col>-->
-                        <!--</div>-->
-                    <!--</a-row>-->
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
@@ -220,18 +252,6 @@
                                 </a-col>
                             </div>
                         </a-row>
-
-
-                        <!--<a-row>-->
-                            <!--<div class="inputPart">-->
-                                <!--<a-col class="gutter-row" :span="6">-->
-                                    <!--<div class="inputName">小数保留几位：</div>-->
-                                <!--</a-col>-->
-                                <!--<a-col class="gutter-row" :span="18">-->
-                                    <!--<a-input placeholder="" v-model="editCurrency.decimals" />-->
-                                <!--</a-col>-->
-                            <!--</div>-->
-                        <!--</a-row>-->
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
@@ -401,7 +421,7 @@
             // 获取商品列表
             ,getList(data){
                 this.loading = true;
-                this.$post('/currency/getCurrencyListPage',data).then((reData)=>{
+                this.$post('/tax/getTaxListPage',data).then((reData)=>{
                     this.attributeList=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false

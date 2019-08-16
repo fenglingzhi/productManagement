@@ -44,9 +44,9 @@
                  @change="handleTableChange"
         >
           <span slot="action" slot-scope="text, record">
-              <a @click="edit(record.carrier_id)">编辑</a>
-                 <a-divider type="vertical"></a-divider>
-              <a @click="edit(record.carrier_id)">删除</a>
+              <!--<a @click="edit(record.carrier_id)">编辑</a>-->
+                 <!--<a-divider type="vertical"></a-divider>-->
+              <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
         </a-table>
         <div class="hrLine"></div>
@@ -69,9 +69,9 @@
                  @change="handleTableChange"
         >
           <span slot="action" slot-scope="text, record">
-              <a @click="edit5(record.carrier_id)">编辑</a>
-                 <a-divider type="vertical"></a-divider>
-              <a @click="edit(record.carrier_id)">删除</a>
+              <!--<a @click="edit5(record.carrier_id)">编辑</a>-->
+                 <!--<a-divider type="vertical"></a-divider>-->
+              <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
         </a-table>
 
@@ -106,9 +106,9 @@
                      @change="handleTableChange"
             >
           <span slot="action" slot-scope="text, record">
-              <a @click="edit(record.carrier_id)">修改</a>
-              <a-divider type="vertical"></a-divider>
-              <a @click="edit(record.carrier_id)">删除</a>
+              <!--<a @click="edit(record.carrier_id)">修改</a>-->
+              <!--<a-divider type="vertical"></a-divider>-->
+              <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
 
           <!--<span slot="c_min" slot-scope="text, record">-->
@@ -142,9 +142,9 @@
                      @change="handleTableChange"
             >
           <span slot="action" slot-scope="text, record">
-              <a @click="edit(record.carrier_id)">修改</a>
-              <a-divider type="vertical"></a-divider>
-              <a @click="edit(record.carrier_id)">删除</a>
+              <!--<a @click="edit(record.carrier_id)">修改</a>-->
+              <!--<a-divider type="vertical"></a-divider>-->
+              <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
 
                 <!--<span slot="c_min" slot-scope="text, record">-->
@@ -189,8 +189,8 @@
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select  v-model="addZone.c_type" defaultValue="1" style="width: 100%"  @change="handleChange">
-                                <a-select-option value="1">重量（kg）</a-select-option>
-                                <a-select-option value="0">金额（$）</a-select-option>
+                                <a-select-option  value="1">重量（kg）</a-select-option>
+                                <a-select-option  value="0">金额（$）</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -628,7 +628,8 @@
         components:{
         },
         methods: {
-            handleChange(value){
+            handleChange(value,a){
+                console.log(a)
                 // alert(value)
                 this.checkedList=[]
                 this.getStateList(value)
@@ -658,9 +659,8 @@
             },
             add2(){
                 this.isEdit=false
-
                 this.addCountry={
-                    country_id:'',
+                    country_ids:'',
                     name:'',
                     c_min:'',
                     c_max:'',
@@ -680,7 +680,7 @@
                 this.visible3 = true
                 this.indeterminate=false
                 this.addState={
-                    state_id:'',
+                    state_ids:'',
                     name:'',
                     c_min:'',
                     c_max:'',
@@ -719,6 +719,24 @@
                 this.indeterminate=false
 
                 this.visible5 = true
+            },
+            deleteCarrier(id){
+                this.$post('/carrier/deleteCarrier',{carrier_id:id}).then((reData)=>{
+                    if(reData.code=="0"){
+                        // this.checkedList=reData.data.zone_id
+                        this.getHasSetCountryList(this.zoneId)
+                        this.getCarrierZoneAndOtherList()
+
+                    }else {
+                        this.$notification.open({
+                            message: '提醒',
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                    }
+                })
             },
             edit(id){
                 this.checkAll=false
@@ -767,9 +785,19 @@
                 })
             },
             handleOk(){
+                this.addState.state_ids= this.addState.state_ids.toString().replace('[','').replace(']','')
+
                 this.$post('/carrier/addCarrierState',this.addState).then((reData)=>{
                     if(reData.code=="0"){
-                        this.getHasSetCountryList()
+                        this.getHasSetCountryList(this.zoneId)
+                        this.visible3 = false
+                        this.$notification.open({
+                            message: '成功',
+                            description: "新增成功",
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
                     }else {
                         this.$notification.open({
                             message: '提醒',
@@ -783,10 +811,19 @@
             },
             handleOk2(){
 
+                this.addCountry.country_ids= this.addCountry.country_ids.toString().replace('[','').replace(']','')
 
                 this.$post('/carrier/addCarrierCountry',this.addCountry).then((reData)=>{
                     if(reData.code=="0"){
-                        this.getHasSetCountryList()
+                        this.getHasSetCountryList(this.zoneId)
+                        this.$notification.open({
+                            message: '成功',
+                            description: "新增成功",
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        this.visible2 = false
 
                     }else {
                         this.$notification.open({
@@ -808,6 +845,14 @@
                 if(this.isEdit){
                     this.$post('/carrier/editCarrierZone',this.addZone).then((reData)=>{
                         if(reData.code=="0"){
+                            this.visible4=false
+                            this.$notification.open({
+                                message: '成功',
+                                description: "编辑成功",
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
                             this.getCarrierZoneAndOtherList()
                         }else {
                             this.$notification.open({
@@ -822,6 +867,14 @@
                 }else {
                     this.$post('/carrier/addCarrierZone',this.addZone).then((reData)=>{
                         if(reData.code=="0"){
+                            this.visible4=false
+                            this.$notification.open({
+                                message: '成功',
+                                description: "新增成功",
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
                             this.getCarrierZoneAndOtherList()
 
                         }else {
@@ -885,7 +938,8 @@
         // 获取已设置国家列表
         getHasSetCountryList(zoneId){
             this.loading = true;
-            this.$post('/carrier/getCarrierCountryAndStateList',{zone_id:zoneId,lang_id:this.$store.state.langId}).then((reData)=>{
+            this.zoneId=zoneId
+            this.$post('/carrier/getCarrierCountryAndStateList',{zone_id:this.zoneId,lang_id:this.$store.state.langId}).then((reData)=>{
                 this.listData4=reData.data.countryCarrierList
                 this.listData5=reData.data.stateCarrierList
                 this.pagination1.total=reData.data.countryCarrierList.length
@@ -919,7 +973,7 @@
                 this.indeterminate = !!checkedList.length && (checkedList.length < this.countryList.length)
                 this.checkAll = checkedList.length === this.countryList.length
                 console.log( checkedList )
-                this.addCountry.country_id = JSON.stringify(checkedList)
+                this.addCountry.country_ids = JSON.stringify(checkedList)
 
 
             },
@@ -927,7 +981,7 @@
                 this.indeterminate = !!checkedList.length && (checkedList.length < this.countryList.length)
                 this.checkAll = checkedList.length === this.countryList.length
                 console.log( checkedList )
-                this.addState.state_id = JSON.stringify(checkedList)
+                this.addState.state_ids = JSON.stringify(checkedList)
 
 
             },
@@ -947,7 +1001,7 @@
                     indeterminate: false,
                     checkAll: e.target.checked,
                 })
-                this.addCountry.country_id = JSON.stringify(this.checkedList)
+                this.addCountry.country_ids = JSON.stringify(this.checkedList)
 
                 console.log(this.checkedList)
 
@@ -962,7 +1016,7 @@
                     indeterminate: false,
                     checkAll: e.target.checked,
                 })
-                this.addState.state_id = JSON.stringify(this.checkedList)
+                this.addState.state_ids = JSON.stringify(this.checkedList)
                 console.log(this.checkedList)
 
             },
@@ -989,10 +1043,11 @@
         },
         data() {
             return {
+                zoneId:'',
                 isEdit:false,
                 whichDo:'',
                 addState:{
-                    state_id:'',
+                    state_ids:'',
                     name:'',
                     c_min:'',
                     c_max:'',
@@ -1000,7 +1055,7 @@
                     shipping_price:'',
                 },
                 addCountry:{
-                    country_id:'',
+                    country_ids:'',
                     name:'',
                     c_min:'',
                     c_max:'',

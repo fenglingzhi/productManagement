@@ -107,7 +107,7 @@
                 </div>
               </a-col>
               <a-col class="gutter-row" :span="18">
-                <a-select style="width: 120px" v-model="form_change.category_id">
+                <a-select style="width: 100%" v-model="form_change.category_id">
                   <a-select-option
                     :value="item.category_id"
                     v-for="(item,index) in typeArr"
@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import moment from "moment"
+import moment from "moment";
 export default {
   name: "countDown",
   data() {
@@ -256,6 +256,7 @@ export default {
       ).then(res => {
         // console.log(res);
         if (res.code == "0") {
+          this.$message.info("添加成功！");
           this.visible_add = false;
           this.getList();
         }
@@ -292,6 +293,7 @@ export default {
         this.form_change
       ).then(res => {
         if (res.code == "0") {
+          this.$message.info("修改成功！");
           this.visible_change = false;
           this.getList();
         }
@@ -332,6 +334,7 @@ export default {
       };
       this.$post("/mobileHomeNotice/removeMobileHomeNotice", data).then(res => {
         if (res.code == "0") {
+          this.$message.info("删除成功！");
           this.getList();
         }
       });

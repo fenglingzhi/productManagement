@@ -77,7 +77,6 @@
                 <!--</div>-->
             <!--</a-col>-->
         <!--</a-row>-->
-{{postData}}
     </div>
 </template>
 <script>

@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import moment from "moment"
+import moment from "moment";
 export default {
   name: "countDown",
   data() {
@@ -189,6 +189,7 @@ export default {
       ).then(res => {
         // console.log(res);
         if (res.code == "0") {
+          this.$message.info('添加成功！');
           this.visible_add = false;
           this.getList();
         }
@@ -215,6 +216,7 @@ export default {
         this.form_change
       ).then(res => {
         if (res.code == "0") {
+          this.$message.info("修改成功！");
           this.visible_change = false;
           this.getList();
         }
@@ -227,7 +229,7 @@ export default {
       };
       this.$post("/mobileHomeRecommend/getMobileHomeRecommendList", data).then(
         res => {
-          console.log(res);
+          // console.log(res);
           if (res.code == "0") {
             let arr = JSON.parse(JSON.stringify(res.data));
             arr.forEach(element => {
@@ -256,6 +258,7 @@ export default {
       this.$post("/mobileHomeRecommend/removeMobileHomeRecommend", data).then(
         res => {
           if (res.code == "0") {
+            this.$message.info("删除成功！");
             this.getList();
           }
         }

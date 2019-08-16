@@ -277,14 +277,14 @@
 
             getData(){
                 var vm = this
-                this.$fetch('/property/getPropertyById',{property_id:1,parent_id:1,lang_id:this.$store.state.langId}).then((reData)=>{
+                this.$fetch('/property/getPropertyListById',{property_id:1,parent_id:1,lang_id:this.$store.state.langId}).then((reData)=>{
                     reData.data.forEach(function(val, indexc) {
                         if(val.parent_id!=0){
                             vm.colorListO.push({value:val.attribute_id,label:val.attribute_name,disabled:false})
                         }
                     });
                 })
-                this.$fetch('/property/getPropertyById',{property_id:2,parent_id:2,lang_id:this.$store.state.langId}).then((reData)=>{
+                this.$fetch('/property/getPropertyListById',{property_id:2,parent_id:2,lang_id:this.$store.state.langId}).then((reData)=>{
                     reData.data.forEach(function(val, indexc) {
                         if(val.parent_id!=0){
                             vm.sizeListO.push({value:val.attribute_id,label:val.attribute_name,disabled:false})

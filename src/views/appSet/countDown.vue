@@ -285,6 +285,7 @@ export default {
       ).then(res => {
         // console.log(res);
         if (res.code == "0") {
+          this.$message.info('添加成功！');
           this.visible_add = false;
           this.getList();
         }
@@ -316,6 +317,7 @@ export default {
         this.form_change
       ).then(res => {
         if (res.code == "0") {
+          this.$message.info('修改成功！');
           this.visible_change = false;
           this.getList();
         }
@@ -368,6 +370,7 @@ export default {
         data
       ).then(res => {
         if (res.code == "0") {
+          this.$message.info('删除成功！');
           this.getList();
         }
       });

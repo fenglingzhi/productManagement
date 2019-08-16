@@ -19,8 +19,8 @@
                     >
               <span slot="action" slot-scope="text, record">
                   <a @click="editAttribute(text.city_id)">修改</a>
-                  <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct(text.city_id)">删除</a>
+                  <!--<a-divider type="vertical"></a-divider>-->
+                  <!--<a @click="deleteProduct(text.city_id)">删除</a>-->
               </span>
 
                 <span slot="contains_states" slot-scope="text, record" style="text-align: center">
@@ -248,6 +248,12 @@
             handleChangeAdd(value){
                 this.addCurrency.active = value
             },
+            // handleChangeCountryEdit(value){
+            //     this.editCurrency.country_id = value
+            // },
+            // handleChangeCountryAdd(value){
+            //     this.addCurrency.country_id = value
+            // },
         //添加提交
         submitAdd() {
             this.$post('/city/addCity',this.addCurrency).then((reData)=>{
