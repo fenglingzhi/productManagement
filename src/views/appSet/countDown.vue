@@ -202,8 +202,16 @@ export default {
           dataIndex: "mobile_home_promotion_countdown_id",
           key: "mobile_home_promotion_countdown_id"
         },
-        { title: "开始时间", dataIndex: "start_stamp_string", key: "start_stamp_string" },
-        { title: "结束时间", dataIndex: "end_stamp_string", key: "end_stamp_string" },
+        {
+          title: "开始时间",
+          dataIndex: "start_stamp_string",
+          key: "start_stamp_string"
+        },
+        {
+          title: "结束时间",
+          dataIndex: "end_stamp_string",
+          key: "end_stamp_string"
+        },
         { title: "分类", dataIndex: "category_name", key: "category_name" },
         {
           title: "是否显示",
@@ -277,6 +285,7 @@ export default {
       ).then(res => {
         // console.log(res);
         if (res.code == "0") {
+          this.$message.info('添加成功！');
           this.visible_add = false;
           this.getList();
         }
@@ -285,12 +294,12 @@ export default {
     change(text) {
       // console.log(text)
       this.form_change.start_stamp = text.start_stamp;
-      this.form_change.end_stamp =text.end_stamp;
+      this.form_change.end_stamp = text.end_stamp;
       this.form_change.category_id = text.category_id;
       this.form_change.active = text.active == false ? "0" : "1";
       this.form_change.mobile_home_promotion_countdown_id =
         text.mobile_home_promotion_countdown_id;
-      console.log(this.form_change);
+      // console.log(this.form_change);
       this.visible_change = true;
     },
     submitChange() {
@@ -308,19 +317,11 @@ export default {
         this.form_change
       ).then(res => {
         if (res.code == "0") {
+          this.$message.info('修改成功！');
           this.visible_change = false;
           this.getList();
         }
       });
-    },
-    // 时间格式化
-    timeParse(time) {
-      var commonTime = "";
-      if (time) {
-        var unixTimestamp = new Date(time * 1);
-        commonTime = unixTimestamp.toLocaleString();
-      }
-      return commonTime;
     },
     // 获取列表
     getList() {
@@ -331,12 +332,21 @@ export default {
         "/mobilePromotionCountdown/getMobilePromotionCountdownList",
         data
       ).then(res => {
-        console.log(res);
+        // console.log(res);
         let arr = JSON.parse(JSON.stringify(res.data));
         arr.forEach(element => {
-          element.add_date = this.timeParse(element.add_date);
-          element.start_stamp_string = this.timeParse(element.start_stamp);
-          element.end_stamp_string = this.timeParse(element.end_stamp);
+          // element.add_date = this.timeParse(element.add_date);
+          element.add_date = moment(element.add_date).format(
+            "YYYY-MM-DD hh:mm:ss"
+          );
+          // element.start_stamp_string = this.timeParse(element.start_stamp);
+          element.start_stamp_string = moment(element.start_stamp).format(
+            "YYYY-MM-DD hh:mm:ss"
+          );
+          // element.end_stamp_string = this.timeParse(element.end_stamp);
+          element.end_stamp_string = moment(element.end_stamp).format(
+            "YYYY-MM-DD hh:mm:ss"
+          );
         });
         this.attributeList = arr;
       });
@@ -346,7 +356,7 @@ export default {
       this.$post("/category/getCategoryAllList", {
         lang_id: this.$store.state.langId
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         this.typeArr = res.data;
       });
     },
@@ -360,6 +370,7 @@ export default {
         data
       ).then(res => {
         if (res.code == "0") {
+          this.$message.info('删除成功！');
           this.getList();
         }
       });

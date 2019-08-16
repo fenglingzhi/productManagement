@@ -130,7 +130,8 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        {title: 'id', key: 'cart_cod_id', dataIndex: 'cart_cod_id', fixed: 'left'},
+        { title: 'id', key: 'cart_cod_id', dataIndex: 'cart_cod_id', fixed: 'left'},
+        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
         { title: '国家/地区', dataIndex: 'country_name', key: 'country_name'},
         { title: '货币', dataIndex: 'currency_name', key: 'currency_name'},
         { title: '价格范围（min）', dataIndex: 'price_min', key: 'price_min'},
@@ -139,7 +140,7 @@
         { title: '信用卡折扣(%)', dataIndex: 'cc_rate', key: 'cc_rate'},
         { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
         { title: '是否启用', key: 'active',scopedSlots: { customRender: 'active' },},
-        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
+        
     ];
     const attributeList = [];
 

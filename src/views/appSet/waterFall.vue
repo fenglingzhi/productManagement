@@ -115,6 +115,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "countDown",
   data() {
@@ -188,6 +189,7 @@ export default {
       ).then(res => {
         // console.log(res);
         if (res.code == "0") {
+          this.$message.info('添加成功！');
           this.visible_add = false;
           this.getList();
         }
@@ -214,19 +216,11 @@ export default {
         this.form_change
       ).then(res => {
         if (res.code == "0") {
+          this.$message.info("修改成功！");
           this.visible_change = false;
           this.getList();
         }
       });
-    },
-    // 时间格式化
-    timeParse(time) {
-      var commonTime = "";
-      if (time) {
-        var unixTimestamp = new Date(time * 1);
-        commonTime = unixTimestamp.toLocaleString();
-      }
-      return commonTime;
     },
     // 获取列表
     getList() {
@@ -235,11 +229,13 @@ export default {
       };
       this.$post("/mobileHomeRecommend/getMobileHomeRecommendList", data).then(
         res => {
-          console.log(res);
+          // console.log(res);
           if (res.code == "0") {
             let arr = JSON.parse(JSON.stringify(res.data));
             arr.forEach(element => {
-              element.add_date = this.timeParse(element.add_date);
+              element.add_date = moment(element.add_date).format(
+                "YYYY-MM-DD hh:mm:ss"
+              );
             });
             this.attributeList = arr;
           }
@@ -262,6 +258,7 @@ export default {
       this.$post("/mobileHomeRecommend/removeMobileHomeRecommend", data).then(
         res => {
           if (res.code == "0") {
+            this.$message.info("删除成功！");
             this.getList();
           }
         }

@@ -144,16 +144,6 @@
         width="900px"
         @ok="submitChange"
       >
-        <!-- <a-row>
-          <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">*选择图片：</div>
-            </a-col>
-            <a-col class="gutter-row" :span="18">
-              <input type="file" id="image2" />
-            </a-col>
-          </div>
-        </a-row>-->
         <a-row>
           <div class="inputPart">
             <a-col class="gutter-row" :span="6">
@@ -228,6 +218,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "setBannerIndex",
   data() {
@@ -336,16 +327,18 @@ export default {
     goSee(text) {
       this.attributeList_detail = [];
       this.getDetail(text.image_type, text.id).then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.message === "查询成功") {
           let arr = JSON.parse(JSON.stringify(res.data));
           arr.forEach(element => {
-            element.add_date = this.timeParse(element.add_date);
+            element.add_date = moment(element.add_date).format(
+              "YYYY-MM-DD hh:mm:ss"
+            );
           });
           this.attributeList_detail = arr;
           this.visible_detail = true;
         } else {
-          alert("查询失败，请重试！");
+          this.$message.info("查询失败，请重试！");
         }
       });
     },
@@ -355,15 +348,6 @@ export default {
         banner_id: id
       };
       return this.$post("/mobileBanner/getMobileBannerList", data);
-    },
-    // 时间格式化
-    timeParse(time) {
-      var commonTime = "";
-      if (time) {
-        var unixTimestamp = new Date(time * 1);
-        commonTime = unixTimestamp.toLocaleString();
-      }
-      return commonTime;
     },
     // 删除具体图片
     goDel(text) {
@@ -379,8 +363,9 @@ export default {
               this.$set(this.attributeList_detail.splice(index, 1));
             }
           });
+          this.$message.info("删除成功！");
         } else {
-          alert("删除失败！");
+          this.$message.info("删除失败！");
         }
       });
     },
@@ -407,7 +392,7 @@ export default {
             allowImgFileSize != 0 &&
             allowImgFileSize < reader.result.length
           ) {
-            alert("上传失败，请上传不大于2M的图片！");
+            _this.$message.info("上传失败，请上传不大于2m图片！");
           } else {
             //将编码写入表单
             _this.form_add.image_base_str = reader.result;
@@ -425,7 +410,7 @@ export default {
                     _this.form_add.image_type = "";
                     _this.form_add.category_id = "";
                     _this.form_add.position = "";
-                    alert("添加成功！");
+                    _this.$message.info("添加成功！");
                   }
                 });
             } else {
@@ -478,6 +463,7 @@ export default {
       this.$post("/mobileBanner/updateMobileBannerInfo", this.form_change).then(
         res => {
           if (res.code == "0") {
+            this.$message.info("修改成功！");
             this.visible_change = false;
             // 改本地的状态
             this.attributeList_detail.forEach((item, index) => {

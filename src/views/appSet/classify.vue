@@ -134,6 +134,7 @@
 </template>
 
 <script>
+import moment from "moment"
 export default {
   name: "hotWords",
   data() {
@@ -215,13 +216,14 @@ export default {
         this.form_add
       ).then(res => {
         if (res.data == 1) {
+          this.$message.info('添加成功！');
           this.visible_add = false;
           this.getList();
         }
       });
     },
     change(text) {
-      console.log(text);
+      // console.log(text);
       this.form_change.position = text.position;
       this.form_change.category_id = text.category_id;
       this.form_change.active = text.active == false ? "0" : "1";
@@ -244,19 +246,11 @@ export default {
         this.form_change
       ).then(res => {
         if (res.data == 1) {
+          this.$message.info('修改成功！');
           this.visible_change = false;
           this.getList();
         }
       });
-    },
-    // 时间格式化
-    timeParse(time) {
-      var commonTime = "";
-      if (time) {
-        var unixTimestamp = new Date(time * 1);
-        commonTime = unixTimestamp.toLocaleString();
-      }
-      return commonTime;
     },
     // 获取列表
     getList() {
@@ -265,10 +259,12 @@ export default {
       };
       this.$post("/mobileHomeCategory/getMobileHomeCategoryList", data).then(
         res => {
-          console.log(res);
+          // console.log(res);
           let arr = JSON.parse(JSON.stringify(res.data));
           arr.forEach(element => {
-            element.add_date = this.timeParse(element.add_date);
+            element.add_date = moment(element.add_date).format(
+              "YYYY-MM-DD hh:mm:ss"
+            );
           });
           this.attributeList = arr;
         }
@@ -279,7 +275,7 @@ export default {
       this.$post("/category/getCategoryAllList", {
         lang_id: this.$store.state.langId
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         this.typeArr = res.data;
       });
     },
@@ -290,6 +286,7 @@ export default {
       this.$post("/mobileHomeCategory/removeMobileHomeCategory", data).then(
         res => {
           if (res.data == 1) {
+            this.$message.info('删除成功！');
             this.getList();
           }
         }
