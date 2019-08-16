@@ -216,13 +216,14 @@ export default {
         this.form_add
       ).then(res => {
         if (res.data == 1) {
+          this.$message.info('添加成功！');
           this.visible_add = false;
           this.getList();
         }
       });
     },
     change(text) {
-      console.log(text);
+      // console.log(text);
       this.form_change.position = text.position;
       this.form_change.category_id = text.category_id;
       this.form_change.active = text.active == false ? "0" : "1";
@@ -245,6 +246,7 @@ export default {
         this.form_change
       ).then(res => {
         if (res.data == 1) {
+          this.$message.info('修改成功！');
           this.visible_change = false;
           this.getList();
         }
@@ -284,6 +286,7 @@ export default {
       this.$post("/mobileHomeCategory/removeMobileHomeCategory", data).then(
         res => {
           if (res.data == 1) {
+            this.$message.info('删除成功！');
             this.getList();
           }
         }
