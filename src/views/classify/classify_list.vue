@@ -12,14 +12,14 @@
           >
             <a-tree-node :key="item.key" v-for="item in classify_list">
               <div slot="title" @click="onSelect(item)" :style="showOperation == item.key ? 'background:#bae7ff':''">
-                <span v-if="item.title.indexOf(searchValue) > -1">
-                  <span v-text="item.title.substr(0, item.title.indexOf(searchValue))"></span>
-                  <span style="color: #f50" v-text="searchValue"></span>
-                  <span
-                    v-text="item.title.substr(item.title.indexOf(searchValue) + searchValue.length)"
-                  ></span>
-                </span>
-                <span v-else v-text="item.title"></span>
+                <!--<span v-if="item.title.indexOf(searchValue) > -1">-->
+                  <!--<span v-text="item.title.substr(0, item.title.indexOf(searchValue))"></span>-->
+                  <!--<span style="color: #f50" v-text="searchValue"></span>-->
+                  <!--<span-->
+                    <!--v-text="item.title.substr(item.title.indexOf(searchValue) + searchValue.length)"-->
+                  <!--&gt;</span>-->
+                <!--</span>-->
+                <span v-text="item.title"></span>
                 <!-- <div
                   style="display:inline-block;margin-left:25px;"
                   v-if="showOperation == item.key"
@@ -29,14 +29,14 @@
               </div>
               <a-tree-node :key="item1.key" v-for="item1 in item.children">
                 <div slot="title" @click="onSelect(item1)" :style="showOperation == item1.key ? 'background:#bae7ff':''">
-                  <span v-if="item1.title.indexOf(searchValue) > -1">
-                    <span v-text="item1.title.substr(0, item1.title.indexOf(searchValue))"></span>
-                    <span style="color: #f50" v-text="searchValue"></span>
-                    <span
-                      v-text="item1.title.substr(item1.title.indexOf(searchValue) + searchValue.length)"
-                    ></span>
-                  </span>
-                  <span v-else v-text="item1.title"></span>
+                  <!--<span v-if="item1.title.indexOf(searchValue) > -1">-->
+                    <!--<span v-text="item1.title.substr(0, item1.title.indexOf(searchValue))"></span>-->
+                    <!--<span style="color: #f50" v-text="searchValue"></span>-->
+                    <!--<span-->
+                      <!--v-text="item1.title.substr(item1.title.indexOf(searchValue) + searchValue.length)"-->
+                    <!--&gt;</span>-->
+                  <!--</span>-->
+                  <span  v-text="item1.title"></span>
                   <div
                     style="display:inline-block;margin-left:25px;"
                     v-if="showOperation == item1.key"
@@ -46,14 +46,14 @@
                 </div>
                 <a-tree-node :key="item2.key" v-for="item2 in item1.children">
                   <div slot="title" @click="onSelect(item2)" :style="showOperation == item2.key ? 'background:#bae7ff':''">
-                    <span v-if="item2.title.indexOf(searchValue) > -1">
-                      <span v-text="item2.title.substr(0, item2.title.indexOf(searchValue))"></span>
-                      <span style="color: #f50" v-text="searchValue"></span>
-                      <span
-                        v-text="item2.title.substr(item2.title.indexOf(searchValue) + searchValue.length)"
-                      ></span>
-                    </span>
-                    <span v-else v-text="item2.title"></span>
+                    <!--<span v-if="item2.title.indexOf(searchValue) > -1">-->
+                      <!--<span v-text="item2.title.substr(0, item2.title.indexOf(searchValue))"></span>-->
+                      <!--<span style="color: #f50" v-text="searchValue"></span>-->
+                      <!--<span-->
+                        <!--v-text="item2.title.substr(item2.title.indexOf(searchValue) + searchValue.length)"-->
+                      <!--&gt;</span>-->
+                    <!--</span>-->
+                    <span  v-text="item2.title"></span>
                     <div
                       style="display:inline-block;margin-left:25px;"
                       v-if="showOperation == item2.key"
@@ -63,14 +63,14 @@
                   </div>
                   <a-tree-node :key="item3.key" v-for="item3 in item2.children">
                     <div slot="title" @click="onSelect(item3)" :style="showOperation == item3.key ? 'background:#bae7ff':''">
-                      <span v-if="item3.title.indexOf(searchValue) > -1">
-                        <span v-text="item3.title.substr(0, item3.title.indexOf(searchValue))"></span>
-                        <span style="color: #f50" v-text="searchValue"></span>
-                        <span
-                          v-text="item3.title.substr(item3.title.indexOf(searchValue) + searchValue.length)"
-                        ></span>
-                      </span>
-                      <span v-else v-text="item3.title"></span>
+                      <!--<span v-if="item3.title.indexOf(searchValue) > -1">-->
+                        <!--<span v-text="item3.title.substr(0, item3.title.indexOf(searchValue))"></span>-->
+                        <!--<span style="color: #f50" v-text="searchValue"></span>-->
+                        <!--<span-->
+                          <!--v-text="item3.title.substr(item3.title.indexOf(searchValue) + searchValue.length)"-->
+                        <!--&gt;</span>-->
+                      <!--</span>-->
+                      <span  v-text="item3.title"></span>
                       <div
                         style="display:inline-block;margin-left:25px;"
                         v-if="showOperation == item3.key"
@@ -80,14 +80,14 @@
                     </div>
                     <a-tree-node :key="item4.key" v-for="item4 in item3.children">
                       <div slot="title" @click="onSelect(item4)" :style="showOperation == item4.key ? 'background:#bae7ff':''">
-                        <span v-if="item4.title.indexOf(searchValue) > -1">
-                          <span v-text="item4.title.substr(0, item4.title.indexOf(searchValue))"></span>
-                          <span style="color: #f50" v-text="searchValue"></span>
-                          <span
-                            v-text="item4.title.substr(item4.title.indexOf(searchValue) + searchValue.length)"
-                          ></span>
-                        </span>
-                        <span v-else v-text="item4.title"></span>
+                        <!--<span v-if="item4.title.indexOf(searchValue) > -1">-->
+                          <!--<span v-text="item4.title.substr(0, item4.title.indexOf(searchValue))"></span>-->
+                          <!--<span style="color: #f50" v-text="searchValue"></span>-->
+                          <!--<span-->
+                            <!--v-text="item4.title.substr(item4.title.indexOf(searchValue) + searchValue.length)"-->
+                          <!--&gt;</span>-->
+                        <!--</span>-->
+                        <span  v-text="item4.title"></span>
                         <div
                           style="display:inline-block;margin-left:25px;"
                           v-if="showOperation == item4.key"
@@ -105,10 +105,23 @@
       </a-col>
 
       <a-col :span="19" style="padding-left:10px;">
-        <classify_list_table :select_classify_key="select_classify_key" v-on:update_classify ="update_classify" v-on:router_add_classify="router_add_classify" :select_classify ="select_classify" v-if="operation_name =='table'"></classify_list_table>
-        <classify_list_edit v-on:update_classify ="update_classify" :classify_list ="classify_list" :operation_name ="operation_name" :select_classify_all ="select_classify_all" v-if="operation_name =='edit' || operation_name =='add'"></classify_list_edit>
+        <classify_list_table
+                :select_classify_key="select_classify_key"
+                v-on:update_classify ="update_classify"
+                v-on:router_add_classify="router_add_classify"
+                :select_classify ="select_classify"
+                v-if="operation_name =='table'">
+        </classify_list_table>
+        <classify_list_edit
+                v-on:update_classify ="update_classify"
+                :classify_list ="classify_list"
+                :operation_name ="operation_name"
+                :select_classify_all ="select_classify_all"
+                v-if="operation_name =='edit' || operation_name =='add'">
+        </classify_list_edit>
       </a-col>
     </a-row>
+
   </div>
 </template>
 

@@ -90,8 +90,8 @@
         </div>
         <div class="editproductAttribute">
             <a-modal
-                    title="新增属性信息"
-                    v-model="visible_add"
+                    title="修改属性信息"
+                    v-model="visible_edit"
                     :destroyOnClose="true"
                     @ok="editAttributeCommit(addAttributeInfo)"
             >
@@ -185,8 +185,20 @@
                     attribute_seq:'',
                     attribute_val:'',
                     status:'',
-                    lang_id:store.state.langId
+                    lang_id:store.state.langId,
+                    ids:'',
+                    // parentId:'',
                 },
+                // editAttributeInfo:{
+                //     add_date:'',
+                //     upd_date:'',
+                //     ids:'',
+                //     parent_id:'',
+                //     attribute_seq:'',
+                //     attribute_name:'',
+                //     attribute_val:'',
+                //     status:'',
+                // },
                 flag:0
             }
         },
@@ -199,7 +211,7 @@
             ,handleChangeadd(value) {
                 this.addAttributeInfo.status = value
             }
-            ,handleChangeEdit(){
+            ,handleChangeEdit(value){
                 this.addAttributeInfo.status = value
             }
             //提交属性新增
@@ -229,12 +241,12 @@
                 }).then((reData)=>{
                     if(reData.code === '0'){
                         console.log(reData.data)
-                        // this.editAttributeInfo.ids = reData.data[0].attribute_id;
-                        // this.editAttributeInfo.parent_id = reData.data[0].parent_id;
-                        // this.editAttributeInfo.attribute_name = reData.data[0].attribute_name;
-                        // this.editAttributeInfo.attribute_val = reData.data[0].attribute_val;
-                        // this.editAttributeInfo.attribute_seq = reData.data[0].attribute_seq;
-                        // this.editAttributeInfo.status = reData.data[0].status;
+                        this.addAttributeInfo.ids = reData.data[0].attribute_id;
+                        this.addAttributeInfo.parent_id = reData.data[0].parent_id;
+                        this.addAttributeInfo.attribute_name = reData.data[0].attribute_name;
+                        this.addAttributeInfo.attribute_val = reData.data[0].attribute_val;
+                        this.addAttributeInfo.attribute_seq = reData.data[0].attribute_seq;
+                        this.addAttributeInfo.status = reData.data[0].status;
                         // store.commit('changeStore',{key:'attribute_parent_id',val:reData.data[0].parent_id});
                         console.log(this.$store.state.attribute_parent_id)
                     } else {
@@ -242,8 +254,23 @@
                     }
                 })
             }
-            ,editAttributeCommit(){
-
+            ,editAttributeCommit(data){
+                this.$post('/property/updateProperty',data).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.$message.success(reData.message);
+                        this.visible_edit = false;
+                        this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                        // if(this.$store.state.attribute_parent_id === '0'){
+                        //     alert(1)
+                        //
+                        //     // router.push('/productAttribute')
+                        // } else {
+                        //     // router.push('/attributeList')
+                        // }
+                    } else {
+                        this.$message.error(reData.message);
+                    }
+                })
             }
             // 获取属性列表
             ,getList(data){
