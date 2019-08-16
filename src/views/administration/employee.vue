@@ -20,7 +20,7 @@
                      :scroll="{ x: 1500 }">
                 <span slot="action" slot-scope="text, record">
                   <a @click="editCod(text.employee_id)">修改</a>
-                  <!--<a-divider type="vertical"></a-divider>-->
+                  <a-divider type="vertical"></a-divider>
                   <a @click="deleteProduct(text.employee_id)">删除</a>
                 </span>
                 <a slot="active" slot-scope="text, record" style="text-align: center">
@@ -126,13 +126,13 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        {title: '雇员id', key: 'employee_id', dataIndex: 'employee_id', fixed: 'left'},
+        { title: '雇员id', key: 'employee_id', dataIndex: 'employee_id', fixed: 'left'},
+        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
         { title: '名', dataIndex: 'first_name', key: 'first_name'},
         { title: '姓', dataIndex: 'last_name', key: 'last_name'},
         { title: '邮箱地址', dataIndex: 'email', key: 'email'},
         { title: '默认语言id', dataIndex: 'lang_id', key: 'lang_id'},
         { title: '是否禁用', key: 'active',scopedSlots: { customRender: 'active' },},
-        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
     ];
     const attributeList = [];
     //表格复选框
@@ -285,6 +285,7 @@
             getList(data){
                 this.loading = true;
                 this.$post('/employee/getEmployeeInfoPage',data).then((reData)=>{
+                    console.log(reData)
                     this.attributeList=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false

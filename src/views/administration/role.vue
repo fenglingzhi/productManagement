@@ -20,7 +20,7 @@
                      :scroll="{ x: 1500 }">
                 <span slot="action" slot-scope="text, record">
                   <a @click="editCod(text.role_id)">修改</a>
-                  <!--<a-divider type="vertical"></a-divider>-->
+                  <a-divider type="vertical"></a-divider>
                   <a @click="deleteProduct(text.role_id)">删除</a>
                 </span>
                 <a slot="active" slot-scope="text, record" style="text-align: center">
@@ -56,12 +56,12 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        {title: '角色id', key: 'role_id', dataIndex: 'role_id', fixed: 'left'},
+        { title: '角色id', key: 'role_id', dataIndex: 'role_id', fixed: 'left'},
+        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
         { title: '角色名称', dataIndex: 'role_name', key: 'role_name'},
         { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
         { title: '更新时间', dataIndex: 'upd_date', key: 'upd_date'},
         { title: '是否禁用', key: 'active',scopedSlots: { customRender: 'active' },},
-        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
     ];
     const attributeList = [];
     //表格复选框
