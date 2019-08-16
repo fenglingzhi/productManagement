@@ -254,19 +254,26 @@
                     }
                 })
             }
+            //提交修改属性
             ,editAttributeCommit(data){
                 this.$post('/property/updateProperty',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.$message.success(reData.message);
-                        this.visible_edit = false;
+
                         this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
-                        // if(this.$store.state.attribute_parent_id === '0'){
+                        // if(this.addAttributeInfo.parent_id === '0'){
                         //     alert(1)
                         //
+                        //     this.$message.success(reData.message);
+                        //     this.visible_edit = false;
                         //     // router.push('/productAttribute')
                         // } else {
+                        //     alert(2)
+                        //
                         //     // router.push('/attributeList')
                         // }
+                        this.$message.success(reData.message);
+                        this.visible_edit = false;
+                        this.getList({parent_id:data.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
                     } else {
                         this.$message.error(reData.message);
                     }
