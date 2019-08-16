@@ -425,9 +425,9 @@
             }
             //删除商品
             ,deleteProduct(data){
-                this.$post('/property/deleteProperty',data).then((reData)=>{
+                this.$post('/currency/deleteCurrency',{currency_id:data}).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({parent_id:store.state.attribute_child_id});
+                        this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize});
                     } else {
                         this.$message.error(reData.message);
                     }

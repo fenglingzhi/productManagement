@@ -221,6 +221,8 @@
             ,add_product(){
                 store.commit('changeStore',{key:'addProductContent',val:'productAddInformatica'});
                 store.commit('changeStore',{key:'addProductCurrent',val:'0'});
+                store.commit('changeStore',{key:'goods_id',val:''});
+
                 router.push('/productAdd')
                 store.commit('changeStore',{key:'isEdit',val:false});
 

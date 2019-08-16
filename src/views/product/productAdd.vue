@@ -1,5 +1,19 @@
 <template>
     <a-row>
+        <template>
+            <template>
+                <a-breadcrumb :routes="routes">
+                    <template slot="itemRender" slot-scope="{route, params, routes, paths}">
+                            <span v-if="routes.indexOf(route) === routes.length - 1">
+                              {{route.breadcrumbName}}
+                            </span>
+                        <router-link v-else :to="paths.join('/')">
+                            {{route.breadcrumbName}}
+                        </router-link>
+                    </template>
+                </a-breadcrumb>
+            </template>
+        </template>
         <a-col :span="3">
             <div class="addProductSteps">
                 <div class="addProductStep" v-for="(item,index) in liList" v-on:click="choseStep(index,item.key)" v-bind:class="{addProductStepChosed:index==$store.state.addProductCurrent}">{{item.title}}</div>
@@ -89,6 +103,13 @@
         },
         data() {
             return {
+                routes: [{
+                    path: 'productList',
+                    breadcrumbName: '商品列表'
+                }, {
+                    path: 'second',
+                    breadcrumbName: '商品详情'
+                }],
 
                 headers: {
                     authorization: 'authorization-text',
