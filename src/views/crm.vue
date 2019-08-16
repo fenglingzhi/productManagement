@@ -54,6 +54,8 @@
     import stateList from './localization/stateList'
     import langList from './localization/langList'
     import cityList from './localization/cityList'
+    import taxList from './localization/taxList'
+
     import logisticList from './logistics/logisticList'
     import productIntroduction from './goods/productIntroduction'
     import codList from './cart/codList'
@@ -69,6 +71,8 @@
     import productAttribute from './attribute/productAttribute'
     import employee from './administration/employee'
     import role from './administration/role'
+
+
     export default {
 
         components:{
@@ -104,7 +108,8 @@
             orderList,
             orderStatus,
             cartRules,
-            productAttribute
+            productAttribute,
+            taxList
         },
         data () {
             return {
