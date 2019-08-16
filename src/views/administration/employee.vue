@@ -74,7 +74,7 @@
                                     <div class="inputName">密码：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
-                                    <a-input placeholder="" v-model="addCod.password" />
+                                    <a-input type="password" placeholder="" v-model="addCod.password" />
                                 </a-col>
                             </div>
                         </a-row>
