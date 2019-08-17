@@ -286,8 +286,8 @@
     import store from '../../store'
     const columns = [
         {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
-        { title: '币种名称', dataIndex: 'name', key: 'name'},
-        { title: '国际码', dataIndex: 'iso_code', key: 'iso_code'},
+        { title: '税名', dataIndex: 'name', key: 'name'},
+        { title: '税率', dataIndex: 'iso_code', key: 'iso_code'},
         { title: '国际码数字', dataIndex: 'iso_code_num', key: 'iso_code_num'},
         { title: '币种符号', dataIndex: 'sign', key: 'sign'},
         { title: '是否启用小数' , key: 'isUse', scopedSlots: { customRender: 'isUse' }},

@@ -65,23 +65,23 @@
 
                 </a-row>
                 <a-row>
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="12">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
+                            <a-col class="gutter-row" :span="3">
                                 <div class="inputName">*商品标签 ：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="18">
+                            <a-col class="gutter-row" :span="21">
                                 <!--<a-input v-model="postData.product_label" placeholder=""/>-->
 
                                 <template>
                                     <div>
                                         <template v-for="(tag, index) in tags">
                                             <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
-                                                <a-tag :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">
-                                                    {{`${tag.slice(0, 20)}...`}}
+                                                <a-tag :key="tag" :closable="index !==9999 " :afterClose="() => handleClose(tag)">
+                                                    {{`${tag.slice(0, 200)}...`}}
                                                 </a-tag>
                                             </a-tooltip>
-                                            <a-tag v-else :key="tag" :closable="index !== 0" :afterClose="() => handleClose(tag)">
+                                            <a-tag v-else :key="tag" :closable="index !== 9999" :afterClose="() => handleClose(tag)">
                                                 {{tag}}
                                             </a-tag>
                                         </template>
@@ -299,8 +299,6 @@
         mounted() {
             var vm=this;
             if(this.$store.state.isEdit){
-
-
                 var Data = this.$store.state.oldData.prdBase
                 this.postData.product_type = Data.product_type
                 this.postData.name = Data.name
@@ -387,5 +385,8 @@
       margin-top: 8px;
       color: #666;
   }
-
+  .ant-tag, .ant-tag a, .ant-tag a:hover {
+      color: rgba(0, 0, 0, 0.65);
+      margin: 5px 3px;
+  }
 </style>
