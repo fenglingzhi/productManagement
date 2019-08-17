@@ -175,7 +175,7 @@
             ,deleteFun(data){
                 this.$post('/gender/deleteGenderInfo',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList(data);
+                        this.getList({langId:data.langId});
                     }
                 })
             }
@@ -194,17 +194,18 @@
                 // console.log(e);
 
             },
-            submitGender_e(e) {
+            submitGender_e() {
+                let vm = this;
                 console.log(this.addCustomerGenderData)
                 // console.log(e);
-                vm.getList({langId:store.state.langId,genderId:genderId})
-                this.$post('/gender/updateGenderInfo',data).then((reData)=>{
+                // vm.getList({langId:store.state.langId})
+                this.$post('/gender/updateGenderInfo',this.addCustomerGenderData).then((reData)=>{
                     if(reData.code === '0'){
-                        this.visible_add = false
+                        this.visible_edit = false
                         this.getList({langId:store.state.langId});
                     } else if(reData.code === '10012'){
                         this.$message.error(reData.message);
-                        this.visible_add = false
+                        this.visible_edit = false
                     }
                 })
             },
