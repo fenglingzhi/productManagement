@@ -89,17 +89,12 @@
               </a-col>
             </div>
           </a-row>
-          <a-row v-if="!isAllRight">
-            <div class="inputPart">
-              <p class="worning">请填写相应内容</p>
-            </div>
-          </a-row>
         </a-modal>
       </div>
 
       <div class="changeCountDown">
         <a-modal
-          title="新增APP首页促销倒计时"
+          title="修改APP首页促销倒计时"
           v-model="visible_change"
           :destroyOnClose="true"
           @ok="submitChange"
@@ -173,11 +168,6 @@
               </a-col>
             </div>
           </a-row>
-          <a-row v-if="!isAllRight">
-            <div class="inputPart">
-              <p class="worning">请填写相应内容</p>
-            </div>
-          </a-row>
         </a-modal>
       </div>
     </div>
@@ -239,8 +229,6 @@ export default {
         end_stamp: "",
         start_stamp: ""
       },
-      // 是否显示校验提示
-      isAllRight: true,
       // 修改的表单
       form_change: {
         start_stamp: "",
@@ -261,35 +249,56 @@ export default {
     moment,
     // 确定添加
     submitAdd() {
-      if (this.form_add.category_id == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      if (this.form_add.active == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      if (this.form_add.start_stamp == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      if (this.form_add.end_stamp == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      this.isAllRight = true;
       // console.log(this.form_add);
-      this.$post(
-        "/mobilePromotionCountdown/addMobilePromotionCountdownInfo",
-        this.form_add
-      ).then(res => {
-        // console.log(res);
-        if (res.code == "0") {
-          this.$message.info('添加成功！');
-          this.visible_add = false;
-          this.getList();
+      if (this.checking(this.form_add)) {
+        this.$post(
+          "/mobilePromotionCountdown/addMobilePromotionCountdownInfo",
+          this.form_add
+        ).then(res => {
+          // console.log(res);
+          if (res.code == "0") {
+            this.openNotification("success", "成功", "添加成功！");
+            this.visible_add = false;
+            Object.assign(this.form_add, {
+              category_id: "",
+              active: "1",
+              end_stamp: "",
+              start_stamp: ""
+            });
+            this.getList();
+          } else {
+            this.openNotification("warning", "警告", res.message);
+          }
+        });
+      }
+    },
+    // 验证
+    checking(obj) {
+      if ("category_id" in obj) {
+        if (obj.category_id == "") {
+          this.openNotification("warning", "警告", "请选择分类！");
+          return false;
         }
-      });
+      }
+      if ("start_stamp" in obj) {
+        if (obj.start_stamp == "" || isNaN(obj.start_stamp)) {
+          this.openNotification("warning", "警告", "请选择开始时间！");
+          return false;
+        }
+      }
+      if ("end_stamp" in obj) {
+        if (obj.end_stamp == "" || isNaN(obj.end_stamp)) {
+          this.openNotification("warning", "警告", "请选择结束时间！");
+          return false;
+        }
+      }
+      if ("active" in obj) {
+        if (obj.active == "") {
+          this.openNotification("warning", "警告", "请选择是否显示！");
+          return false;
+        }
+      }
+      return true;
     },
     change(text) {
       // console.log(text)
@@ -303,25 +312,20 @@ export default {
       this.visible_change = true;
     },
     submitChange() {
-      if (this.form_change.category_id == "") {
-        this.isAllRight = false;
-        return false;
+      if (this.checking(this.form_change)) {
+        this.$post(
+          "/mobilePromotionCountdown/updateMobilePromotionCountdownInfo",
+          this.form_change
+        ).then(res => {
+          if (res.code == "0") {
+            this.openNotification("success", "成功", "修改成功！");
+            this.visible_change = false;
+            this.getList();
+          } else {
+            this.openNotification("error", "失败", "修改失败，请重试！");
+          }
+        });
       }
-      if (this.form_change.active == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      this.isAllRight = true;
-      this.$post(
-        "/mobilePromotionCountdown/updateMobilePromotionCountdownInfo",
-        this.form_change
-      ).then(res => {
-        if (res.code == "0") {
-          this.$message.info('修改成功！');
-          this.visible_change = false;
-          this.getList();
-        }
-      });
     },
     // 获取列表
     getList() {
@@ -335,15 +339,12 @@ export default {
         // console.log(res);
         let arr = JSON.parse(JSON.stringify(res.data));
         arr.forEach(element => {
-          // element.add_date = this.timeParse(element.add_date);
           element.add_date = moment(element.add_date).format(
             "YYYY-MM-DD hh:mm:ss"
           );
-          // element.start_stamp_string = this.timeParse(element.start_stamp);
           element.start_stamp_string = moment(element.start_stamp).format(
             "YYYY-MM-DD hh:mm:ss"
           );
-          // element.end_stamp_string = this.timeParse(element.end_stamp);
           element.end_stamp_string = moment(element.end_stamp).format(
             "YYYY-MM-DD hh:mm:ss"
           );
@@ -361,17 +362,28 @@ export default {
       });
     },
     submitDel(text) {
-      let data = {
-        mobile_home_promotion_countdown_id:
-          text.mobile_home_promotion_countdown_id
-      };
-      this.$post(
-        "/mobilePromotionCountdown/removeMobilePromotionCountdown",
-        data
-      ).then(res => {
-        if (res.code == "0") {
-          this.$message.info('删除成功！');
-          this.getList();
+      let _this = this;
+      this.$confirm({
+        title: "删除?",
+        content: "确认删除这条信息吗？",
+        onOk() {
+          let data = {
+            mobile_home_promotion_countdown_id:
+              text.mobile_home_promotion_countdown_id
+          };
+          _this
+            .$post(
+              "/mobilePromotionCountdown/removeMobilePromotionCountdown",
+              data
+            )
+            .then(res => {
+              if (res.code == "0") {
+                _this.openNotification("success", "成功", "删除成功！");
+                _this.getList();
+              } else {
+                _this.openNotification("error", "失败", "删除失败，请重试！");
+              }
+            });
         }
       });
     },
@@ -386,15 +398,17 @@ export default {
     },
     end_stamp_onchange_change(date, dateString) {
       this.form_change.end_stamp = Date.parse(dateString);
+    },
+    openNotification(type, title, txt) {
+      this.$notification[type]({
+        message: title,
+        description: txt
+      });
     }
   }
 };
 </script>
 <style scoped>
-.worning {
-  text-align: center;
-  color: red;
-}
 #add {
   margin-bottom: 15px;
 }
