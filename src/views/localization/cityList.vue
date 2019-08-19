@@ -297,7 +297,7 @@
                     this.getStateList(reData.data.country_id)
                     this.editCurrency = reData.data
                     // this.editCurrency.lang_id = data.lang_id
-                    this.editCurrency.state_id= reData.data.state_id.toString()
+                    this.editCurrency.state_id= reData.data.state_id
                     this.editCurrency.active= reData.data.active.toString()
                     this.visible_edit = true
 

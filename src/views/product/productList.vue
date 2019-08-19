@@ -132,10 +132,10 @@
                :rowSelection="rowSelection"
                :scroll="{ x: 1500 }">
           <span slot="action" slot-scope="text, record">
-              <a @click="edit(record.product_id)">修改{{record.product_id}}</a>
+              <a @click="edit(record.product_id)">修改</a>
 
               <a-divider type="vertical"></a-divider>
-              <a @click="deleteProduct({product_id:record.product_id})">删除{{record.product_id}}</a>
+              <a @click="deleteProduct({product_id:record.product_id})">删除</a>
           </span>
         <span slot="img_" slot-scope="text, record">
               <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">

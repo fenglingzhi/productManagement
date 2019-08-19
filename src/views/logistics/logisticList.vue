@@ -44,8 +44,8 @@
                  @change="handleTableChange"
         >
           <span slot="action" slot-scope="text, record">
-              <!--<a @click="edit(record.carrier_id)">编辑</a>-->
-                 <!--<a-divider type="vertical"></a-divider>-->
+              <a @click="edit(record.carrier_id)">编辑</a>
+                 <a-divider type="vertical"></a-divider>
               <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
         </a-table>
@@ -69,8 +69,8 @@
                  @change="handleTableChange"
         >
           <span slot="action" slot-scope="text, record">
-              <!--<a @click="edit5(record.carrier_id)">编辑</a>-->
-                 <!--<a-divider type="vertical"></a-divider>-->
+              <a @click="edit5(record.carrier_id)">编辑</a>
+                 <a-divider type="vertical"></a-divider>
               <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
         </a-table>
@@ -106,8 +106,8 @@
                      @change="handleTableChange"
             >
           <span slot="action" slot-scope="text, record">
-              <!--<a @click="edit(record.carrier_id)">修改</a>-->
-              <!--<a-divider type="vertical"></a-divider>-->
+              <a @click="edit2(record.carrier_id)">修改</a>
+              <a-divider type="vertical"></a-divider>
               <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
 
@@ -142,8 +142,8 @@
                      @change="handleTableChange"
             >
           <span slot="action" slot-scope="text, record">
-              <!--<a @click="edit(record.carrier_id)">修改</a>-->
-              <!--<a-divider type="vertical"></a-divider>-->
+              <a @click="edit3(record.carrier_id)">修改</a>
+              <a-divider type="vertical"></a-divider>
               <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
 
@@ -444,6 +444,7 @@
         <a-modal
                 title="设置省/州物流费用"
                 width="900px"
+                :destroyOnClose="true"
                 :visible="visible3"
                 @ok="handleOk"
                 @cancel="handleCancel2"
@@ -467,7 +468,7 @@
                             <div class="inputName">国家：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
+                            <a-select :defaultValue="countryDefault" style="width: 100%"  @change="handleChange">
                                 <a-select-option v-for="item in countryList" :value="item.value">{{item.label}}</a-select-option>
                             </a-select>
                         </a-col>
@@ -590,23 +591,23 @@
     const columns2 = [
         {title: '操作', key: 'action',width:160, scopedSlots: { customRender: 'action' },},
         { title: '编号', align:'center', dataIndex: 'carrier_id',width:120, key: 'carrier_id'},
-        { title: '国家', align:'center',dataIndex: 'country_name', key: 'country_name'},
+        // { title: '国家', align:'center',dataIndex: 'country_name', key: 'country_name'},
         { title: '前台显示', align:'center',dataIndex: 'name', key: 'name'},
         { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
         { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
         { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
-        { title: '是否是其他', align:'center',dataIndex: 'c_other', key: 'c_other'},
+        // { title: '是否是其他', align:'center',dataIndex: 'c_other', key: 'c_other'},
 
     ];
     const columns4 = [
         {title: '操作', key: 'action',width:160, scopedSlots: { customRender: 'action' },},
         { title: '编号', align:'center', dataIndex: 'carrier_id',width:120, key: 'carrier_id'},
-        { title: '（省/州）名称', align:'center',dataIndex: 'state_name', key: 'state_name'},
+        // { title: '（省/州）名称', align:'center',dataIndex: 'state_name', key: 'state_name'},
         { title: '前台显示', align:'center',dataIndex: 'name', key: 'name'},
         { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
         { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
         { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
-        { title: '是否是其他', align:'center',dataIndex: 'c_other', key: 'c_other'},
+        // { title: '是否是其他', align:'center',dataIndex: 'c_other', key: 'c_other'},
 
     ];
     const columns3 = [
@@ -717,7 +718,6 @@
                 }
                 this.checkedList=[]
                 this.indeterminate=false
-
                 this.visible5 = true
             },
             deleteCarrier(id){
@@ -738,6 +738,78 @@
                     }
                 })
             },
+            edit3(id){
+                this.getCountryList()
+                this.checkAll=false
+                this.indeterminate=false
+                this.checkedList=[]
+                this.isEdit=true
+                this.$post('/carrier/getCarrierInfo',{carrier_id:id}).then((reData)=>{
+                    if(reData.code=="0"){
+                        this.addState = reData.data
+                        this.addState.c_type = reData.data.c_type.toString()
+                        this.visible3 = true
+                        let checked=[]
+                        let countryDefault;
+                        reData.data.carrierList.forEach(function (val) {
+                            checked.push(val.state_id)
+                            countryDefault=val.country_id
+                        })
+                        this.countryDefault =  countryDefault
+                        this.getStateList(countryDefault)
+
+                        this.checkedList = checked
+                        this.addState.state_ids = checked
+
+                        delete this.addState.carrierList
+                        delete this.addState.c_other
+                        delete this.addState.grade
+
+                    }else {
+                        this.$notification.open({
+                            message: '提醒',
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                    }
+                })
+            },
+
+            edit2(id){
+                this.getCountryList()
+                this.checkAll=false
+                this.indeterminate=false
+                this.checkedList=[]
+                this.isEdit=true
+                this.$post('/carrier/getCarrierInfo',{carrier_id:id}).then((reData)=>{
+                    if(reData.code=="0"){
+                        this.addCountry = reData.data
+                        this.addCountry.c_type = reData.data.c_type.toString()
+                        this.visible2 = true
+                        let checked=[]
+                        reData.data.carrierList.forEach(function (val) {
+                            checked.push(val.country_id)
+                        })
+                        this.checkedList = checked
+                        this.addCountry.country_ids = checked
+
+                        delete this.addCountry.carrierList
+                        delete this.addCountry.c_other
+                        delete this.addCountry.grade
+
+                    }else {
+                        this.$notification.open({
+                            message: '提醒',
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                    }
+                })
+            },
             edit(id){
                 this.checkAll=false
                 this.indeterminate=false
@@ -745,13 +817,20 @@
                 this.isEdit=true
                 this.$post('/carrier/getCarrierInfo',{carrier_id:id}).then((reData)=>{
                     if(reData.code=="0"){
-                        // this.checkedList=reData.data.zone_id
-                        this.checkedList=[4,5]
-
                         this.addZone = reData.data
                         this.addZone.c_type = reData.data.c_type.toString()
-
                         this.visible4 = true
+                        let checked=[]
+                        reData.data.carrierList.forEach(function (val) {
+                            checked.push(val.zone_id)
+                        })
+                        this.checkedList = checked
+                        this.addZone.zone_ids = checked
+
+                        delete this.addZone.carrierList
+                        delete this.addZone.c_other
+                        delete this.addZone.grade
+
                     }else {
                         this.$notification.open({
                             message: '提醒',
@@ -786,63 +865,116 @@
             },
             handleOk(){
                 this.addState.state_ids= this.addState.state_ids.toString().replace('[','').replace(']','')
+                if(this.isEdit){
+                    this.$post('/carrier/editCarrierState',this.addState).then((reData)=>{
+                        if(reData.code=="0"){
+                            this.getHasSetCountryList(this.zoneId)
+                            this.visible3 = false
+                            this.$notification.open({
+                                message: '成功',
+                                description: "修改成功",
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }else {
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }
+                    })
+                }else {
+                    this.$post('/carrier/addCarrierState',this.addState).then((reData)=>{
+                        if(reData.code=="0"){
+                            this.getHasSetCountryList(this.zoneId)
+                            this.visible3 = false
+                            this.$notification.open({
+                                message: '成功',
+                                description: "新增成功",
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }else {
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }
+                    })
 
-                this.$post('/carrier/addCarrierState',this.addState).then((reData)=>{
-                    if(reData.code=="0"){
-                        this.getHasSetCountryList(this.zoneId)
-                        this.visible3 = false
-                        this.$notification.open({
-                            message: '成功',
-                            description: "新增成功",
-                            onClick: () => {
-                                console.log('ok');
-                            },
-                        })
-                    }else {
-                        this.$notification.open({
-                            message: '提醒',
-                            description: reData.message,
-                            onClick: () => {
-                                console.log('ok');
-                            },
-                        })
-                    }
-                })
+                }
+
             },
             handleOk2(){
 
                 this.addCountry.country_ids= this.addCountry.country_ids.toString().replace('[','').replace(']','')
 
-                this.$post('/carrier/addCarrierCountry',this.addCountry).then((reData)=>{
-                    if(reData.code=="0"){
-                        this.getHasSetCountryList(this.zoneId)
-                        this.$notification.open({
-                            message: '成功',
-                            description: "新增成功",
-                            onClick: () => {
-                                console.log('ok');
-                            },
-                        })
-                        this.visible2 = false
+                if(this.isEdit){
+                    this.$post('/carrier/editCarrierCountry',this.addCountry).then((reData)=>{
+                        if(reData.code=="0"){
+                            this.getHasSetCountryList(this.zoneId)
+                            this.$notification.open({
+                                message: '成功',
+                                description: "修改成功",
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            this.visible2 = false
 
-                    }else {
-                        this.$notification.open({
-                            message: '提醒',
-                            description: reData.message,
-                            onClick: () => {
-                                console.log('ok');
-                            },
-                        })
-                    }
-                })
+                        }else {
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }
+                    })
+                }else {
+                    this.$post('/carrier/addCarrierCountry',this.addCountry).then((reData)=>{
+                        if(reData.code=="0"){
+                            this.getHasSetCountryList(this.zoneId)
+                            this.$notification.open({
+                                message: '成功',
+                                description: "新增成功",
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            this.visible2 = false
+
+                        }else {
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }
+                    })
+
+                }
+
             },
             handleOk3(){
 
             },
             handleOk4(){
+                this.addZone.zone_ids= this.addZone.zone_ids.toString().replace('[','').replace(']','')
 
-                 this.addZone.zone_ids= this.addZone.zone_ids.toString().replace('[','').replace(']','')
                 if(this.isEdit){
+
                     this.$post('/carrier/editCarrierZone',this.addZone).then((reData)=>{
                         if(reData.code=="0"){
                             this.visible4=false
@@ -894,7 +1026,15 @@
                 if(this.isEdit){
                     this.$post('/carrier/editCarrierOther',this.addOtherCountry).then((reData)=>{
                         if(reData.code=="0"){
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
                             this.getCarrierZoneAndOtherList()
+                            this.visible5 = false
                         }else {
                             this.$notification.open({
                                 message: '提醒',
@@ -908,7 +1048,16 @@
                 }else {
                     this.$post('/carrier/addCarrierOther',this.addOtherCountry).then((reData)=>{
                         if(reData.code=="0"){
+                            this.$notification.open({
+                                message: '提醒',
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
                             this.getCarrierZoneAndOtherList()
+                            this.visible5 = false
+
                         }else {
                             this.$notification.open({
                                 message: '提醒',
@@ -1040,9 +1189,11 @@
             var vm =this
             // this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize,active:1})
             this.getCarrierZoneAndOtherList()
+
         },
         data() {
             return {
+                countryDefault:'请选择',
                 zoneId:'',
                 isEdit:false,
                 whichDo:'',

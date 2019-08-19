@@ -197,7 +197,7 @@
                 if(this.fileList[0].size>5242880){
                     this.$notification.open({
                         message: '图片超出5M',
-                        description: reData.message,
+                        description: "请选择小于5M的图片上传",
                         onClick: () => {
                             console.log('ok');
                         },
