@@ -21,16 +21,6 @@
           </a-col>
         </div>
       </a-col>
-      <!--<a-col class="gutter-row" :span="6">-->
-        <!--<div class="inputPart">-->
-          <!--<a-col class="gutter-row" :span="6">-->
-            <!--<div class="inputName">库存数量 ：</div>-->
-          <!--</a-col>-->
-          <!--<a-col class="gutter-row" :span="18">-->
-            <!--<a-input placeholder="请输入库存数量" v-model="search_data.good_qty"/>-->
-          <!--</a-col>-->
-        <!--</div>-->
-      <!--</a-col>-->
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
@@ -98,13 +88,13 @@
           <a-col class="gutter-row" :span="18">
             <a-row>
               <a-col class="gutter-row" :span="6">
-                <a-button type="primary" @click="search_product(search_data)">搜索</a-button>
-              </a-col>
-              <a-col class="gutter-row" :span="6">
                 <a-button type="primary" @click="add_product()">新增</a-button>
               </a-col>
               <a-col class="gutter-row" :span="6">
-                <a-button type="primary">导出</a-button>
+                <a-button type="primary" @click="search_product(search_data)">搜索</a-button>
+              </a-col>
+              <a-col class="gutter-row" :span="6">
+                <!--<a-button type="primary">导出</a-button>-->
               </a-col>
             </a-row>
           </a-col>
@@ -113,16 +103,6 @@
     </a-row>
     <div class="hrLine"></div>
     <div>
-      <!--<div style="margin-bottom: 16px">-->
-        <!--<a-button type="primary">-->
-          <!--Reload-->
-        <!--</a-button>-->
-        <!--<span style="margin-left: 8px">-->
-        <!--&lt;!&ndash;<template v-if="hasSelected">&ndash;&gt;-->
-          <!--&lt;!&ndash;&lt;!&ndash;{{`Selected ${selectedRowKeys.length} items`}}&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;</template>&ndash;&gt;-->
-      <!--</span>-->
-      <!--</div>-->
       <a-table :columns="columns"
                :dataSource="productListData"
                :pagination="pagination"
@@ -132,19 +112,28 @@
                :rowSelection="rowSelection"
                :scroll="{ x: 1500 }">
           <span slot="action" slot-scope="text, record">
-              <a @click="edit(record.product_id)">修改{{record.product_id}}</a>
-
+              <a @click="edit(record.product_id)">修改</a>
               <a-divider type="vertical"></a-divider>
-              <a @click="deleteProduct({product_id:record.product_id})">删除{{record.product_id}}</a>
+              <a-popconfirm
+                    v-if="productListData.length"
+                    title="请确认删除"
+                    @confirm="() => deleteProduct({product_id:record.product_id})">
+                <a @click="">删除</a>
+              </a-popconfirm>
+
           </span>
         <span slot="img_" slot-scope="text, record">
               <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
           </span>
-        <a slot="active" slot-scope="text, record" style="text-align: center">
-          <!--{{record}}-->
+        <a slot="product" slot-scope="text, record" style="text-align: center">
           <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
           <a-icon type="close" style="color: red" v-if="text === '0'" @click="change_active({product_id:record.product_id,active:'1'})"></a-icon>
         </a>
+        <span slot="product_type" slot-scope="text, record" style="text-align: center">
+          <span v-if="text === '0'">一般商品</span>
+          <span v-if="text === '1'">已存在商品</span>
+          <span v-if="text === '2'">虚拟商品</span>
+        </span>
       </a-table>
     </div>
   </div>
@@ -156,8 +145,8 @@
         {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '商品ID', dataIndex: 'product_id', key: 'product_id'},
         { title: '商品名称', dataIndex: 'name', key: 'name'},
-        { title: '图片地址',  key: 'image_url',scopedSlots: { customRender: 'img_' },},
-        { title: '商品类型', dataIndex: 'product_type', key: 'product_type'},
+        { title: '图片',  key: 'image_url',scopedSlots: { customRender: 'img_' },},
+        { title: '商品类型', dataIndex: 'product_type', key: 'product_type',scopedSlots: { customRender: 'product_type' },},
         { title: 'upc码', dataIndex: 'upc', key: 'upc'},
         { title: '商品SKU码', dataIndex: 'product_code', key: 'product_code'},
         { title: '商品库存', dataIndex: 'good_qty', key: 'good_qty'},
@@ -222,10 +211,8 @@
                 store.commit('changeStore',{key:'addProductContent',val:'productAddInformatica'});
                 store.commit('changeStore',{key:'addProductCurrent',val:'0'});
                 store.commit('changeStore',{key:'goods_id',val:''});
-
                 router.push('/productAdd')
                 store.commit('changeStore',{key:'isEdit',val:false});
-
             }
             // 获取商品列表
             ,getList(data){
@@ -243,18 +230,23 @@
             }
             //搜索产品
             ,search_product(data){
-                let vm = this;
-                // console.log('111111111111111',this.search_data)
                 this.$post('/product/getProductListPage',data).then((reData)=>{
-
-                    this.productListData=reData.data.dataList
-                    this.pagination.total=reData.data.page.totalResultSize
-                    this.loading = false
+                    if(reData.code === '0'){
+                        this.productListData=reData.data.dataList
+                        this.pagination.total=reData.data.page.totalResultSize
+                        this.loading = false
+                        this.$notification.open({
+                            message: reData.message,
+                        });
+                    } else {
+                        this.$notification.open({
+                            message: reData.message,
+                        });
+                    }
                 })
             }
             //编辑
             ,edit(id) {
-
                 store.commit('changeStore',{key:'addProductContent',val:'productAddInformatica'});
                 store.commit('changeStore',{key:'addProductCurrent',val:'0'});
                 let data={
@@ -262,15 +254,11 @@
                     lang_id:this.$store.state.langId
                 }
                 this.$post('/product/getProductInfoById',data).then((reData)=>{
-
                     store.commit('changeStore',{key:'oldData',val:reData.data});
                     router.push('/productAdd')
                     store.commit('changeStore',{key:'goods_id',val:id});
                     store.commit('changeStore',{key:'isEdit',val:true});
                 })
-
-
-
             }
             //时间选择
             ,onChange(date, dateString) {
@@ -289,6 +277,13 @@
                 this.$post('/product/deleteProduct',data).then((reData)=>{
                     if(reData.code === '0'){
                         this.getList(data);
+                        this.$notification.open({
+                            message: reData.message,
+                        });
+                    } else {
+                        this.$notification.open({
+                            message: reData.message,
+                        });
                     }
                 })
             }
