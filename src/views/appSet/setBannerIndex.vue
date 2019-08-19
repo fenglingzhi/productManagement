@@ -97,11 +97,6 @@
             </a-col>
           </div>
         </a-row>
-        <a-row v-if="!isAllRight">
-          <div class="inputPart">
-            <p class="worning">请填写相应内容</p>
-          </div>
-        </a-row>
       </a-modal>
     </div>
 
@@ -207,11 +202,6 @@
             </a-col>
           </div>
         </a-row>
-        <a-row v-if="!isAllRight">
-          <div class="inputPart">
-            <p class="worning">请填写相应内容</p>
-          </div>
-        </a-row>
       </a-modal>
     </div>
   </div>
@@ -276,8 +266,8 @@ export default {
         },
         {
           title: "分类",
-          key: "category_id",
-          dataIndex: "category_id"
+          key: "category_name",
+          dataIndex: "category_name"
         },
         {
           title: "显示",
@@ -307,8 +297,6 @@ export default {
         position: ""
       },
       typeArr: [], //分类的数组
-      // 控制提示信息显示
-      isAllRight: true,
       // 修改的表单
       form_change: {
         active: "",
@@ -326,9 +314,9 @@ export default {
     // 查看详情
     goSee(text) {
       this.attributeList_detail = [];
-      this.getDetail(text.image_type, text.id).then(res => {
+      this.getDetail(text.image_type).then(res => {
         // console.log(res);
-        if (res.message === "查询成功") {
+        if (res.code == "0") {
           let arr = JSON.parse(JSON.stringify(res.data));
           arr.forEach(element => {
             element.add_date = moment(element.add_date).format(
@@ -338,34 +326,44 @@ export default {
           this.attributeList_detail = arr;
           this.visible_detail = true;
         } else {
-          this.$message.info("查询失败，请重试！");
+          this.openNotification("error", "错误", "获取列表信息错误，请重试！");
         }
       });
     },
-    getDetail(image_type, id) {
+    getDetail(image_type) {
       let data = {
         image_type: image_type,
-        banner_id: id
+        // banner_id: id,
+        lang_id: this.$store.state.langId
       };
       return this.$post("/mobileBanner/getMobileBannerList", data);
     },
     // 删除具体图片
     goDel(text) {
-      let data = {
-        mobile_banner_id: text.mobile_banner_id
-      };
-      this.$post("/mobileBanner/removeMobileBannerInfo", data).then(res => {
-        // 成功就删除本地的数据
-        if (res.data == 1) {
-          // 删除本地
-          this.attributeList_detail.forEach((item, index) => {
-            if (item.mobile_banner_id == data.mobile_banner_id) {
-              this.$set(this.attributeList_detail.splice(index, 1));
-            }
-          });
-          this.$message.info("删除成功！");
-        } else {
-          this.$message.info("删除失败！");
+      let _this = this;
+      this.$confirm({
+        title: "删除?",
+        content: "确认删除这条信息吗？",
+        onOk() {
+          let data = {
+            mobile_banner_id: text.mobile_banner_id
+          };
+          _this
+            .$post("/mobileBanner/removeMobileBannerInfo", data)
+            .then(res => {
+              // 成功就删除本地的数据
+              if (res.code == "0") {
+                // 删除本地
+                _this.attributeList_detail.forEach((item, index) => {
+                  if (item.mobile_banner_id == data.mobile_banner_id) {
+                    _this.$set(_this.attributeList_detail.splice(index, 1));
+                  }
+                });
+                _this.openNotification("success", "成功", "删除成功！");
+              } else {
+                _this.openNotification("error", "失败", "删除失败，请重试！");
+              }
+            });
         }
       });
     },
@@ -392,13 +390,13 @@ export default {
             allowImgFileSize != 0 &&
             allowImgFileSize < reader.result.length
           ) {
-            _this.$message.info("上传失败，请上传不大于2m图片！");
+            _this.openNotification("warning", "警告", "请上传大要大于2m的图片");
           } else {
             //将编码写入表单
             _this.form_add.image_base_str = reader.result;
             // 验证成功之后发请求
             if (_this.checking(_this.form_add)) {
-              _this.isAllRight = true;
+              // _this.isAllRight = true;
               _this
                 .$post("/mobileBanner/addMobileBannerInfo", _this.form_add)
                 .then(res => {
@@ -410,42 +408,51 @@ export default {
                     _this.form_add.image_type = "";
                     _this.form_add.category_id = "";
                     _this.form_add.position = "";
-                    _this.$message.info("添加成功！");
+                    _this.openNotification("success", "成功", "添加成功！");
+                  } else {
+                    _this.openNotification("warning", "警告", res.message);
                   }
                 });
-            } else {
-              _this.isAllRight = false;
             }
           }
         };
       } else {
-        this.isAllRight = false;
+        this.openNotification("warning", "警告", "请选择要上传的图片！");
       }
     },
     // 验证
     checking(obj) {
       if ("image_base_str" in obj) {
         if (obj.image_base_str == "") {
+          this.openNotification("warning", "警告", "请选择要上传的图片！");
           return false;
         }
       }
       if ("active" in obj) {
         if (obj.active == "") {
+          this.openNotification("warning", "警告", "请选择是否激活！");
           return false;
         }
       }
       if ("image_type" in obj) {
         if (obj.image_type == "") {
+          this.openNotification("warning", "警告", "请选择图片类型！");
           return false;
         }
       }
       if ("category_id" in obj) {
         if (obj.category_id == "") {
+          this.openNotification("warning", "警告", "请选择分类！");
           return false;
         }
       }
       if ("position" in obj) {
         if (obj.position == "") {
+          this.openNotification("warning", "警告", "请输入排序！");
+          return false;
+        }
+        if (!/^[0-9]*$/.test(obj.position)) {
+          this.openNotification("warning", "警告", "排序仅接受数字");
           return false;
         }
       }
@@ -460,10 +467,13 @@ export default {
       this.visible_change = true;
     },
     submitChange() {
-      this.$post("/mobileBanner/updateMobileBannerInfo", this.form_change).then(
-        res => {
+      if (this.checking(this.form_change)) {
+        this.$post(
+          "/mobileBanner/updateMobileBannerInfo",
+          this.form_change
+        ).then(res => {
           if (res.code == "0") {
-            this.$message.info("修改成功！");
+            this.openNotification("success", "成功", "修改成功！");
             this.visible_change = false;
             // 改本地的状态
             this.attributeList_detail.forEach((item, index) => {
@@ -476,19 +486,23 @@ export default {
                 this.$set(this.attributeList_detail, index, newObj);
               }
             });
+          } else {
+            this.openNotification("warning", "警告", res.message);
           }
-        }
-      );
+        });
+      }
+    },
+    openNotification(type, title, txt) {
+      this.$notification[type]({
+        message: title,
+        description: txt
+      });
     }
   }
 };
 </script>
 
 <style scoped>
-.worning {
-  text-align: center;
-  color: red;
-}
 #add {
   margin-bottom: 15px;
 }

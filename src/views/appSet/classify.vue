@@ -67,11 +67,6 @@
               </a-col>
             </div>
           </a-row>
-          <a-row v-if="!isAllRight">
-            <div class="inputPart">
-              <p class="worning">请填写相应内容</p>
-            </div>
-          </a-row>
         </a-modal>
       </div>
 
@@ -122,11 +117,6 @@
               </a-col>
             </div>
           </a-row>
-          <a-row v-if="!isAllRight">
-            <div class="inputPart">
-              <p class="worning">请填写相应内容</p>
-            </div>
-          </a-row>
         </a-modal>
       </div>
     </div>
@@ -134,7 +124,7 @@
 </template>
 
 <script>
-import moment from "moment"
+import moment from "moment";
 export default {
   name: "hotWords",
   data() {
@@ -168,12 +158,6 @@ export default {
       attributeList: [],
       // 分类的数据
       typeArr: [],
-      // 分页
-      // pagination: {
-      //   currentPage: 1,
-      //   defaultPageSize: 100,
-      //   total: 1
-      // },
       loading: false,
       // 增加的模态框
       visible_add: false,
@@ -184,8 +168,6 @@ export default {
         category_id: "",
         active: "1"
       },
-      // 是否显示校验提示
-      isAllRight: true,
       // 修改的表单
       form_change: {
         position: "",
@@ -202,25 +184,49 @@ export default {
   methods: {
     // 确定添加
     submitAdd() {
-      if (this.form_add.category_id == "") {
-        this.isAllRight = false;
-        return false;
+      if (this.checking(this.form_add)) {
+        this.$post(
+          "/mobileHomeCategory/addMobileHomeCategoryInfo",
+          this.form_add
+        ).then(res => {
+          if (res.code == "0") {
+            this.openNotification("success", "成功", "添加成功");
+            this.visible_add = false;
+            Object.assign(this.form_add, {
+              position: "1",
+              category_id: "",
+              active: "1"
+            });
+            this.getList();
+          }
+        });
       }
-      if (this.form_add.active == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      this.isAllRight = true;
-      this.$post(
-        "/mobileHomeCategory/addMobileHomeCategoryInfo",
-        this.form_add
-      ).then(res => {
-        if (res.data == 1) {
-          this.$message.info('添加成功！');
-          this.visible_add = false;
-          this.getList();
+    },
+    // 验证
+    checking(obj) {
+      if ("active" in obj) {
+        if (obj.active == "") {
+          this.openNotification("warning", "警告", "请选择是否显示！");
+          return false;
         }
-      });
+      }
+      if ("category_id" in obj) {
+        if (obj.category_id == "") {
+          this.openNotification("warning", "警告", "请选择分类！");
+          return false;
+        }
+      }
+      if ("position" in obj) {
+        if (obj.position == "") {
+          this.openNotification("warning", "警告", "请输入排序！");
+          return false;
+        }
+        if (!/^[0-9]*$/.test(obj.position)) {
+          this.openNotification("warning", "警告", "排序仅接受数字");
+          return false;
+        }
+      }
+      return true;
     },
     change(text) {
       // console.log(text);
@@ -232,25 +238,20 @@ export default {
       this.visible_change = true;
     },
     submitChange() {
-      if (this.form_change.category_id == "") {
-        this.isAllRight = false;
-        return false;
+      if (this.checking(this.form_change)) {
+        this.$post(
+          "/mobileHomeCategory/updateMobileHomeCategoryInfo",
+          this.form_change
+        ).then(res => {
+          if (res.code == "0") {
+            this.openNotification("success", "成功", "修改成功！");
+            this.visible_change = false;
+            this.getList();
+          } else {
+            this.openNotification("error", "失败", res.message);
+          }
+        });
       }
-      if (this.form_change.active == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      this.isAllRight = true;
-      this.$post(
-        "/mobileHomeCategory/updateMobileHomeCategoryInfo",
-        this.form_change
-      ).then(res => {
-        if (res.data == 1) {
-          this.$message.info('修改成功！');
-          this.visible_change = false;
-          this.getList();
-        }
-      });
     },
     // 获取列表
     getList() {
@@ -280,26 +281,37 @@ export default {
       });
     },
     submitDel(text) {
-      let data = {
-        mobile_home_category_id: text.mobile_home_category_id
-      };
-      this.$post("/mobileHomeCategory/removeMobileHomeCategory", data).then(
-        res => {
-          if (res.data == 1) {
-            this.$message.info('删除成功！');
-            this.getList();
-          }
+      let _this = this;
+      this.$confirm({
+        title: "删除?",
+        content: "确认删除这条信息吗？",
+        onOk() {
+          let data = {
+            mobile_home_category_id: text.mobile_home_category_id
+          };
+          _this
+            .$post("/mobileHomeCategory/removeMobileHomeCategory", data)
+            .then(res => {
+              if (res.code == "0") {
+                _this.openNotification("success", "成功", "删除成功！");
+                _this.getList();
+              } else {
+                _this.openNotification("error", "失败", "删除失败，请重试！");
+              }
+            });
         }
-      );
+      });
+    },
+    openNotification(type, title, txt) {
+      this.$notification[type]({
+        message: title,
+        description: txt
+      });
     }
   }
 };
 </script>
 <style scoped>
-.worning {
-  text-align: center;
-  color: red;
-}
 #add {
   margin-bottom: 15px;
 }

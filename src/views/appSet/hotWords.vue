@@ -60,11 +60,6 @@
               </a-col>
             </div>
           </a-row>
-          <a-row v-if="!isAllRight">
-            <div class="inputPart">
-              <p class="worning">请填写相应内容</p>
-            </div>
-          </a-row>
         </a-modal>
       </div>
 
@@ -107,11 +102,6 @@
               <a-col class="gutter-row" :span="18">
                 <a-input placeholder v-model="form_change.position" />
               </a-col>
-            </div>
-          </a-row>
-          <a-row v-if="!isAllRight">
-            <div class="inputPart">
-              <p class="worning">请填写相应内容</p>
             </div>
           </a-row>
         </a-modal>
@@ -169,8 +159,6 @@ export default {
         title: "",
         active: "1"
       },
-      // 是否显示校验提示
-      isAllRight: true,
       // 修改的表单
       form_change: {
         position: "",
@@ -186,24 +174,42 @@ export default {
   methods: {
     // 确定添加
     submitAdd() {
-      if (this.form_add.title == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      if (this.form_add.position == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      this.isAllRight = true;
-      this.$post("/mobileSearchHot/addMobileSearchHotInfo", this.form_add).then(
-        res => {
-          if (res.data == 1) {
-            this.$message.info('添加成功！');
+      if (this.checking(this.form_add)) {
+        this.$post(
+          "/mobileSearchHot/addMobileSearchHotInfo",
+          this.form_add
+        ).then(res => {
+          if (res.code == "0") {
+            this.openNotification("success", "成功", "添加成功");
             this.visible_add = false;
+            Object.assign(this.form_add, {
+              position: "1",
+              title: "",
+              active: "1"
+            });
             this.getList();
           }
+        });
+      }
+    },
+    checking(obj) {
+      if ("title" in obj) {
+        if (obj.title == "") {
+          this.openNotification("warning", "警告", "请输入标题");
+          return false;
         }
-      );
+      }
+      if ("position" in obj) {
+        if (obj.position == "") {
+          this.openNotification("warning", "警告", "请输入排序！");
+          return false;
+        }
+        if (!/^[0-9]*$/.test(obj.position)) {
+          this.openNotification("warning", "警告", "排序仅接受数字");
+          return false;
+        }
+      }
+      return true;
     },
     change(position, title, active, mobile_search_hot_id) {
       this.form_change.position = position;
@@ -214,25 +220,18 @@ export default {
       this.visible_change = true;
     },
     submitChange() {
-      if (this.form_change.title == "") {
-        this.isAllRight = false;
-        return false;
+      if (this.checking(this.form_change)) {
+        this.$post(
+          "/mobileSearchHot/updateMobileSearchHotInfo",
+          this.form_change
+        ).then(res => {
+          if (res.code == "0") {
+            this.openNotification("success", "成功", "修改成功");
+            this.visible_change = false;
+            this.getList();
+          }
+        });
       }
-      if (this.form_change.position == "") {
-        this.isAllRight = false;
-        return false;
-      }
-      this.isAllRight = true;
-      this.$post(
-        "/mobileSearchHot/updateMobileSearchHotInfo",
-        this.form_change
-      ).then(res => {
-        if (res.data == 1) {
-          this.$message.info('修改成功！');
-          this.visible_change = false;
-          this.getList();
-        }
-      });
     },
     // 获取列表
     getList() {
@@ -251,24 +250,37 @@ export default {
       });
     },
     submitDel(text) {
-      let data = {
-        mobile_search_hot_id: text.mobile_search_hot_id
-      };
-      this.$post("/mobileSearchHot/removeMobileSearchHot", data).then(res => {
-        if (res.data == 1) {
-          this.$message.info("删除成功！");
-          this.getList();
+      let _this = this;
+      this.$confirm({
+        title: "删除?",
+        content: "确认删除这条信息吗？",
+        onOk() {
+          let data = {
+            mobile_search_hot_id: text.mobile_search_hot_id
+          };
+          _this
+            .$post("/mobileSearchHot/removeMobileSearchHot", data)
+            .then(res => {
+              if (res.code == "0") {
+                _this.openNotification("success", "成功", "删除成功");
+                _this.getList();
+              } else {
+                _this.openNotification("error", "失败", "删除失败，请重试！");
+              }
+            });
         }
+      });
+    },
+    openNotification(type, title, txt) {
+      this.$notification[type]({
+        message: title,
+        description: txt
       });
     }
   }
 };
 </script>
 <style scoped>
-.worning {
-  text-align: center;
-  color: red;
-}
 #add {
   margin-bottom: 15px;
 }
