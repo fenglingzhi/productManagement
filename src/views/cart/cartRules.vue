@@ -66,6 +66,7 @@
                     v-model="visible_add"
                     :destroyOnClose = "true"
                     @ok="submitAdd(addCod.edit)"
+                    @cancel="closeModle"
                 >
                 <a-tabs defaultActiveKey="1" @change="callback">
                         <a-tab-pane tab="信息" key="1">
@@ -149,156 +150,198 @@
                             </div>
                             </a-row>
                             <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="8">
-                                    <div class="inputName">每个用户可用数量：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="16">
-                                    <a-input placeholder="" v-model="addCod.quantity_per_user" />
-                                </a-col>
-                            </div>
-                            </a-row>
-                            <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="8">
-                                    <div class="inputName">是否开启国家限制：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="16">
-                                    <a-select :defaultValue="addCod.country_restriction" style="width: 100%"  @change="limitCurrency">
-                                        <a-select-option value="0">否</a-select-option>
-                                        <a-select-option value="1">是</a-select-option>
-                                    </a-select>
-                                </a-col>
-                            </div>
-                            </a-row>
-                            <a-row v-if="addCod.country_restriction == 1">
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">限制国家选择：</div>
+                                        <div class="inputName">每个用户可用数量：</div>
                                     </a-col>
                                     <a-col class="gutter-row" :span="16">
-                                        <a-select :defaultValue="addCod.countries_ids" style="width: 100%"  @change="getAddcountry">
-                                            <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}{{item.country_id}}</a-select-option>
-                                        </a-select>
+                                        <a-input placeholder="" v-model="addCod.quantity_per_user" />
                                     </a-col>
                                 </div>
                             </a-row>
-                            <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="8">
-                                    <div class="inputName">是否开启产品限制：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="16">
-                                    <a-select :defaultValue="addCod.product_restriction" style="width: 100%"  @change="limitProduct">
-                                        <a-select-option value="0">否</a-select-option>
-                                        <a-select-option value="1">是</a-select-option>
-                                    </a-select>
-                                </a-col>
-                            </div>
-                            </a-row>
-                            <a-row v-if="addCod.product_restriction == 1">
-                                <div class="inputPart">
-                                    <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">限制产品：</div>
-                                    </a-col>
-                                    <a-col class="gutter-row" :span="16">
-                                        <a-select :defaultValue="addCod.products_ids" style="width: 100%"  @change="selProducts">
-                                        <a-select-option v-for="item in products" :value=item.product_id>
-                                            {{item.name}}{{item.product_id}}
-                                        </a-select-option>
-                                        </a-select>
-                                    </a-col>
-                                </div>
-                            </a-row>
-                            <a-row v-if="addCod.product_restriction == 1">
-                                <div class="inputPart">
-                                    <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">限制产品分类：</div>
-                                    </a-col>
-                                    <a-col class="gutter-row" :span="16">
-                                        <a-select :defaultValue="addCod.categories_ids" style="width: 100%"  @change="selCategories">
-                                        <a-select-option v-for="item in categories" :value=item.category_id>
-                                            {{item.name}}{{item.category_id}}
-                                        </a-select-option>
-                                        </a-select>
-                                    </a-col>
-                                </div>
-                            </a-row>
-                            <a-row v-if="addCod.product_restriction == 1">
-                                <div class="inputPart">
-                                    <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">产品限制数量：</div>
-                                    </a-col>
-                                    <a-col class="gutter-row" :span="16">
-                                        <a-input placeholder="" v-model="addCod.products_quantity" />
-                                    </a-col>
-                                </div>
-                            </a-row>
-
-                            <a-row v-if="addCod.product_restriction == 1">
-                                <div class="inputPart">
-                                    <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">分类限制产品数量：</div>
-                                    </a-col>
-                                    <a-col class="gutter-row" :span="16">
-                                        <a-input placeholder="" v-model="addCod.categories_quantity" />
-                                    </a-col>
-                                </div>
-                            </a-row>
+                           
                         </div>
                         </a-tab-pane>
                         <a-tab-pane tab="条件" key="2" forceRender>
                             <div style="width:80%;margin:0 auto">
-                            <a-row>
-                                <div class="inputPart">
-                                    <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">满足金额使用：</div>
-                                    </a-col>
-                                    <a-col class="gutter-row" :span="16">
-                                        <a-input placeholder="" v-model="addCod.minimum_amount" />
-                                    </a-col>
+                                <a-row>
+                                    <div class="inputPart">
+                                        <a-col class="gutter-row" :span="8">
+                                            <div class="inputName">是否开启国家限制：</div>
+                                        </a-col>
+                                        <a-col class="gutter-row" :span="16">
+                                            <a-select :defaultValue="addCod.country_restriction" style="width: 100%"  @change="limitCurrency">
+                                                <a-select-option value="0">否</a-select-option>
+                                                <a-select-option value="1">是</a-select-option>
+                                            </a-select>
+                                        </a-col>
+                                    </div>
+                                </a-row>
+                                <a-row v-if="addCod.country_restriction == 1">
+                                    <div class="inputPart">
+                                        <a-col class="gutter-row" :span="8">
+                                            <div class="inputName">限制国家选择：</div>
+                                        </a-col>
+                                        <a-col class="gutter-row" :span="16">
+                                            <a-select 
+                                            :defaultValue="addCod.countries_ids" 
+                                            style="width: 100%" 
+                                            mode="multiple" 
+                                            @change="getAddcountry">
+                                                <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}{{item.country_id}}</a-select-option>
+                                            </a-select>
+                                        </a-col>
+                                    </div>
+                                </a-row>
+                                <a-row>
+                                    <div class="inputPart">
+                                        <a-col class="gutter-row" :span="8">
+                                            <div class="inputName">是否开启产品限制：</div>
+                                        </a-col>
+                                        <a-col class="gutter-row" :span="16">
+                                            <a-select :defaultValue="addCod.product_restriction" style="width: 100%"  @change="limitProduct">
+                                                <a-select-option value="0">否</a-select-option>
+                                                <a-select-option value="1">是</a-select-option>
+                                            </a-select>
+                                        </a-col>
+                                    </div>
+                                </a-row>
+                                <div v-if="addCod.product_restriction == 1">
+                                    <a-row>
+                                        <div class="inputPart" style="display: flex;justify-content: flex-end;align-items: center;">
+                                            <a-col class="gutter-row" :span="16">
+                                                <span>购物车必须至少包含</span>
+                                                <a-input type="text" style="width:100px" v-model="limitPN"/>
+                                                <span>个符合以下规则的产品</span>
+                                            </a-col>
+                                        </div>
+                                    </a-row>
+                                    <a-row>
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="8">
+                                                <div class="inputName">添加规则：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="16">
+                                                <a-select 
+                                                :defaultValue="limitType" 
+                                                style="width: 100%"  
+                                                mode="multiple"
+                                                @change="limitTypef">
+                                                    <a-select-option value="0">产品</a-select-option>
+                                                    <a-select-option value="1">分类</a-select-option>
+                                                </a-select>
+                                            </a-col>
+                                        </div>
+                                    </a-row>
+                                    <a-row v-if="limitProductf">
+                                        <div class="inputPart limitProduct">
+                                            <a-col class="gutter-row" :span="8">
+                                                <div class="inputName">限制产品：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="16">
+                                                <a-select 
+                                                    :defaultValue="addCod.products_ids" 
+                                                    mode="multiple" 
+                                                    style="width: 100%"  
+                                                    @change="selProducts">
+                                                    <a-select-option v-for="item in products" :value=item.product_id>
+                                                        {{item.name}}{{item.product_id}}
+                                                    </a-select-option>
+                                                </a-select>
+                                            </a-col>
+                                        </div>
+                                    </a-row>
+                                    <a-row v-if="limitProductf">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="8">
+                                                <div class="inputName">产品限制数量：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="16">
+                                                <a-input placeholder="" readonly v-model="addCod.products_quantity" style="cursor: not-allowed;"/>
+                                            </a-col>
+                                        </div>
+                                    </a-row>
+                                    <!-- 分类 -->
+                                    <a-row v-if="limitPtype">
+                                        <div class="inputPart limitProduct">
+                                            <a-col class="gutter-row" :span="8">
+                                                <div class="inputName">限制产品分类：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="16">
+                                                <a-select 
+                                                :defaultValue="addCod.categories_ids" 
+                                                style="width: 100%"  
+                                                mode="multiple" 
+                                                @change="selCategories">
+                                                    <a-select-option v-for="item in categories" :value=item.category_id>
+                                                        {{item.name}}{{item.category_id}}
+                                                    </a-select-option>
+                                                </a-select>
+                                            </a-col>
+                                        </div>
+                                    </a-row>
+
+                                    <a-row v-if="limitPtype">
+                                        <div class="inputPart">
+                                            <a-col class="gutter-row" :span="8">
+                                                <div class="inputName">限制产品分类数量：</div>
+                                            </a-col>
+                                            <a-col class="gutter-row" :span="16">
+                                                <a-input placeholder="" readonly v-model="addCod.categories_quantity" style="cursor: not-allowed;"/>
+                                            </a-col>
+                                        </div>
+                                    </a-row>
                                 </div>
-                            </a-row>
-                            <a-row>
-                                <div class="inputPart">
-                                    <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">金额是否包含税：</div>
-                                    </a-col>
-                                    <a-col class="gutter-row" :span="16">
-                                        <a-select :defaultValue="addCod.minimum_amount_tax" style="width: 100%"  @change="amountTax">
-                                            <a-select-option value="0">否</a-select-option>
-                                            <a-select-option value="1">是</a-select-option>
-                                        </a-select>
-                                    </a-col>
-                                </div>
-                            </a-row>
-                            <a-row>
-                                <div class="inputPart">
-                                    <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">币种：</div>
-                                    </a-col>
-                                    <a-col class="gutter-row" :span="16">
-                                        <a-select :defaultValue="addCod.minimum_amount_currency" style="width: 100%"  @change="selCurrency">
-                                        <a-select-option v-for="item in currency" :value=item.currency_id>
-                                            {{item.name}}{{item.currency_id}}
-                                        </a-select-option>
-                                        </a-select>
-                                    </a-col>
-                                </div>
-                            </a-row>
-                            <a-row>
-                                <div class="inputPart">
-                                    <a-col class="gutter-row" :span="8">
-                                    <div class="inputName">金额是否包运费：</div>
-                                    </a-col>
-                                    <a-col class="gutter-row" :span="16">
-                                        <a-select :defaultValue="addCod.minimum_amount_shipping" style="width: 100%"  @change="amountShipp">
-                                            <a-select-option value="0">否</a-select-option>
-                                            <a-select-option value="1">是</a-select-option>
-                                        </a-select>
-                                    </a-col>
-                                </div>
-                            </a-row>
+                                <a-row>
+                                    <div class="inputPart">
+                                        <a-col class="gutter-row" :span="8">
+                                            <div class="inputName">满足金额使用：</div>
+                                        </a-col>
+                                        <a-col class="gutter-row" :span="16">
+                                            <a-input placeholder="" v-model="addCod.minimum_amount" />
+                                        </a-col>
+                                    </div>
+                                </a-row>
+                                <a-row>
+                                    <div class="inputPart">
+                                        <a-col class="gutter-row" :span="8">
+                                            <div class="inputName">金额是否包含税：</div>
+                                        </a-col>
+                                        <a-col class="gutter-row" :span="16">
+                                            <a-select :defaultValue="addCod.minimum_amount_tax" style="width: 100%"  @change="amountTax">
+                                                <a-select-option value="0">否</a-select-option>
+                                                <a-select-option value="1">是</a-select-option>
+                                            </a-select>
+                                        </a-col>
+                                    </div>
+                                </a-row>
+                                <a-row>
+                                    <div class="inputPart">
+                                        <a-col class="gutter-row" :span="8">
+                                            <div class="inputName">币种：</div>
+                                        </a-col>
+                                        <a-col class="gutter-row" :span="16">
+                                            <a-select :defaultValue="addCod.minimum_amount_currency" style="width: 100%"  @change="selCurrency">
+                                            <a-select-option v-for="item in currency" :value=item.currency_id>
+                                                {{item.name}}{{item.currency_id}}
+                                            </a-select-option>
+                                            </a-select>
+                                        </a-col>
+                                    </div>
+                                </a-row>
+                                <a-row>
+                                    <div class="inputPart">
+                                        <a-col class="gutter-row" :span="8">
+                                        <div class="inputName">金额是否包运费：</div>
+                                        </a-col>
+                                        <a-col class="gutter-row" :span="16">
+                                            <a-select :defaultValue="addCod.minimum_amount_shipping" style="width: 100%"  @change="amountShipp">
+                                                <a-select-option value="0">否</a-select-option>
+                                                <a-select-option value="1">是</a-select-option>
+                                            </a-select>
+                                        </a-col>
+                                    </div>
+                                </a-row>
                             </div>
                         </a-tab-pane>
                         <a-tab-pane tab="操作" key="3">
@@ -316,7 +359,23 @@
                                     </a-col>
                                 </div>
                             </a-row>
-                            <a-row>
+                            <a-row style="display:flex">
+                                <div class="inputPart" style="width: 100%;display: flex;align-items: center;">
+                                    <a-col class="gutter-row" :span="8">
+                                        <div class="inputName">优惠类型：</div>
+                                    </a-col>
+                                    <a-col class="gutter-row" :span="16">
+                                        <div>
+                                            <a-radio-group @change="reductChange" v-model="reductType">
+                                                <a-radio :value="1">百分比</a-radio>
+                                                <a-radio :value="2">金额</a-radio>
+                                            </a-radio-group>
+                                        </div>
+                                    </a-col>
+                                </div>
+                            </a-row>
+                           
+                            <a-row v-if="reductType == 1">
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
                                         <div class="inputName">百分比优惠值：</div>
@@ -326,7 +385,7 @@
                                     </a-col>
                                 </div>
                             </a-row>
-                            <a-row>
+                            <a-row v-if="reductType == 2">
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
                                         <div class="inputName">金额优惠值：</div>
@@ -369,11 +428,6 @@
                 </a-modal>
             </div>
         </div>
-
-        <!-- 添加、编辑 页面 -->
-        <!-- <div v-else>
-          
-        </div> -->
     </div>
 </template>
 <script>
@@ -425,6 +479,11 @@
                 edit:false,
                 country:[],
                 currency:[],
+                reductType:'',
+                limitType:[],
+                limitPN:'0',
+                limitPtype:false,
+                limitProductf:false,
                 products:[], //产品
                 categories:[], //分类
                 addCod:{
@@ -442,10 +501,10 @@
                   quantity:'',
                   quantity_per_user:'',
                   country_restriction:'0',
-                  countries_ids:'',
+                  countries_ids:[],
                   product_restriction:'0',
-                  products_ids:'',
-                  categories_ids:'',
+                  products_ids:[],
+                  categories_ids:[],
                   products_quantity:'',
                   categories_quantity:'',
                   free_shipping:'0',
@@ -478,6 +537,10 @@
                if(mm){
 
                 }else{
+                    this. limitType = []
+                    this.limitPtype = false;
+                    this.limitProductf = false;
+                    this.reductType = '';
                     this.addCod = {
                         name:'',
                         description:'',
@@ -493,10 +556,10 @@
                         quantity:'',
                         quantity_per_user:'',
                         country_restriction:'0',
-                        countries_ids:'',
+                        countries_ids:[],
                         product_restriction:'0',
-                        products_ids:'',
-                        categories_ids:'',
+                        products_ids:[],
+                        categories_ids:[],
                         products_quantity:'',
                         categories_quantity:'',
                         free_shipping:'0',
@@ -513,6 +576,17 @@
             },
             callback (key) {
                 console.log(key)
+            },
+            // 优惠类型
+            reductChange(e){
+                this.reductType = e.target.value;
+            },
+            // 关闭弹框
+            closeModle(){
+                this.limitType = []
+                this.limitPtype = false;
+                this.limitProductf = false;
+                this.reductType = '';
             },
             // 获取国家信息
             get_counrtys(){
@@ -557,7 +631,10 @@
             },
             //国家选择
             getAddcountry(value) {
-                this.addCod.countries_ids = value
+                value=value.join(',');
+                value.toString();
+                this.addCod.countries_ids = value;
+                console.log(this.addCod.countries_ids)
             },
             // 是否限制国家选择
             limitCurrency(value){
@@ -569,10 +646,46 @@
             },
             // 选择产品
             selProducts(value){
-               this.addCod.products_ids = value;
+                value=value.join(',');
+                value.toString();
+                this.addCod.products_ids = value;
+            },
+            // 选择限制产品类型
+            limitTypef(value){
+                let vm = this;
+                console.log(value);
+                this.checKLimitPtyoe(value);
+                vm.limitType = value;
+            },
+            // 限制产品校验
+            checKLimitPtyoe(value){
+                var vm = this;
+                if (value.length == 1) {
+                    if(value[0] === '0'){
+                        vm.limitProductf = true;
+                        vm.limitPtype = false;
+                        vm.addCod.products_quantity = vm.limitPN;
+                    }else if(value[0] === '1'){
+                        vm.limitPtype = true;
+                        vm.limitProductf = false;
+                        vm.addCod.categories_quantity = vm.limitPN;
+                    }
+                }else if(value.length == 2){
+                    vm.limitPtype = true;
+                    vm.limitProductf = true;
+                    vm.addCod.products_quantity = vm.limitPN;
+                    vm.addCod.categories_quantity = vm.limitPN;
+                }else{
+                    vm.limitPtype = false;
+                    vm.limitProductf = false;
+                    vm.addCod.categories_quantity = '';
+                    vm.addCod.categories_quantity = '';
+                }
             },
             // 选择分类产品
             selCategories(value){
+                value=value.join(',');
+                value.toString();
                 this.addCod.categories_ids = value;
             },
             // 金额是否含税
@@ -656,7 +769,7 @@
                                 countries_ids:'',
                                 product_restriction:'0',
                                 products_ids:'',
-                                categories_ids:'',
+                                categories_ids:[],
                                 products_quantity:'',
                                 categories_quantity:'',
                                 free_shipping:'0',
@@ -700,7 +813,7 @@
                             countries_ids:'',
                             product_restriction:'0',
                             products_ids:'',
-                            categories_ids:'',
+                            categories_ids:[],
                             products_quantity:'',
                             categories_quantity:'',
                             free_shipping:'0',
@@ -710,7 +823,6 @@
                             reduction_currency:'',
                         }
                         this.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize});
-
                     } else {
                         this.$message.error(reData.message);
                         this.visible_add = false
@@ -779,7 +891,7 @@
         },
         mounted() {
             var vm = this;
-            store.commit('changeStore',{key:'title',val:'币种列表'});
+            store.commit('changeStore',{key:'title',val:'购物车'});
             vm.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize})
         },
 
@@ -814,4 +926,11 @@
     .ant-table-tbody > tr > td{
         text-align:center;
     } */
+    .limitProduct .ant-select-selection__rendered ul li .ant-select-selection__choice__content {
+        display: none;
+        max-width:20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 </style>

@@ -120,7 +120,6 @@
                     @confirm="() => deleteProduct({product_id:record.product_id})">
                 <a @click="">删除</a>
               </a-popconfirm>
-
           </span>
         <span slot="img_" slot-scope="text, record">
               <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
