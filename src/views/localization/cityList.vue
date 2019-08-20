@@ -131,7 +131,7 @@
                                 <div class="inputName">国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-select :defaultValue="editCurrency.country_id" style="width: 100%"  @change="handleChangeZoneAdd">
+                                <a-select :defaultValue="editCurrency.country_id" style="width: 100%"  @change="handleChangeZoneEdit">
                                     <a-select-option v-for="item in countryList" :value="item.country_id">{{item.name}}</a-select-option>
                                 </a-select>
                             </a-col>
@@ -184,12 +184,14 @@
                     city_id:'',
                     name:'',
                     state_id:'',
+                    country_id:'',
                     lang_id:this.$store.state.langId,
                     active:'1'
                 },
                 addCurrency:{
                     name:'',
                     state_id:'',
+                    country_id:'',
                     lang_id:this.$store.state.langId,
                     active:'1'
             },
@@ -229,11 +231,12 @@
 
             },
             handleChangeZoneEdit(value){
-                this.editCurrency.zone_id = value.zone_id
-                this.editCurrency.country_id = value.country_id
+                this.editCurrency.country_id = value
+                this.getStateList(value)
 
             },
             handleChangeZoneAdd(value){
+                this.addCurrency.country_id = value
                 this.getStateList(value)
             },
             handleChangeStateAdd(value){
@@ -276,7 +279,7 @@
         }
         //修改提交
         ,submitEdit() {
-                this.$post('/state/editState',this.editCurrency).then((reData)=>{
+                this.$post('/city/editCity',this.editCurrency).then((reData)=>{
                     if(reData.code === '0'){
                         this.$message.success(reData.message, 3);
                         this.visible_edit = false
