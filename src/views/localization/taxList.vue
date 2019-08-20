@@ -10,7 +10,7 @@
                 <a-col class="gutter-row" :span="3">
                     <a-row>
                         <a-col class="gutter-row" :offset="12" :span="12">
-                            <a-button type="primary" @click="addAttribute(store.state.attribute_child_id)">
+                            <a-button type="primary" @click="addcountryTax">
                                 新增
                             </a-button>
                         </a-col>
@@ -25,17 +25,17 @@
                      @change="handleTableChange"
                     >
               <span slot="action" slot-scope="text, record">
-                  <a @click="editAttribute(text.currency_id)">修改</a>
+                  <a @click="editAttribute(text.tax_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct(text.currency_id)">删除</a>
+                  <a @click="deleteProduct(text.tax_id)">删除</a>
               </span>
                 <a slot="isUse" slot-scope="text, record" style="text-align: center">
                     <div style="width: 100%;text-align: left" v-if="text.decimals == 1">是</div>
                     <div style="width: 100%;text-align: left" v-if="text.decimals == 0">否</div>
                 </a>
                 <a slot="active" slot-scope="text, record" style="text-align: center">
-                    <a-icon type="check" style="color: green" v-if="text.active == '1'" @click="change_active({currency_id:text.currency_id,active:'0'})"></a-icon>
-                    <a-icon type="close" style="color: red" v-if="text.active == '0'" @click="change_active({currency_id:text.currency_id,active:'1'})"></a-icon>
+                    <a-icon type="check" style="color: green" v-if="text.active == '1'" @click="change_active({tax_id:text.tax_id,active:'0'})"></a-icon>
+                    <a-icon type="close" style="color: red" v-if="text.active == '0'" @click="change_active({tax_id:text.tax_id,active:'1'})"></a-icon>
                 </a>
             </a-table>
 
@@ -48,59 +48,44 @@
                 <a-col class="gutter-row" :span="3">
                     <a-row>
                         <a-col class="gutter-row" :offset="12" :span="12">
-                            <a-button type="primary" @click="addAttribute(store.state.attribute_child_id)">
+                            <a-button type="primary" @click="addStateTax">
                                 新增
                             </a-button>
                         </a-col>
                     </a-row>
                 </a-col>
             </div>
-            <a-table :columns="columns"
-                     :dataSource="attributeList"
-                     :pagination="pagination"
+            <a-table :columns="stateColumns"
+                     :dataSource="attributeStateList"
                      :loading="loading"
                      align="center"
-                     @change="handleTableChange"
             >
-              <span slot="action" slot-scope="text, record">
-                  <a @click="editAttribute(text.currency_id)">修改</a>
+                <span slot="action" slot-scope="text, record">
+                  <a @click="stateEditAttribute(text.state_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct(text.currency_id)">删除</a>
-              </span>
-                <a slot="isUse" slot-scope="text, record" style="text-align: center">
+                  <a @click="deleteStateProduct(text.tax_state_id)">删除</a>
+                </span>
+                <!-- <a slot="stateIsUse" slot-scope="text, record" style="text-align: center">
                     <div style="width: 100%;text-align: left" v-if="text.decimals == 1">是</div>
                     <div style="width: 100%;text-align: left" v-if="text.decimals == 0">否</div>
-                </a>
+                </a> -->
                 <a slot="active" slot-scope="text, record" style="text-align: center">
-                    <a-icon type="check" style="color: green" v-if="text.active == '1'" @click="change_active({currency_id:text.currency_id,active:'0'})"></a-icon>
-                    <a-icon type="close" style="color: red" v-if="text.active == '0'" @click="change_active({currency_id:text.currency_id,active:'1'})"></a-icon>
+                    <a-icon type="check" style="color: green" v-if="text.active == '1'" @click="change_state_active({tax_state_id:text.tax_state_id,active:'0'})"></a-icon>
+                    <a-icon type="close" style="color: red" v-if="text.active == '0'" @click="change_state_active({tax_state_id:text.tax_state_id,active:'1'})"></a-icon>
                 </a>
             </a-table>
 
             <div class="addCurrency">
                 <a-modal
-                        title="新增"
+                        title="国家税信息"
                         v-model="visible_add"
                         :destroyOnClose = "true"
-                        @ok="submitAdd"
+                        @ok="submitAdd(addCurrency.edit)"
                 >
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">是否启用：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-select defaultValue="1" style="width: 100%"  @change="handleChangeAdd">
-                                    <a-select-option value="1">启用</a-select-option>
-                                    <a-select-option value="0">不启用</a-select-option>
-                                </a-select>
-                            </a-col>
-                        </div>
-                    </a-row>
-                    <a-row>
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">货币名称：</div>
+                                <div class="inputName">税率命：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -111,30 +96,10 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国家码 ：</div>
+                                <div class="inputName">税率 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="addCurrency.iso_code" />
-                            </a-col>
-                        </div>
-                    </a-row>
-                    <a-row>
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国际数字码 ：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="addCurrency.iso_code_num" />
-                            </a-col>
-                        </div>
-                    </a-row>
-                    <a-row>
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">币种符号 ：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="addCurrency.sign" />
+                                <a-input placeholder="" v-model="addCurrency.rate" />
                             </a-col>
                         </div>
                     </a-row>
@@ -142,12 +107,89 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">是否启用小数：</div>
+                                <div class="inputName">国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-select :defaultValue="addCurrency.decimals" style="width: 100%"  @change="decimalsChangeAdd">
-                                    <a-select-option value=1>启用</a-select-option>
-                                    <a-select-option value=0>不启用</a-select-option>
+                                <a-select 
+                                :defaultValue="addCurrency.country_id" 
+                                style="width: 100%" 
+                                @change="getAddcountry">
+                                    <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}{{item.country_id}}</a-select-option>
+                                </a-select>
+                            </a-col>
+                        </div>
+                    </a-row>
+
+                    <a-row>
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">是否启用：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-select :defaultValue="addCurrency.active" style="width: 100%"  @change="handleChangeAdd">
+                                    <a-select-option value="1">是</a-select-option>
+                                    <a-select-option value="0">否</a-select-option>
+                                </a-select>
+                            </a-col>
+                        </div>
+                    </a-row>
+                </a-modal>
+
+                <!-- 省州税 -->
+                <a-modal
+                    title="省州税信息"
+                    v-model="stateVisible_add"
+                    :destroyOnClose = "true"
+                    @ok="submitAddState(addState.edit)"
+                >
+                    <a-row>
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">税率命：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-input placeholder="" v-model="addState.name" />
+                            </a-col>
+                        </div>
+                    </a-row>
+
+                    <a-row>
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">税率 ：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-input placeholder="" v-model="addState.rate" />
+                            </a-col>
+                        </div>
+                    </a-row>
+
+                    <a-row>
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">国家：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-select 
+                                :defaultValue="addState.country_id" 
+                                style="width: 100%" 
+                                @change="getAddstateCountry">
+                                    <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}{{item.country_id}}</a-select-option>
+                                </a-select>
+                            </a-col>
+                        </div>
+                    </a-row>
+                     <a-row>
+                        <div class="inputPart">
+                            <a-col class="gutter-row" :span="6">
+                                <div class="inputName">省/州：</div>
+                            </a-col>
+                            <a-col class="gutter-row" :span="18">
+                                <a-select 
+                                :defaultValue="addState.country_id" 
+                                style="width: 100%" 
+                                @change="selectState">
+                                    <a-select-option v-for="item in state" :value=item.state_id>{{item.name}}{{item.state_id}}</a-select-option>
                                 </a-select>
                             </a-col>
                         </div>
@@ -155,129 +197,18 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">汇率：</div>
+                                <div class="inputName">是否启用：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="addCurrency.conversion_rate" />
+                                <a-select :defaultValue="addState.active" style="width: 100%"  @change="handleChangeAdd">
+                                    <a-select-option value="1">是</a-select-option>
+                                    <a-select-option value="0">否</a-select-option>
+                                </a-select>
                             </a-col>
                         </div>
                     </a-row>
-                    <a-row>
-                        <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
-                                <div class="inputName">位置序号：</div>
-                            </a-col>
-                            <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="addCurrency.position" />
-                            </a-col>
-                        </div>
-                    </a-row>
-
-
                 </a-modal>
             </div>
-            <div class="editCurrency">
-                <a-modal
-                        title="修改信息"
-                        v-model="visible_edit"
-                        :destroyOnClose = "true"
-                        @ok="submitEdit"
-                >
-
-                        <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">是否启用：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-select :defaultValue="editCurrency.active" style="width: 100%"  @change="handleChangeEdit">
-                                        <a-select-option value="1">启用</a-select-option>
-                                        <a-select-option value="0">不启用</a-select-option>
-                                    </a-select>
-                                </a-col>
-                            </div>
-                        </a-row>
-                        <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">货币名称：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-input placeholder="" v-model="editCurrency.name" />
-                                </a-col>
-                            </div>
-                        </a-row>
-
-                        <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">国家码 ：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-input placeholder="" v-model="editCurrency.iso_code" />
-                                </a-col>
-                            </div>
-                        </a-row>
-                        <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">国际数字码 ：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-input placeholder="" v-model="editCurrency.iso_code_num" />
-                                </a-col>
-                            </div>
-                        </a-row>
-                        <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">币种符号 ：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-input placeholder="" v-model="editCurrency.sign" />
-                                </a-col>
-                            </div>
-                        </a-row>
-
-                        <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">是否启用小数：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-select :defaultValue="editCurrency.decimals" style="width: 100%"  @change="decimalsChangeEdit">
-                                        <a-select-option value="1">启用</a-select-option>
-                                        <a-select-option value="0">不启用</a-select-option>
-                                    </a-select>
-                                </a-col>
-                            </div>
-                        </a-row>
-                        <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">汇率：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-input placeholder="" v-model="editCurrency.conversion_rate" />
-                                </a-col>
-                            </div>
-                        </a-row>
-                        <a-row>
-                            <div class="inputPart">
-                                <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">位置序号：</div>
-                                </a-col>
-                                <a-col class="gutter-row" :span="18">
-                                    <a-input placeholder="" v-model="editCurrency.position" />
-                                </a-col>
-                            </div>
-                        </a-row>
-
-
-                    </a-modal>
-            </div>
-
-
         </div>
     </div>
 </template>
@@ -285,51 +216,47 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
+        { title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
         { title: '税名', dataIndex: 'name', key: 'name'},
-        { title: '税率', dataIndex: 'iso_code', key: 'iso_code'},
-        { title: '国际码数字', dataIndex: 'iso_code_num', key: 'iso_code_num'},
-        { title: '币种符号', dataIndex: 'sign', key: 'sign'},
-        { title: '是否启用小数' , key: 'isUse', scopedSlots: { customRender: 'isUse' }},
-        { title: '汇率', dataIndex: 'conversion_rate', key: 'conversion_rate'},
-        { title: '排序', dataIndex: 'position', key: 'position'},
+        { title: '税率', dataIndex: 'rate', key: 'rate'},
         { title: '是否启用', key: 'active',scopedSlots: { customRender: 'active' },},
-
-
-
+    ];
+    const stateColumns = [
+        { title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
+        { title: '税名', dataIndex: 'name', key: 'name'},
+        { title: '税率', dataIndex: 'rate', key: 'rate'},
+        { title: '是否启用', key: 'active',scopedSlots: { customRender: 'active' },},
     ];
     const attributeList = [];
-
+    const attributeStateList = [];
     export default {
         data() {
             return {
-                editCurrency:{
-                    currency_id:'20',
-                    name:'121'
-                    ,iso_code:'23'
-                    ,iso_code_num:'22'
-                    ,sign:'121'
-                    ,decimals:'12'
-                    ,conversion_rate:'45'
-                    ,active:'0'
-                    ,position:'54'
-                },
+                country:[],
+                state:[],
                 addCurrency:{
                     name:''
-                    ,iso_code:''
+                    ,rate:''
                     ,iso_code_num:''
-                    ,sign:''
-                    ,decimals:''
-                    ,conversion_rate:''
-                    ,active:'1'
-                    ,position:''
-            },
+                    ,country_id:''
+                    ,active:'1',
+                    edit:false
+                },
+                addState:{
+                    country_id:'',
+                    state_id:'',
+                    rate:'',
+                    active:'1',
+                    name:'',
+                    edit:false
+                },
                 visible_add:false,
-                visible_edit:false,
-
+                stateVisible_add:false,
                 attributeList,
+                attributeStateList,
                 store,
                 columns,
+                stateColumns,
                 loading: false,
                 pagination:{
                     currentPage:1,
@@ -351,18 +278,68 @@
             }
         },
         methods: {
-            // 获取单条数据
-            getData(data){
-                this.$post('/currency/getCurrencyInfo',data).then((reData)=>{
-                    this.editCurrency = reData.data
-                    this.visible_edit = true
-                    this.editCurrency.decimals = reData.data.decimals.toString()
+            // 新增国家税
+            addcountryTax(mm){
+                if(mm){
 
-                })
+                }else{
+                    this.addCurrency={
+                        name:''
+                        ,rate:''
+                        ,iso_code_num:''
+                        ,country_id:''
+                        ,active:'1',
+                        edit:false
+                    }
+                }
+                this.visible_add = true
+                this.getCountry();
+            },
+             // 新增省州税
+            addStateTax(mm){
+                if(mm){
+
+                }else{
+                    this.addState = {
+                        country_id:'',
+                        state_id:'',
+                        rate:'',
+                        active:'1',
+                        name:'',
+                        edit:false
+                    }
+                }
+                this.stateVisible_add = true
+                this.getCountry();
+            },
+            // 获取国家
+            getCountry(){
+                let vm = this;
+                this.$post('/country/getCountryList',{lang_id:store.state.langId,pageSize:'10000'}).then((reData)=>{
+                    vm.country = reData.data
+                });
+            },
+            // 选择国家id
+            getAddcountry(value){
+                this.addCurrency.country_id = value;
+            },
+            // 选择州国家id
+            getAddstateCountry(value){
+                this.addState.country_id = value;
+                this.getStateList(value);
+            },
+            // 获取省州
+            getStateList(id){
+                let vm = this;
+                this.$post('/state/getStateList',{country_id:id}).then((reData)=>{
+                    vm.state = reData.data
+                });
+            },
+            selectState(value){
+                this.addState.state_id = value;
             },
             decimalsChangeEdit(value){
                 this.editCurrency.decimals = value
-
             },
             decimalsChangeAdd(value){
                 this.addCurrency.decimals = value
@@ -373,57 +350,129 @@
             handleChangeAdd(value){
                 this.addCurrency.active = value
             },
-        //添加提交
-        submitAdd() {
-            this.$post('/currency/addCurrency',this.addCurrency).then((reData)=>{
-                if(reData.code === '0'){
-                    this.$message.success(reData.message, 3);
-                    this.visible_add = false
-                    this.addCurrency={
-                            name:''
-                            ,iso_code:''
-                            ,iso_code_num:''
-                            ,sign:''
-                            ,decimals:''
-                            ,conversion_rate:''
-                            ,active:'1'
-                            ,position:''
-                    },
-                    this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+            //添加提交
+            submitAdd(edit) {
+                if(edit){
+                    this.submitEdit()
+                }else{
+                    this.$post('/tax/addTax',this.addCurrency).then((reData)=>{
+                        if(reData.code === '0'){
+                            this.$message.success(reData.message, 3);
+                            this.visible_add = false
+                            this.addCurrency={
+                                name:''
+                                ,rate:''
+                                ,iso_code_num:''
+                                ,country_id:''
+                                ,active:'1',
+                                edit:false
+                            },
+                            this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
 
-                } else {
-                    this.$message.error(reData.message);
-                    this.visible_add = false
+                        } else {
+                            this.$message.error(reData.message);
+                            this.visible_add = false
+                        }
+                    })
                 }
-            })
-        }
-        //修改提交
-        ,submitEdit() {
-                this.$post('/currency/editCurrency',this.editCurrency).then((reData)=>{
+                
+            },
+             //添加省州提交
+            submitAddState(edit) {
+                if(edit){
+                    this.submitEditState()
+                }else{
+                    this.$post('/tax/addTaxState',this.addState).then((reData)=>{
+                        if(reData.code === '0'){
+                            this.$message.success(reData.message, 3);
+                            this.visible_add = false
+                            this.addState = {
+                                country_id:'',
+                                state_id:'',
+                                rate:'',
+                                active:'1',
+                                name:'',
+                                edit:false
+                            }
+                            this.getStataList({});
+
+                        } else {
+                            this.$message.error(reData.message);
+                            this.visible_add = false
+                        }
+                    })
+                }
+                
+            }
+            //修改提交
+            ,submitEdit() {
+                this.$post('/tax/editTax',this.addCurrency).then((reData)=>{
                     if(reData.code === '0'){
                         this.$message.success(reData.message, 3);
-                        this.visible_edit = false
+                        this.visible_add = false
                         this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
                     } else {
                         this.$message.error(reData.message);
-                        this.visible_edit = false
+                        this.visible_add = false
                     }
                 })
-        },
+            },
+              //州税修改提交
+            submitEditState() {
+                this.$post('/tax/editTaxState',this.addState).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.$message.success(reData.message, 3);
+                        this.stateVisible_add = false
+                        this.getStataList({});
+                    } else {
+                        this.$message.error(reData.message);
+                        this.stateVisible_add = false
+                    }
+                })
+            },
             //新增属性
             addAttribute(){
                 this.visible_add = true
-            }
+            },
+            // 州属性
+            addAttributeState(){
+                this.stateVisible_add = true;
+            },
             //修改属性
-            ,editAttribute(currency_id){
-               this.getData({currency_id:currency_id})
+            editAttribute(id){
+               this.$post('/tax/getTaxListPage',{tax_id:id}).then((reData)=>{
+                    this.addCurrency = reData.data.dataList[0];
+                    this.addCurrency.edit = true;
+                    this.addCurrency.active = this.addCurrency.active.toString()
+                    this.addcountryTax(this.addCurrency.edit)
+                })
+            },
+             //修改州属性
+            stateEditAttribute(stateId){
+               this.$post('/tax/getTaxStateList',{state_id:stateId}).then((reData)=>{
+                   console.log(reData)
+                    this.addState = reData.data[0];
+                    this.addState.edit = true;
+                    this.addState.active = this.addState.active.toString()
+                    this.addStateTax(this.addState.edit)
+                })
             }
-            // 获取商品列表
+            // 获取国家税列表
             ,getList(data){
                 this.loading = true;
                 this.$post('/tax/getTaxListPage',data).then((reData)=>{
+                    console.log(reData)
                     this.attributeList=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
+                    this.loading = false
+                })
+            }
+              // 获取省税列表
+            ,getStataList(data){
+                this.loading = true;
+                this.$post('/tax/getTaxStateList',data).then((reData)=>{
+                    console.log(reData)
+                    this.attributeStateList=reData.data;
                     this.loading = false
                 })
             }
@@ -432,10 +481,9 @@
                 this.pagination.currentPage = pagination.current
                 this.getList({currentPage:pagination.current,pageSize:pagination.defaultPageSize})
             }
-
             //更改商品状态
             ,change_active(data){
-                this.$post('/currency/editActiveCurrency',data).then((reData)=>{
+                this.$post('/tax/editTaxActive',data).then((reData)=>{
                     if(reData.code === '0'){
                         this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize});
                     }else {
@@ -443,15 +491,68 @@
                     }
                 })
             }
-            //删除商品
-            ,deleteProduct(data){
-                this.$post('/currency/deleteCurrency',{currency_id:data}).then((reData)=>{
+             //更改州状态
+            ,change_state_active(data){
+                this.$post('/tax/editTaxStateActive',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize});
-                    } else {
+                        this.getStataList({});
+                    }else {
                         this.$message.error(reData.message);
                     }
                 })
+            }
+            //删除商品
+            ,deleteProduct(data){
+                var that = this;
+                this.$confirm({
+                    title: '删 除',
+                    content: '确认要删除信息',
+                    onOk() {
+                        that.$post('/tax/deleteTax',{tax_id:data}).then((reData)=>{
+                            if(reData.code === '0'){
+                                that.getList({currentPage:that.pagination.currentPage,page_size:that.pagination.defaultPageSize});
+                            } else {
+                                that.$message.error(reData.message);
+                            }
+                        })
+                    },
+                    onCancel() {},
+                });
+              
+            }
+              //删除州税
+            ,deleteStateProduct(data){
+                var that = this;
+                this.$confirm({
+                    title: '删 除',
+                    content: '确认要删除信息',
+                    onOk() {
+                        that.$post('/tax/deleteTaxState',{tax_state_id:data}).then((reData)=>{
+                            if(reData.code === '0'){
+                                that.$notification.open({
+                                    message: '删 除',
+                                    duration: 2,
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                                that.getStataList({});
+                            } else {
+                                that.$notification.open({
+                                    message: '删 除',
+                                    duration: 2,
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                        })
+                    },
+                    onCancel() {},
+                });
+              
             }
 
         },
@@ -459,6 +560,7 @@
             var vm = this;
             store.commit('changeStore',{key:'title',val:'币种列表'});
             vm.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize})
+            vm.getStataList({})
         },
 
     }
