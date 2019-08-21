@@ -7,7 +7,7 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :scroll="{ x: 1600 }">
+                     :scroll="{ x: 1000 }">
               <span slot="action" slot-scope="text, record">
                   <a @click="searchFun({cart_id:record.cart_id,lang_id:$store.state.langId})">查看</a>
               </span>
@@ -18,7 +18,7 @@
         </div>
         <div class="updateCustomerAddress">
             <a-modal
-                    title="产看客户购物车"
+                    title="查看客户购物车"
                     v-model="visible_update"
                     @ok="submitAddressUpdate"
             >
@@ -162,21 +162,21 @@
     import store from '../../store'
     const columns = [
         {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
-        { title: '沙特身份证', dataIndex: 'national_id', key: 'national_id'},
-        { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
-        { title: '平台类型', dataIndex: 'mobile_type', key: 'mobile_type'},
-        { title: '货币sign', dataIndex: 'sign', key: 'sign'},
-        { title: '语言id', dataIndex: 'lang_id', key: 'lang_id'},
-        { title: '物流id', dataIndex: 'carrier_id', key: 'carrier_id'},
-        { title: '购物车id', dataIndex: 'city', key: 'city'},
-        { title: '更新时间', dataIndex: 'upd_date', key: 'upd_date'},
-        { title: '总价', dataIndex: 'total_amount', key: 'total_amount'},
-        { title: '小数点保留几位', dataIndex: 'decimals', key: 'decimals'},
-        { title: '客户id', dataIndex: 'customer_id', key: 'customer_id'},
-        { title: '汇率', dataIndex: 'conversion_rate', key: 'conversion_rate'},
+        { title: '购物车id', dataIndex: 'cart_id', key: 'cart_id'},
         { title: '订单id', dataIndex: 'order_id', key: 'order_id'},
-        { title: '币种id', dataIndex: 'currency_id', key: 'currency_id'},
         { title: '用户邮件', dataIndex: 'email', key: 'email'},
+        { title: '总价', dataIndex: 'total_amount', key: 'total_amount'},
+        { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
+        // { title: '更新时间', dataIndex: 'upd_date', key: 'upd_date'},
+        // { title: '沙特身份证', dataIndex: 'national_id', key: 'national_id'},
+        // { title: '平台类型', dataIndex: 'mobile_type', key: 'mobile_type'},
+        // { title: '货币sign', dataIndex: 'sign', key: 'sign'},
+        // { title: '语言id', dataIndex: 'lang_id', key: 'lang_id'},
+        // { title: '小数点保留几位', dataIndex: 'decimals', key: 'decimals'},
+        // { title: '客户id', dataIndex: 'customer_id', key: 'customer_id'},
+        // { title: '汇率', dataIndex: 'conversion_rate', key: 'conversion_rate'},
+        // { title: '物流id', dataIndex: 'carrier_id', key: 'carrier_id'},
+        // { title: '币种id', dataIndex: 'currency_id', key: 'currency_id'},
     ];
     const productListData = [];
     //表格复选框

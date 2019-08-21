@@ -20,12 +20,12 @@
                 <input type="text" v-model="record.position" @blur="change_position(record)" style="text-align:center;border:1px solid #ccc;">
             </span>
              <span slot="active" slot-scope="record">
-                <span v-if="record.active == '0'" style="cursor: pointer;" @click="show_active(record)"><a-icon type="close" /></span>
-                <span v-if="record.active == '1'" style="cursor: pointer;" @click="show_active(record)"><a-icon type="check" /></span>
+                <span v-if="record.active == '0'" style="cursor: pointer;color:red;" @click="show_active(record)"><a-icon type="close" /></span>
+                <span v-if="record.active == '1'" style="cursor: pointer;color:green;" @click="show_active(record)"><a-icon type="check" /></span>
             </span>
             <span slot="isBanner" slot-scope="record">
-                <span v-if="record.isBanner == '0'" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="close" /></span>
-                <span v-if="record.isBanner == '1'" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="check" /></span>
+                <span v-if="record.isBanner == '0'" style="cursor: pointer;color:red;" @click="show_isBanner(record)"><a-icon type="close" /></span>
+                <span v-if="record.isBanner == '1'" style="cursor: pointer;color:green;" @click="show_isBanner(record)"><a-icon type="check" /></span>
             </span>
             <span slot="description" slot-scope="record">
                 <span v-html="record.description"></span>

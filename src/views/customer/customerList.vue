@@ -538,7 +538,7 @@
                     this.$post('/customer/addCustomerInfo',this.addCustomerInfo).then((reData)=>{
                         if(reData.code === '0'){
                             this.visible_add = false
-                            this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize});
+                            this.getList({lang_id:store.state.langId,currentPage:this.pagination.total,pageSize:this.pagination.defaultPageSize});
                         } else {
                             this.$message.error(reData.message);
                             this.visible_add = false
@@ -553,7 +553,7 @@
                 this.$post('/customer/updateCustomerInfo',this.addCustomerInfo).then((reData)=>{
                     if(reData.code === '0'){
                         this.visible_edit = false
-                        this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize});
+                        this.getList({lang_id:store.state.langId,currentPage:1,pageSize:this.pagination.defaultPageSize});
                     } else {
                         this.$message.error(reData.message);
                         this.visible_add = false
@@ -632,7 +632,7 @@
         mounted() {
             var vm = this
             store.commit('changeStore',{key:'title',val:'产品列表'});
-            vm.getList({currentPage:1,pageSize:vm.pagination.defaultPageSize})
+            vm.getList({lang_id:store.state.langId,currentPage:1,pageSize:vm.pagination.defaultPageSize})
             vm.getGender();
         },
 

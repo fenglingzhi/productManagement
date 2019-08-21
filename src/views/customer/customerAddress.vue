@@ -10,12 +10,16 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :rowSelection="rowSelection"
-                     :scroll="{ x: 2400 }">
+                     :scroll="{ x: 1400 }">
               <span slot="action" slot-scope="text, record">
                   <a @click="searchFun({address_id:record.address_id,lang_id:$store.state.langId})">修改</a>
                   <a-divider type="vertical"></a-divider>
-                  <a @click="deleteFun({address_id:record.address_id})">删除</a>
+                  <a-popconfirm
+                          v-if="productListData.length"
+                          title="请确认删除"
+                          @confirm="() => deleteFun({address_id:record.address_id})">
+                    <a>删除</a>
+                  </a-popconfirm>
               </span>
                 <span slot="img_" slot-scope="text, record">
                   <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
@@ -56,16 +60,6 @@
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input placeholder="沙特身份证" v-model="addCustomerAddressData.national_id" />
-                        </a-col>
-                    </div>
-                </a-row>
-                <a-row>
-                    <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">地址别名：</div>
-                        </a-col>
-                        <a-col class="gutter-row" :span="18">
-                            <a-input placeholder="请输地址别名" v-model="addCustomerAddressData.alias" />
                         </a-col>
                     </div>
                 </a-row>
@@ -140,6 +134,16 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
+                            <div class="inputName">地址别名：</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="18">
+                            <a-input placeholder="请输地址别名" v-model="addCustomerAddressData.alias" />
+                        </a-col>
+                    </div>
+                </a-row>
+                <a-row>
+                    <div class="inputPart">
+                        <a-col class="gutter-row" :span="4">
                             <div class="inputName">地址1：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
@@ -167,6 +171,10 @@
                         </a-col>
                     </div>
                 </a-row>
+
+
+
+
             </a-modal>
         </div>
         <div class="updateCustomerAddress">
@@ -255,7 +263,7 @@
                                       style="width: 100%"
                                       :value="addCustomerAddressData.country_id"
                                       @change="handleChangeCountry">
-                                <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}{{item.country_id}}</a-select-option>
+                                <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -286,7 +294,7 @@
                             <a-select defaultValue="请选择"
                                       v-if="!city_flag"
                                       style="width: 100%"
-                                      :value="addCustomerAddressData.city_id"
+                                      :value="addCustomerAddressData.city"
                                       @change="handleChangeCity">
                                 <a-select-option v-for="item in city" :value=item.city_id>{{item.name}}</a-select-option>
                             </a-select>
@@ -333,25 +341,27 @@
     import store from '../../store'
     const columns = [
         {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
-        { title: '沙特身份证', dataIndex: 'national_id', key: 'national_id'},
+        { title: '地址id', dataIndex: 'address_id', key: 'address_id'},
         { title: '名', dataIndex: 'firstname', key: 'firstname'},
         { title: '姓', dataIndex: 'lastname', key: 'lastname'},
-        { title: '中间名', dataIndex: 'middlename', key: 'middlename'},
-        { title: '国家', dataIndex: 'country_name', key: 'country_name'},
-        { title: '省/州', dataIndex: 'state_name', key: 'state_name'},
-        { title: '城市', dataIndex: 'city', key: 'city'},
-        { title: '街道', dataIndex: 'street', key: 'street'},
         { title: '地址1', dataIndex: 'address1', key: 'address1'},
         { title: '地址2', dataIndex: 'address2', key: 'address2'},
         { title: '邮政编码', dataIndex: 'postcode', key: 'postcode'},
+        { title: '城市', dataIndex: 'city', key: 'city'},
+        { title: '省/州', dataIndex: 'state_name', key: 'state_name'},
+        { title: '国家', dataIndex: 'country_name', key: 'country_name'},
+        { title: '联系电话', dataIndex: 'phone', key: 'phone'},
+
+        // { title: '中间名', dataIndex: 'middlename', key: 'middlename'},
+        // { title: '街道', dataIndex: 'street', key: 'street'},
         // { title: '状态', dataIndex: 'active', key: 'active'},
         // { title: '是否默认', dataIndex: 'is_default', key: 'is_default'},
-        { title: '联系电话', dataIndex: 'phone', key: 'phone'},
         // { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
         // { title: '更新时间', dataIndex: 'upd_date', key: 'upd_date'},
-        { title: '别名', dataIndex: 'alias', key: 'alias'},
-        { title: '公司', dataIndex: 'company', key: 'company'},
-        { title: '备用电话', dataIndex: 'alertnate_phone', key: 'alertnate_phone'},
+        // { title: '别名', dataIndex: 'alias', key: 'alias'},
+        // { title: '公司', dataIndex: 'company', key: 'company'},
+        // { title: '备用电话', dataIndex: 'alertnate_phone', key: 'alertnate_phone'},
+        // { title: '沙特身份证', dataIndex: 'national_id', key: 'national_id'},
     ];
     const productListData = [];
     //表格复选框
@@ -394,8 +404,8 @@
                     postcode:'',
                     state_id:'',
                     country_id:'',
-                    other:'',
-                    address_id:''
+                    // other:'',
+                    address_id:'1'
                 }
                 ,country:[]
                 ,state:[]
@@ -408,27 +418,27 @@
             //更新地址详情
             searchFun(data){
                 this.addCustomerAddressData.address_id = data.address_id
-                this.$post('/country/getCountryListPage',{lang_id:store.state.langId,pageSize:'10000'}).then((reData)=>{
-                    this.country = reData.data.dataList.slice(0)
+                this.$post('/address/getAddressInfoList',data).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.addCustomerAddressData.phone=reData.data[0].phone;
+                        this.addCustomerAddressData.email=reData.data[0].email;
+                        this.addCustomerAddressData.national_id=reData.data[0].national_id;
+                        this.addCustomerAddressData.alias=reData.data[0].alias;
+                        this.addCustomerAddressData.firstname=reData.data[0].firstname;
+                        this.addCustomerAddressData.lastname=reData.data[0].lastname;
+                        this.addCustomerAddressData.company=reData.data[0].company;
+                        this.addCustomerAddressData.address1=reData.data[0].address1;
+                        this.addCustomerAddressData.address2=reData.data[0].address2;
+                        this.addCustomerAddressData.postcode=reData.data[0].postcode;
+                        this.addCustomerAddressData.state_id=reData.data[0].state_id;
+                        this.addCustomerAddressData.country_id=reData.data[0].country_id;
+                        this.addCustomerAddressData.email=reData.data[0].email;
+                        this.addCustomerAddressData.city=reData.data[0].city_name;
+                        // this.addCustomerAddressData.other=reData.data[0].other;
+                    }
                 }).then(()=>{
-                    this.$post('/address/getAddressInfoList',data).then((reData)=>{
-                        if(reData.code === '0'){
-                            this.addCustomerAddressData.phone=reData.data[0].phone;
-                            this.addCustomerAddressData.email=reData.data[0].email;
-                            this.addCustomerAddressData.national_id=reData.data[0].national_id;
-                            this.addCustomerAddressData.alias=reData.data[0].alias;
-                            this.addCustomerAddressData.firstname=reData.data[0].firstname;
-                            this.addCustomerAddressData.lastname=reData.data[0].lastname;
-                            this.addCustomerAddressData.company=reData.data[0].company;
-                            this.addCustomerAddressData.address1=reData.data[0].address1;
-                            this.addCustomerAddressData.address2=reData.data[0].address2;
-                            this.addCustomerAddressData.city=reData.data[0].city;
-                            this.addCustomerAddressData.postcode=reData.data[0].postcode;
-                            this.addCustomerAddressData.state_id=reData.data[0].state_id;
-                            this.addCustomerAddressData.country_id=reData.data[0].country_id;
-                            this.addCustomerAddressData.email=reData.data[0].email;
-                            this.addCustomerAddressData.other=reData.data[0].other;
-                        }
+                    this.$post('/country/getCountryListPage',{lang_id:store.state.langId,pageSize:'10000'}).then((reData)=>{
+                        this.country = reData.data.dataList.slice(0)
                     })
                 }).then(()=>{
                     this.$post('/state/getStateListPage',{country_id:this.addCustomerAddressData.country_id,pageSize:'10000'}).then((reData)=>{
@@ -456,6 +466,20 @@
             ,add_product(){
                 let vm = this;
                 this.visible_add = true
+                this.addCustomerAddressData.phone='';
+                this.addCustomerAddressData.email='';
+                this.addCustomerAddressData.national_id='';
+                this.addCustomerAddressData.alias='';
+                this.addCustomerAddressData.firstname='';
+                this.addCustomerAddressData.lastname='';
+                this.addCustomerAddressData.company='';
+                this.addCustomerAddressData.address1='';
+                this.addCustomerAddressData.address2='';
+                this.addCustomerAddressData.city='';
+                this.addCustomerAddressData.postcode='';
+                this.addCustomerAddressData.state_id='';
+                this.addCustomerAddressData.country_id='';
+                this.addCustomerAddressData.email='';
                 this.$post('/country/getCountryListPage',{lang_id:store.state.langId,pageSize:'10000'}).then((reData)=>{
                     vm.country = reData.data.dataList.slice(0)
                 });
@@ -525,15 +549,96 @@
             //提交新增地址
             ,submitAddress() {
                 console.log(this.addCustomerAddressData)
-                this.$post('/address/addAddressInfo',this.addCustomerAddressData).then((reData)=>{
-                    if(reData.code === '0'){
-                        this.visible_add = false
-                        this.getList({lang_id:store.state.langId});
-                    } else {
-                        this.$message.error(reData.message);
-                        // this.visible_add = false
-                    }
-                })
+                if(this.addCustomerAddressData.phone === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填电话号码'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.email === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写邮箱'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.national_id === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写身份证'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.firstname === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写名'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.lastname === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写姓'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.company === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写公司'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.country_id === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写国家'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.state_id === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写省'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.city === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写城市'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.alias === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写地址别名'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.address1 === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写地址1'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.address2 === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写地址2'
+                    });
+                    return false;
+                } else if(this.addCustomerAddressData.postcode === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写邮编'
+                    });
+                    return false;
+                } else {
+                    this.$post('/address/addAddressInfo',this.addCustomerAddressData).then((reData)=>{
+                        if(reData.code === '0'){
+                            this.visible_add = false
+                            this.getList({lang_id:store.state.langId});
+                        } else {
+                            this.$message.error(reData.message);
+                            // this.visible_add = false
+                        }
+                    })
+                }
+
             },
             //提交更新地址
             submitAddressUpdate() {

@@ -30,12 +30,6 @@
             <a-button :style="{ marginLeft: '8px' }" @click="handleReset">清空</a-button>
           </a-col>
         </a-row>
-        <!-- <a-row>
-          <a-col :span="24" :style="{ textAlign: 'left' }">
-            <a-button type="primary" html-type="submit">搜索</a-button>
-            <a-button :style="{ marginLeft: '8px' }" @click="handleReset">清空</a-button>
-          </a-col>
-        </a-row>-->
       </a-form>
     </div>
     <div class="hrLine"></div>
@@ -317,31 +311,6 @@ const columns = [
     scopedSlots: { customRender: "send_email" }
   },
   { title: "模板名称", dataIndex: "template", key: "template" }
-  //   {
-  //     title: "删除",
-  //     dataIndex: "unremoveable",
-  //     key: "unremoveable",
-  //     scopedSlots: { customRender: "unremoveable" }
-  //   },
-  //   {
-  //     title: "标记为运输状态",
-  //     dataIndex: "shipped",
-  //     key: "shipped",
-  //     scopedSlots: { customRender: "shipped" }
-  //   },
-  //   { title: "颜色", dataIndex: "color", key: "color" },
-  //   {
-  //     title: "标记为支付状态",
-  //     dataIndex: "paid",
-  //     key: "paid",
-  //     scopedSlots: { customRender: "paid" }
-  //   },
-  //   {
-  //     title: "标记为有效订单",
-  //     dataIndex: "logable",
-  //     key: "logable",
-  //     scopedSlots: { customRender: "logable" }
-  //   }
 ];
 const productListData = [];
 export default {
