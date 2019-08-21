@@ -59,7 +59,7 @@
               <a-input v-model="text.unit_code" placeholder=""/>
           </span>
         <span slot="unit_weight" slot-scope="text, record">
-              <a-input v-model="text.unit_weight" placeholder=""/>
+              <a-input v-model="text.unit_weight" type="number" placeholder=""/>
           </span>
           <span slot="ean13" slot-scope="text, record">
               <a-input v-model="text.ean13" placeholder=""/>
@@ -71,7 +71,7 @@
               <a-input v-model="text.upc" placeholder=""/>
           </span>
         <span slot="good_qty" slot-scope="text, record">
-              <a-input v-model="text.good_qty" placeholder=""/>
+              <a-input v-model="text.good_qty" type="number" placeholder=""/>
           </span>
 
       <a slot="isDefault" slot-scope="text, record,index" style="text-align: center">
@@ -245,9 +245,9 @@
                 //         }
                 //     }
                 // });
+                var vm =this
 
                 if (isAll){
-                    var vm =this
                     $.ajax({
                         dataType:'JSON',
                         type: 'POST',
@@ -292,8 +292,16 @@
                 //         }
                 //     }
                 // });
-
-                if (isAll){
+                var vm =this
+                var isAllOk=false
+                for(let i=0;i<vm.tabList.length;i++){
+                    Object.keys(vm.tabList[i]).forEach(function(key){
+                        if(vm.tabList[i][key]===''){
+                            isAllOk = true
+                        }
+                    });
+                }
+                if (!isAllOk){
                     var vm =this
                     $.ajax({
                         dataType:'JSON',
@@ -318,7 +326,7 @@
 
                     this.$notification.open({
                         message: '提醒',
-                        description: '请把信息填写完整再提交！',
+                        description: '请把每条组合的所有信息填写完整再提交！',
                         onClick: () => {
                             console.log('ok');
                         },

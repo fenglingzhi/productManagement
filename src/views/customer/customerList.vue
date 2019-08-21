@@ -56,7 +56,7 @@
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
-                              <a-select-option  v-for="item in genderIdList" :value=item.gender_id>{{item.name}}</a-select-option>
+                              <a-select-option  v-for="(item,index) in genderIdList" :value=item.gender_id :key="index">{{item.name}}</a-select-option>
                           </a-select>
                       </a-col>
                   </div>
@@ -166,7 +166,7 @@
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange" :value="addCustomerInfo.genderId">
-                              <a-select-option  v-for="item in genderIdList" :value=item.gender_id>{{item.name}}</a-select-option>
+                              <a-select-option  v-for="(item,index) in genderIdList" :value=item.gender_id :key="index">{{item.name}}</a-select-option>
                           </a-select>
                       </a-col>
                   </div>
@@ -282,7 +282,7 @@
                           <!--<a-select defaultValue="请选择" style="width: 100%" disabled="disabled" @change="handleChange" :value="addCustomerInfo.genderId">-->
                               <!--<a-select-option  v-for="item in genderIdList" :value=item.gender_id>{{item.name}}</a-select-option>-->
                           <!--</a-select>-->
-                          <span v-for="item in genderIdList" v-if="item.gender_id == addCustomerInfo.genderId" v-text="item.name"></span>
+                          <span v-for="(item,index) in genderIdList" v-if="item.gender_id == addCustomerInfo.genderId" v-text="item.name" :key="index"></span>
                       </a-col>
                   </div>
               </a-row>

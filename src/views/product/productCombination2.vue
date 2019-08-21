@@ -2,7 +2,7 @@
     <div class="producetAdd">
         <div class="secondTitle">
             <a-col class="gutter-row"  :span="21" style="padding-top: 13px;">
-                产品属性：
+                产品属性：1111111
             </a-col>
             <a-col class="gutter-row" :span="3">
                 <a-row>

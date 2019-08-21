@@ -22,7 +22,7 @@
                                 <div class="inputName">*商品编号：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.product_code" placeholder=""/>
+                                <a-input v-model="postData.product_code"  maxlength="32" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
@@ -39,10 +39,10 @@
                     <a-col class="gutter-row" :span="6">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*UPC码：</div>
+                                <div class="inputName">UPC码：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input v-model="postData.upc" placeholder=""/>
+                                <a-input v-model="postData.upc"  maxlength="12" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
@@ -68,7 +68,7 @@
                     <a-col class="gutter-row" :span="12">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="3">
-                                <div class="inputName">*商品标签 ：</div>
+                                <div class="inputName">商品标签 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="21">
                                 <!--<a-input v-model="postData.product_label" placeholder=""/>-->
@@ -132,7 +132,7 @@
                     <a-col class="gutter-row" :span="6">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*商品简介：</div>
+                                <div class="inputName">商品简介：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-textarea v-model="postData.description_short" placeholder="Basic usage" :rows="4"/>
@@ -145,7 +145,7 @@
                     <a-col class="gutter-row" :span="18">
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="2">
-                                <div class="inputName">*产品详情：</div>
+                                <div class="inputName">产品详情：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="22">
                                 <tinymce-editor v-model="postData.description"
@@ -205,7 +205,25 @@
                 //         isAll =false
                 //     }
                 // }
-                if (isAll){
+                 if(this.postData.product_code==''){
+                     this.$notification.open({
+                         message: '提醒',
+                         duration: 2,
+                         description: "请填写商品编号再保存",
+                         onClick: () => {
+                             console.log('ok');
+                         },
+                     })
+                } else if(this.postData.name==''){
+                     this.$notification.open({
+                         message: '提醒',
+                         duration: 2,
+                         description: "请填写商品名称再保存",
+                         onClick: () => {
+                             console.log('ok');
+                         },
+                     })
+                 } else  {
                     if(this.$store.state.isEdit){
                         this.$post('/product/editProduct',this.postData).then((reData)=>{
                             console.log(reData)
@@ -249,15 +267,6 @@
 
                     }
 
-                }else {
-                    store.commit('changeStore',{key:'loading',val:false});
-                    this.$notification.open({
-                        message: '提醒',
-                        description: '请把信息填写完整再提交！',
-                        onClick: () => {
-                            console.log('ok');
-                        },
-                    })
                 }
             },
 
