@@ -104,21 +104,34 @@
                 this.postData.currencyId=value
             },
             saveProductInfor(){
-                store.commit('changeStore',{key:'loading',val:true});
 
-                // if(this.checkedKeys.checked.length>0){
-                    for(let i=0;i<this.checkedKeys.checked.length;i++){
-                        if(i==0){
-                            this.postData.categoryIds=this.checkedKeys.checked[i]
-                        }else {
-                            this.postData.categoryIds=this.postData.categoryIds+','+this.checkedKeys.checked[i]
+                for(let i=0;i<this.checkedKeys.checked.length;i++){
+                    if(i==0){
+                        this.postData.categoryIds=this.checkedKeys.checked[i]
+                    }else {
+                        this.postData.categoryIds=this.postData.categoryIds+','+this.checkedKeys.checked[i]
 
-                        }
                     }
-                // }
-
+                }
 
                 this.postData.productId=this.$store.state.goods_id;
+                if(this.postData.categoryIds==''){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "至少选择一个分类",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                } else{
+                    store.commit('changeStore',{key:'loading',val:true});
+
+                    // if(this.checkedKeys.checked.length>0){
+
+
+                    // }
+
                     this.$fetch('/productCategory/updateProductCategory',this.postData).then((reData)=>{
                         console.log(reData)
                         store.commit('changeStore',{key:'loading',val:false});
@@ -134,6 +147,8 @@
                         })
 
                     })
+                }
+
 
             }
             ,checked(jsontree){

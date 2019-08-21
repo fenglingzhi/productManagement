@@ -64,7 +64,7 @@
           </span>
 
             <span slot="unit_weight" slot-scope="text, record">
-              <a-input v-model="text.unit_weight" placeholder=""/>
+              <a-input v-model="text.unit_weight" type="number" placeholder=""/>
           </span>
             <span slot="ean13" slot-scope="text, record">
               <a-input v-model="text.ean13" placeholder=""/>
@@ -77,7 +77,7 @@
               <a-input v-model="text.upc" placeholder=""/>
           </span>
             <span slot="good_qty" slot-scope="text, record">
-              <a-input v-model="text.good_qty" placeholder=""/>
+              <a-input v-model="text.good_qty" type="number" placeholder=""/>
           </span>
             <a slot="isDefault" slot-scope="text, record,index" style="text-align: center">
                 <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active('0',index)"></a-icon>
@@ -96,7 +96,7 @@
                 </a-row>
             </a-col>
         </div>
-        <a-table :columns="columns"
+        <a-table :columns="columns2"
                  :dataSource="tabList"
                  align="center"
                  :scroll="{ x: 1000 }">
@@ -107,7 +107,7 @@
               <a-input v-model="text.unit_code" placeholder=""/>
           </span>
             <span slot="unit_weight" slot-scope="text, record">
-              <a-input v-model="text.unit_weight" placeholder=""/>
+              <a-input v-model="text.unit_weight" type="number" placeholder=""/>
           </span>
             <span slot="ean13" slot-scope="text, record">
               <a-input v-model="text.ean13" placeholder=""/>
@@ -119,7 +119,7 @@
               <a-input v-model="text.upc" placeholder=""/>
           </span>
             <span slot="good_qty" slot-scope="text, record">
-              <a-input v-model="text.good_qty" placeholder=""/>
+              <a-input v-model="text.good_qty" type="number" placeholder=""/>
           </span>
 
 
@@ -144,6 +144,19 @@
 
     const columns = [
         {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
+        { title: '属性商品名称', dataIndex: 'unit_name', key: 'unit_name'},
+        { title: '属性商品码', key: 'unit_code', scopedSlots: { customRender: 'unit_code' }},
+        { title: '商品重量(kg)', key: 'unit_weight', scopedSlots: { customRender: 'unit_weight' }},
+        { title: 'ean13', key: 'ean13', scopedSlots: { customRender: 'ean13' }},
+        { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
+        { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
+        { title: '是否默认', align: 'center' ,scopedSlots: { customRender: 'isDefault' },},
+        { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
+        { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
+
+    ];
+    const columns2 = [
+        // {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '属性商品名称', dataIndex: 'unit_name', key: 'unit_name'},
         { title: '属性商品码', key: 'unit_code', scopedSlots: { customRender: 'unit_code' }},
         { title: '商品重量(kg)', key: 'unit_weight', scopedSlots: { customRender: 'unit_weight' }},
@@ -373,6 +386,7 @@
                 this.tabListCopy.splice(index,1)
             },
             saveEiderInfor(){
+
                 // store.commit('changeStore',{key:'loading',val:true});
                 let isAll = true
                 // this.tabList.forEach(function(val, index) {
@@ -384,8 +398,19 @@
                 //     }
                 // });
                var postData =  this.tabList.concat(this.tabListCopy)
+
+
+                var vm =this
+                var isAllOk=false
+                for(let i=0;i<postData.length;i++){
+                    Object.keys(postData[i]).forEach(function(key){
+                        if(postData[i][key]===''){
+                            isAllOk = true
+                        }
+                    });
+                }
                 console.log(postData)
-                if (isAll){
+                if (!isAllOk){
                     var vm =this
                     $.ajax({
                         dataType:'JSON',
@@ -413,7 +438,7 @@
                     store.commit('changeStore',{key:'loading',val:false});
                     this.$notification.open({
                         message: '提醒',
-                        description: '请把信息填写完整再提交！',
+                        description: '请把每条组合的所有信息填写完整再提交！',
                         onClick: () => {
                             console.log('ok');
                         },
@@ -432,7 +457,6 @@
                 //         }
                 //     }
                 // });
-
                 if (isAll){
                     var vm =this
                     $.ajax({
@@ -473,7 +497,7 @@
         },
         data() {
             return {
-                columns,
+                columns,columns2,
                 productId:'',
                 sizeListO:[],
                 colorListO:[],

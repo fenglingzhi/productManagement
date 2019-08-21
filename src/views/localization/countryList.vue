@@ -1,15 +1,80 @@
 <template>
     <div class="producetList">
+        <a-row>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName">国家ID：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-input placeholder="请输入国家ID" v-model="search_data.country_id" />
+                    </a-col>
+                </div>
+            </a-col>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName">国家名称 ：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-input placeholder="请输入国家名称" v-model="search_data.name"/>
+                    </a-col>
+                </div>
+            </a-col>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName">国际码 ：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-input placeholder="请输入国际码" maxlenght="3" v-model="search_data.iso_code"/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
 
+
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName">状态：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-select defaultValue="" style="width: 100%"  v-model="search_data.active">
+                            <a-select-option value="">不限</a-select-option>
+                            <a-select-option value="1">是</a-select-option>
+                            <a-select-option value="0">否</a-select-option>
+                        </a-select>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+
+        <a-row>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-row>
+                            <a-col class="gutter-row" :span="6">
+                                <a-button type="primary" @click="addAttribute()">新增</a-button>
+                            </a-col>
+                            <a-col class="gutter-row" :span="6">
+                                <a-button type="primary" @click="search_product()">搜索</a-button>
+                            </a-col>
+                            <a-col class="gutter-row" :span="6">
+                                <!--<a-button type="primary">导出</a-button>-->
+                            </a-col>
+                        </a-row>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
         <!--<div class="hrLine"></div>-->
         <div>
-            <div style="margin-bottom: 16px">
-                <a-button type="primary" @click="addAttribute()">
-                    新增
-                </a-button>
 
-                <span style="margin-left: 8px"></span>
-            </div>
             <a-table :columns="columns"
                      :dataSource="attributeList"
                      :pagination="pagination"
@@ -19,8 +84,13 @@
                     >
               <span slot="action" slot-scope="text, record">
                   <a @click="editAttribute(text.name,text.iso_code,text.call_prefix,text.lang_id,text.active,text.country_id,text.zone_id,text.position)">修改</a>
-                  <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct(text.country_id)">删除</a>
+                  <!--<a-divider type="vertical"></a-divider>-->
+                      <!--<a-popconfirm-->
+                              <!--title="请确认删除"-->
+                              <!--@confirm="() => deleteProduct(text.country_id)">-->
+                <!--<a @click="">删除</a>-->
+              <!--</a-popconfirm>-->
+                  <!--<a @click="deleteProduct(text.country_id)">删除</a>-->
               </span>
 
                 <span slot="contains_states" slot-scope="text, record" style="text-align: center">
@@ -45,7 +115,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">是否启用：</div>
+                                <div class="inputName">*是否启用：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="1" style="width: 100%"  @change="handleChangeAdd">
@@ -58,7 +128,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国家名字 ：</div>
+                                <div class="inputName">*国家名字 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -68,7 +138,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">区域：</div>
+                                <div class="inputName">*区域：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="请选择区域" style="width: 100%"  @change="handleChangeZoneAdd">
@@ -91,27 +161,27 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国际区号 ：</div>
+                                <div class="inputName">*国际区号 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="addCurrency.call_prefix" />
+                                <a-input placeholder="" type="number" v-model="addCurrency.call_prefix" />
                             </a-col>
                         </div>
                     </a-row>
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">位置顺序 ：</div>
+                                <div class="inputName">*位置顺序 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="addCurrency.position" />
+                                <a-input placeholder="" type="number" v-model="addCurrency.position" />
                             </a-col>
                         </div>
                     </a-row>
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">语言：</div>
+                                <div class="inputName">*语言：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="请选择语言" style="width: 100%"  @change="hangeLang_id">
@@ -133,7 +203,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">是否启用：</div>
+                                    <div class="inputName">*是否启用：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.active" style="width: 100%"  @change="handleChangeEdit">
@@ -146,17 +216,17 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">国家名字 ：</div>
+                                    <div class="inputName">*国家名字 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
-                                    <a-input placeholder="" v-model="editCurrency.name" />
+                                    <a-input placeholder="" type="email" v-model="editCurrency.name" />
                                 </a-col>
                             </div>
                         </a-row>
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">区域：</div>
+                                <div class="inputName">*区域：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select :defaultValue="editCurrency.zone_id " style="width: 100%"  @change="handleChangeZoneEdit">
@@ -168,7 +238,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">国际码 ：</div>
+                                    <div class="inputName">*国际码 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder="" v-model="editCurrency.iso_code" />
@@ -178,27 +248,27 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">国际区号 ：</div>
+                                    <div class="inputName">*国际区号 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
-                                    <a-input placeholder="" v-model="editCurrency.call_prefix" />
+                                    <a-input placeholder="" type="number" v-model="editCurrency.call_prefix" />
                                 </a-col>
                             </div>
                         </a-row>
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">位置顺序 ：</div>
+                                <div class="inputName">*位置顺序 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
-                                <a-input placeholder="" v-model="editCurrency.position" />
+                                <a-input placeholder="" type="number" v-model="editCurrency.position" />
                             </a-col>
                         </div>
                     </a-row>
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">语言：</div>
+                                    <div class="inputName">*语言：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.lang_id" style="width: 100%"  @change="hangeLang_idEdit">
@@ -222,20 +292,25 @@
         {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
         { title: '国家ID', dataIndex: 'country_id', key: 'country_id'},
         { title: '国家名称', dataIndex: 'name', key: 'name'},
-        { title: '电话国际码', dataIndex: 'call_prefix', key: 'call_prefix'},
+        { title: '国际区号', dataIndex: 'call_prefix', key: 'call_prefix'},
         // { title: '是否设置省/州', key: 'contains_states', scopedSlots: { customRender: 'contains_states' },},
         { title: '国际码', dataIndex: 'iso_code', key: 'iso_code'},
-        { title: '排序', dataIndex: 'position', key: 'position'},
+        // { title: '排序', dataIndex: 'position', key: 'position'},
         { title: '是否启用', key: 'active',scopedSlots: { customRender: 'active' },},
-
-
-
     ];
     const attributeList = [];
 
     export default {
         data() {
             return {
+                search_data:{
+                    country_id:'',
+                    name:'',
+                    iso_code:'',
+                    call_prefix:'',
+                    active:'',
+
+                },
                 langList:[],
                 zoneList:[],
                 editCurrency:{
@@ -292,6 +367,9 @@
         }
         ,
         methods: {
+            search_product(){
+                this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize,country_id:this.search_data.country_id,name:this.search_data.name,iso_code:this.search_data.iso_code,active:this.search_data.active,lang_id:this.$store.state.langId})
+            },
             hangeLang_id(value){
                 this.addCurrency.lang_id = value
             },
@@ -311,44 +389,89 @@
             },
             handleChangeAdd(value){
                 this.addCurrency.active = value
+            }
+            ,checkoutNull(data){
+                var isNull =false
+                Object.keys(data).forEach(function(key){
+                    if(data[key]===''){
+                        isNull = true
+                    }
+                });
+                return isNull
             },
-        //添加提交
-        submitAdd() {
-            this.$post('/country/addCountry',this.addCurrency).then((reData)=>{
-                if(reData.code === '0'){
-                    this.$message.success(reData.message, 3);
-                    this.visible_add = false
-                    this.addCurrency={
-                        name:'',
-                        iso_code:'',
-                        call_prefix:'',
-                        lang_id:'1',
-                        active:'1'
-                    },
-                    this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
 
-                } else {
-                    this.$message.error(reData.message);
-                    this.visible_add = false
-                }
-            })
+            //添加提交
+        submitAdd() {
+            if(this.checkoutNull(this.addCurrency)){
+                this.$notification.open({
+                    message: '提醒',
+                    duration: 2,
+                    description: "请填写所有信息再提交！",
+                    onClick: () => {
+                        console.log('ok');
+                    },
+                })
+            }else {
+                this.$post('/country/addCountry',this.addCurrency).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.$message.success(reData.message, 3);
+                        this.visible_add = false
+                        this.addCurrency={
+                            zone_id:'',
+                            name:'',
+                            iso_code:'',
+                            call_prefix:'',
+                            lang_id:'',
+                            active:'1',
+                            position:''
+                        },
+                            this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
+
+                    } else {
+                        this.$message.error(reData.message);
+                        this.visible_add = false
+                    }
+                })
+            }
+
         }
         //修改提交
         ,submitEdit() {
-                this.$post('/country/editCountry',this.editCurrency).then((reData)=>{
-                    if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
-                        this.visible_edit = false
-                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
-                    } else {
-                        this.$message.error(reData.message);
-                        this.visible_edit = false
-                    }
-                })
+                if(this.checkoutNull(this.editCurrency)){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写所有信息再提交！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                }else {
+                    this.$post('/country/editCountry',this.editCurrency).then((reData)=>{
+                        if(reData.code === '0'){
+                            this.$message.success(reData.message, 3);
+                            this.visible_edit = false
+                            this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
+                        } else {
+                            this.$message.error(reData.message);
+                            this.visible_edit = false
+                        }
+                    })
+
+                }
         },
             //新增属性
             addAttribute(){
                 this.visible_add = true
+                this.addCurrency={
+                    zone_id:'',
+                    name:'',
+                    iso_code:'',
+                    call_prefix:'',
+                    lang_id:'',
+                    active:'1',
+                    position:''
+                }
             }
             //修改属性
             ,editAttribute(name,iso_code,call_prefix,lang_id,active,country_id,zone_id,position){
@@ -386,7 +509,7 @@
             //表格分页
             ,handleTableChange(pagination){
                 this.pagination.currentPage = pagination.current
-                this.getList({currentPage:pagination.current,pageSize:pagination.defaultPageSize,lang_id:this.$store.state.langId})
+                this.getList({currentPage:pagination.current,pageSize:pagination.defaultPageSize,country_id:this.search_data.country_id,name:this.search_data.name,iso_code:this.search_data.iso_code,active:this.search_data.active,lang_id:this.$store.state.langId})
             }
 
             //更改商品状态

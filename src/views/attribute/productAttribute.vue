@@ -5,9 +5,6 @@
                 <a-button type="primary" @click="addAttribute()">
                     新增
                 </a-button>
-                <a-button type="primary" @click="deleteAllAttribute({ids:deleteAllData,status:'200'})" style="margin-left: 20px;">
-                    批量删除
-                </a-button>
                 <a-button type="primary" @click="returnAttribute()" style="margin-left: 20px;" v-show="addAttributeInfo.parent_id != 0">
                     返回
                 </a-button>
@@ -25,7 +22,13 @@
                   <a @click="editAttribute(record.attribute_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
 
-                  <a @click="deleteProduct({status:0,ids:record.attribute_id})">删除</a>
+              <a-popconfirm
+                          v-if="attributeList.length"
+                          title="请确认删除"
+                          @confirm="() => deleteProduct({status:0,ids:record.attribute_id})">
+                <a @click="">删除</a>
+              </a-popconfirm>
+
               </span>
               <span slot="redirect" slot-scope="text, record">
                   <a @click="select_attribute_child(record.attribute_id)">{{record.attribute_name}}</a>
@@ -92,7 +95,6 @@
             <a-modal
                     title="修改属性信息"
                     v-model="visible_edit"
-                    :destroyOnClose="true"
                     @ok="editAttributeCommit(addAttributeInfo)"
             >
                 <a-row>
@@ -187,35 +189,31 @@
                     status:'',
                     lang_id:store.state.langId,
                     ids:'',
-                    // parentId:'',
                 },
-                // editAttributeInfo:{
-                //     add_date:'',
-                //     upd_date:'',
-                //     ids:'',
-                //     parent_id:'',
-                //     attribute_seq:'',
-                //     attribute_name:'',
-                //     attribute_val:'',
-                //     status:'',
-                // },
-                flag:0
+                flag:0,
+                disabled:true
             }
         },
         methods: {
             //新增属性
             addAttribute(){
                 this.visible_add = true;
+                this.addAttributeInfo.attribute_name = '';
+                this.addAttributeInfo.attribute_seq = '';
+                this.addAttributeInfo.attribute_val = '';
+                this.addAttributeInfo.status = '';
             }
             //新增属性选择
             ,handleChangeadd(value) {
                 this.addAttributeInfo.status = value
             }
+            //编辑属性选择
             ,handleChangeEdit(value){
                 this.addAttributeInfo.status = value
             }
             //提交属性新增
             ,addAttributeCommit(data){
+                // if(this.addAttributeInfo.parent_id)
                 this.$post('/property/addProperty',data).then((reData)=>{
                     if(reData.code === '0'){
                         if(this.addAttributeInfo.parent_id === 0){
@@ -227,7 +225,9 @@
                         }
 
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: reData.message,
+                        });
                     }
                 })
             }
@@ -247,10 +247,11 @@
                         this.addAttributeInfo.attribute_val = reData.data[0].attribute_val;
                         this.addAttributeInfo.attribute_seq = reData.data[0].attribute_seq;
                         this.addAttributeInfo.status = reData.data[0].status;
-                        // store.commit('changeStore',{key:'attribute_parent_id',val:reData.data[0].parent_id});
                         console.log(this.$store.state.attribute_parent_id)
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: reData.message,
+                        });
                     }
                 })
             }
@@ -258,24 +259,15 @@
             ,editAttributeCommit(data){
                 this.$post('/property/updateProperty',data).then((reData)=>{
                     if(reData.code === '0'){
-
-                        this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
-                        // if(this.addAttributeInfo.parent_id === '0'){
-                        //     alert(1)
-                        //
-                        //     this.$message.success(reData.message);
-                        //     this.visible_edit = false;
-                        //     // router.push('/productAttribute')
-                        // } else {
-                        //     alert(2)
-                        //
-                        //     // router.push('/attributeList')
-                        // }
-                        this.$message.success(reData.message);
+                        this.$notification.open({
+                            message: reData.message,
+                        });
                         this.visible_edit = false;
                         this.getList({parent_id:data.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: reData.message,
+                        });
                     }
                 })
             }
@@ -297,9 +289,11 @@
             ,deleteProduct(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({parent_id:0,lang_id:store.state.langId});
+                        this.getList({parent_id:this.addAttributeInfo.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: reData.message,
+                        });
                     }
                 })
             }
@@ -307,10 +301,14 @@
             ,deleteAllAttribute(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.$message.success(reData.message);
-                        this.getList({parent_id:0,lang_id:store.state.langId});
+                        this.$notification.open({
+                            message: reData.message,
+                        });
+                        this.getList({parent_id:data.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: reData.message,
+                        });
                     }
                 })
             }
