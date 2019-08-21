@@ -14,30 +14,31 @@
                :loading="loading"
                align="center"
                @change="handleTableChange"
-               :rowSelection="rowSelection"
-               :scroll="{ x: 1800 }">
+               :scroll="{ x: 1000 }">
           <span slot="action" slot-scope="text, record">
-              {{record.customer_id}}
               <a @click="searchFun({customer_id:record.customer_id})">查看</a>
               <a-divider type="vertical"></a-divider>
               <a @click="editFun({customer_id:record.customer_id})">修改</a>
               <a-divider type="vertical"></a-divider>
-              <a @click="deleteProduct({customer_id:record.customer_id})">删除{{record.product_id}}</a>
+              <a-popconfirm
+                      v-if="productListData.length"
+                      title="请确认删除"
+                      @confirm="() => deleteProduct({customer_id:record.customer_id})">
+                <a>删除</a>
+              </a-popconfirm>
+
           </span>
         <a slot="newsletter" slot-scope="text, record" style="text-align: center">
-          <!--{{record}}-->
-          <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
-          <a-icon type="close" style="color: red" v-if="text === '0'" @click="change_active({product_id:record.product_id,active:'1'})"></a-icon>
+          <a-icon type="check" style="color: green" v-if="text === '1'"></a-icon>
+          <a-icon type="close" style="color: red" v-if="text === '0'"></a-icon>
         </a>
           <a slot="active" slot-scope="text, record" style="text-align: center">
-              <!--{{record}}-->
-              <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
-              <a-icon type="close" style="color: red" v-if="text === '0'" @click="change_active({product_id:record.product_id,active:'1'})"></a-icon>
+              <a-icon type="check" style="color: green" v-if="text === '1'"></a-icon>
+              <a-icon type="close" style="color: red" v-if="text === '0'"></a-icon>
           </a>
         <a slot="optin" slot-scope="text, record" style="text-align: center">
-          <!--{{record}}-->
-          <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
-          <a-icon type="close" style="color: red" v-if="text === '0'" @click="change_active({product_id:record.product_id,active:'1'})"></a-icon>
+          <a-icon type="check" style="color: green" v-if="text === '1'"></a-icon>
+          <a-icon type="close" style="color: red" v-if="text === '0'"></a-icon>
         </a>
       </a-table>
     </div>
@@ -55,7 +56,7 @@
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
-                              <a-select-option  v-for="item in genderIdList" :value=item.gender_id>{{item.name}}</a-select-option>
+                              <a-select-option  v-for="(item,index) in genderIdList" :value=item.gender_id :key="index">{{item.name}}</a-select-option>
                           </a-select>
                       </a-col>
                   </div>
@@ -86,7 +87,7 @@
                           <div class="inputName">邮箱地址：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
-                          <a-input placeholder="请输入邮箱地址" v-model="addCustomerInfo.email" />
+                          <a-input placeholder="请输入邮箱地址" type="email" v-model="addCustomerInfo.email" />
                       </a-col>
                   </div>
               </a-row>
@@ -165,7 +166,7 @@
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange" :value="addCustomerInfo.genderId">
-                              <a-select-option  v-for="item in genderIdList" :value=item.gender_id>{{item.name}}</a-select-option>
+                              <a-select-option  v-for="(item,index) in genderIdList" :value=item.gender_id :key="index">{{item.name}}</a-select-option>
                           </a-select>
                       </a-col>
                   </div>
@@ -265,7 +266,7 @@
               </a-row>
           </a-modal>
       </div>
-      <div class="editCustomerGender">
+      <div class="searchCustomerGender">
           <a-modal
                   title="查看客户信息"
                   v-model="visible_search"
@@ -281,7 +282,7 @@
                           <!--<a-select defaultValue="请选择" style="width: 100%" disabled="disabled" @change="handleChange" :value="addCustomerInfo.genderId">-->
                               <!--<a-select-option  v-for="item in genderIdList" :value=item.gender_id>{{item.name}}</a-select-option>-->
                           <!--</a-select>-->
-                          <span v-for="item in genderIdList" v-if="item.gender_id == addCustomerInfo.genderId" v-text="item.name"></span>
+                          <span v-for="(item,index) in genderIdList" v-if="item.gender_id == addCustomerInfo.genderId" v-text="item.name" :key="index"></span>
                       </a-col>
                   </div>
               </a-row>
@@ -365,22 +366,13 @@
     import moment from 'moment'
     const columns = [
         {title: '操作',dataIndex: 'action', key: 'action', scopedSlots: { customRender: 'action' },},
+        { title: '客户id', dataIndex: 'customer_id', key: 'customer_id'},
         { title: '称呼', dataIndex: 'name', key: 'name'},
-        { title: '名', dataIndex: 'firstname', key: 'firstname'},
-        { title: '姓', dataIndex: 'lastname', key: 'lastname'},
-        { title: '生日', dataIndex: 'birthday', key: 'birthday'},
         { title: '电子邮件', dataIndex: 'email', key: 'email'},
-        { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
-        { title: '付款最多天数', dataIndex: 'max_payment_days', key: 'max_payment_days'},
-        { title: '允许未付金额', dataIndex: 'outstanding_allow_amount', key: 'outstanding_allow_amount'},
-        { title: 'cod拒签次数', dataIndex: 'cod_reject', key: 'cod_reject'},
+        { title: '是否启用', dataIndex: 'active', key: 'active', align: 'center' ,scopedSlots: { customRender: 'active' },},
+        { title: '是否订阅电子简报', dataIndex: 'newsletter', key: 'newsletter', align: 'center' ,scopedSlots: { customRender: 'newsletter' },},
         { title: '是否接受推销', dataIndex: 'optin', key: 'optin', align: 'center' ,scopedSlots: { customRender: 'optin' },},
-        { title: '是否接受电子订阅', dataIndex: 'newsletter', key: 'newsletter', align: 'center' ,scopedSlots: { customRender: 'newsletter' },},
-        { title: '状态', dataIndex: 'active', key: 'active', align: 'center' ,scopedSlots: { customRender: 'active' },},
-        { title: '个人信息的完善', dataIndex: 'completed', key: 'completed'},
-        // { title: '上一次修改密码时间', dataIndex: 'last_passwd_gen', key: 'last_passwd_gen'},
-        { title: '客户风险等级', dataIndex: 'risk_id', key: 'risk_id'},
-
+        { title: '注册时间', dataIndex: 'add_date', key: 'add_date'},
     ];
     const productListData = [];
     //表格复选框
@@ -451,6 +443,16 @@
             //新增商品
             ,add_product(){
                 this.visible_add = true
+                this.addCustomerInfo.active = "";
+                this.addCustomerInfo.birthday = "";
+                this.addCustomerInfo.customerId = "";
+                this.addCustomerInfo.email = "";
+                this.addCustomerInfo.firstname = "";
+                this.addCustomerInfo.genderId = "";
+                this.addCustomerInfo.lastname = "";
+                this.addCustomerInfo.newsletter = "";
+                this.addCustomerInfo.optin = "";
+                this.addCustomerInfo.passwd = "";
             }
             //编辑
             ,editFun(data) {
@@ -478,15 +480,72 @@
             //添加提交
             ,submitAdd() {
                 console.log(this.addCustomerInfo)
-                this.$post('/customer/addCustomerInfo',this.addCustomerInfo).then((reData)=>{
-                    if(reData.code === '0'){
-                        this.visible_add = false
-                        this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize});
-                    } else {
-                        this.$message.error(reData.message);
-                        this.visible_add = false
-                    }
-                })
+                if(this.addCustomerInfo.genderId === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填选择性别'
+                    });
+                    return false;
+                } else if(this.addCustomerInfo.firstname === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写名'
+                    });
+                    return false;
+                } else if(this.addCustomerInfo.lastname === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写姓'
+                    });
+                    return false;
+                } else if(this.addCustomerInfo.email === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写电子邮件'
+                    });
+                    return false;
+                } else if(this.addCustomerInfo.passwd === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写密码'
+                    });
+                    return false;
+                } else if(this.addCustomerInfo.birthday === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写生日'
+                    });
+                    return false;
+                } else if(this.addCustomerInfo.active === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请选择是否启用'
+                    });
+                    return false;
+                } else if(this.addCustomerInfo.newsletter === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请选择电子订阅'
+                    });
+                    return false;
+                } else if(this.addCustomerInfo.optin === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请选择推销'
+                    });
+                    return false;
+                } else {
+                    this.$post('/customer/addCustomerInfo',this.addCustomerInfo).then((reData)=>{
+                        if(reData.code === '0'){
+                            this.visible_add = false
+                            this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize});
+                        } else {
+                            this.$message.error(reData.message);
+                            this.visible_add = false
+                        }
+                    })
+                }
+
             }
             //修改提交
             ,submitEdit() {
@@ -521,7 +580,7 @@
                     this.addCustomerInfo.lastname=reData.data[0].lastname;
                     this.addCustomerInfo.email=reData.data[0].email;
                     this.addCustomerInfo.passwd=reData.data[0].passwd;
-                    this.addCustomerInfo.birthday=reData.data[0].birthday.toString();
+                    this.addCustomerInfo.birthday=reData.data[0].birthday;
                     this.addCustomerInfo.active=reData.data[0].active;
                     this.addCustomerInfo.newsletter=reData.data[0].newsletter;
                     this.addCustomerInfo.optin=reData.data[0].optin;

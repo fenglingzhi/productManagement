@@ -12,16 +12,22 @@ export default new Vuex.Store({
           showName:'test',
           shopData:{}
       },
-      tabArray:[
-          {
-        title: "首页",
-        content:'index',
-        key: "0",
-        closable: false ,
-        defaultActiveKey:true
-    }
-    ],
-      activeKey:'0',
+
+      tabArray:[{
+        // title: "首页",
+        // content:'index',
+        // key: "0",
+        // closable: false ,
+        // defaultActiveKey:true
+          title: "商品管理",
+          content:'productWrap',
+          key: "1-1",
+          closable: false ,
+          defaultActiveKey:true
+    }],
+      // activeKey:'0',
+      activeKey:'1-1',
+
       menuKey:[],
       goods_id:'1',
       addProductContent:'productAddInformatica',

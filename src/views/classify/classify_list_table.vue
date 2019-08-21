@@ -27,9 +27,18 @@
                 <span v-if="record.isBanner == '0'" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="close" /></span>
                 <span v-if="record.isBanner == '1'" style="cursor: pointer;" @click="show_isBanner(record)"><a-icon type="check" /></span>
             </span>
+            <span slot="description" slot-scope="record">
+                <span v-html="record.description"></span>
+            </span>
             <span slot="operation" slot-scope="record">
-                <a @click="del_classify(record)" disabled v-if="record.child_num">删除</a>
-                <a @click="del_classify(record)" v-if="!record.child_num">删除</a>
+                <a-popconfirm
+                        v-if="table_data.length"
+                        title="请确认删除"
+                        @confirm="() => del_classify(record)">
+                    <a disabled v-if="record.child_num">删除</a>
+                    <a v-if="!record.child_num">删除</a>
+              </a-popconfirm>
+
             </span>
         </a-table>
     </div>
@@ -52,7 +61,8 @@ const columns = [
   {
     title: "描述",
     align:"center",
-    dataIndex: "description"
+
+    scopedSlots: { customRender: 'description' },
   },
   {
     title: "位置",
@@ -217,5 +227,7 @@ export default {
 }
 </script>
 <style scope>
-    
+    p{
+        margin: 0;
+    }
 </style>

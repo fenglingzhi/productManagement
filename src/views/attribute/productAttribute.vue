@@ -16,7 +16,6 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :rowSelection="rowSelection"
                      :scroll="{ x: 1500 }">
               <span slot="action" slot-scope="text, record">
                   <a @click="editAttribute(record.attribute_id)">修改</a>
@@ -213,23 +212,52 @@
             }
             //提交属性新增
             ,addAttributeCommit(data){
-                // if(this.addAttributeInfo.parent_id)
-                this.$post('/property/addProperty',data).then((reData)=>{
-                    if(reData.code === '0'){
-                        if(this.addAttributeInfo.parent_id === 0){
-                            this.visible_add = false;
-                            this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
-                        } else {
-                            this.visible_add = false;
-                            this.getList({parent_id:this.addAttributeInfo.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
-                        }
+                if(data.attribute_name === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写属性名称'
+                    });
+                    return false;
+                } else if(data.attribute_seq === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写属性排序'
+                    });
+                    return false;
+                } else if(data.attribute_val === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写属性值'
+                    });
+                    return false;
+                }else if(data.status === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写属性状态'
+                    });
+                    return false;
+                } else {
+                    this.$post('/property/addProperty',data).then((reData)=>{
+                        if(reData.code === '0'){
+                            if(this.addAttributeInfo.parent_id === 0){
+                                this.visible_add = false;
+                                this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                            } else {
+                                this.visible_add = false;
+                                this.getList({parent_id:this.addAttributeInfo.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                            }
 
-                    } else {
-                        this.$notification.open({
-                            message: reData.message,
-                        });
-                    }
-                })
+                        } else {
+                            this.$notification.open({
+                                message: reData.message,
+                            });
+                        }
+                    })
+                }
+                // if(this.addAttributeInfo.parent_id)
+                console.log(this.checkForm(this.addAttributeInfo))
+
+
             }
             //修改属性
             ,editAttribute(data){
@@ -327,6 +355,11 @@
                 this.addAttributeInfo.parent_id = 0;
                 this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
             }
+            //表单校验
+            ,checkForm(obj){
+
+            }
+
         },
         mounted() {
             var vm = this;

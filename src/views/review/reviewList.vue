@@ -63,23 +63,12 @@
         </a-row>
         <div class="hrLine"></div>
         <div>
-            <!--<div style="margin-bottom: 16px">-->
-            <!--<a-button type="primary">-->
-            <!--Reload-->
-            <!--</a-button>-->
-            <!--<span style="margin-left: 8px">-->
-            <!--&lt;!&ndash;<template v-if="hasSelected">&ndash;&gt;-->
-            <!--&lt;!&ndash;&lt;!&ndash;{{`Selected ${selectedRowKeys.length} items`}}&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;</template>&ndash;&gt;-->
-            <!--</span>-->
-            <!--</div>-->
             <a-table :columns="columns"
                      :dataSource="productListData"
                      :pagination="pagination"
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :rowSelection="rowSelection"
                      :scroll="{ x: 1500 }">
           <span slot="action" slot-scope="text, record">
               <a @click="edit(record.product_id)">修改</a>
@@ -90,6 +79,10 @@
                 <span slot="img_" slot-scope="text, record">
               <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
           </span>
+                <span slot="score" slot-scope="text, record">
+                    <a-rate  v-model='record.score' disabled></a-rate>
+                </span>
+
                 <a slot="active" slot-scope="text, record" style="text-align: center">
                     <!--{{record}}-->
                     <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({commentId:record.comment_id,active:'0'})"></a-icon>
@@ -108,7 +101,7 @@
         { title: '标题', dataIndex: 'title', key: 'title'},
         { title: '商品id', dataIndex: 'product_id', key: 'product_id'},
         { title: '描述', dataIndex: 'description', key: 'description'},
-        { title: '评分0-5', dataIndex: 'score', key: 'score'},
+        { title: '评分', dataIndex: 'score', key: 'score', align: 'center' ,scopedSlots: { customRender: 'score' },},
         { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
         { title: '状态', dataIndex: 'active', key: 'active', align: 'center' ,scopedSlots: { customRender: 'active' },},
     ];

@@ -11,10 +11,10 @@
         <img :src="'http://static1.kapeixi.cn'+banner_item.image_url" alt="图片加载失败" />
       </span>
       <span slot="active" slot-scope="banner_item">
-        <span v-if="banner_item.active == '0'"  @click="show_banner(banner_item)" style="cursor: pointer;">
+        <span v-if="banner_item.active == '0'"  @click="show_banner(banner_item)" style="cursor: pointer;color:red;">
           <a-icon type="close" />
         </span>
-        <span v-if="banner_item.active == '1'" @click="show_banner(banner_item)" style="cursor: pointer;">
+        <span v-if="banner_item.active == '1'" @click="show_banner(banner_item)" style="cursor: pointer;color:green;">
           <a-icon type="check" />
         </span>
       </span>
@@ -26,7 +26,13 @@
       <span slot="operation" slot-scope="banner_item">
         <a @click="edit_banner(banner_item)">编辑</a>
         &nbsp;|&nbsp;
-        <a @click="delete_banner(banner_item)">删除</a>
+        <a-popconfirm
+                v-if="data.length"
+                title="请确认删除"
+                @confirm="() => delete_banner(banner_item)">
+                <a>删除</a>
+              </a-popconfirm>
+
       </span>
     </a-table>
   </div>
@@ -117,22 +123,16 @@ export default {
     //banner 删除事件
     delete_banner(item) {
       let _that = this;
-      this.$confirm({
-        title: "确认是否删除",
-        onOk() {
-          let data = {
-            banner_id: item.banner_id
-          };
-          _that.$post("/banner/removeBannerInfo", data).then(reData => {
-            if (reData.code == 0) {
+      let data = {
+          banner_id: item.banner_id
+      };
+      _that.$post("/banner/removeBannerInfo", data).then(reData => {
+          if (reData.code == 0) {
               _that.get_banner_list();
               _that.$message.success('删除成功');
-            } else {
+          } else {
               _that.$message.error(reData.message);
-            }
-          });
-        },
-        onCancel() {}
+          }
       });
     },
     //显示切换事件
