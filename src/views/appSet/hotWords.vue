@@ -195,7 +195,11 @@ export default {
     checking(obj) {
       if ("title" in obj) {
         if (obj.title == "") {
-          this.openNotification("warning", "警告", "请输入标题");
+          this.openNotification("warning", "警告", "请输入标题！");
+          return false;
+        }
+        if (!/^\S*$/.test(obj.title)) {
+          this.openNotification("warning", "警告", "标题内容不能包含空格");
           return false;
         }
       }
