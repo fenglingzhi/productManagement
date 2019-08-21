@@ -79,7 +79,7 @@
                             <a-row>
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">名称：</div>
+                                        <div class="inputName">*名称：</div>
                                     </a-col>
                                     <a-col class="gutter-row" :span="16">
                                         <a-input placeholder="" v-model="addCod.name" />
@@ -99,7 +99,7 @@
                             <a-row>
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">唯一折扣卷码：</div>
+                                        <div class="inputName">*唯一折扣卷码：</div>
                                     </a-col>
                                     <a-col class="gutter-row" :span="16">
                                         <a-input placeholder="" v-model="addCod.code" />
@@ -109,7 +109,7 @@
                             <a-row>
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">状态：</div>
+                                        <div class="inputName">*状态：</div>
                                     </a-col>
                                     <a-col class="gutter-row" :span="16">
                                         <a-select :defaultValue="addCod.active" style="width: 100%"  @change="getAddactive">
@@ -122,7 +122,7 @@
                             <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="8">
-                                    <div class="inputName">有效期：</div>
+                                    <div class="inputName">*有效期：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="16">
                                     <div class="date-pick">
@@ -147,7 +147,7 @@
                             <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="8">
-                                    <div class="inputName">折扣卷总量：</div>
+                                    <div class="inputName">*折扣卷总量：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="16">
                                     <a-input placeholder="" v-model="addCod.quantity" />
@@ -157,7 +157,7 @@
                             <a-row>
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">每个用户可用数量：</div>
+                                        <div class="inputName">*每个用户可用数量：</div>
                                     </a-col>
                                     <a-col class="gutter-row" :span="16">
                                         <a-input placeholder="" v-model="addCod.quantity_per_user" />
@@ -169,6 +169,16 @@
                         </a-tab-pane>
                         <a-tab-pane tab="条件" key="2" forceRender>
                             <div style="width:80%;margin:0 auto">
+                                <a-row>
+                                    <div class="inputPart">
+                                        <a-col class="gutter-row" :span="8">
+                                            <div class="inputName">单一客户的限制：</div>
+                                        </a-col>
+                                        <a-col class="gutter-row" :span="16">
+                                            <a-input placeholder="" type="email" v-model="addCod.customer_id" />
+                                        </a-col>
+                                    </div>
+                                </a-row>
                                 <a-row>
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
@@ -300,7 +310,7 @@
                                 <a-row>
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
-                                            <div class="inputName">满足金额使用：</div>
+                                            <div class="inputName">*满足金额使用：</div>
                                         </a-col>
                                         <a-col class="gutter-row" :span="16">
                                             <a-input placeholder="" v-model="addCod.minimum_amount" />
@@ -310,7 +320,7 @@
                                 <a-row>
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
-                                            <div class="inputName">金额是否包含税：</div>
+                                            <div class="inputName">*金额是否包含税：</div>
                                         </a-col>
                                         <a-col class="gutter-row" :span="16">
                                             <a-select :defaultValue="addCod.minimum_amount_tax" style="width: 100%"  @change="amountTax">
@@ -323,7 +333,7 @@
                                 <a-row>
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
-                                            <div class="inputName">币种：</div>
+                                            <div class="inputName">*币种：</div>
                                         </a-col>
                                         <a-col class="gutter-row" :span="16">
                                             <a-select :defaultValue="addCod.minimum_amount_currency" style="width: 100%"  @change="selCurrency">
@@ -337,7 +347,7 @@
                                 <a-row>
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">金额是否包运费：</div>
+                                        <div class="inputName">*金额是否包运费：</div>
                                         </a-col>
                                         <a-col class="gutter-row" :span="16">
                                             <a-select :defaultValue="addCod.minimum_amount_shipping" style="width: 100%"  @change="amountShipp">
@@ -400,7 +410,7 @@
                                     </a-col>
                                 </div>
                             </a-row>
-                            <a-row>
+                            <a-row v-if="reductType == 2">
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
                                     <div class="inputName">优惠券是否包含税：</div>
@@ -413,7 +423,7 @@
                                     </a-col>
                                 </div>
                             </a-row>
-                            <a-row>
+                            <a-row v-if="reductType == 2">
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
                                         <div class="inputName">优惠券币种：</div>
@@ -496,7 +506,7 @@
                   description:'',
                   code:'',
                   active:'1',
-                  customer_id:'0',
+                  customer_id:'',
                   date_from:'2019-08-08 17:00:09',
                   date_to:'2019-08-09 17:00:09',
                   minimum_amount:'',
@@ -551,7 +561,7 @@
                         description:'',
                         code:'',
                         active:'1',
-                        customer_id:'0',
+                        customer_id:'',
                         date_from:'2019-08-08 17:00:09',
                         date_to:'2019-08-09 17:00:09',
                         minimum_amount:'',
@@ -702,7 +712,7 @@
                 this.addCod.minimum_amount_shipping = value;
             },
             // 是否免运费
-            freeShipp(){
+            freeShipp(value){
                this.addCod.free_shipping = value;
             },
             // 优惠券是否包含税
@@ -730,6 +740,9 @@
                    console.log(reData)
                    this.addCod = reData.data[0];
                    this.addCod.edit = true;
+                   if(this.addCod.customer_id == 0){
+                        this.addCod.customer_id = "";
+                   }
                    this.addCod.active= reData.data[0].active.toString()
                    this.addCod.minimum_amount_tax= reData.data[0].minimum_amount_tax.toString()
                    this.addCod.minimum_amount_shipping= reData.data[0].minimum_amount_shipping.toString()
@@ -751,6 +764,15 @@
                 if (edit) {
                     this.submitEdit()
                 } else {
+                    if(this.reductType === '' || this.reductType == 1){
+                        delete this.addCod.reduction_amount;
+                        delete this.addCod.reduction_currency;
+                    }else{
+                        delete this.addCod.reduction_percent;
+                    }
+                    if(this.addCod.customer_id == ''){
+                        this.addCod.customer_id = 0;
+                    }
                     this.$post('/discount/addDiscountInfo',this.addCod).then((reData)=>{
                         console.log("返回结果",reData)
                         if(reData.code === '0'){
@@ -769,7 +791,7 @@
                                 description:'',
                                 code:'',
                                 active:'1',
-                                customer_id:'0',
+                                customer_id:'',
                                 date_from:'2019-08-08 17:00:09',
                                 date_to:'2019-08-09 17:00:09',
                                 minimum_amount:'',
@@ -803,14 +825,23 @@
                                 },
                             })
                             // this.$message.error(reData.message);
-                            this.visible_add = false
+                            this.visible_add = true
                         }
                     })
                 }
             }
             //修改提交
             ,submitEdit() {
-                 var vm = this;
+                var vm = this;
+                if(this.reductType === '' || this.reductType == 1){
+                    delete this.addCod.reduction_amount;
+                    delete this.addCod.reduction_currency;
+                }else{
+                    delete this.addCod.reduction_percent;
+                }
+                if(this.addCod.customer_id == ''){
+                    this.addCod.customer_id = 0;
+                }
                 this.$post('/discount/updateDiscountInfo',this.addCod).then((reData)=>{
                     console.log(reData)
                     if(reData.code === '0'){
@@ -829,7 +860,7 @@
                             description:'',
                             code:'',
                             active:'1',
-                            customer_id:'0',
+                            customer_id:'',
                             date_from:'2019-08-08 17:00:09',
                             date_to:'2019-08-09 17:00:09',
                             minimum_amount:'',

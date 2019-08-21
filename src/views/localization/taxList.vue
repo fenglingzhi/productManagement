@@ -81,11 +81,12 @@
                         v-model="visible_add"
                         :destroyOnClose = "true"
                         @ok="submitAdd(addCurrency.edit)"
+                        @cancel="closeModle()"
                 >
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">税率命：</div>
+                                <div class="inputName">*税率名：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -96,7 +97,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">税率 ：</div>
+                                <div class="inputName">*税率 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.rate" />
@@ -107,7 +108,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国家：</div>
+                                <div class="inputName">*国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select 
@@ -141,11 +142,12 @@
                     v-model="stateVisible_add"
                     :destroyOnClose = "true"
                     @ok="submitAddState(addState.edit)"
+                    @cancel="closeModle('state')"
                 >
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">税率命：</div>
+                                <div class="inputName">*税率名：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addState.name" />
@@ -156,7 +158,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">税率 ：</div>
+                                <div class="inputName">*税率 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addState.rate" />
@@ -167,7 +169,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国家：</div>
+                                <div class="inputName">*国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select 
@@ -182,7 +184,7 @@
                      <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">省/州：</div>
+                                <div class="inputName">*省/州：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select 
@@ -417,7 +419,7 @@
                                 },
                             })
                             // this.$message.success(reData.message, 3);
-                            this.visible_add = false
+                            this.stateVisible_add = false
                             this.addState = {
                                 country_id:'',
                                 state_id:'',
@@ -438,7 +440,7 @@
                                 },
                             })
                             // this.$message.error(reData.message);
-                            this.visible_add = false
+                            this.stateVisible_add = false
                         }
                     })
                 }
@@ -459,6 +461,14 @@
                         // this.$message.success(reData.message, 3);
                         this.visible_add = false
                         this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        this.addCurrency={
+                            name:''
+                            ,rate:''
+                            ,iso_code_num:''
+                            ,country_id:''
+                            ,active:'1',
+                            edit:false
+                        }
                     } else {
                         this.$notification.open({
                             message: '修 改',
@@ -656,6 +666,29 @@
                     this.$message.error("请填选择国家");
                     return false
                 }
+            },
+            // 关闭弹框
+            closeModle(name){
+                if(name == 'state'){
+                    this.addState = {
+                        country_id:'',
+                        state_id:'',
+                        rate:'',
+                        active:'1',
+                        name:'',
+                        edit:false
+                    }
+                }else{
+                     this.addCurrency={
+                        name:''
+                        ,rate:''
+                        ,iso_code_num:''
+                        ,country_id:''
+                        ,active:'1',
+                        edit:false
+                    }
+                }
+
             },
               // 省州税添加校验
             stateCheckout(data){

@@ -39,7 +39,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">国家/地区：</div>
+                                    <div class="inputName">*国家/地区：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.country_id" style="width: 100%"  @change="getAddcountry">
@@ -52,7 +52,7 @@
                          <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">价格范围货币：</div>
+                                    <div class="inputName">*价格范围货币：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.currency_id" style="width: 100%"  @change="getAddcurrency">
@@ -67,7 +67,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">价格范围（min）：</div>
+                                    <div class="inputName">*价格范围（min）：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.price_min" />
@@ -77,7 +77,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">价格范围（max）：</div>
+                                    <div class="inputName">*价格范围（max）：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.price_max"/>
@@ -88,7 +88,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">PayPal折扣（百分比%）：</div>
+                                    <div class="inputName">*PayPal折扣（百分比%）：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.paypal_rate" />
@@ -99,7 +99,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">信用卡折扣（百分比%）：</div>
+                                    <div class="inputName">*信用卡折扣（百分比%）：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.cc_rate" />
@@ -110,7 +110,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">是否显示：</div>
+                                    <div class="inputName">*是否显示：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.active" style="width: 100%"  @change="getAddactive">
@@ -317,7 +317,7 @@
             //表格分页
             ,handleTableChange(pagination){
                 this.pagination.currentPage = pagination.current
-                this.getList({currentPage:pagination.current,pageSize:pagination.defaultPageSize})
+                this.getList({lang_id:store.state.langId,currentPage:pagination.current,pageSize:pagination.defaultPageSize})
             }
 
             //删除商品

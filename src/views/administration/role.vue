@@ -45,7 +45,7 @@
                   <a-row>
                       <div class="inputPart">
                         <a-col class="gutter-row" :span="7">
-                          <div class="inputName">名称：</div>
+                          <div class="inputName">*名称：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="15">
                           <a-input placeholder="" v-model="addCod.role_name" />

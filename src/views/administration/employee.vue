@@ -44,7 +44,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">名：</div>
+                                    <div class="inputName">*名：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.first_name" />
@@ -54,7 +54,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">姓：</div>
+                                    <div class="inputName">*姓：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.last_name" />
@@ -64,7 +64,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">电子邮件：</div>
+                                    <div class="inputName">*电子邮件：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.email"/>
@@ -85,7 +85,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">语言：</div>
+                                    <div class="inputName">*语言：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.lang_id" style="width: 100%"  @change="getAddlang">
@@ -97,7 +97,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">角色：</div>
+                                    <div class="inputName">*角色：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.role_id" style="width: 100%"  @change="getAddRole">
@@ -190,7 +190,14 @@
 
                 }else{
                     this.addCod = {
+                        first_name:'',
+                        last_name:'',
+                        email:'',
+                        lang_id:'',
+                        role_id:'',
+                        cc_rate:'',
                         active:'0',
+                        password:'',
                         edit:false
                     }
                 }
@@ -241,6 +248,7 @@
 
             //添加提交
             submitAdd(edit) {
+                console.log(this.addCod)
                 var flag = this.checkRes(this.addCod)
                 if(flag == false){
                     return
@@ -345,7 +353,7 @@
                                 console.log('ok');
                             },
                         })
-                    //    this.$message.success(reData.message);
+                    //  this.$message.success(reData.message);
                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
                     } else {
                         this.$notification.open({
@@ -362,6 +370,7 @@
             },
              // 添加时的校验数据
             checkRes(data){
+                console.log(111,data)
                 if(data.first_name === '' || data.first_name === null){
                     this.$message.error("请填写名");
                     return false
