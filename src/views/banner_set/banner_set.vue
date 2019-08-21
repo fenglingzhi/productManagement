@@ -57,7 +57,7 @@
         <a-row class="row-padding">
             <a-col :span="5"><span class="must_fill" style="color:red;">*</span>超链接</a-col>
             <a-col :span="19">
-                <a-input placeholder="请输入超链接" v-model="banner_url" />
+                <a-input placeholder="请输入http://" v-model="banner_url" />
             </a-col>
         </a-row>
         <a-row class="row-padding">
@@ -230,22 +230,68 @@ export default {
         }else if(this.image_type == 13){
             data.banner_map = this.banner_map
         }
+        console.log(data)
         if(this.opera_type == 'add'){
-            this.$post("/banner/addBannerInfo", data).then(reData => {
-                if (reData.code == 0) {
-                    this.$message.success('添加成功');
-                    if(this.$refs[('update_banner'+data.image_type)]){
-                        this.$refs[('update_banner'+data.image_type)][0].get_banner_list();
-                    }
-                    setTimeout(() => {
-                        this.visible = false;
+            if(data.image_base_str === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请上传图片'
+                });
+                this.loading = false;
+                return false;
+            } else if(data.banner_url === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写超链接'
+                });
+                this.loading = false;
+                return false;
+            } else if(data.banner_url === '/<a[^>]*href=[\'"]([^"]*)[\'"].*?[^>]*>(.*?)<\\/a>/g'){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写正确的超链接'
+                });
+                this.loading = false;
+                return false;
+            } else if(data.position === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写顺序'
+                });
+                this.loading = false;
+                return false;
+            } else if(data.title_1 === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写title1'
+                });
+                this.loading = false;
+                return false;
+            } else if(data.title_2 === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写title2'
+                });
+                this.loading = false;
+                return false;
+            } else {
+                this.$post("/banner/addBannerInfo", data).then(reData => {
+                    if (reData.code == 0) {
+                        this.$message.success('添加成功');
+                        if(this.$refs[('update_banner'+data.image_type)]){
+                            this.$refs[('update_banner'+data.image_type)][0].get_banner_list();
+                        }
+                        setTimeout(() => {
+                            this.visible = false;
+                            this.loading = false;
+                        }, 1000);
+                    } else {
+                        this.$message.error(reData.message);
                         this.loading = false;
-                    }, 1000);
-                } else {
-                    this.$message.error(reData.message);
-                    this.loading = false;
-                }
-            });
+                    }
+                });
+            }
+
         }else if(this.opera_type == 'edit'){
             data.banner_id = this.edit_banner_id;
             this.$post("/banner/updateBannerInfo", data).then(reData => {

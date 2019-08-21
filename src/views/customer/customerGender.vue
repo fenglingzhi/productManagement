@@ -12,12 +12,17 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :rowSelection="rowSelection"
                      :scroll="{ x: 1500 }">
               <span slot="action" slot-scope="text, record">
                   <a @click="editFun(record.lang_id,record.gender_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
-                  <a @click="deleteFun({langId:record.lang_id,genderId:record.gender_id})">删除</a>
+                  <a-popconfirm
+                          v-if="productListData.length"
+                          title="请确认删除"
+                          @confirm="() => deleteFun({langId:record.lang_id,genderId:record.gender_id})">
+                    <a>删除</a>
+                  </a-popconfirm>
+
               </span>
                     <span slot="img_" slot-scope="text, record">
                   <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">

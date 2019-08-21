@@ -53,7 +53,7 @@
         </div>
         <div class="addCustomerGender">
             <a-modal
-                    title="新增客户信息"
+                    title="新增订单信息"
                     v-model="visible_add"
                     :destroyOnClose="true"
                     @ok="submitAdd"
@@ -157,7 +157,7 @@
         </div>
         <div class="addCustomerGender">
             <a-modal
-                    title="新增客户信息"
+                    title="更新订单信息"
                     v-model="visible_edit"
                     :destroyOnClose="false"
                     @ok="submitEdit"

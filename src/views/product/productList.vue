@@ -109,7 +109,6 @@
                :loading="loading"
                align="center"
                @change="handleTableChange"
-               :rowSelection="rowSelection"
                :scroll="{ x: 1500 }">
           <span slot="action" slot-scope="text, record">
               <a @click="edit(record.product_id)">修改</a>

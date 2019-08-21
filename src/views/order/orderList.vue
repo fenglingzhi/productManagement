@@ -18,7 +18,7 @@
         </div>
         <div class="editCustomerGender">
             <a-modal
-                    title="查看客户信息"
+                    title="查看订单信息"
                     v-model="visible_search"
                     @ok="submitSearch"
                     :destroyOnClose="true"
