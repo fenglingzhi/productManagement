@@ -284,13 +284,58 @@ export default {
                 data.categoryImgStr = this.imageUrl;
             }   
             data.active = this.active;
-            this.$post("/category/add", data).then(reData => {
-                if (reData.code == 0) {
-                   this.$emit("update_classify","add");
-                } else {
-                this.$message.error(reData.message);
-                }
-            });
+            console.log('data',data)
+            if(data.name === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写名称'
+                });
+                return false;
+            } else if(data.categoryImgStr === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请上传封面图片'
+                });
+                return false;
+            } else if(data.description === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请上填写描述'
+                });
+                return false;
+            } else if(data.metaTitle === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写Meta标题'
+                });
+                return false;
+            } else if(data.metaDescription === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写Meta说明'
+                });
+                return false;
+            } else if(data.metaKeywords === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写关键词'
+                });
+                return false;
+            } else if(data.linkRewrite === ''){
+                this.$notification.open({
+                    message: '警告',
+                    description: '请填写好友链接'
+                });
+                return false;
+            } else {
+                this.$post("/category/add", data).then(reData => {
+                    if (reData.code == 0) {
+                        this.$emit("update_classify","add");
+                    } else {
+                        this.$message.error(reData.message);
+                    }
+                });
+            }
 
         }
     }

@@ -1,4 +1,43 @@
 <template>
+<!--<<<<<<< HEAD-->
+    <!--<div class="orderList">-->
+        <!--客户信息-->
+        <!--<div class="hrLine"></div>-->
+        <!--<div>-->
+            <!--<a-table :columns="columns"-->
+                     <!--:dataSource="productListData"-->
+                     <!--:pagination="pagination"-->
+                     <!--:loading="loading"-->
+                     <!--align="center"-->
+                     <!--@change="handleTableChange"-->
+                     <!--:rowSelection="rowSelection"-->
+                     <!--:scroll="{ x: 3800 }">-->
+          <!--<span slot="action" slot-scope="text, record">-->
+              <!--<a @click="searchFun({order_id:record.order_id})">查看</a>-->
+          <!--</span>-->
+            <!--</a-table>-->
+        <!--</div>-->
+        <!--<div class="editCustomerGender">-->
+            <!--<a-modal-->
+                    <!--title="查看订单信息"-->
+                    <!--v-model="visible_search"-->
+                    <!--@ok="submitSearch"-->
+                    <!--:destroyOnClose="true"-->
+            <!--&gt;-->
+                <!--<a-card :bordered="false"-->
+                        <!--:headStyle="{'padding': 0,'font-size': '16px','color':'red'}"-->
+                        <!--:bodyStyle="{padding: '15px'}"-->
+                        <!--style="margin-top: -20px;font-size: 14px;">-->
+                    <!--<a-row>-->
+                        <!--<a-col :span="12">-->
+                            <!--<p>添加时间：{{orderListDetail}}</p>-->
+                        <!--</a-col>-->
+                        <!--&lt;!&ndash;<a-col :span="12">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<p>平台类型：{{customerCartInfo.cartInfo.mobile_type}}</p>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</a-col>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a-col :span="12">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<p>币种标识：{{customerCartInfo.cartInfo.sign}}</p>&ndash;&gt;-->
+<!--=======-->
   <div class="orderList">
     <div class="high-search">
       <a-form class="ant-advanced-search-form" @submit="handleSearch" id="orderList-search">
@@ -55,7 +94,7 @@
                 showTime
                 @change="add_date_onchange"
                 style="width:174px"
-              />
+              ></a-date-picker>
             </a-form-item>
           </a-col>
         </a-row>
@@ -116,6 +155,7 @@
             <!--</a-col>-->
             <!--<a-col :span="12">-->
             <!--<p>币种标识：{{customerCartInfo.cartInfo.sign}}</p>-->
+<!--&gt;>>>>>> 8fbbf3e14b34155167ce6ea882172a9984305175-->
 
             <!--</a-col>-->
             <!--<a-col :span="12">-->

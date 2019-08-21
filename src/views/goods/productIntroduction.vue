@@ -259,16 +259,32 @@
             var vm =this
             /** 验证文件是否导入成功  */
             $("#form1").ajaxForm(function(data){
-                vm.$message.success(data.message);
+                if(data.code=='0'){
+                    vm.$message.success(data.message);
+                }else {
+                    vm.$message.error(data.message);
+                }
             });
             $("#form2").ajaxForm(function(data){
-                vm.$message.success(data.message);
+                if(data.code=='0'){
+                    vm.$message.success(data.message);
+                }else {
+                    vm.$message.error(data.message);
+                }
             });
             $("#form3").ajaxForm(function(data){
-                vm.$message.success(data.message);
+                if(data.code=='0'){
+                    vm.$message.success(data.message);
+                }else {
+                    vm.$message.error(data.message);
+                }
             });
             $("#form4").ajaxForm(function(data){
-                vm.$message.success(data.message);
+                if(data.code=='0'){
+                    vm.$message.success(data.message);
+                }else {
+                    vm.$message.error(data.message);
+                }
             });
             this.getCategoryAllList({lang_id:this.$store.state.langId,is_banner:1})
             this.getTagAllList({lang_id:this.$store.state.langId})

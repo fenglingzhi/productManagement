@@ -60,62 +60,6 @@
           <a @click="deleteProduct({order_state_id:record.order_state_id})">删除</a>
         </span>
         <span slot="name" slot-scope="text,record" :style="{color:record.color}">{{text}}</span>
-        <!-- <a slot="unremoveable" slot-scope="text, record" style="text-align: center">
-          <a-icon
-            type="check"
-            style="color: green"
-            v-if="text === '1'"
-            @click="change_active({product_id:record.product_id,active:'0'})"
-          ></a-icon>
-          <a-icon
-            type="close"
-            style="color: red"
-            v-if="text === '0'"
-            @click="change_active({product_id:record.product_id,active:'1'})"
-          ></a-icon>
-        </a>-->
-        <!-- <a slot="shipped" slot-scope="text, record" style="text-align: center">
-          <a-icon
-            type="check"
-            style="color: green"
-            v-if="text === '1'"
-            @click="change_active({product_id:record.product_id,active:'0'})"
-          ></a-icon>
-          <a-icon
-            type="close"
-            style="color: red"
-            v-if="text === '0'"
-            @click="change_active({product_id:record.product_id,active:'1'})"
-          ></a-icon>
-        </a>-->
-        <!-- <a slot="paid" slot-scope="text, record" style="text-align: center">
-          <a-icon
-            type="check"
-            style="color: green"
-            v-if="text === '1'"
-            @click="change_active({product_id:record.product_id,active:'0'})"
-          ></a-icon>
-          <a-icon
-            type="close"
-            style="color: red"
-            v-if="text === '0'"
-            @click="change_active({product_id:record.product_id,active:'1'})"
-          ></a-icon>
-        </a>-->
-        <!-- <a slot="logable" slot-scope="text, record" style="text-align: center">
-          <a-icon
-            type="check"
-            style="color: green"
-            v-if="text === '1'"
-            @click="change_active({product_id:record.product_id,active:'0'})"
-          ></a-icon>
-          <a-icon
-            type="close"
-            style="color: red"
-            v-if="text === '0'"
-            @click="change_active({product_id:record.product_id,active:'1'})"
-          ></a-icon>
-        </a>-->
         <a slot="send_email" slot-scope="text" style="text-align: center">
           <a-icon type="check" style="color: green" v-if="text === '1'"></a-icon>
           <a-icon type="close" style="color: red" v-if="text === '0'"></a-icon>

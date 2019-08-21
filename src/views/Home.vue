@@ -6,8 +6,8 @@
       <div class="logo" @click="logo()">
         <img src="../assets/logos.png" width="100" alt="">
       </div>
-      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"  :selectedKeys="$store.state.menuKey"     :defaultOpenKeys="['1']" :style="{ textAlign: 'left' }">
-        <a-menu-item key="0" @click="choseWhich('首页','index','0')"><a-icon type="home" /><span>首页</span></a-menu-item>
+      <a-menu theme="dark" mode="inline" :defaultSelectedKeys="menuKey"  :selectedKeys="$store.state.menuKey" :defaultOpenKeys="['1']" :style="{ textAlign: 'left' }">
+        <!--<a-menu-item key="0" @click="choseWhich('首页','index','0')"><a-icon type="home" /><span>首页</span></a-menu-item>-->
         <a-sub-menu key="1">
           <span slot="title"><a-icon type="snippets" /><span>商品管理</span></span>
           <a-menu-item key="1-1" @click="choseWhich('商品管理','productWrap','1-1')" ><a-icon type="reconciliation" />商品管理</a-menu-item>

@@ -1,6 +1,5 @@
 <template>
   <div class="crm">
-
       <template>
           <a-spin :spinning="$store.state.loading">
               <div class="spin-content">
@@ -19,16 +18,7 @@
                   </div>
               </div>
           </a-spin>
-
-
       </template>
-
-
-
-
-
-
-
   </div>
 </template>
 <script>
