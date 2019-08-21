@@ -226,6 +226,7 @@
                             this.$notification.open({
                                 message: '图片超出5M',
                                 description: "请选择小于5M的图片上传",
+                                duration: 2,
                                 onClick: () => {
                                     console.log('ok');
                                 },
@@ -238,8 +239,6 @@
                             this.$post('/productImage/addProductImage',this.postData).then((reData)=>{
                                 console.log(reData)
                                 store.commit('changeStore',{key:'loading',val:false });
-
-
                                 this.getdata()
                                 if(reData.code == 0){
                                     this.fileList=[]

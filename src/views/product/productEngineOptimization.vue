@@ -12,25 +12,25 @@
                 </a-row>
             </a-col>
         </div>
+        <!--<a-row>-->
+            <!--<a-col class="gutter-row" :span="8">-->
+                <!--<div class="inputPart">-->
+                    <!--<a-col class="gutter-row" :span="6">-->
+                        <!--<div class="inputName">*语言：</div>-->
+                    <!--</a-col>-->
+                    <!--<a-col class="gutter-row" :span="18">-->
+                        <!--<a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">-->
+                            <!--<a-select-option value="1">美</a-select-option>-->
+                        <!--</a-select>-->
+                    <!--</a-col>-->
+                <!--</div>-->
+            <!--</a-col>-->
+        <!--</a-row>-->
         <a-row>
             <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">*语言：</div>
-                    </a-col>
-                    <a-col class="gutter-row" :span="18">
-                        <a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">
-                            <a-select-option value="1">美</a-select-option>
-                        </a-select>
-                    </a-col>
-                </div>
-            </a-col>
-        </a-row>
-        <a-row>
-            <a-col class="gutter-row" :span="8">
-                <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputName">*友好链接 ：</div>
+                        <div class="inputName">友好链接 ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
                         <a-input v-model="postData.linkRewrite" placeholder=""/>
@@ -42,7 +42,7 @@
             <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">*meta标题：</div>
+                        <div class="inputName">meta标题：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
                         <a-input v-model="postData.metaTitle" placeholder=""/>
@@ -54,7 +54,7 @@
             <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">*meta关键字：</div>
+                        <div class="inputName">meta关键字：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
                         <a-input v-model="postData.metaKeyword" placeholder=""/>
@@ -66,7 +66,7 @@
             <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">*meta详情：</div>
+                        <div class="inputName">meta详情：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
                         <a-textarea v-model="postData.metaDescription" placeholder="Basic usage" :rows="4"/>
@@ -118,6 +118,8 @@
                 //         isAll =false
                 //     }
                 // }
+                this.postData.langId=this.$store.state.langId
+
                 this.postData.productId =  this.$store.state.goods_id;
                 if (isAll){
                     this.$post('/product/editProductSeo',this.postData).then((reData)=>{
@@ -161,7 +163,7 @@
             return {
                 postData:{
                     productId:'',
-                    langId:'1',
+                    langId:'',
                     linkRewrite:'',
                     metaTitle:'',
                     metaKeyword:'',

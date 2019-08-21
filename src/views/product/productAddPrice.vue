@@ -35,7 +35,7 @@
                         <div class="inputName">*成本价格：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input v-model="postData.cost_price" placeholder=""/>
+                        <a-input v-model="postData.cost_price" type="number" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
@@ -47,7 +47,7 @@
                         <div class="inputName">*零售价格：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input v-model="postData.retail_price" placeholder=""/>
+                        <a-input v-model="postData.retail_price" type="number" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
@@ -59,7 +59,7 @@
                         <div class="inputName">*折扣价格：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input v-model="postData.sale_price" placeholder=""/>
+                        <a-input v-model="postData.sale_price" type="number" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
@@ -107,7 +107,34 @@
                 //     }
                 // }
 
-                if (isAll){
+                if(this.postData.cost_price==''){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写商品成本价格再保存",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                } else  if(this.postData.retail_price==''){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写商品零售价格再保存",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                } else  if(this.postData.sale_price==''){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写商品折扣价格再保存",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                } else {
                     this.$post('/product/updateProductPrice',this.postData).then((reData)=>{
                         console.log(reData)
                         store.commit('changeStore',{key:'loading',val:false});
@@ -126,16 +153,6 @@
                             },1000)
 
                         }
-                    })
-                }else {
-                    store.commit('changeStore',{key:'loading',val:false});
-
-                    this.$notification.open({
-                        message: '提醒',
-                        description: '请把信息填写完整再提交！',
-                        onClick: () => {
-                            console.log('ok');
-                        },
                     })
                 }
             }

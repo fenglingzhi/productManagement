@@ -25,10 +25,10 @@
             <productAddPrice v-show="$store.state.addProductContent == 'productAddPrice'"></productAddPrice>
             <productAddCollection v-show="$store.state.addProductContent == 'productAddCollection'"></productAddCollection>
             <productAddPic v-show="$store.state.addProductContent == 'productAddPic'"></productAddPic>
-            <productCombination v-show="$store.state.addProductContent == 'productCombination' && $store.state.isEdit"></productCombination>
             <productEngineOptimization v-show="$store.state.addProductContent == 'productEngineOptimization'"></productEngineOptimization>
             <productNum v-show="$store.state.addProductContent == 'productNum'"></productNum>
             <productCombinationNew v-show="$store.state.addProductContent == 'productCombination' && !$store.state.isEdit"></productCombinationNew>
+            <productCombination v-show="$store.state.addProductContent == 'productCombination' && $store.state.isEdit"></productCombination>
 
         </a-col>
 
@@ -92,8 +92,20 @@
                 console.log(date, dateString);
             },
             choseStep(index,key){
-                store.commit('changeStore',{key:'addProductCurrent',val:index});
-                store.commit('changeStore',{key:'addProductContent',val:key});
+                if(this.$store.state.goods_id ==''){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请先保存基本产品信息再进行其他信息填写",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                }else {
+                    store.commit('changeStore',{key:'addProductCurrent',val:index});
+                    store.commit('changeStore',{key:'addProductContent',val:key});
+                }
+
             }
         } ,
         mounted() {

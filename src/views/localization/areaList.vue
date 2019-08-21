@@ -20,7 +20,12 @@
               <span slot="action" slot-scope="text, record">
                   <a @click="editAttribute(text.zone_id,text.name,text.active)">修改</a>
                   <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct(text.zone_id)">删除</a>
+                   <a-popconfirm
+                           title="请确认删除"
+                           @confirm="() => deleteProduct(text.zone_id)">
+                <a @click="">删除</a>
+              </a-popconfirm>
+                  <!--<a @click="deleteProduct(text.zone_id)">删除</a>-->
               </span>
                 <a slot="active" slot-scope="text, record" style="text-align: center">
                     <a-icon type="check" style="color: green" v-if="text.active == '1'" @click="change_active({zone_id:text.zone_id,active:'0'})"></a-icon>
@@ -157,37 +162,73 @@
             },
             handleChangeAdd(value){
                 this.addCurrency.active = value
+            }
+            ,checkoutNull(data){
+                var isNull =false
+                Object.keys(data).forEach(function(key){
+                    if(data[key]===''){
+                        isNull = true
+                    }
+                });
+                return isNull
             },
-        //添加提交
+
+
+            //添加提交
         submitAdd() {
-            this.$post('/zone/addZone',this.addCurrency).then((reData)=>{
-                if(reData.code === '0'){
-                    this.$message.success(reData.message, 3);
-                    this.visible_add = false
-                    this.addCurrency={
+            if(this.checkoutNull(this.addCurrency)){
+                this.$notification.open({
+                    message: '提醒',
+                    duration: 2,
+                    description: "请填写区域名称再提交！",
+                    onClick: () => {
+                        console.log('ok');
+                    },
+                })
+            }else {
+                this.$post('/zone/addZone',this.addCurrency).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.$message.success(reData.message, 3);
+                        this.visible_add = false
+                        this.addCurrency={
                             name:''
                             ,active:'1'
-                    },
-                    this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        },
+                            this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
 
-                } else {
-                    this.$message.error(reData.message);
-                    this.visible_add = false
-                }
-            })
+                    } else {
+                        this.$message.error(reData.message);
+                        this.visible_add = false
+                    }
+                })
+            }
+
+
         }
         //修改提交
         ,submitEdit() {
-                this.$post('/zone/editZone',this.editCurrency).then((reData)=>{
-                    if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
-                        this.visible_edit = false
-                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
-                    } else {
-                        this.$message.error(reData.message);
-                        this.visible_edit = false
-                    }
-                })
+                if(this.checkoutNull(this.editCurrency)){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写区域名称再提交！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                }else {
+                    this.$post('/zone/editZone',this.editCurrency).then((reData)=>{
+                        if(reData.code === '0'){
+                            this.$message.success(reData.message, 3);
+                            this.visible_edit = false
+                            this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        } else {
+                            this.$message.error(reData.message);
+                            this.visible_edit = false
+                        }
+                    })
+                }
+
         },
             //新增属性
             addAttribute(){
