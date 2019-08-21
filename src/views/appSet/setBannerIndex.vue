@@ -80,7 +80,7 @@
                   :value="item.category_id"
                   v-for="(item,index) in typeArr"
                   :key="index"
-                >{{item.meta_title}}</a-select-option>
+                >{{item.name}}</a-select-option>
               </a-select>
             </a-col>
           </div>
@@ -180,12 +180,16 @@
               </div>
             </a-col>
             <a-col class="gutter-row" :span="18">
-              <a-select style="width: 100%" v-model="form_change.category_id">
+              <a-select
+                style="width: 100%"
+                v-model="form_change.category_id"
+                @change="write_category_name"
+              >
                 <a-select-option
                   :value="item.category_id"
                   v-for="(item,index) in typeArr"
                   :key="index"
-                >{{item.meta_title}}</a-select-option>
+                >{{item.name}}</a-select-option>
               </a-select>
             </a-col>
           </div>
@@ -302,6 +306,7 @@ export default {
         active: "",
         image_type: "",
         category_id: "",
+        category_name: "",
         position: "",
         mobile_banner_id: ""
       }
@@ -459,13 +464,16 @@ export default {
       return true;
     },
     goChange(text) {
+      // console.log(text);
       this.form_change.active = text.active == false ? "0" : "1";
       this.form_change.image_type = text.image_type;
       this.form_change.category_id = text.category_id;
+      this.form_change.category_name = text.category_name;
       this.form_change.position = text.position;
       this.form_change.mobile_banner_id = text.mobile_banner_id;
       this.visible_change = true;
     },
+    // 提交修改
     submitChange() {
       if (this.checking(this.form_change)) {
         this.$post(
@@ -496,6 +504,13 @@ export default {
       this.$notification[type]({
         message: title,
         description: txt
+      });
+    },
+    write_category_name(val) {
+      this.typeArr.forEach(item => {
+        if (val == item.category_id) {
+          this.form_change.category_name = item.name;
+        }
       });
     }
   }

@@ -12,6 +12,7 @@ export default new Vuex.Store({
           showName:'test',
           shopData:{}
       },
+
       tabArray:[{
         title: "首页",
         content:'index',

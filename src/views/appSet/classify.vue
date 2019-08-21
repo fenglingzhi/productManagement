@@ -50,7 +50,7 @@
                     :value="item.category_id"
                     v-for="(item,index) in typeArr"
                     :key="index"
-                  >{{item.meta_title}}</a-select-option>
+                  >{{item.name}}</a-select-option>
                 </a-select>
               </a-col>
             </div>
@@ -100,7 +100,7 @@
                     :value="item.category_id"
                     v-for="(item,index) in typeArr"
                     :key="index"
-                  >{{item.meta_title}}</a-select-option>
+                  >{{item.name}}</a-select-option>
                 </a-select>
               </a-col>
             </div>
@@ -276,7 +276,7 @@ export default {
       this.$post("/category/getCategoryAllList", {
         lang_id: this.$store.state.langId
       }).then(res => {
-        // console.log(res);
+        console.log(res);
         this.typeArr = res.data;
       });
     },

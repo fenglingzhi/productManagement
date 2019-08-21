@@ -81,11 +81,12 @@
                         v-model="visible_add"
                         :destroyOnClose = "true"
                         @ok="submitAdd(addCurrency.edit)"
+                        @cancel="closeModle()"
                 >
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">税率命：</div>
+                                <div class="inputName">*税率名：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -96,7 +97,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">税率 ：</div>
+                                <div class="inputName">*税率 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.rate" />
@@ -107,7 +108,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国家：</div>
+                                <div class="inputName">*国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select 
@@ -141,11 +142,12 @@
                     v-model="stateVisible_add"
                     :destroyOnClose = "true"
                     @ok="submitAddState(addState.edit)"
+                    @cancel="closeModle('state')"
                 >
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">税率命：</div>
+                                <div class="inputName">*税率名：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addState.name" />
@@ -156,7 +158,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">税率 ：</div>
+                                <div class="inputName">*税率 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addState.rate" />
@@ -167,7 +169,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国家：</div>
+                                <div class="inputName">*国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select 
@@ -182,7 +184,7 @@
                      <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">省/州：</div>
+                                <div class="inputName">*省/州：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select 
@@ -352,12 +354,24 @@
             },
             //添加提交
             submitAdd(edit) {
+                var flag = this.checkout(this.addCurrency)
+                if(flag == false){
+                    return
+                }
                 if(edit){
                     this.submitEdit()
                 }else{
                     this.$post('/tax/addTax',this.addCurrency).then((reData)=>{
                         if(reData.code === '0'){
-                            this.$message.success(reData.message, 3);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.success(reData.message, 3);
                             this.visible_add = false
                             this.addCurrency={
                                 name:''
@@ -370,7 +384,15 @@
                             this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
 
                         } else {
-                            this.$message.error(reData.message);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.error(reData.message);
                             this.visible_add = false
                         }
                     })
@@ -379,13 +401,25 @@
             },
              //添加省州提交
             submitAddState(edit) {
+                var flag = this.stateCheckout(this.addState)
+                if(flag == false){
+                    return
+                }
                 if(edit){
                     this.submitEditState()
                 }else{
                     this.$post('/tax/addTaxState',this.addState).then((reData)=>{
                         if(reData.code === '0'){
-                            this.$message.success(reData.message, 3);
-                            this.visible_add = false
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.success(reData.message, 3);
+                            this.stateVisible_add = false
                             this.addState = {
                                 country_id:'',
                                 state_id:'',
@@ -397,8 +431,16 @@
                             this.getStataList({});
 
                         } else {
-                            this.$message.error(reData.message);
-                            this.visible_add = false
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.error(reData.message);
+                            this.stateVisible_add = false
                         }
                     })
                 }
@@ -408,11 +450,35 @@
             ,submitEdit() {
                 this.$post('/tax/editTax',this.addCurrency).then((reData)=>{
                     if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.success(reData.message, 3);
                         this.visible_add = false
                         this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        this.addCurrency={
+                            name:''
+                            ,rate:''
+                            ,iso_code_num:''
+                            ,country_id:''
+                            ,active:'1',
+                            edit:false
+                        }
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                         this.visible_add = false
                     }
                 })
@@ -421,11 +487,27 @@
             submitEditState() {
                 this.$post('/tax/editTaxState',this.addState).then((reData)=>{
                     if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.success(reData.message, 3);
                         this.stateVisible_add = false
                         this.getStataList({});
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                         this.stateVisible_add = false
                     }
                 })
@@ -487,7 +569,15 @@
                     if(reData.code === '0'){
                         this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize});
                     }else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '状态更改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                     }
                 })
             }
@@ -497,7 +587,15 @@
                     if(reData.code === '0'){
                         this.getStataList({});
                     }else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '状态更改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                     }
                 })
             }
@@ -553,6 +651,63 @@
                     onCancel() {},
                 });
               
+            },
+            // 国家税添加校验
+            checkout(data){
+                 if(data.name === '' || data.name === null){
+                    this.$message.error("请填写税率名");
+                    return false
+                }
+                if(data.rate === '' || data.rate === null){  
+                    this.$message.error("请填税率");
+                    return false
+                }
+                if(data.country_id === '' || data.country_id === null){
+                    this.$message.error("请填选择国家");
+                    return false
+                }
+            },
+            // 关闭弹框
+            closeModle(name){
+                if(name == 'state'){
+                    this.addState = {
+                        country_id:'',
+                        state_id:'',
+                        rate:'',
+                        active:'1',
+                        name:'',
+                        edit:false
+                    }
+                }else{
+                     this.addCurrency={
+                        name:''
+                        ,rate:''
+                        ,iso_code_num:''
+                        ,country_id:''
+                        ,active:'1',
+                        edit:false
+                    }
+                }
+
+            },
+              // 省州税添加校验
+            stateCheckout(data){
+                 if(data.name === '' || data.name === null){
+                    this.$message.error("请填写税率名");
+                    return false
+                }
+                if(data.rate === '' || data.rate === null){  
+                    this.$message.error("请填税率");
+                    return false
+                }
+                if(data.country_id === '' || data.country_id === null){
+                    this.$message.error("请填选择国家");
+                    return false
+                }
+                 if(data.state_id === '' || data.state_id === null){
+                    this.$message.error("请填选择省/州");
+                    return false
+                }
             }
 
         },
