@@ -241,7 +241,15 @@
                     this.$post('/cartCod/addCartCODInfo',this.addCod).then((reData)=>{
                         console.log("返回结果",reData)
                         if(reData.code === '0'){
-                            this.$message.success(reData.message, 3);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.success(reData.message, 3);
                             this.visible_add = false
                             this.addCod={
                                 active:'1'
@@ -249,7 +257,15 @@
                             this.getList({lang_id:store.state.langId,currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
     
                         } else {
-                            this.$message.error(reData.message);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.error(reData.message);
                             this.visible_add = false
                         }
                     })
@@ -259,7 +275,15 @@
             ,submitEdit() {
                 this.$post('/cartCod/updateCartCODInfo',this.addCod).then((reData)=>{
                     if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.success(reData.message, 3);
                         this.visible_add = false
                         this.addCod={
                             active:'1'
@@ -267,7 +291,15 @@
                         this.getList({lang_id:store.state.langId,currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
 
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                         this.visible_add = false
                     }
                 })
@@ -294,7 +326,15 @@
                     if(reData.code === '0'){
                         this.getList({parent_id:store.state.attribute_child_id});
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '删 除',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                     }
                 })
             }

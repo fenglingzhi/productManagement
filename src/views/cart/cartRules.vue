@@ -17,9 +17,14 @@
                      :rowSelection="rowSelection" 
                      :scroll="{ x: 2500 }">
               <span slot="action" slot-scope="text, record">
-                  <a @click="editCod(text.discount_id)">修改</a>
-                  <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct(text.discount_id,text)">删除</a>
+                   <a @click="editCod(text.discount_id)">修改</a>
+                   <a-divider type="vertical"></a-divider>
+                   <a-popconfirm
+                               title="请确认删除"
+                               @confirm="() => deleteProduct(text.discount_id,text)">
+                       <a>删除</a>
+                    </a-popconfirm>
+                  <!-- <a @click="deleteProduct(text.discount_id,text)">删除</a> -->
               </span>
                 <!-- 状态 -->
                 <a slot="active" slot-scope="text, record" style="text-align: center">
@@ -749,7 +754,15 @@
                     this.$post('/discount/addDiscountInfo',this.addCod).then((reData)=>{
                         console.log("返回结果",reData)
                         if(reData.code === '0'){
-                            this.$message.success(reData.message, 3);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.success(reData.message, 3);
                             this.visible_add = false
                             this.addCod={
                                 name:'',
@@ -781,7 +794,15 @@
                             this.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize});
     
                         } else {
-                            this.$message.error(reData.message);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.error(reData.message);
                             this.visible_add = false
                         }
                     })
@@ -793,7 +814,15 @@
                 this.$post('/discount/updateDiscountInfo',this.addCod).then((reData)=>{
                     console.log(reData)
                     if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.success(reData.message, 3);
                         this.visible_add = false
                         this.addCod={
                             name:'',
@@ -824,7 +853,15 @@
                         }
                         this.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize});
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                         this.visible_add = false
                     }
                 })
@@ -855,7 +892,15 @@
                     if(reData.code === '0'){
                         this.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize});
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '删 除',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                     }
                 })
             },
