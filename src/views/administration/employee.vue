@@ -47,7 +47,7 @@
                                     <div class="inputName">*名：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
-                                    <a-input placeholder="" v-model="addCod.first_name" />
+                                    <a-input placeholder="" maxlength="32" v-model="addCod.first_name" />
                                 </a-col>
                             </div>
                         </a-row>
@@ -57,7 +57,7 @@
                                     <div class="inputName">*姓：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
-                                    <a-input placeholder="" v-model="addCod.last_name" />
+                                    <a-input placeholder="" maxlength="32" v-model="addCod.last_name" />
                                 </a-col>
                             </div>
                         </a-row>
@@ -78,7 +78,7 @@
                                     <div class="inputName">密码：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
-                                    <a-input type="password" placeholder="" v-model="addCod.password" />
+                                    <a-input type="password" maxlength="32" placeholder="" v-model="addCod.password" />
                                 </a-col>
                             </div>
                         </a-row>
@@ -361,7 +361,7 @@
                         if(this.pagination.lastPageSize == 1 && this.pagination.currentPage>=2){
                             this.pagination.currentPage = this.pagination.currentPage - 1
                         }
-                       this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
                     } else {
                         this.$notification.open({
                             message: '删 除',

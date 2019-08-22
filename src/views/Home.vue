@@ -56,9 +56,9 @@
               <a-menu-item key="7-1" @click="choseWhich('物流列表','logisticList','7-1')" ><a-icon type="reconciliation" />物流列表</a-menu-item>
           </a-sub-menu>
         <a-sub-menu key="8">
-          <span slot="title"><a-icon type="snippets" /><span>购物车</span></span>
+          <span slot="title"><a-icon type="snippets" /><span>价格规则</span></span>
           <a-menu-item key="8-1" @click="choseWhich('COD设置','codList','8-1')" ><a-icon type="reconciliation" />COD设置</a-menu-item>
-          <a-menu-item key="8-2" @click="choseWhich('购物车规则','cartRules','8-2')" ><a-icon type="reconciliation" />购物车规则</a-menu-item>
+          <a-menu-item key="8-2" @click="choseWhich('折扣券','cartRules','8-2')" ><a-icon type="reconciliation" />折扣券</a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="9">
           <span slot="title"><a-icon type="snippets" /><span>行政</span></span>
