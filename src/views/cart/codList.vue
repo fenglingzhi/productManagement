@@ -70,7 +70,7 @@
                                     <div class="inputName">*价格范围（min）：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
-                                    <a-input placeholder="" v-model="addCod.price_min" />
+                                    <a-input placeholder="" maxlength="10" v-model="addCod.price_min" />
                                 </a-col>
                             </div>
                         </a-row>
@@ -80,7 +80,7 @@
                                     <div class="inputName">*价格范围（max）：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
-                                    <a-input placeholder="" v-model="addCod.price_max"/>
+                                    <a-input placeholder="" maxlength="10" v-model="addCod.price_max"/>
                                 </a-col>
                             </div>
                         </a-row>
@@ -91,7 +91,7 @@
                                     <div class="inputName">*PayPal折扣（百分比%）：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
-                                    <a-input placeholder="" v-model="addCod.paypal_rate" />
+                                    <a-input placeholder="" maxlength="10" v-model="addCod.paypal_rate" />
                                 </a-col>
                             </div>
                         </a-row>
@@ -102,7 +102,7 @@
                                     <div class="inputName">*信用卡折扣（百分比%）：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
-                                    <a-input placeholder="" v-model="addCod.cc_rate" />
+                                    <a-input placeholder="" maxlength="10" v-model="addCod.cc_rate" />
                                 </a-col>
                             </div>
                         </a-row>
@@ -342,7 +342,7 @@
         },
         mounted() {
             var vm = this;
-            store.commit('changeStore',{key:'title',val:'币种列表'});
+            // store.commit('changeStore',{key:'title',val:'币种列表'});
             vm.getList({lang_id:store.state.langId,currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize})
         },
 

@@ -713,7 +713,7 @@
         },
         mounted() {
             var vm = this;
-            store.commit('changeStore',{key:'title',val:'币种列表'});
+            // store.commit('changeStore',{key:'title',val:'币种列表'});
             vm.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize})
             vm.getStataList({})
         },
