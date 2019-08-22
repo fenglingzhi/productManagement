@@ -1,5 +1,74 @@
 <template>
     <div class="customerAddress">
+        <a-row>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName"> 购物车ID：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-input placeholder="请输入购物车ID" v-model="addCustomerAddressData.cart_id" />
+                    </a-col>
+                </div>
+            </a-col>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName"> 订单号ID：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-input placeholder="请输入订单号ID" v-model="addCustomerAddressData.order_id" />
+                    </a-col>
+                </div>
+            </a-col>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName">客户email ：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-input placeholder="请输入客户email" v-model="addCustomerAddressData.email"/>
+                    </a-col>
+                </div>
+            </a-col>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName">购物车金额 ：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-input placeholder="请输入购物车金额" v-model="addCustomerAddressData.total_amount"/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                        <div class="inputName"> 注册时间：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-range-picker @change="onChange" />
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-row>
+                            <a-col class="gutter-row" :span="10">
+                                <a-button type="primary" @click="search_product(addCustomerInfo)">搜索</a-button>
+                            </a-col>
+                        </a-row>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
         <div>
             <a-table :columns="columns"
                      :dataSource="productListData"
@@ -279,6 +348,34 @@
                 })
                 this.visible_update = true;
             }
+            //时间选择
+            ,onChange(date, dateString) {
+                console.log(dateString)
+                this.addCustomerInfo.birthday = dateString
+            }
+            //搜索产品
+            ,search_product(data){
+                this.$post('/cart/getCartInfoPage',{
+                    lang_id:store.state.langId,
+                    currentPage:1,
+                    pageSize:this.pagination.defaultPageSize,
+                    genderId:this.addCustomerInfo.genderId,
+                    firstname:this.addCustomerInfo.firstname,
+                    lastname:this.addCustomerInfo.lastname,
+                    email:this.addCustomerInfo.email,
+                    passwd:this.addCustomerInfo.passwd,
+                    birthday:this.addCustomerInfo.birthday,
+                    active:this.addCustomerInfo.active,
+                    newsletter:this.addCustomerInfo.newsletter,
+                    optin:this.addCustomerInfo.optin,
+                    customerId:this.addCustomerInfo.customerId,
+                }).then((reData)=>{
+                    this.productListData=reData.data.dataList
+                    this.pagination.currentPage = reData.data.page.currentPage
+                    this.pagination.total=reData.data.page.totalResultSize
+                    this.loading = false
+                })
+            }
             //新增地址
             ,add_product(){
                 let vm = this;
@@ -388,5 +485,20 @@
     }
 </script>
 <style scoped>
-
+    .inputName{
+        text-align: right;
+        line-height: 34px;
+    }
+    .ant-row{
+        margin: 10px 0;
+    }
+    .hrLine{
+        width: 120%;
+        height: 30px;
+        margin-left: -30px;
+        background: #f0f2f5;
+    }
+    .show_text{
+        line-height: 32px;
+    }
 </style>

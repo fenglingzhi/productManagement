@@ -50,7 +50,12 @@
           <span slot="action" slot-scope="text, record">
               <a @click="edit(record.carrier_id)">编辑</a>
                  <a-divider type="vertical"></a-divider>
-              <a @click="deleteCarrier(record.carrier_id)">删除</a>
+              <!--<a @click="deleteCarrier(record.carrier_id)">删除</a>-->
+                <a-popconfirm
+                        title="请确认删除"
+                        @confirm="() => deleteCarrier(record.carrier_id)">
+                <a @click="">删除</a>
+                </a-popconfirm>
           </span>
             <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
@@ -59,7 +64,7 @@
         <div class="hrLine"></div>
         <div class="secondTitle">
             <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
-                其他国家设置 ：
+                其他区域 ：
             </a-col>
             <a-col class="gutter-row" :span="3">
                 <a-row>
@@ -78,7 +83,11 @@
           <span slot="action" slot-scope="text, record">
               <a @click="edit5(record.carrier_id)">编辑</a>
                  <a-divider type="vertical"></a-divider>
-              <a @click="deleteCarrier(record.carrier_id)">删除</a>
+               <a-popconfirm
+                       title="请确认删除"
+                       @confirm="() => deleteCarrier(record.carrier_id)">
+                <a @click="">删除</a>
+                </a-popconfirm>
           </span>
             <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
@@ -118,7 +127,11 @@
           <span slot="action" slot-scope="text, record">
               <a @click="edit2(record.carrier_id)">修改</a>
               <a-divider type="vertical"></a-divider>
-              <a @click="deleteCarrier(record.carrier_id)">删除</a>
+               <a-popconfirm
+                       title="请确认删除"
+                       @confirm="() => deleteCarrier(record.carrier_id)">
+                <a @click="">删除</a>
+                </a-popconfirm>
           </span>
                 <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
@@ -156,7 +169,11 @@
           <span slot="action" slot-scope="text, record">
               <a @click="edit3(record.carrier_id)">修改</a>
               <a-divider type="vertical"></a-divider>
-              <a @click="deleteCarrier(record.carrier_id)">删除</a>
+                <a-popconfirm
+                        title="请确认删除"
+                        @confirm="() => deleteCarrier(record.carrier_id)">
+                <a @click="">删除</a>
+                </a-popconfirm>
           </span>
                 <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
@@ -187,7 +204,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">前台显示内容 ：</div>
+                            <div class="inputName">* 前台显示内容 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addZone.name" placeholder="" />
@@ -199,7 +216,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">类型：</div>
+                            <div class="inputName">* 类型：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select  v-model="addZone.c_type" defaultValue="1" style="width: 100%"  @change="handleChange">
@@ -214,7 +231,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">最大值 ：</div>
+                            <div class="inputName">* 最大值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addZone.c_max" placeholder="" />
@@ -226,7 +243,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">最小值 ：</div>
+                            <div class="inputName">* 最小值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addZone.c_min" placeholder="" />
@@ -238,7 +255,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">运费 ：</div>
+                            <div class="inputName">* 运费 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addZone.shipping_price" placeholder="" />
@@ -250,7 +267,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart" style="padding: 0px 8px 6px 22px">
                         <a-col class="gutter-row" :span=3>
-                            <div class="inputName">选择区域 ：</div>
+                            <div class="inputName">* 选择区域 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
 
@@ -280,7 +297,7 @@
 
         <!--设置其他国家物流费用弹框-->
         <a-modal
-                title="设置其他国家物流费用"
+                title="设置其他区域物流费用"
                 width="900px"
                 :visible="visible5"
                 @ok="handleOk5"
@@ -290,7 +307,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">前台显示内容 ：</div>
+                            <div class="inputName">* 前台显示内容 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addOtherCountry.name" placeholder="" />
@@ -302,7 +319,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">类型：</div>
+                            <div class="inputName">* 类型：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%" v-model="addOtherCountry.c_type" @change="handleChange">
@@ -317,7 +334,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">最大值 ：</div>
+                            <div class="inputName">* 最大值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addOtherCountry.c_max" placeholder="" />
@@ -329,7 +346,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">最小值 ：</div>
+                            <div class="inputName">* 最小值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addOtherCountry.c_min" placeholder="" />
@@ -341,7 +358,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">运费 ：</div>
+                            <div class="inputName">* 运费 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addOtherCountry.shipping_price" placeholder="" />
@@ -364,7 +381,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">前台显示内容 ：</div>
+                            <div class="inputName">* 前台显示内容 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addCountry.name" placeholder="" />
@@ -376,7 +393,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">类型：</div>
+                            <div class="inputName">* 类型：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%"  v-model="addCountry.c_type">
@@ -391,7 +408,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">最大值 ：</div>
+                            <div class="inputName">* 最大值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addCountry.c_max" placeholder="" />
@@ -403,7 +420,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">最小值 ：</div>
+                            <div class="inputName">* 最小值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addCountry.c_min" placeholder="" />
@@ -415,7 +432,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">运费 ：</div>
+                            <div class="inputName">* 运费 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addCountry.shipping_price" placeholder="" />
@@ -427,7 +444,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart" style="padding: 0px 8px 6px 22px">
                         <a-col class="gutter-row" :span=3>
-                            <div class="inputName">选择国家 ：</div>
+                            <div class="inputName">* 选择国家 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
 
@@ -468,7 +485,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">前台显示内容 ：</div>
+                            <div class="inputName">* 前台显示内容 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addState.name" placeholder="" />
@@ -480,7 +497,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">国家：</div>
+                            <div class="inputName">* 国家：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select :defaultValue="countryDefault" style="width: 100%"  @change="handleChange">
@@ -494,7 +511,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">类型：</div>
+                            <div class="inputName">* 类型：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%"  v-model="addState.c_type" >
@@ -509,7 +526,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">最大值 ：</div>
+                            <div class="inputName">* 最大值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addState.c_max" placeholder="" />
@@ -521,7 +538,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">最小值 ：</div>
+                            <div class="inputName">* 最小值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addState.c_min" placeholder="" />
@@ -533,7 +550,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">运费 ：</div>
+                            <div class="inputName">* 运费 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addState.shipping_price" placeholder="" />
@@ -545,7 +562,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart" style="padding: 0px 8px 6px 22px">
                         <a-col class="gutter-row" :span=3>
-                            <div class="inputName">选择省/州 ：</div>
+                            <div class="inputName">* 选择省/州 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
 
@@ -694,11 +711,12 @@
             },
             add3(){
                 this.isEdit=false
-
                 this.checkedList=[]
                 this.getCountryList()
                 this.visible3 = true
                 this.indeterminate=false
+                this.countryDefault='请选择国家'
+
                 this.addState={
                     state_ids:'',
                     name:'',
@@ -743,7 +761,14 @@
                 this.$post('/carrier/deleteCarrier',{carrier_id:id}).then((reData)=>{
                     if(reData.code=="0"){
                         // this.checkedList=reData.data.zone_id
-                        this.getHasSetCountryList(this.zoneId)
+                        this.getCountryList()
+                        this.$post('/carrier/getCarrierCountryAndStateList',{zone_id:this.zoneId,lang_id:this.$store.state.langId}).then((reData)=>{
+                            this.listData4=reData.data.countryCarrierList
+                            this.listData5=reData.data.stateCarrierList
+                            this.pagination1.total=reData.data.countryCarrierList.length
+                            this.pagination2.total=reData.data.stateCarrierList.length
+                            this.loading = false
+                        })
                         this.getCarrierZoneAndOtherList()
 
                     }else {
@@ -882,212 +907,266 @@
                     }
                 })
             },
+            checkoutNull(data){
+                var isNull =false
+                Object.keys(data).forEach(function(key){
+                    if(data[key]===''||data[key]=='[]'){
+                        isNull = true
+                    }
+                });
+                return isNull
+            },
             handleOk(){
-                this.addState.state_ids= this.addState.state_ids.toString().replace('[','').replace(']','')
-                if(this.isEdit){
-                    this.$post('/carrier/editCarrierState',this.addState).then((reData)=>{
-                        if(reData.code=="0"){
-                            this.getHasSetCountryList(this.zoneId)
-                            this.visible3 = false
-                            this.$notification.open({
-                                message: '成功',
-                                description: "修改成功",
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }else {
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }
+                if(this.checkoutNull(this.addState)){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写所有标*信息再提交！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
                     })
                 }else {
-                    this.$post('/carrier/addCarrierState',this.addState).then((reData)=>{
-                        if(reData.code=="0"){
-                            this.getHasSetCountryList(this.zoneId)
-                            this.visible3 = false
-                            this.$notification.open({
-                                message: '成功',
-                                description: "新增成功",
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }else {
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }
-                    })
+                    this.addState.state_ids= this.addState.state_ids.toString().replace('[','').replace(']','')
+                    if(this.isEdit){
+                        this.$post('/carrier/editCarrierState',this.addState).then((reData)=>{
+                            if(reData.code=="0"){
+                                this.getHasSetCountryList(this.zoneId)
+                                this.visible3 = false
+                                this.$notification.open({
+                                    message: '成功',
+                                    description: "修改成功",
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }else {
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                        })
+                    }else {
+                        this.$post('/carrier/addCarrierState',this.addState).then((reData)=>{
+                            if(reData.code=="0"){
+                                this.getHasSetCountryList(this.zoneId)
+                                this.visible3 = false
+                                this.$notification.open({
+                                    message: '成功',
+                                    description: "新增成功",
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }else {
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                        })
+
+                    }
 
                 }
 
             },
             handleOk2(){
-
-                this.addCountry.country_ids= this.addCountry.country_ids.toString().replace('[','').replace(']','')
-
-                if(this.isEdit){
-                    this.$post('/carrier/editCarrierCountry',this.addCountry).then((reData)=>{
-                        if(reData.code=="0"){
-                            this.getHasSetCountryList(this.zoneId)
-                            this.$notification.open({
-                                message: '成功',
-                                description: "修改成功",
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                            this.visible2 = false
-
-                        }else {
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }
+                if(this.checkoutNull(this.addCountry)){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写所有标*信息再提交！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
                     })
                 }else {
-                    this.$post('/carrier/addCarrierCountry',this.addCountry).then((reData)=>{
-                        if(reData.code=="0"){
-                            this.getHasSetCountryList(this.zoneId)
-                            this.$notification.open({
-                                message: '成功',
-                                description: "新增成功",
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                            this.visible2 = false
+                    this.addCountry.country_ids= this.addCountry.country_ids.toString().replace('[','').replace(']','')
+                    if(this.isEdit){
+                        this.$post('/carrier/editCarrierCountry',this.addCountry).then((reData)=>{
+                            if(reData.code=="0"){
+                                this.getHasSetCountryList(this.zoneId)
+                                this.$notification.open({
+                                    message: '成功',
+                                    description: "修改成功",
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                                this.visible2 = false
 
-                        }else {
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }
-                    })
+                            }else {
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                        })
+                    }else {
+                        this.$post('/carrier/addCarrierCountry',this.addCountry).then((reData)=>{
+                            if(reData.code=="0"){
+                                this.getHasSetCountryList(this.zoneId)
+                                this.$notification.open({
+                                    message: '成功',
+                                    description: "新增成功",
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                                this.visible2 = false
 
+                            }else {
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                        })
+
+                    }
                 }
+
 
             },
             handleOk3(){
 
             },
             handleOk4(){
-                this.addZone.zone_ids= this.addZone.zone_ids.toString().replace('[','').replace(']','')
-
-                if(this.isEdit){
-
-                    this.$post('/carrier/editCarrierZone',this.addZone).then((reData)=>{
-                        if(reData.code=="0"){
-                            this.visible4=false
-                            this.$notification.open({
-                                message: '成功',
-                                description: "编辑成功",
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                            this.getCarrierZoneAndOtherList()
-                        }else {
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }
+                if(this.checkoutNull(this.addZone)){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写所有标*信息再提交！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
                     })
                 }else {
-                    this.$post('/carrier/addCarrierZone',this.addZone).then((reData)=>{
-                        if(reData.code=="0"){
-                            this.visible4=false
-                            this.$notification.open({
-                                message: '成功',
-                                description: "新增成功",
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                            this.getCarrierZoneAndOtherList()
+                    this.addZone.zone_ids= this.addZone.zone_ids.toString().replace('[','').replace(']','')
+                    if(this.isEdit){
+                        this.$post('/carrier/editCarrierZone',this.addZone).then((reData)=>{
+                            if(reData.code=="0"){
+                                this.visible4=false
+                                this.$notification.open({
+                                    message: '成功',
+                                    description: "编辑成功",
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                                this.getCarrierZoneAndOtherList()
+                            }else {
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                        })
+                    }else {
+                        this.$post('/carrier/addCarrierZone',this.addZone).then((reData)=>{
+                            if(reData.code=="0"){
+                                this.visible4=false
+                                this.$notification.open({
+                                    message: '成功',
+                                    description: "新增成功",
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                                this.getCarrierZoneAndOtherList()
 
-                        }else {
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }
-                    })
+                            }else {
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                        })
+                    }
                 }
+
 
             },
             handleOk5(){
-                if(this.isEdit){
-                    this.$post('/carrier/editCarrierOther',this.addOtherCountry).then((reData)=>{
-                        if(reData.code=="0"){
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                            this.getCarrierZoneAndOtherList()
-                            this.visible5 = false
-                        }else {
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }
+                if(this.checkoutNull(this.addOtherCountry)){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写所有标*信息再提交！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
                     })
                 }else {
-                    this.$post('/carrier/addCarrierOther',this.addOtherCountry).then((reData)=>{
-                        if(reData.code=="0"){
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                            this.getCarrierZoneAndOtherList()
-                            this.visible5 = false
 
-                        }else {
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
-                        }
-                    })
+                    if(this.isEdit){
+                        this.$post('/carrier/editCarrierOther',this.addOtherCountry).then((reData)=>{
+                            if(reData.code=="0"){
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                                this.getCarrierZoneAndOtherList()
+                                this.visible5 = false
+                            }else {
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                        })
+                    }else {
+                        this.$post('/carrier/addCarrierOther',this.addOtherCountry).then((reData)=>{
+                            if(reData.code=="0"){
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                                this.getCarrierZoneAndOtherList()
+                                this.visible5 = false
+
+                            }else {
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                        })
+                    }
                 }
+
 
             },
 

@@ -106,7 +106,7 @@
     const columns = [
         {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '名称', dataIndex: 'name', key: 'name'},
-        { title: '语言', dataIndex: 'lang_id', key: 'lang_id'},
+        { title: '语言', dataIndex: 'langName', key: 'langName'},
         { title: '称呼', dataIndex: 'gender_id', key: 'gender_id'},
     ];
     const productListData = [];

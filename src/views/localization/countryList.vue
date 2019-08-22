@@ -27,7 +27,7 @@
                         <div class="inputName">国际码 ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
-                        <a-input placeholder="请输入国际码" maxlenght="3" v-model="search_data.iso_code"/>
+                        <a-input placeholder="请输入国际码" maxlength="3" v-model="search_data.iso_code"/>
                     </a-col>
                 </div>
             </a-col>
@@ -406,7 +406,7 @@
                 this.$notification.open({
                     message: '提醒',
                     duration: 2,
-                    description: "请填写所有信息再提交！",
+                    description: "请填写所有标*信息再提交！",
                     onClick: () => {
                         console.log('ok');
                     },
@@ -441,7 +441,7 @@
                     this.$notification.open({
                         message: '提醒',
                         duration: 2,
-                        description: "请填写所有信息再提交！",
+                        description: "请填写所有标*信息再提交！",
                         onClick: () => {
                             console.log('ok');
                         },
@@ -536,7 +536,7 @@
         },
         mounted() {
             var vm = this;
-            store.commit('changeStore',{key:'title',val:'区域列表'});
+            // store.commit('changeStore',{key:'title',val:'区域列表'});
             vm.getList({currentPage:1,pageSize:vm.pagination.defaultPageSize,lang_id:this.$store.state.langId})
             this.getZoneList()
             this.getLangeList()

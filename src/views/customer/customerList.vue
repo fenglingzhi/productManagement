@@ -1,13 +1,118 @@
 <template>
   <div class="customerList">
-    客户信息
-    <div class="hrLine"></div>
-    <div>
-      <div style="margin: 16px 0">
-        <a-button type="primary" @click="add_product()">
-          新增
-        </a-button>
-      </div>
+      <a-row>
+          <a-col class="gutter-row" :span="6">
+              <div class="inputPart">
+                  <a-col class="gutter-row" :span="6">
+                      <div class="inputName">客户ID：</div>
+                  </a-col>
+                  <a-col class="gutter-row" :span="18">
+                      <a-input placeholder="请输入客户ID" v-model="addCustomerInfo.customerId" />
+                  </a-col>
+              </div>
+          </a-col>
+          <a-col class="gutter-row" :span="6">
+              <div class="inputPart">
+                  <a-col class="gutter-row" :span="6">
+                      <div class="inputName">email ：</div>
+                  </a-col>
+                  <a-col class="gutter-row" :span="18">
+                      <a-input placeholder="请输入email" v-model="addCustomerInfo.email"/>
+                  </a-col>
+              </div>
+          </a-col>
+          <a-col class="gutter-row" :span="6">
+              <div class="inputPart">
+                  <a-col class="gutter-row" :span="6">
+                      <div class="inputName">称呼：</div>
+                  </a-col>
+                  <a-col class="gutter-row" :span="18">
+                      <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
+                          <a-select-option value="">请选择</a-select-option>
+                          <a-select-option value="1">男</a-select-option>
+                          <a-select-option value="2">女</a-select-option>
+                          <a-select-option value="3">中性</a-select-option>
+                      </a-select>
+                  </a-col>
+              </div>
+          </a-col>
+          <a-col class="gutter-row" :span="6">
+              <div class="inputPart">
+                  <a-col class="gutter-row" :span="6">
+                      <div class="inputName">是否启用：</div>
+                  </a-col>
+                  <a-col class="gutter-row" :span="18">
+                      <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_s">
+                          <a-select-option value="">请选择</a-select-option>
+                          <a-select-option value="1">禁用</a-select-option>
+                          <a-select-option value="0">正常</a-select-option>
+                      </a-select>
+                  </a-col>
+              </div>
+          </a-col>
+
+      </a-row>
+      <a-row>
+          <a-col class="gutter-row" :span="6">
+              <div class="inputPart">
+                  <a-col class="gutter-row" :span="6">
+                      <div class="inputName">接受简报：</div>
+                  </a-col>
+                  <a-col class="gutter-row" :span="18">
+                      <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_e">
+                          <a-select-option value="">请选择</a-select-option>
+                          <a-select-option value="1">是</a-select-option>
+                          <a-select-option value="0">否</a-select-option>
+                      </a-select>
+                  </a-col>
+              </div>
+          </a-col>
+          <a-col class="gutter-row" :span="6">
+              <div class="inputPart">
+                  <a-col class="gutter-row" :span="6">
+                      <div class="inputName">接受推销：</div>
+                  </a-col>
+                  <a-col class="gutter-row" :span="18">
+                      <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_p">
+                          <a-select-option value="">请选择</a-select-option>
+                          <a-select-option value="1">是</a-select-option>
+                          <a-select-option value="0">否</a-select-option>
+                      </a-select>
+                  </a-col>
+              </div>
+          </a-col>
+          <a-col class="gutter-row" :span="6">
+              <div class="inputPart">
+                  <a-col class="gutter-row" :span="6">
+                      <div class="inputName"> 注册时间：</div>
+                  </a-col>
+                  <a-col class="gutter-row" :span="18">
+                      <a-range-picker @change="onChange" />
+                  </a-col>
+              </div>
+          </a-col>
+      </a-row>
+      <a-row>
+          <a-col class="gutter-row" :span="6">
+              <div class="inputPart">
+                  <a-col class="gutter-row" :span="6">
+                  </a-col>
+                  <a-col class="gutter-row" :span="18">
+                      <a-row>
+                          <a-col class="gutter-row" :span="10">
+                              <a-button type="primary" @click="add_product()">
+                                  新增
+                              </a-button>
+                          </a-col>
+                          <a-col class="gutter-row" :span="10">
+                              <a-button type="primary" @click="search_product(addCustomerInfo)">搜索</a-button>
+                          </a-col>
+                      </a-row>
+                  </a-col>
+              </div>
+          </a-col>
+      </a-row>
+      <div>
       <a-table :columns="columns"
                :dataSource="productListData"
                :pagination="pagination"
@@ -600,13 +705,31 @@
             //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
-                this.getList({currentPage:pagination.current,page_size:pagination.defaultPageSize})
+                this.getList({
+                    lang_id:store.state.langId,
+                    currentPage:pagination.current,
+                    page_size:pagination.defaultPageSize
+                })
             }
             //搜索产品
             ,search_product(data){
-                this.$post('/product/getProductListPage',data).then((reData)=>{
-
+                this.$post('/customer/getCustomerListPageInfo',{
+                    lang_id:store.state.langId,
+                    currentPage:1,
+                    pageSize:this.pagination.defaultPageSize,
+                    genderId:this.addCustomerInfo.genderId,
+                    firstname:this.addCustomerInfo.firstname,
+                    lastname:this.addCustomerInfo.lastname,
+                    email:this.addCustomerInfo.email,
+                    passwd:this.addCustomerInfo.passwd,
+                    birthday:this.addCustomerInfo.birthday,
+                    active:this.addCustomerInfo.active,
+                    newsletter:this.addCustomerInfo.newsletter,
+                    optin:this.addCustomerInfo.optin,
+                    customerId:this.addCustomerInfo.customerId,
+                }).then((reData)=>{
                     this.productListData=reData.data.dataList
+                    this.pagination.currentPage = reData.data.page.currentPage
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
                 })
@@ -620,7 +743,12 @@
             ,change_active(data){
                 this.$post('/product/editDisableProduct',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        this.getList({
+                            lang_id:store.state.langId,
+                            currentPage:this.pagination.currentPage,
+                            pageSize:this.pagination.defaultPageSize
+
+                        });
                     }
                 })
             }
@@ -628,7 +756,10 @@
             ,deleteProduct(data){
                 this.$post('/customer/removeCustomerInfo',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        this.getList({
+                            lang_id:store.state.langId,
+                            pageSize:this.pagination.defaultPageSize
+                        });
                     }
                 })
             }
@@ -642,7 +773,11 @@
         mounted() {
             var vm = this
             // store.commit('changeStore',{key:'title',val:'产品列表'});
-            vm.getList({lang_id:store.state.langId,currentPage:1,pageSize:vm.pagination.defaultPageSize})
+            vm.getList({
+                lang_id:store.state.langId,
+                currentPage:1,
+                pageSize:vm.pagination.defaultPageSize
+            })
             vm.getGender();
         },
 

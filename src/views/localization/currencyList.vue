@@ -27,7 +27,7 @@
                         <div class="inputName">国际码 ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
-                        <a-input placeholder="请输入国际码" maxlenght="3" v-model="search_data.iso_code"/>
+                        <a-input placeholder="请输入国际码" maxlength="3" v-model="search_data.iso_code"/>
                     </a-col>
                 </div>
             </a-col>
@@ -39,7 +39,7 @@
                         <div class="inputName">国际码数字：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
-                        <a-input placeholder="请输入国际码数字" maxlenght="3" type="number" v-model="search_data.iso_code_num" />
+                        <a-input placeholder="请输入国际码数字" maxlength="3" type="number" v-model="search_data.iso_code_num" />
                     </a-col>
                 </div>
             </a-col>
@@ -469,7 +469,7 @@
                 this.$notification.open({
                     message: '提醒',
                     duration: 2,
-                    description: "请填写所有信息再提交！",
+                    description: "请填写所有标*信息再提交！",
                     onClick: () => {
                         console.log('ok');
                     },
@@ -506,7 +506,7 @@
                     this.$notification.open({
                         message: '提醒',
                         duration: 2,
-                        description: "请填写所有信息再提交！",
+                        description: "请填写所有标*信息再提交！",
                         onClick: () => {
                             console.log('ok');
                         },

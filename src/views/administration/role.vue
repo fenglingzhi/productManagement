@@ -48,7 +48,7 @@
                           <div class="inputName">*名称：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="15">
-                          <a-input placeholder="" v-model="addCod.role_name" />
+                          <a-input placeholder="" maxlength="32" v-model="addCod.role_name" />
                         </a-col>
                       </div>
                   </a-row>
@@ -268,6 +268,7 @@
         },
         mounted() {
             var vm = this;
+            // store.commit('changeStore',{key:'title',val:'币种列表'});
             vm.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize})
         },
 
