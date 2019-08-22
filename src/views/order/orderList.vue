@@ -1,43 +1,43 @@
 <template>
-<!--<<<<<<< HEAD-->
-    <!--<div class="orderList">-->
-        <!--客户信息-->
-        <!--<div class="hrLine"></div>-->
-        <!--<div>-->
-            <!--<a-table :columns="columns"-->
-                     <!--:dataSource="productListData"-->
-                     <!--:pagination="pagination"-->
-                     <!--:loading="loading"-->
-                     <!--align="center"-->
-                     <!--@change="handleTableChange"-->
-                     <!--:rowSelection="rowSelection"-->
-                     <!--:scroll="{ x: 3800 }">-->
-          <!--<span slot="action" slot-scope="text, record">-->
-              <!--<a @click="searchFun({order_id:record.order_id})">查看</a>-->
-          <!--</span>-->
-            <!--</a-table>-->
-        <!--</div>-->
-        <!--<div class="editCustomerGender">-->
-            <!--<a-modal-->
-                    <!--title="查看订单信息"-->
-                    <!--v-model="visible_search"-->
-                    <!--@ok="submitSearch"-->
-                    <!--:destroyOnClose="true"-->
-            <!--&gt;-->
-                <!--<a-card :bordered="false"-->
-                        <!--:headStyle="{'padding': 0,'font-size': '16px','color':'red'}"-->
-                        <!--:bodyStyle="{padding: '15px'}"-->
-                        <!--style="margin-top: -20px;font-size: 14px;">-->
-                    <!--<a-row>-->
-                        <!--<a-col :span="12">-->
-                            <!--<p>添加时间：{{orderListDetail}}</p>-->
-                        <!--</a-col>-->
-                        <!--&lt;!&ndash;<a-col :span="12">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<p>平台类型：{{customerCartInfo.cartInfo.mobile_type}}</p>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a-col>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a-col :span="12">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<p>币种标识：{{customerCartInfo.cartInfo.sign}}</p>&ndash;&gt;-->
-<!--=======-->
+  <!--<<<<<<< HEAD-->
+  <!--<div class="orderList">-->
+  <!--客户信息-->
+  <!--<div class="hrLine"></div>-->
+  <!--<div>-->
+  <!--<a-table :columns="columns"-->
+  <!--:dataSource="productListData"-->
+  <!--:pagination="pagination"-->
+  <!--:loading="loading"-->
+  <!--align="center"-->
+  <!--@change="handleTableChange"-->
+  <!--:rowSelection="rowSelection"-->
+  <!--:scroll="{ x: 3800 }">-->
+  <!--<span slot="action" slot-scope="text, record">-->
+  <!--<a @click="searchFun({order_id:record.order_id})">查看</a>-->
+  <!--</span>-->
+  <!--</a-table>-->
+  <!--</div>-->
+  <!--<div class="editCustomerGender">-->
+  <!--<a-modal-->
+  <!--title="查看订单信息"-->
+  <!--v-model="visible_search"-->
+  <!--@ok="submitSearch"-->
+  <!--:destroyOnClose="true"-->
+  <!--&gt;-->
+  <!--<a-card :bordered="false"-->
+  <!--:headStyle="{'padding': 0,'font-size': '16px','color':'red'}"-->
+  <!--:bodyStyle="{padding: '15px'}"-->
+  <!--style="margin-top: -20px;font-size: 14px;">-->
+  <!--<a-row>-->
+  <!--<a-col :span="12">-->
+  <!--<p>添加时间：{{orderListDetail}}</p>-->
+  <!--</a-col>-->
+  <!--&lt;!&ndash;<a-col :span="12">&ndash;&gt;-->
+  <!--&lt;!&ndash;<p>平台类型：{{customerCartInfo.cartInfo.mobile_type}}</p>&ndash;&gt;-->
+  <!--&lt;!&ndash;</a-col>&ndash;&gt;-->
+  <!--&lt;!&ndash;<a-col :span="12">&ndash;&gt;-->
+  <!--&lt;!&ndash;<p>币种标识：{{customerCartInfo.cartInfo.sign}}</p>&ndash;&gt;-->
+  <!--=======-->
   <div class="orderList">
     <div class="high-search">
       <a-form class="ant-advanced-search-form" @submit="handleSearch" id="orderList-search">
@@ -61,26 +61,21 @@
         <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="支付金额">
-              <a-input placeholder="请输入金额" v-model="form_search.total_paid_tax_excl" />
+              <a-input placeholder="请输入金额" v-model="form_search.total_paid" />
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="币种id">
-              <a-input placeholder="仅接受数字" v-model="form_search.currency_id" />
+            <a-form-item label="币种">
+              <a-input placeholder="请输入币种" v-model="form_search.iso_code" />
             </a-form-item>
           </a-col>
-          <a-col :span="8">
-            <a-form-item label="客户id">
-              <a-input placeholder="仅接受数字" v-model="form_search.customer_id" />
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="客户邮箱">
               <a-input placeholder="请输入邮箱" v-model="form_search.email" />
             </a-form-item>
           </a-col>
+        </a-row>
+        <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="运送国家">
               <a-input placeholder="请输入国家" v-model="form_search.country_name" />
@@ -90,23 +85,27 @@
             <a-form-item label="订单创建时间">
               <!-- <a-input placeholder="输入订单创建时间" v-model="form_search.add_date" /> -->
               <a-date-picker
-                format="YYYY-MM-DD"
+                format="YYYY-MM-DD hh:mm:ss"
                 showTime
-                @change="add_date_onchange"
+                v-model="form_search.add_date"
                 style="width:174px"
               ></a-date-picker>
             </a-form-item>
           </a-col>
-        </a-row>
-        <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="订单状态">
               <a-input placeholder="输入订单状态" v-model="form_search.order_state_name" />
             </a-form-item>
           </a-col>
+        </a-row>
+        <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="有效单">
-              <a-input placeholder="是否是有效单" v-model="form_search.valid" />
+              <a-select v-model="form_search.valid" defaultValue="请选择" style="width:174px;">
+                <a-select-option value="请选择">请选择</a-select-option>
+                <a-select-option value="1">是</a-select-option>
+                <a-select-option value="0">否</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
           <a-col :span="8" :style="{ paddingLeft: '111px' }">
@@ -114,12 +113,6 @@
             <a-button :style="{ marginLeft: '8px' }" @click="handleReset">清空</a-button>
           </a-col>
         </a-row>
-        <!-- <a-row>
-          <a-col :span="24" :style="{ textAlign: 'left' }">
-            <a-button type="primary" html-type="submit">搜索</a-button>
-            <a-button :style="{ marginLeft: '8px' }" @click="handleReset">清空</a-button>
-          </a-col>
-        </a-row>-->
       </a-form>
     </div>
     <div class="hrLine"></div>
@@ -155,7 +148,7 @@
             <!--</a-col>-->
             <!--<a-col :span="12">-->
             <!--<p>币种标识：{{customerCartInfo.cartInfo.sign}}</p>-->
-<!--&gt;>>>>>> 8fbbf3e14b34155167ce6ea882172a9984305175-->
+            <!--&gt;>>>>>> 8fbbf3e14b34155167ce6ea882172a9984305175-->
 
             <!--</a-col>-->
             <!--<a-col :span="12">-->
@@ -219,7 +212,18 @@ export default {
   },
   data() {
     return {
-      form_search: {},
+      form_search: {
+        order_id: "", //订单id
+        ycang_order_id: "", //易仓id
+        payment: "", //支付方式
+        total_paid: "", //支付金额
+        iso_code: "", //币种
+        email: "", //邮箱
+        country_name: "", //国家
+        add_date: null, //订单创建时间
+        order_state_name: "", //订单状态
+        valid: "请选择" //有效订单
+      },
       productListData: [],
       columns: [
         {
@@ -240,8 +244,8 @@ export default {
           dataIndex: "total_paid_tax_excl",
           key: "total_paid_tax_excl"
         },
-        { title: "币种id", dataIndex: "currency_id", key: "currency_id" },
-        { title: "客户id", dataIndex: "customer_id", key: "customer_id" },
+        { title: "币种", dataIndex: "iso_code", key: "iso_code" },
+        // { title: "客户id", dataIndex: "customer_id", key: "customer_id" },
         { title: "客户邮箱", dataIndex: "email", key: "email" },
         { title: "运送国家", dataIndex: "country_name", key: "country_name" },
         {
@@ -337,17 +341,34 @@ export default {
   methods: {
     handleSearch(e) {
       e.preventDefault();
-      console.log("搜索事件！");
+      // console.log(this.form_search);
+      let searchObj = {};
+      for (const key in this.form_search) {
+        if (
+          this.form_search[key] != "" &&
+          this.form_search[key] != null &&
+          this.form_search[key] != "请选择"
+        ) {
+          searchObj[key] = this.form_search[key];
+        }
+      }
     },
     handleReset() {
-      console.log("reset事件！");
+      // 重置表单
+      Object.assign(this.form_search, {
+        order_id: "",
+        ycang_order_id: "",
+        payment: "",
+        total_paid: "",
+        iso_code: "",
+        email: "",
+        country_name: "",
+        add_date: null,
+        order_state_name: "",
+        valid: "请选择"
+      });
     },
     moment,
-    //性别
-    // handleChange(value) {
-    //   console.log(`selected ${value}`);
-    //   this.addCustomerInfo.genderId = value;
-    // },
     //查看详情
     searchFun(data) {
       this.getListDetail(data);
@@ -357,7 +378,8 @@ export default {
       this.visible_search = false;
     },
     // 获取订单信息列表
-    getList(data) {
+    getList(pageObj, searchObj = {}) {
+      let data = Object.assign({}, pageObj, searchObj);
       this.loading = true;
       this.$post("/order/getOrderInfoPage", data).then(reData => {
         let dataList = JSON.parse(JSON.stringify(reData.data.dataList));
@@ -382,7 +404,7 @@ export default {
     },
     //表格分页事件
     handleTableChange(pagination) {
-      console.log(pagination);
+      // console.log(pagination);
       this.getList({
         currentPage: pagination.current,
         pageSize: pagination.pageSize
@@ -391,30 +413,9 @@ export default {
     add_date_onchange(date, dateString) {
       this.form_search.add_date = Date.parse(dateString);
     }
-    //搜索产品
-    // search_product(data) {
-    //   this.$post("/product/getProductListPage", data).then(reData => {
-    //     this.productListData = reData.data.dataList;
-    //     this.pagination.total = reData.data.page.totalResultSize;
-    //     this.loading = false;
-    //   });
-    // },
-    //时间选择
-    // onChange(date, dateString) {
-    //   console.log(dateString);
-    //   this.addCustomerInfo.birthday = dateString;
-    // },
-    //更改商品状态
-    // change_active(data) {
-    //   this.$post("/product/editDisableProduct", data).then(reData => {
-    //     if (reData.code === "0") {
-    //       this.getList({ page: 1, page_size: this.pagination.defaultPageSize });
-    //     }
-    //   });
-    // }
   },
   mounted() {
-    store.commit("changeStore", { key: "title", val: "产品列表" });
+    // store.commit("changeStore", { key: "title", val: "产品列表" });
     this.getList({ currentPage: 1, pageSize: this.pagination.pageSize });
   }
 };

@@ -120,7 +120,13 @@
             <a-divider type="vertical"></a-divider>
             <a @click="goDel(text)">删除</a>
           </span>
-          <a slot="image_url" slot-scope="text" :href="text.image_url" target="_blank">
+          <a
+            slot="image_url"
+            slot-scope="text"
+            :href="text.image_url"
+            target="_blank"
+            class="img_box"
+          >
             <img :src="text.image_url" alt />
           </a>
           <a slot="active" slot-scope="text" style="text-align: center">
@@ -237,20 +243,55 @@ export default {
       ],
       // 数据
       attributeList: [
-        { id: "1", image_type: "1", content: "CAROUSEL BANNER(轮播图)" },
-        { id: "2", image_type: "2", content: "TRIPLE VERTICAL BANNER(3张)" },
-        { id: "3", image_type: "3", content: "DOUBLE SQUARE BANNER(2张)" },
-        { id: "4", image_type: "4", content: "LEFT ONE RIGHT TWO(左1)" },
-        { id: "5", image_type: "5", content: "LEFT ONE RIGHT TWO(右上)" },
-        { id: "6", image_type: "6", content: "LEFT ONE RIGHT TWO(右下)" },
-        { id: "7", image_type: "7", content: "QUARTETTE VERTICAL BANNER(四张)" }
+        {
+          key: "1",
+          id: "1",
+          image_type: "1",
+          content: "CAROUSEL BANNER(轮播图)"
+        },
+        {
+          key: "2",
+          id: "2",
+          image_type: "2",
+          content: "TRIPLE VERTICAL BANNER(3张)"
+        },
+        {
+          key: "3",
+          id: "3",
+          image_type: "3",
+          content: "DOUBLE SQUARE BANNER(2张)"
+        },
+        {
+          key: "4",
+          id: "4",
+          image_type: "4",
+          content: "LEFT ONE RIGHT TWO(左1)"
+        },
+        {
+          key: "5",
+          id: "5",
+          image_type: "5",
+          content: "LEFT ONE RIGHT TWO(右上)"
+        },
+        {
+          key: "6",
+          id: "6",
+          image_type: "6",
+          content: "LEFT ONE RIGHT TWO(右下)"
+        },
+        {
+          key: "7",
+          id: "7",
+          image_type: "7",
+          content: "QUARTETTE VERTICAL BANNER(四张)"
+        }
       ],
       // detail数据
       columns_detail: [
         {
           title: "操作",
           key: "action_detail",
-          fixed: "left",
+          // fixed: "left",
           scopedSlots: { customRender: "action_detail" }
         },
         {
@@ -320,7 +361,7 @@ export default {
     goSee(text) {
       this.attributeList_detail = [];
       this.getDetail(text.image_type).then(res => {
-        // console.log(res);
+        console.log(res);
         if (res.code == "0") {
           let arr = JSON.parse(JSON.stringify(res.data));
           arr.forEach(element => {
@@ -528,5 +569,8 @@ export default {
 .inputName span {
   color: red;
   margin-right: 5px;
+}
+.img_box img {
+  max-width: 100px;
 }
 </style>
