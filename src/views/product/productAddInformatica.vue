@@ -1,6 +1,7 @@
 <template>
             <div class="producetAdd">
                 <div class="secondTitle">
+
                     <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
                         产品信息：
                     </a-col>
@@ -18,30 +19,30 @@
                 <a-row>
                     <a-col class="gutter-row" :span="6">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
+                            <a-col class="gutter-row" :span="8">
                                 <div class="inputName">*商品编号：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="18">
+                            <a-col class="gutter-row" :span="16">
                                 <a-input v-model="postData.product_code"  maxlength="32" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
                     <a-col class="gutter-row" :span="6">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
+                            <a-col class="gutter-row" :span="8">
                                 <div class="inputName">*商品名称：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="18">
+                            <a-col class="gutter-row" :span="16">
                                 <a-input v-model="postData.name" placeholder=""/>
                             </a-col>
                         </div>
                     </a-col>
                     <a-col class="gutter-row" :span="6">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
+                            <a-col class="gutter-row" :span="8">
                                 <div class="inputName">UPC码：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="18">
+                            <a-col class="gutter-row" :span="16">
                                 <a-input v-model="postData.upc"  maxlength="12" placeholder=""/>
                             </a-col>
                         </div>
@@ -50,10 +51,10 @@
                 <a-row>
                     <a-col class="gutter-row" :span="6">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
+                            <a-col class="gutter-row" :span="8">
                                 <div class="inputName">*商品类型：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="18">
+                            <a-col class="gutter-row" :span="16">
                                 <a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">
                                     <a-select-option value="1">一般商品</a-select-option>
                                     <a-select-option value="2">已存在商品组合</a-select-option>
@@ -62,15 +63,14 @@
                             </a-col>
                         </div>
                     </a-col>
-
                 </a-row>
                 <a-row>
                     <a-col class="gutter-row" :span="12">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="3">
+                            <a-col class="gutter-row" :span="4">
                                 <div class="inputName">商品标签 ：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="21">
+                            <a-col class="gutter-row" :span="20">
                                 <!--<a-input v-model="postData.product_label" placeholder=""/>-->
 
                                 <template>
@@ -112,10 +112,10 @@
                 <a-row>
                     <a-col class="gutter-row" :span="6">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
+                            <a-col class="gutter-row" :span="8">
                                 <div class="inputName">*是否启用：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="18" style="line-height: 30px">
+                            <a-col class="gutter-row" :span="16" style="line-height: 30px">
                                 <a-radio-group @change="onChangeIsUse" name="radioGroup" :defaultValue="1">
                                     <a-radio :value="0">启用</a-radio>
                                     <a-radio :value="1">禁止</a-radio>
@@ -131,10 +131,10 @@
                 <a-row>
                     <a-col class="gutter-row" :span="6">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="6">
+                            <a-col class="gutter-row" :span="8">
                                 <div class="inputName">商品简介：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="18">
+                            <a-col class="gutter-row" :span="16">
                                 <a-textarea v-model="postData.description_short" placeholder="Basic usage" :rows="4"/>
                             </a-col>
                         </div>
@@ -142,12 +142,12 @@
                 </a-row>
 
                 <a-row>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <div class="inputPart">
-                            <a-col class="gutter-row" :span="2">
+                            <a-col class="gutter-row" :span="3">
                                 <div class="inputName">产品详情：</div>
                             </a-col>
-                            <a-col class="gutter-row" :span="22">
+                            <a-col class="gutter-row" :span="21">
                                 <tinymce-editor v-model="postData.description"
                                                 :disabled="disabled"
                                                 ref="editor"></tinymce-editor>
@@ -361,10 +361,10 @@
     }
 </script>
 <style scoped>
-  .inputName{
-    text-align: right;
-    line-height: 34px;
-  }
+    .inputName {
+        text-align: right;
+        line-height: 34px;
+    }
   .ant-row{
     margin: 10px 0;
   }

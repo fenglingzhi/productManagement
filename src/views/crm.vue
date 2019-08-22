@@ -9,9 +9,11 @@
                               v-model="$store.state.activeKey"
                               type="editable-card"
                               @edit="onEdit"
-                              :tabClick="changeTab"
+                              @tabClick="changeTab"
+
+
                       >
-                          <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closable="pane.closable">
+                          <a-tab-pane v-for="pane in panes" :tab="pane.title"   :key="pane.key" :closable="pane.closable">
                               <componet :is="pane.content"></componet>
                           </a-tab-pane>
                       </a-tabs>
@@ -115,13 +117,18 @@
 
             },
             changeTab(key){
-                store.commit('changeStore',{key:'activeKey',val:key});
+                this.$store.state.tabArray.forEach(function(val, index) {
+                    if(val.key==key){
+                        store.commit('changeStore',{key:'title',val:val.title});
+
+                    }
+                });
             },
             onEdit (targetKey, action) {
+
                 this[action](targetKey)
             },
             remove (targetKey) {
-
                 let activeKey = this.$store.state.activeKey
                 let lastIndex
                 this.$store.state.tabArray.forEach((pane, i) => {
@@ -133,8 +140,7 @@
                 if (lastIndex >= 0 && activeKey === targetKey) {
                     activeKey = panes[lastIndex].key
                 }
-                console.log(panes)
-                console.log(activeKey)
+
                 store.commit('changeStore',{key:'tabArray',val:panes});
                 store.commit('changeStore',{key:'activeKey',val:activeKey});
 

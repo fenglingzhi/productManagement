@@ -40,7 +40,7 @@
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
-            <div class="inputName"> 商品创建时间：</div>
+            <div class="inputName"> 创建时间：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
             <a-range-picker @change="onChange" />

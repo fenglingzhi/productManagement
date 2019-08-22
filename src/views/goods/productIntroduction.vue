@@ -17,10 +17,10 @@
             <a-row class="gutter-row">
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="6">
+                        <a-col class="gutter-row" :span="8">
                             <div class="inputName">*分类：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-select  style="width: 100%" defaultValue="请选择分类" @change="handleChangeSelect">
                                 <a-select-option v-for="item in categoryList" :value="item.category_id">{{item.name}}</a-select-option>
                             </a-select>
@@ -31,7 +31,7 @@
             <a-row>
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="6">
+                        <a-col class="gutter-row" :span="8">
                             <div class="inputName">*选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
@@ -61,10 +61,10 @@
             <a-row class="gutter-row">
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="6">
+                        <a-col class="gutter-row" :span="8">
                             <div class="inputName">*选择分类：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <template>
                                 <a-tree
                                         @expand="onExpand"
@@ -82,7 +82,7 @@
             <a-row>
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="6">
+                        <a-col class="gutter-row" :span="8">
                             <div class="inputName">*选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
@@ -114,7 +114,7 @@
             <a-row>
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="6">
+                        <a-col class="gutter-row" :span="8">
                             <div class="inputName">*选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
@@ -143,10 +143,10 @@
             <a-row class="gutter-row">
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="6">
+                        <a-col class="gutter-row" :span="8">
                             <div class="inputName">*Tag标签：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-select  style="width: 100%" defaultValue="请选择标签" @change="handleChangeSelect4">
                                 <a-select-option v-for="item in tagList" :value="item.tag_id">{{item.name}}</a-select-option>
                             </a-select>
@@ -157,7 +157,7 @@
             <a-row>
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="6">
+                        <a-col class="gutter-row" :span="8">
                             <div class="inputName">*选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">

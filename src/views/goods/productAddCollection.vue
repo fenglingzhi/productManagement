@@ -15,10 +15,10 @@
         <a-row class="gutter-row">
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="8">
                         <div class="inputName">*默认分类：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">
                             <a-select-option value="1">比基尼</a-select-option>
                             <a-select-option value="2">连体裤</a-select-option>
@@ -32,10 +32,10 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="8">
                         <div class="inputName">*分类选择：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
 
                         <template>
                             <a-tree

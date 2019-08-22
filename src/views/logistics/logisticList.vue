@@ -23,6 +23,10 @@
           <span slot="action" slot-scope="text, record">
               <a @click="getHasSetCountryList(record.zone_id)">查看</a>
           </span>
+            <span slot="shipping_price" slot-scope="text, record">
+              ${{text.shipping_price}}
+          </span>
+
         </a-table>
         <div class="hrLine"></div>
         <div class="secondTitle">
@@ -48,6 +52,9 @@
                  <a-divider type="vertical"></a-divider>
               <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
+            <span slot="shipping_price" slot-scope="text, record">
+              ${{text.shipping_price}}
+          </span>
         </a-table>
         <div class="hrLine"></div>
         <div class="secondTitle">
@@ -72,6 +79,9 @@
               <a @click="edit5(record.carrier_id)">编辑</a>
                  <a-divider type="vertical"></a-divider>
               <a @click="deleteCarrier(record.carrier_id)">删除</a>
+          </span>
+            <span slot="shipping_price" slot-scope="text, record">
+              ${{text.shipping_price}}
           </span>
         </a-table>
 
@@ -110,7 +120,9 @@
               <a-divider type="vertical"></a-divider>
               <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
-
+                <span slot="shipping_price" slot-scope="text, record">
+              ${{text.shipping_price}}
+          </span>
           <!--<span slot="c_min" slot-scope="text, record">-->
                 <!--<span v-if="text.c_type">{{text.c_min}}kg</span>-->
           <!--</span>-->
@@ -146,7 +158,9 @@
               <a-divider type="vertical"></a-divider>
               <a @click="deleteCarrier(record.carrier_id)">删除</a>
           </span>
-
+                <span slot="shipping_price" slot-scope="text, record">
+              ${{text.shipping_price}}
+          </span>
                 <!--<span slot="c_min" slot-scope="text, record">-->
                 <!--<span v-if="text.c_type">{{text.c_min}}kg</span>-->
                 <!--</span>-->
@@ -342,6 +356,7 @@
                 width="900px"
                 :visible="visible2"
                 @ok="handleOk2"
+                :destroyOnClose="true"
                 @cancel="handleCancel2"
         >
 
@@ -595,7 +610,8 @@
         { title: '前台显示', align:'center',dataIndex: 'name', key: 'name'},
         { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
         { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
-        { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
+        // { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
+        { title: '运费', align:'center', key:'shipping_price', scopedSlots: { customRender: 'shipping_price' }},
         // { title: '是否是其他', align:'center',dataIndex: 'c_other', key: 'c_other'},
 
     ];
@@ -606,7 +622,9 @@
         { title: '前台显示', align:'center',dataIndex: 'name', key: 'name'},
         { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
         { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
-        { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
+        // { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
+        { title: '运费', align:'center', key:'shipping_price', scopedSlots: { customRender: 'shipping_price' }},
+
         // { title: '是否是其他', align:'center',dataIndex: 'c_other', key: 'c_other'},
 
     ];
@@ -616,7 +634,8 @@
         { title: '前台显示', align:'center',dataIndex: 'name', key: 'name'},
         { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
         { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
-        { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
+        // { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
+        { title: '运费', align:'center', key:'shipping_price', scopedSlots: { customRender: 'shipping_price' }},
 
     ];
     const listData1 =[]
@@ -1088,6 +1107,7 @@
         getHasSetCountryList(zoneId){
             this.loading = true;
             this.zoneId=zoneId
+            this.getCountryList()
             this.$post('/carrier/getCarrierCountryAndStateList',{zone_id:this.zoneId,lang_id:this.$store.state.langId}).then((reData)=>{
                 this.listData4=reData.data.countryCarrierList
                 this.listData5=reData.data.stateCarrierList
@@ -1100,7 +1120,7 @@
 
             // 获取启用的国家列表
             getCountryList(){
-                this.$post('/country/getCountryList',{lang_id:this.$store.state.langId}).then((reData)=>{
+                this.$post('/country/getCountryList',{lang_id:this.$store.state.langId,zone_id:this.zoneId}).then((reData)=>{
                     // this.countryList=reData.data
                     this.countryList = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"label").replace(/country_id/g,"value"))
 
@@ -1187,12 +1207,12 @@
         } ,
         mounted() {
             var vm =this
-            // this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize,active:1})
             this.getCarrierZoneAndOtherList()
 
         },
         data() {
             return {
+                choseZoneId:'',
                 countryDefault:'请选择',
                 zoneId:'',
                 isEdit:false,

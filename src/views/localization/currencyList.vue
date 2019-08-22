@@ -3,30 +3,30 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="7">
                         <div class="inputName">币种ID：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入币种ID" v-model="search_data.currency_id" />
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="7">
                         <div class="inputName">币种名称 ：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入币种名称" v-model="search_data.name"/>
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="7">
                         <div class="inputName">国际码 ：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入国际码" maxlenght="3" v-model="search_data.iso_code"/>
                     </a-col>
                 </div>
@@ -35,10 +35,10 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="7">
                         <div class="inputName">国际码数字：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入国际码数字" maxlenght="3" type="number" v-model="search_data.iso_code_num" />
                     </a-col>
                 </div>
@@ -46,10 +46,10 @@
 
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="7">
                         <div class="inputName">状态：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-select defaultValue="不限" style="width: 100%"  v-model="search_data.active">
                             <a-select-option value="">不限</a-select-option>
                             <a-select-option value="1">是</a-select-option>

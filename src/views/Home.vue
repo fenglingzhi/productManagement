@@ -127,7 +127,7 @@
                 newKey.push(key)
                 store.commit('changeStore',{key:'menuKey',val:newKey});
 
-
+                store.commit('changeStore',{key:'title',val:title});
                 var oldMenu= this.$store.state.tabArray
                 var isAddTab = true
                 oldMenu.forEach((item, index) => {
@@ -153,8 +153,8 @@
         },
         watch: {
             "$store.state.activeKey"() {
-                this.choseWhich(1,1,this.$store.state.activeKey)
-                this.menuKey.splice(0,this.menuKey,length)
+                this.choseWhich(this.$store.state.title,1,this.$store.state.activeKey)
+                // this.menuKey.splice(0,this.menuKey.length)
                 // this.menuKey.push(this.$store.state.activeKey)
             },
 
