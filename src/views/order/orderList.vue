@@ -307,7 +307,7 @@ export default {
     // }
   },
   mounted() {
-    store.commit("changeStore", { key: "title", val: "产品列表" });
+    // store.commit("changeStore", { key: "title", val: "产品列表" });
     this.getList({ currentPage: 1, pageSize: this.pagination.pageSize });
   }
 };

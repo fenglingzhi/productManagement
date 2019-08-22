@@ -381,7 +381,7 @@
         },
         mounted() {
             var vm = this
-            store.commit('changeStore',{key:'title',val:'产品列表'});
+            // store.commit('changeStore',{key:'title',val:'产品列表'});
             vm.getList()
         },
 

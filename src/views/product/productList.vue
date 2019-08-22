@@ -288,7 +288,7 @@
         },
         mounted() {
             var vm = this
-            store.commit('changeStore',{key:'title',val:'产品列表'});
+            // store.commit('changeStore',{key:'title',val:'产品列表'});
             vm.getList({currentPage:1,page_size:vm.pagination.defaultPageSize})
         },
 
