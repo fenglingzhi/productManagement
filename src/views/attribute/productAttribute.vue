@@ -166,6 +166,7 @@
                 visible_search: false,
                 loading: false,
                 pagination:{
+                    currentPage:'1',
                     defaultPageSize:10,
                     total:1,
                 },
@@ -241,10 +242,20 @@
                         if(reData.code === '0'){
                             if(this.addAttributeInfo.parent_id === 0){
                                 this.visible_add = false;
-                                this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                                this.getList({
+                                    parent_id:0,
+                                    currentPage:this.pagination.currentPage,
+                                    pageSize:this.pagination.defaultPageSize,
+                                    lang_id:store.state.langId
+                                })
                             } else {
                                 this.visible_add = false;
-                                this.getList({parent_id:this.addAttributeInfo.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                                this.getList({
+                                    parent_id:this.addAttributeInfo.parent_id,
+                                    currentPage:this.pagination.currentPage,
+                                    pageSize:this.pagination.defaultPageSize,
+                                    lang_id:store.state.langId
+                                })
                             }
 
                         } else {
@@ -311,28 +322,22 @@
             //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
-                this.getList({page:pagination.current,page_size:pagination.defaultPageSize})
+                this.getList({
+                    parent_id:this.addAttributeInfo.parent_id,
+                    currentPage:pagination.current,
+                    pageSize:pagination.defaultPageSize,
+                    lang_id:store.state.langId
+                })
             }
             //删除商品
             ,deleteProduct(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({parent_id:this.addAttributeInfo.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
-                    } else {
-                        this.$notification.open({
-                            message: reData.message,
-                        });
-                    }
-                })
-            }
-            //批量删除
-            ,deleteAllAttribute(data){
-                this.$post('/property/deleteProperty',data).then((reData)=>{
-                    if(reData.code === '0'){
-                        this.$notification.open({
-                            message: reData.message,
-                        });
-                        this.getList({parent_id:data.parent_id,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                        this.getList({
+                            parent_id:this.addAttributeInfo.parent_id,
+                            pageSize:this.pagination.defaultPageSize,
+                            lang_id:store.state.langId
+                        })
                     } else {
                         this.$notification.open({
                             message: reData.message,
@@ -345,7 +350,11 @@
                 this.addAttributeInfo.parent_id = data;
                 console.log(data)
                 if(this.flag === 0){
-                    this.getList({parent_id:data,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                    this.getList({
+                        parent_id:data,
+                        pageSize:this.pagination.defaultPageSize,
+                        lang_id:store.state.langId
+                    })
                     this.flag = 1;
                 }
             }
@@ -353,7 +362,11 @@
             ,returnAttribute(){
                 this.flag = 0;
                 this.addAttributeInfo.parent_id = 0;
-                this.getList({parent_id:0,pageSize:this.pagination.defaultPageSize,lang_id:store.state.langId})
+                this.getList({
+                    parent_id:0,
+                    pageSize:this.pagination.defaultPageSize,
+                    lang_id:store.state.langId
+                })
             }
             //表单校验
             ,checkForm(obj){
@@ -364,7 +377,12 @@
         mounted() {
             var vm = this;
             // store.commit('changeStore',{key:'title',val:'属性列表'});
-            vm.getList({parent_id:0,pageSize:vm.pagination.defaultPageSize,lang_id:store.state.langId})
+            vm.getList({
+                parent_id:0,
+                currentPage:this.pagination.currentPage,
+                pageSize:vm.pagination.defaultPageSize,
+                lang_id:store.state.langId
+            })
         },
 
     }
