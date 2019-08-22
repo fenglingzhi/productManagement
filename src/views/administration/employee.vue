@@ -178,6 +178,7 @@
                     currentPage:1,
                     defaultPageSize:10,
                     total:1,
+                    lastPageSize:''
                 }, 
                 deleteAllData:'',
             }
@@ -331,6 +332,9 @@
                 this.$post('/employee/getEmployeeInfoPage',data).then((reData)=>{
                     console.log(reData)
                     this.attributeList=reData.data.dataList
+                    if(reData.data.dataList.length == 1){
+                        this.pagination.lastPageSize = 1;
+                    }
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
                 })
@@ -354,6 +358,9 @@
                             },
                         })
                     //  this.$message.success(reData.message);
+                        if(this.pagination.lastPageSize == 1 && this.pagination.currentPage>=2){
+                            this.pagination.currentPage = this.pagination.currentPage - 1
+                        }
                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
                     } else {
                         this.$notification.open({
@@ -395,6 +402,7 @@
         },
         mounted() {
             var vm = this;
+            // store.commit('changeStore',{key:'title',val:'币种列表'});
             vm.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize})
         },
 

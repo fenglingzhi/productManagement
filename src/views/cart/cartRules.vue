@@ -967,7 +967,7 @@
         },
         mounted() {
             var vm = this;
-            store.commit('changeStore',{key:'title',val:'购物车'});
+            // store.commit('changeStore',{key:'title',val:'购物车'});
             vm.getList({currentPage:vm.pagination.current,pageSize:vm.pagination.defaultPageSize})
         },
 
