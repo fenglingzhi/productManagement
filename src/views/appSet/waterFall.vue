@@ -35,7 +35,7 @@
                     :value="item.category_id"
                     v-for="(item,index) in typeArr"
                     :key="index"
-                  >{{item.meta_title}}</a-select-option>
+                  >{{item.name}}</a-select-option>
                 </a-select>
               </a-col>
             </div>
@@ -78,7 +78,7 @@
                     :value="item.category_id"
                     v-for="(item,index) in typeArr"
                     :key="index"
-                  >{{item.meta_title}}</a-select-option>
+                  >{{item.name}}</a-select-option>
                 </a-select>
               </a-col>
             </div>

@@ -19,9 +19,14 @@
                      :rowSelection="rowSelection" 
                      :scroll="{ x: 1500 }">
                 <span slot="action" slot-scope="text, record">
-                  <a @click="editCod(text.role_id)">修改</a>
-                  <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct(text.role_id)">删除</a>
+                   <a @click="editCod(text.role_id)">修改</a>
+                   <a-divider type="vertical"></a-divider>
+                    <a-popconfirm
+                               title="请确认删除"
+                               @confirm="() => deleteProduct(text.role_id)">
+                       <a>删除</a>
+                    </a-popconfirm>
+                  <!-- <a @click="deleteProduct(text.role_id)">删除</a> -->
                 </span>
                 <a slot="active" slot-scope="text, record" style="text-align: center">
                     <a-icon type="check" style="color: green" v-if="text.active == '1'"></a-icon>
@@ -40,7 +45,7 @@
                   <a-row>
                       <div class="inputPart">
                         <a-col class="gutter-row" :span="7">
-                          <div class="inputName">名称：</div>
+                          <div class="inputName">*名称：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="15">
                           <a-input placeholder="" v-model="addCod.role_name" />
@@ -136,7 +141,15 @@
                     this.$post('/role/addRoleInfo',this.addCod).then((reData)=>{
                         console.log("返回结果",reData)
                         if(reData.code === '0'){
-                            this.$message.success(reData.message, 3);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.success(reData.message, 3);
                             this.visible_add = false
                             this.addCod={
                                 active:'0',
@@ -145,7 +158,15 @@
                             this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
     
                         } else {
-                            this.$message.error(reData.message);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 3,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.error(reData.message);
                             this.visible_add = false
                         }
                     })
@@ -156,7 +177,15 @@
                 console.log(this.addCod)
                 this.$post('/role/updateRoleInfo',this.addCod).then((reData)=>{
                     if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.success(reData.message, 3);
                         this.visible_add = false
                         this.addCod={
                             active:'0',
@@ -165,7 +194,15 @@
                         this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
 
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                         this.visible_add = false
                     }
                 })
@@ -190,17 +227,41 @@
             ,deleteProduct(id){
                 this.$post('/role/removeRoleInfo',{role_id:id}).then((reData)=>{
                     if(reData.code === '0'){
-                       this.$message.success(reData.message);
+                        this.$notification.open({
+                            message: '删 除',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                    //    this.$message.success(reData.message);
                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '删 除',
+                            duration: 3,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                     }
                 })
             },
              // 添加时的校验数据
             checkRes(data){
                 if(data.role_name === '' || data.role_name === null){
-                    this.$message.error("请填写名称");
+                    this.$notification.open({
+                        message: '添 加',
+                        duration: 3,
+                        description: "请填写名称",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                    // this.$message.error("请填写名称");
                     return false
                 }
             }

@@ -1,43 +1,4 @@
 <template>
-<!--<<<<<<< HEAD-->
-    <!--<div class="orderList">-->
-        <!--客户信息-->
-        <!--<div class="hrLine"></div>-->
-        <!--<div>-->
-            <!--<a-table :columns="columns"-->
-                     <!--:dataSource="productListData"-->
-                     <!--:pagination="pagination"-->
-                     <!--:loading="loading"-->
-                     <!--align="center"-->
-                     <!--@change="handleTableChange"-->
-                     <!--:rowSelection="rowSelection"-->
-                     <!--:scroll="{ x: 3800 }">-->
-          <!--<span slot="action" slot-scope="text, record">-->
-              <!--<a @click="searchFun({order_id:record.order_id})">查看</a>-->
-          <!--</span>-->
-            <!--</a-table>-->
-        <!--</div>-->
-        <!--<div class="editCustomerGender">-->
-            <!--<a-modal-->
-                    <!--title="查看订单信息"-->
-                    <!--v-model="visible_search"-->
-                    <!--@ok="submitSearch"-->
-                    <!--:destroyOnClose="true"-->
-            <!--&gt;-->
-                <!--<a-card :bordered="false"-->
-                        <!--:headStyle="{'padding': 0,'font-size': '16px','color':'red'}"-->
-                        <!--:bodyStyle="{padding: '15px'}"-->
-                        <!--style="margin-top: -20px;font-size: 14px;">-->
-                    <!--<a-row>-->
-                        <!--<a-col :span="12">-->
-                            <!--<p>添加时间：{{orderListDetail}}</p>-->
-                        <!--</a-col>-->
-                        <!--&lt;!&ndash;<a-col :span="12">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<p>平台类型：{{customerCartInfo.cartInfo.mobile_type}}</p>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</a-col>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<a-col :span="12">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<p>币种标识：{{customerCartInfo.cartInfo.sign}}</p>&ndash;&gt;-->
-<!--=======-->
   <div class="orderList">
 
     <div class="high-search">
@@ -260,74 +221,6 @@ export default {
           key: "order_state_name"
         },
         { title: "有效单", dataIndex: "valid", key: "valid" }
-        //   {
-        //     title: "cod服务费用",
-        //     dataIndex: "total_cod_service",
-        //     key: "total_cod_service"
-        //   },
-        //   { title: "COD订单", dataIndex: "is_cod", key: "is_cod" },
-        //   {
-        //     title: "优惠卷的折扣金额",
-        //     dataIndex: "total_discounts",
-        //     key: "total_discounts"
-        //   },
-        //   {
-        //     title: "包含支付方式优惠后的总金额",
-        //     dataIndex: "total_paid_paymethod_incl",
-        //     key: "total_paid_paymethod_incl"
-        //   },
-        //   { title: "总支付金额", dataIndex: "total_paid", key: "total_paid" },
-        //   {
-        //     title: "含税的运费",
-        //     dataIndex: "total_shipping_tax_incl",
-        //     key: "total_shipping_tax_incl"
-        //   },
-        //   {
-        //     title: "不含税的产品总价",
-        //     dataIndex: "total_products_wt",
-        //     key: "total_products_wt"
-        //   },
-        //   { title: "运费", dataIndex: "total_shipping", key: "total_shipping" },
-        //   { title: "货币汇率", dataIndex: "conversion_rate", key: "conversion_rate" },
-        //   {
-        //     title: "包含税的折扣金额",
-        //     dataIndex: "total_discounts_tax_incl",
-        //     key: "total_discounts_tax_incl"
-        //   },
-        //   {
-        //     title: "不包含支付方式优惠后的总金额",
-        //     dataIndex: "total_paid_paymethod_excl",
-        //     key: "total_paid_paymethod_excl"
-        //   },
-        //   { title: "当前状态", dataIndex: "current_state", key: "current_state" },
-        //   {
-        //     title: "不含税的运费",
-        //     dataIndex: "total_shipping_tax_excl",
-        //     key: "total_shipping_tax_excl"
-        //   },
-        //   { title: "追踪代码", dataIndex: "shipping_number", key: "shipping_number" },
-        //   {
-        //     title: "实际收到的钱",
-        //     dataIndex: "total_paid_real",
-        //     key: "total_paid_real"
-        //   },
-        //   {
-        //     title: "支付的折扣百分比",
-        //     dataIndex: "paymethod_rate",
-        //     key: "paymethod_rate"
-        //   },
-        //   {
-        //     title: "包含税的支付金额",
-        //     dataIndex: "total_paid_tax_incl",
-        //     key: "total_paid_tax_incl"
-        //   },
-        //   { title: "产品总价", dataIndex: "total_products", key: "total_products" },
-        //   { title: "小数点保留几位", dataIndex: "round_mode", key: "round_mode" },
-        //   {
-        //     title: "不含税的折扣金额",
-        //     dataIndex: "total_discounts_tax_excl",
-        //     key: "total_discounts_tax_excl"
-        //   }
       ],
       visible_search: false,
       loading: false,
@@ -419,7 +312,7 @@ export default {
     // }
   },
   mounted() {
-    store.commit("changeStore", { key: "title", val: "产品列表" });
+    // store.commit("changeStore", { key: "title", val: "产品列表" });
     this.getList({ currentPage: 1, pageSize: this.pagination.pageSize });
   }
 };

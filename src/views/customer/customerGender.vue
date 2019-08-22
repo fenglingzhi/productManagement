@@ -51,7 +51,7 @@
                             <div class="inputName">状态：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
+                            <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange" :value="addCustomerGenderData.genderId">
                                 <a-select-option value="">请选择</a-select-option>
                                 <a-select-option value="1">男</a-select-option>
                                 <a-select-option value="2">女</a-select-option>
@@ -150,7 +150,9 @@
             }
             //新增商品
             ,add_product(){
-                this.visible_add = true
+                this.visible_add = true;
+                this.addCustomerGenderData.name = '';
+                this.addCustomerGenderData.genderId = '';
             }
             //编辑
             ,editFun(langId,genderId) {
@@ -187,17 +189,32 @@
             //提交称呼
             ,submitGender(e) {
                 console.log(this.addCustomerGenderData)
-                this.$post('/gender/addGenderInfo',this.addCustomerGenderData).then((reData)=>{
-                    if(reData.code === '0'){
-                        this.visible_add = false
-                        this.getList({langId:store.state.langId});
-                    } else if(reData.code === '10012'){
-                        this.$message.error(reData.message);
-                        this.visible_add = false
-                    }
-                })
+                if(this.addCustomerGenderData.name === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请填写名称'
+                    });
+                    return false;
+                } else if(this.addCustomerGenderData.genderId === ''){
+                    this.$notification.open({
+                        message: '警告',
+                        description: '请选择性别'
+                    });
+                    return false;
+                } else {
+                    this.$post('/gender/addGenderInfo',this.addCustomerGenderData).then((reData)=>{
+                        if(reData.code === '0'){
+                            this.visible_add = false
+                            this.getList({langId:store.state.langId});
+                        } else if(reData.code === '10012'){
+                            this.$notification.open({
+                                message: reData.message,
+                            });
+                            this.visible_add = false
+                        }
+                    })
+                }
                 // console.log(e);
-
             },
             submitGender_e() {
                 let vm = this;
@@ -217,7 +234,7 @@
         },
         mounted() {
             var vm = this
-            store.commit('changeStore',{key:'title',val:'产品列表'});
+            // store.commit('changeStore',{key:'title',val:'产品列表'});
             vm.getList({langId:store.state.langId})
         },
 
