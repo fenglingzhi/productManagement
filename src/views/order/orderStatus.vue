@@ -5,29 +5,33 @@
         <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="状态id">
-              <a-input placeholder="仅接受数字" v-model="form_search.order_state_id" />
+              <a-input placeholder="请输入订单id" v-model.trim="form_search.order_state_id" />
             </a-form-item>
           </a-col>
           <a-col :span="8">
             <a-form-item label="名字">
-              <a-input placeholder="请输入名字" v-model="form_search.name" />
+              <a-input placeholder="请输入名字" v-model.trim="form_search.name" />
             </a-form-item>
           </a-col>
           <a-col :span="8">
             <a-form-item label="是否给客户发邮件">
-              <a-input placeholder="请输入" v-model="form_search.send_email" />
+              <a-select v-model="form_search.send_email" style="width:174px;">
+                <a-select-option value="9">请选择</a-select-option>
+                <a-select-option value="1">是</a-select-option>
+                <a-select-option value="0">否</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
         </a-row>
         <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="邮件模板">
-              <a-input placeholder="请输入" v-model="form_search.template" />
+              <a-input placeholder="请输入" v-model.trim="form_search.template" />
             </a-form-item>
           </a-col>
           <a-col :span="8" :style="{ paddingLeft: '100px'  }">
-            <a-button type="primary" html-type="submit">搜索</a-button>
-            <a-button :style="{ marginLeft: '8px' }" @click="handleReset">清空</a-button>
+            <a-button type="primary" html-type="submit" :style="{ marginLeft: '42px' }">搜索</a-button>
+            <a-button :style="{ marginLeft: '46px' }" @click="handleReset">清空</a-button>
           </a-col>
         </a-row>
       </a-form>
@@ -319,7 +323,7 @@ export default {
       form_search: {
         order_state_id: "",
         name: "",
-        send_email: "",
+        send_email: "9",
         template: ""
       },
       productListData,
@@ -348,7 +352,8 @@ export default {
         send_email: "",
         template: "",
         order_state_id: ""
-      }
+      },
+      searchObj: {}
     };
   },
   methods: {
@@ -391,7 +396,7 @@ export default {
       // 获取详情
       this.$post("/orderState/getOrderStateInfoOne", data).then(reData => {
         if (reData.code === "0") {
-          console.log(this.addStatueInfo);
+          // console.log(this.addStatueInfo);
           this.addStatueInfo.lang_id = reData.data.lang_id;
           this.addStatueInfo.name = reData.data.name;
           this.addStatueInfo.color = reData.data.color;
@@ -525,13 +530,19 @@ export default {
       this.visible_search = false;
     },
     // 获取列表
-    getList(data) {
+    getList(pageObj, searchObj = {}) {
+      let data = Object.assign({}, pageObj, searchObj);
       this.loading = true;
       this.$post("/orderState/getOrderStateInfoPage", data).then(reData => {
-        console.log(reData.data.dataList);
-        this.productListData = reData.data.dataList;
-        this.pagination.total = reData.data.page.totalResultSize;
-        this.loading = false;
+        if (reData.code == "0") {
+          this.productListData = reData.data.dataList;
+          this.pagination.total = reData.data.page.totalResultSize;
+          this.loading = false;
+        } else {
+          this.productListData = [];
+          this.pagination.total = 0;
+          this.loading = false;
+        }
       });
     },
     //表格分页
@@ -539,20 +550,15 @@ export default {
       console.log(pagination);
       //   每次触发回调的时候将当前页数记录到pagination中,以便删除等事件完成后需要更新列表
       this.pagination.currentPage = pagination.current;
-      this.getList({
-        currentPage: pagination.current,
-        pageSize: pagination.pageSize,
-        lang_id: store.state.langId
-      });
+      this.getList(
+        {
+          currentPage: pagination.current,
+          pageSize: pagination.pageSize,
+          lang_id: store.state.langId
+        },
+        this.searchObj
+      );
     },
-    //更改商品状态
-    // change_active(data) {
-    //   this.$post("/product/editDisableProduct", data).then(reData => {
-    //     if (reData.code === "0") {
-    //       this.getList({ page: 1, page_size: this.pagination.pageSize });
-    //     }
-    //   });
-    // },
     //删除商品
     deleteProduct(data) {
       let _this = this;
@@ -575,12 +581,41 @@ export default {
         }
       });
     },
+    // 高级搜索
     handleSearch(e) {
       e.preventDefault();
-      console.log("搜索事件！");
+      // console.log("搜索事件！");
+      this.searchObj = {};
+      for (const key in this.form_search) {
+        if (
+          this.form_search[key] != "" &&
+          this.form_search[key] != null &&
+          this.form_search[key] != "9"
+        ) {
+          // this.searchObj[key] = this.form_search[key];
+          this.$set(this.searchObj, key, this.form_search[key]);
+        }
+      }
+      this.getList(
+        {
+          // currentPage: this.pagination.currentPage,
+          currentPage: this.pagination.currentPage,
+          pageSize: this.pagination.pageSize,
+          lang_id: store.state.langId
+        },
+        this.searchObj
+      );
     },
+    //重置
     handleReset() {
-      console.log("reset事件！");
+      // console.log("reset事件！");
+      // 重置表单
+      Object.assign(this.form_search, {
+        order_state_id: "",
+        name: "",
+        send_email: "9",
+        template: ""
+      });
     }
   },
   mounted() {
