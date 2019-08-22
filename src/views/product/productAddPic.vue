@@ -21,10 +21,10 @@
       <a-row>
           <a-col class="gutter-row" :span="8">
               <div class="inputPart">
-                  <a-col class="gutter-row" :span="4">
+                  <a-col class="gutter-row" :span="6">
                       <div class="inputName">研发样图：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="20">
+                  <a-col class="gutter-row" :span="18">
                       <div class="clearfix">
                           <a-upload
                                   action="//jsonplaceholder.typicode.com/posts/"
@@ -50,12 +50,12 @@
       <a-row>
         <a-col class="gutter-row" :span="6">
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
               <div class="inputName">*位置：</div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select  style="width: 100%" defaultValue="0" @change="handleChangeSelect">
-                <a-select-option value="0">all</a-select-option>
+                <a-select-option value="0">新增</a-select-option>
                 <a-select-option v-for='item in selectData' :value="item">{{item}}</a-select-option>
               </a-select>
             </a-col>
@@ -65,10 +65,10 @@
     <a-row>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
+          <a-col class="gutter-row" :span="8">
             <div class="inputName">*是否展示：</div>
           </a-col>
-          <a-col class="gutter-row" :span="18">
+          <a-col class="gutter-row" :span="16">
             <a-select  style="width: 100%" defaultValue="1" @change="handleChangeCoverSelect">
               <a-select-option value="1">是</a-select-option>
               <a-select-option value="0">否</a-select-option>
@@ -81,10 +81,10 @@
         <a-row>
           <a-col class="gutter-row" :span="6">
             <div class="inputPart">
-              <a-col class="gutter-row" :span="6">
+              <a-col class="gutter-row" :span="8">
                 <div class="inputName">*Caption：</div>
               </a-col>
-              <a-col class="gutter-row" :span="18">
+              <a-col class="gutter-row" :span="16">
                 <a-input  v-model="postData.legend" placeholder=""/>
               </a-col>
             </div>

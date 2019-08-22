@@ -2,14 +2,87 @@
     <div class="producetList">
 
         <!--<div class="hrLine"></div>-->
-        <div>
-            <div style="margin-bottom: 16px">
-                <a-button type="primary" @click="addAttribute()">
-                    新增
-                </a-button>
 
-                <span style="margin-left: 8px"></span>
-            </div>
+        <a-row>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="7">
+                        <div class="inputName"> 省/州ID：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="16">
+                        <a-input placeholder="请输入国家ID" v-model="search_data.state_id" />
+                    </a-col>
+                </div>
+            </a-col>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="7">
+                        <div class="inputName">省/州名称 ：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="16">
+                        <a-input placeholder="请输入省/州名称" v-model="search_data.name"/>
+                    </a-col>
+                </div>
+            </a-col>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="7">
+                        <div class="inputName">国际码 ：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="16">
+                        <a-input placeholder="请输入国际码" maxlenght="3" v-model="search_data.iso_code"/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+
+
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="7">
+                        <div class="inputName">状态：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="16">
+                        <a-select defaultValue="" style="width: 100%"  v-model="search_data.active">
+                            <a-select-option value="">不限</a-select-option>
+                            <a-select-option value="1">是</a-select-option>
+                            <a-select-option value="0">否</a-select-option>
+                        </a-select>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+
+        <a-row>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-row>
+                            <a-col class="gutter-row" :span="6">
+                                <a-button type="primary" @click="addAttribute()">新增</a-button>
+                            </a-col>
+                            <a-col class="gutter-row" :span="6">
+                                <a-button type="primary" @click="search_product()">搜索</a-button>
+                            </a-col>
+                            <a-col class="gutter-row" :span="6">
+                                <!--<a-button type="primary">导出</a-button>-->
+                            </a-col>
+                        </a-row>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <div>
+            <!--<div style="margin-bottom: 16px">-->
+                <!--<a-button type="primary" @click="addAttribute()">-->
+                    <!--新增-->
+                <!--</a-button>-->
+
+                <!--<span style="margin-left: 8px"></span>-->
+            <!--</div>-->
             <a-table :columns="columns"
                      :dataSource="attributeList"
                      :pagination="pagination"
@@ -182,6 +255,8 @@
         { title: '省/州id', dataIndex: 'state_id', key: 'state_id'},
         { title: '省/州名字', dataIndex: 'name', key: 'name'},
         { title: '省/州国际码', dataIndex: 'iso_code', key: 'iso_code'},
+        { title: '所属区域', dataIndex: 'zone_name', key: 'zone_name'},
+        { title: '所属国家', dataIndex: 'country_name', key: 'country_name'},
         { title: '是否启用', key: 'active',scopedSlots: { customRender: 'active' },},
 
 
@@ -192,6 +267,14 @@
     export default {
         data() {
             return {
+                search_data:{
+                    state_id:'',
+                    name:'',
+                    iso_code:'',
+                    active:'',
+
+                },
+                zoneId:'',
                 zoneList:[],
                 countryList:[],
                 editCurrency:{
@@ -199,7 +282,6 @@
                     country_id:'',
                     name:'',
                     iso_code:'',
-                    call_prefix:'',
                     lang_id:'',
                     active:'1'
                 },
@@ -239,6 +321,9 @@
             }
         },
         methods: {
+            search_product(){
+                this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize,state_id:this.search_data.state_id,name:this.search_data.name,iso_code:this.search_data.iso_code,active:this.search_data.active})
+            },
             hangeLang_id(value){
                 this.addCurrency.lang_id = value
             },
@@ -248,12 +333,19 @@
             },
             handleChangeZoneEdit(value){
                 this.editCurrency.zone_id = value
+                this.zoneId = value
+                this.getCountryList()
+
             },
             handleChangeCountryEdit(value){
                 this.editCurrency.country_id = value
             },
             handleChangeZoneAdd(value){
                 this.addCurrency.zone_id= value
+                this.zoneId = value
+                this.getCountryList()
+
+
             },
             handleChangeCountryAdd(value){
                 this.addCurrency.country_id	 = value
@@ -266,6 +358,7 @@
             },
         //添加提交
         submitAdd() {
+            this.addCurrency.lang_id=this.$store.state.langId
             this.$post('/state/addState',this.addCurrency).then((reData)=>{
                 if(reData.code === '0'){
                     this.$message.success(reData.message, 3);
@@ -275,12 +368,20 @@
                         zone_id:'',
                         iso_code:'',
                         country_id:'',
-                        lang_id:'1',
+                        lang_id:this.$store.state.langId,
                         active:'1'
                     },
-                    this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
+                    this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId,state_id:this.search_data.state_id,name:this.search_data.name,iso_code:this.search_data.iso_code,active:this.search_data.active});
 
                 } else {
+                    this.addCurrency={
+                        name:'',
+                        zone_id:'',
+                        iso_code:'',
+                        country_id:'',
+                        lang_id:this.$store.state.langId,
+                        active:'1'
+                    },
                     this.$message.error(reData.message);
                     this.visible_add = false
                 }
@@ -288,11 +389,12 @@
         }
         //修改提交
         ,submitEdit() {
+                this.editCurrency.lang_id=this.$store.state.langId
                 this.$post('/state/editState',this.editCurrency).then((reData)=>{
                     if(reData.code === '0'){
                         this.$message.success(reData.message, 3);
                         this.visible_edit = false
-                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
+                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId,state_id:this.search_data.state_id,name:this.search_data.name,iso_code:this.search_data.iso_code,active:this.search_data.active});
                     } else {
                         this.$message.error(reData.message);
                         this.visible_edit = false
@@ -331,11 +433,11 @@
             }
             // 获取国家列表
             ,getCountryList(){
-                this.$post('/country/getCountryList',{lang_id:this.$store.state.langId}).then((reData)=>{
+                this.$post('/country/getCountryList',{lang_id:this.$store.state.langId,zone_id:this.zoneId}).then((reData)=>{
                     this.countryList=reData.data
                 })
             }
-            // 获取国家列表
+            // 获取区域列表
             ,getzoneList(){
                 this.$post('/zone/getZoneList',{lang_id:this.$store.state.langId}).then((reData)=>{
                     this.zoneList=reData.data
@@ -345,14 +447,14 @@
             //表格分页
             ,handleTableChange(pagination){
                 this.pagination.currentPage = pagination.current
-                this.getList({currentPage:pagination.current,pageSize:pagination.defaultPageSize,lang_id:this.$store.state.langId})
+                this.getList({currentPage:pagination.current,pageSize:pagination.defaultPageSize,lang_id:this.$store.state.langId,state_id:this.search_data.state_id,name:this.search_data.name,iso_code:this.search_data.iso_code,active:this.search_data.active})
             }
 
             //更改商品状态
             ,change_active(data){
                 this.$post('/state/editActiveState',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
+                        this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize,lang_id:this.$store.state.langId,state_id:this.search_data.state_id,name:this.search_data.name,iso_code:this.search_data.iso_code,active:this.search_data.active});
                     }else {
                         this.$message.error(reData.message);
                     }
@@ -372,7 +474,7 @@
         },
         mounted() {
             var vm = this;
-            store.commit('changeStore',{key:'title',val:''});
+            // store.commit('changeStore',{key:'title',val:''});
             this.getCountryList()
             this.getzoneList()
             vm.getList({currentPage:1,pageSize:vm.pagination.defaultPageSize,lang_id:this.$store.state.langId})

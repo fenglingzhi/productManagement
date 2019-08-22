@@ -399,6 +399,7 @@
                 visible_search: false,
                 loading: false,
                 pagination:{
+                    currentPage:'1',
                     defaultPageSize:10,
                     total:1,
                 }
@@ -538,7 +539,11 @@
                     this.$post('/customer/addCustomerInfo',this.addCustomerInfo).then((reData)=>{
                         if(reData.code === '0'){
                             this.visible_add = false
-                            this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize});
+                            this.getList({
+                                lang_id:store.state.langId,
+                                currentPage:this.pagination.currentPage,
+                                pageSize:this.pagination.defaultPageSize
+                            });
                         } else {
                             this.$message.error(reData.message);
                             this.visible_add = false
@@ -553,7 +558,11 @@
                 this.$post('/customer/updateCustomerInfo',this.addCustomerInfo).then((reData)=>{
                     if(reData.code === '0'){
                         this.visible_edit = false
-                        this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize});
+                        this.getList({
+                            lang_id:store.state.langId,
+                            currentPage:this.pagination.currentPage,
+                            pageSize:this.pagination.defaultPageSize
+                        });
                     } else {
                         this.$message.error(reData.message);
                         this.visible_add = false
@@ -569,6 +578,7 @@
                 this.$post('/customer/getCustomerListPageInfo',data).then((reData)=>{
                     this.productListData=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
+                    this.pagination.currentPage = reData.data.page.currentPage
                     this.loading = false
                 })
             }
@@ -610,7 +620,7 @@
             ,change_active(data){
                 this.$post('/product/editDisableProduct',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({page:1,page_size:this.pagination.defaultPageSize});
+                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
                     }
                 })
             }
@@ -618,7 +628,7 @@
             ,deleteProduct(data){
                 this.$post('/customer/removeCustomerInfo',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize});
+                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
                     }
                 })
             }
@@ -631,8 +641,8 @@
         },
         mounted() {
             var vm = this
-            store.commit('changeStore',{key:'title',val:'产品列表'});
-            vm.getList({currentPage:1,pageSize:vm.pagination.defaultPageSize})
+            // store.commit('changeStore',{key:'title',val:'产品列表'});
+            vm.getList({lang_id:store.state.langId,currentPage:1,pageSize:vm.pagination.defaultPageSize})
             vm.getGender();
         },
 

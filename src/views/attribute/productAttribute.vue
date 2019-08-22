@@ -363,7 +363,7 @@
         },
         mounted() {
             var vm = this;
-            store.commit('changeStore',{key:'title',val:'属性列表'});
+            // store.commit('changeStore',{key:'title',val:'属性列表'});
             vm.getList({parent_id:0,pageSize:vm.pagination.defaultPageSize,lang_id:store.state.langId})
         },
 

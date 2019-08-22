@@ -13,12 +13,12 @@
             </a-col>
         </div>
         <a-row>
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
                         <div class="inputName">尺码选择：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <div class="choseLists">
                             <a-checkbox-group :options="sizeListO"  @change="onChangeSize" />
                         </div>
@@ -26,12 +26,12 @@
                 </div>
             </a-col>
 
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
                         <div class="inputName">颜色选择：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <div class="choseLists">
 
                             <a-checkbox-group :options="colorListO"  @change="onChangeColor" />

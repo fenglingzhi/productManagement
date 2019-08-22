@@ -21,7 +21,11 @@
                 <span slot="action" slot-scope="text, record">
                   <a @click="editCod(text.employee_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
-                  <a @click="deleteProduct(text.employee_id)">删除</a>
+                  <a-popconfirm
+                               title="请确认删除"
+                               @confirm="() => deleteProduct(text.employee_id)">
+                       <a>删除</a>
+                   </a-popconfirm>
                 </span>
                 <a slot="active" slot-scope="text, record" style="text-align: center">
                     <a-icon type="check" style="color: green" v-if="text.active == '1'"></a-icon>
@@ -40,7 +44,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">名：</div>
+                                    <div class="inputName">*名：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.first_name" />
@@ -50,7 +54,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">姓：</div>
+                                    <div class="inputName">*姓：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.last_name" />
@@ -60,7 +64,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">电子邮件：</div>
+                                    <div class="inputName">*电子邮件：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.email"/>
@@ -81,7 +85,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">语言：</div>
+                                    <div class="inputName">*语言：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.lang_id" style="width: 100%"  @change="getAddlang">
@@ -93,7 +97,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">角色：</div>
+                                    <div class="inputName">*角色：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.role_id" style="width: 100%"  @change="getAddRole">
@@ -186,7 +190,14 @@
 
                 }else{
                     this.addCod = {
+                        first_name:'',
+                        last_name:'',
+                        email:'',
+                        lang_id:'',
+                        role_id:'',
+                        cc_rate:'',
                         active:'0',
+                        password:'',
                         edit:false
                     }
                 }
@@ -237,6 +248,7 @@
 
             //添加提交
             submitAdd(edit) {
+                console.log(this.addCod)
                 var flag = this.checkRes(this.addCod)
                 if(flag == false){
                     return
@@ -247,7 +259,15 @@
                     this.$post('/employee/addEmployeeInfo',this.addCod).then((reData)=>{
                         console.log("返回结果",reData)
                         if(reData.code === '0'){
-                            this.$message.success(reData.message, 3);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 2,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.success(reData.message, 3);
                             this.visible_add = false
                             this.addCod={
                                 active:'0',
@@ -256,7 +276,15 @@
                             this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
     
                         } else {
-                            this.$message.error(reData.message);
+                            this.$notification.open({
+                                message: '添 加',
+                                duration: 2,
+                                description: reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                            // this.$message.error(reData.message);
                             this.visible_add = false
                         }
                     })
@@ -267,7 +295,15 @@
                 console.log(this.addCod)
                 this.$post('/employee/updateEmployeeInfo',this.addCod).then((reData)=>{
                     if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
+                         this.$notification.open({
+                            message: '修 改',
+                            duration: 2,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.success(reData.message, 3);
                         this.visible_add = false
                         this.addCod={
                             active:'0',
@@ -276,7 +312,15 @@
                         this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
 
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '修 改',
+                            duration: 2,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                         this.visible_add = false
                     }
                 })
@@ -301,15 +345,32 @@
             ,deleteProduct(id){
                 this.$post('/employee/removeEmployeeInfo',{employee_id:id}).then((reData)=>{
                     if(reData.code === '0'){
-                       this.$message.success(reData.message);
+                        this.$notification.open({
+                            message: '删 除',
+                            duration: 2,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                    //  this.$message.success(reData.message);
                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
                     } else {
-                        this.$message.error(reData.message);
+                        this.$notification.open({
+                            message: '删 除',
+                            duration: 2,
+                            description: reData.message,
+                            onClick: () => {
+                                console.log('ok');
+                            },
+                        })
+                        // this.$message.error(reData.message);
                     }
                 })
             },
              // 添加时的校验数据
             checkRes(data){
+                console.log(111,data)
                 if(data.first_name === '' || data.first_name === null){
                     this.$message.error("请填写名");
                     return false

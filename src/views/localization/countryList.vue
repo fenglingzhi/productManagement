@@ -3,30 +3,30 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="7">
                         <div class="inputName">国家ID：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入国家ID" v-model="search_data.country_id" />
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="7">
                         <div class="inputName">国家名称 ：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入国家名称" v-model="search_data.name"/>
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="7">
                         <div class="inputName">国际码 ：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入国际码" maxlenght="3" v-model="search_data.iso_code"/>
                     </a-col>
                 </div>
@@ -37,10 +37,10 @@
 
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="7">
                         <div class="inputName">状态：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-select defaultValue="" style="width: 100%"  v-model="search_data.active">
                             <a-select-option value="">不限</a-select-option>
                             <a-select-option value="1">是</a-select-option>
@@ -54,9 +54,9 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="5">
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="19">
                         <a-row>
                             <a-col class="gutter-row" :span="6">
                                 <a-button type="primary" @click="addAttribute()">新增</a-button>

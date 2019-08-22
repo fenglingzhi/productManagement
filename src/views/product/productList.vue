@@ -40,7 +40,7 @@
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="6">
-            <div class="inputName"> 商品创建时间：</div>
+            <div class="inputName"> 创建时间：</div>
           </a-col>
           <a-col class="gutter-row" :span="18">
             <a-range-picker @change="onChange" />
@@ -123,7 +123,7 @@
         <span slot="img_" slot-scope="text, record">
               <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
           </span>
-        <a slot="product" slot-scope="text, record" style="text-align: center">
+        <a slot="active" slot-scope="text, record" style="text-align: center">
           <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
           <a-icon type="close" style="color: red" v-if="text === '0'" @click="change_active({product_id:record.product_id,active:'1'})"></a-icon>
         </a>
@@ -288,7 +288,7 @@
         },
         mounted() {
             var vm = this
-            store.commit('changeStore',{key:'title',val:'产品列表'});
+            // store.commit('changeStore',{key:'title',val:'产品列表'});
             vm.getList({currentPage:1,page_size:vm.pagination.defaultPageSize})
         },
 

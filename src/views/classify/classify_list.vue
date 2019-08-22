@@ -4,11 +4,15 @@
       <a-col :span="5" style="border-right: 1px solid rgb(232, 232, 232);padding:0 8px;">
         <div>
           <!-- <a-input-search style="margin-bottom:8px;" placeholder="Search" @change="onChange"/> -->
+          <!--<a-tree-->
+            <!--:defaultExpandedKeys="expandedKeys"-->
+            <!--@expand="onExpand"-->
+            <!--:expandedKeys="expandedKeys"-->
+            <!--:autoExpandParent="autoExpandParent"-->
+          <!--&gt;-->
           <a-tree
-            :defaultExpandedKeys="expandedKeys"
-            @expand="onExpand"
-            :expandedKeys="expandedKeys"
-            :autoExpandParent="autoExpandParent"
+                  @expand="onExpand"
+                  defaultExpandAll
           >
             <a-tree-node :key="item.key" v-for="item in classify_list">
               <div slot="title" @click="onSelect(item)" :style="showOperation == item.key ? 'background:#bae7ff':''">
@@ -201,7 +205,7 @@ export default {
     },
     onExpand(expandedKeys) {
       this.expandedKeys = expandedKeys;
-      this.autoExpandParent = false;
+      this.autoExpandParent = true;
     },
     // 搜索框监听事件
     onChange(e) {
