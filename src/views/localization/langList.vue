@@ -43,7 +43,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">是否启用：</div>
+                                <div class="inputName">* 是否启用：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="1" style="width: 100%"  @change="handleChangeAdd">
@@ -56,7 +56,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">语言名称：</div>
+                                <div class="inputName">* 语言名称：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -77,7 +77,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">是否启用：</div>
+                                    <div class="inputName">* 是否启用：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.active" style="width: 100%"  @change="handleChangeEdit">
@@ -91,7 +91,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">语言名称：</div>
+                                <div class="inputName">* 语言名称：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="editCurrency.name" />
@@ -176,34 +176,59 @@
             },
         //添加提交
         submitAdd() {
-            this.$post('/lang/addLang',this.addCurrency).then((reData)=>{
-                if(reData.code === '0'){
-                    this.$message.success(reData.message, 3);
-                    this.visible_add = false
-                    this.addCurrency={
+            if(this.addCurrency.name==''){
+                this.$notification.open({
+                    message: '提醒',
+                    duration: 2,
+                    description: "请填写语言名称后再提交！",
+                    onClick: () => {
+                        console.log('ok');
+                    },
+                })
+            }else {
+
+                this.$post('/lang/addLang',this.addCurrency).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.$message.success(reData.message, 3);
+                        this.visible_add = false
+                        this.addCurrency={
                             name:''
                             ,active:'1'
-                    },
-                    this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        },
+                            this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
 
-                } else {
-                    this.$message.error(reData.message);
-                    this.visible_add = false
-                }
-            })
+                    } else {
+                        this.$message.error(reData.message);
+                        this.visible_add = false
+                    }
+                })
+            }
+
         }
         //修改提交
         ,submitEdit() {
-                this.$post('/lang/editLang',this.editCurrency).then((reData)=>{
-                    if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
-                        this.visible_edit = false
-                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
-                    } else {
-                        this.$message.error(reData.message);
-                        this.visible_edit = false
-                    }
-                })
+                if(this.editCurrency.name==''){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写语言名称后再提交！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                }else {
+                    this.$post('/lang/editLang',this.editCurrency).then((reData)=>{
+                        if(reData.code === '0'){
+                            this.$message.success(reData.message, 3);
+                            this.visible_edit = false
+                            this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize});
+                        } else {
+                            this.$message.error(reData.message);
+                            this.visible_edit = false
+                        }
+                    })
+                }
+
         },
             //新增属性
             addAttribute(){

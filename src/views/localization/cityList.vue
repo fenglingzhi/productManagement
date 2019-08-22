@@ -2,11 +2,76 @@
     <div class="producetList">
 
         <!--<div class="hrLine"></div>-->
+
+        <a-row>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="7">
+                        <div class="inputName">  城市ID：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="16">
+                        <a-input placeholder="请输入城市ID" v-model="search_data.city_id" />
+                    </a-col>
+                </div>
+            </a-col>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="7">
+                        <div class="inputName">城市名称 ：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="16">
+                        <a-input placeholder="请输城市名称" v-model="search_data.name"/>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+        <a-row>
+
+
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="7">
+                        <div class="inputName">状态：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="16">
+                        <a-select defaultValue="" style="width: 100%"  v-model="search_data.active">
+                            <a-select-option value="">不限</a-select-option>
+                            <a-select-option value="1">是</a-select-option>
+                            <a-select-option value="0">否</a-select-option>
+                        </a-select>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+
+        <a-row>
+            <a-col class="gutter-row" :span="6">
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="6">
+                    </a-col>
+                    <a-col class="gutter-row" :span="18">
+                        <a-row>
+                            <a-col class="gutter-row" :span="6">
+                                <a-button type="primary" @click="addAttribute()">新增</a-button>
+                            </a-col>
+                            <a-col class="gutter-row" :span="6">
+                                <a-button type="primary" @click="search_product()">搜索</a-button>
+                            </a-col>
+                            <a-col class="gutter-row" :span="6">
+                                <!--<a-button type="primary">导出</a-button>-->
+                            </a-col>
+                        </a-row>
+                    </a-col>
+                </div>
+            </a-col>
+        </a-row>
+
+
         <div>
             <div style="margin-bottom: 16px">
-                <a-button type="primary" @click="addAttribute()">
-                    新增
-                </a-button>
+                <!--<a-button type="primary" @click="addAttribute()">-->
+                    <!--新增-->
+                <!--</a-button>-->
 
                 <span style="margin-left: 8px"></span>
             </div>
@@ -45,7 +110,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">是否启用：</div>
+                                <div class="inputName">*是否启用：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="1" style="width: 100%"   @change="handleChangeAdd">
@@ -58,7 +123,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">名字 ：</div>
+                                <div class="inputName">*名字 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -68,7 +133,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国家：</div>
+                                <div class="inputName">*国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="请选择国家" style="width: 100%"  @change="handleChangeZoneAdd">
@@ -104,7 +169,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">是否启用：</div>
+                                    <div class="inputName">*是否启用：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.active" style="width: 100%"  @change="handleChangeEdit">
@@ -117,7 +182,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">名字 ：</div>
+                                    <div class="inputName">*名字 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder="" v-model="editCurrency.name" />
@@ -128,7 +193,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国家：</div>
+                                <div class="inputName">*国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select :defaultValue="editCurrency.country_id" style="width: 100%"  @change="handleChangeZoneEdit">
@@ -165,12 +230,11 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        {title: '操作', key: 'action', fixed: 'left', scopedSlots: { customRender: 'action' },},
+        {title: '操作', key: 'action', scopedSlots: { customRender: 'action' },},
         { title: '城市id', dataIndex: 'city_id', key: 'city_id'},
         { title: '城市名字', dataIndex: 'name', key: 'name'},
+        { title: '省/州', dataIndex: 'state_name', key: 'state_name'},
         { title: '是否启用', key: 'active',scopedSlots: { customRender: 'active' },},
-
-
 
     ];
     const attributeList = [];
@@ -178,6 +242,12 @@
     export default {
         data() {
             return {
+                search_data:{
+                    name:'',
+                    city_id:'',
+                    country_id:'',
+                    active:'1'
+                },
                 stateList:[],
                 countryList:[],
                 editCurrency:{
@@ -223,12 +293,14 @@
             }
         },
         methods: {
+            search_product(){
+                this.getList({currentPage:1,pageSize:this.pagination.defaultPageSize,city_id:this.search_data.city_id,name:this.search_data.name,active:this.search_data.active})
+            },
             hangeLang_id(value){
                 this.addCurrency.lang_id = value
             },
             hangeLang_idEdit(value){
                 this.editCurrency.lang_id = value
-
             },
             handleChangeZoneEdit(value){
                 this.editCurrency.country_id = value
@@ -257,38 +329,75 @@
             // handleChangeCountryAdd(value){
             //     this.addCurrency.country_id = value
             // },
-        //添加提交
-        submitAdd() {
-            this.$post('/city/addCity',this.addCurrency).then((reData)=>{
-                if(reData.code === '0'){
-                    this.$message.success(reData.message, 3);
-                    this.visible_add = false
-                    this.addCurrency={
-                        name:'',
-                        state_id:'',
-                        lang_id:this.$store.state.langId,
-                        active:'1'
-                    },
-                    this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
 
-                } else {
-                    this.$message.error(reData.message);
-                    this.visible_add = false
-                }
-            })
+            checkoutNull(data){
+                var isNull =false
+                Object.keys(data).forEach(function(key){
+                    if(data[key]===''){
+                        if(key!='state_id'){
+                            isNull = true
+                        }
+                    }
+                });
+                return isNull
+            },
+
+            //添加提交
+        submitAdd() {
+            if(this.checkoutNull(this.addCurrency)){
+                this.$notification.open({
+                    message: '提醒',
+                    duration: 2,
+                    description: "请填写所有标*信息再提交！",
+                    onClick: () => {
+                        console.log('ok');
+                    },
+                })
+            }else {
+                this.$post('/city/addCity',this.addCurrency).then((reData)=>{
+                    if(reData.code === '0'){
+                        this.$message.success(reData.message, 3);
+                        this.visible_add = false
+                        this.addCurrency={
+                            name:'',
+                            state_id:'',
+                            lang_id:this.$store.state.langId,
+                            active:'1'
+                        },
+                            this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId,city_id:this.search_data.city_id,name:this.search_data.name,active:this.search_data.active});
+
+                    } else {
+                        this.$message.error(reData.message);
+                        this.visible_add = false
+                    }
+                })
+            }
+
         }
         //修改提交
         ,submitEdit() {
-                this.$post('/city/editCity',this.editCurrency).then((reData)=>{
-                    if(reData.code === '0'){
-                        this.$message.success(reData.message, 3);
-                        this.visible_edit = false
-                        this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
-                    } else {
-                        this.$message.error(reData.message);
-                        this.visible_edit = false
-                    }
-                })
+                if(this.checkoutNull(this.editCurrency)){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写所有标*信息再提交！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                }else {
+                    this.$post('/city/editCity',this.editCurrency).then((reData)=>{
+                        if(reData.code === '0'){
+                            this.$message.success(reData.message, 3);
+                            this.visible_edit = false
+                            this.getList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,lang_id:this.$store.state.langId,city_id:this.search_data.city_id,name:this.search_data.name,active:this.search_data.active});
+                        } else {
+                            this.$message.error(reData.message);
+                            this.visible_edit = false
+                        }
+                    })
+                }
+
         },
             //新增属性
             addAttribute(){
@@ -338,14 +447,14 @@
             //表格分页
             ,handleTableChange(pagination){
                 this.pagination.currentPage = pagination.current
-                this.getList({currentPage:pagination.current,pageSize:pagination.defaultPageSize,lang_id:this.$store.state.langId})
+                this.getList({currentPage:pagination.current,pageSize:pagination.defaultPageSize,lang_id:this.$store.state.langId,city_id:this.search_data.city_id,name:this.search_data.name,active:this.search_data.active})
             }
 
             //更改商品状态
             ,change_active(data){
                 this.$post('/city/editActiveCity',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
+                        this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize,lang_id:this.$store.state.langId,city_id:this.search_data.city_id,name:this.search_data.name,active:this.search_data.active});
                     }else {
                         this.$message.error(reData.message);
                     }
@@ -355,7 +464,7 @@
             ,deleteProduct(id){
                 this.$post('/country/deleteCountry',{country_id:id}).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize,lang_id:this.$store.state.langId});
+                        this.getList({currentPage:this.pagination.currentPage,page_size:this.pagination.defaultPageSize,lang_id:this.$store.state.langId,city_id:this.search_data.city_id,name:this.search_data.name,active:this.search_data.active});
                     } else {
                         this.$message.error(reData.message);
                     }

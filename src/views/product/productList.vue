@@ -253,9 +253,10 @@
                 }
                 this.$post('/product/getProductInfoById',data).then((reData)=>{
                     store.commit('changeStore',{key:'oldData',val:reData.data});
-                    router.push('/productAdd')
                     store.commit('changeStore',{key:'goods_id',val:id});
                     store.commit('changeStore',{key:'isEdit',val:true});
+                    router.push('/productAdd')
+
                 })
             }
             //时间选择
