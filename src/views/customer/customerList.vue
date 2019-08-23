@@ -105,14 +105,13 @@
                               </a-button>
                           </a-col>
                           <a-col class="gutter-row" :span="10">
-                              <a-button type="primary" @click="search_product(addCustomerInfo)">搜索</a-button>
+                              <a-button type="primary" @click="search_product()">搜索</a-button>
                           </a-col>
                       </a-row>
                   </a-col>
               </div>
           </a-col>
       </a-row>
-      <div>
       <a-table :columns="columns"
                :dataSource="productListData"
                :pagination="pagination"
@@ -146,7 +145,6 @@
           <a-icon type="close" style="color: red" v-if="text === '0'"></a-icon>
         </a>
       </a-table>
-    </div>
       <div class="addCustomerGender">
           <a-modal
                   title="新增客户信息"
@@ -712,21 +710,19 @@
                 })
             }
             //搜索产品
-            ,search_product(data){
+            ,search_product(){
+
                 this.$post('/customer/getCustomerListPageInfo',{
                     lang_id:store.state.langId,
-                    currentPage:1,
+                    currentPage:this.pagination.currentPage,
                     pageSize:this.pagination.defaultPageSize,
                     genderId:this.addCustomerInfo.genderId,
-                    firstname:this.addCustomerInfo.firstname,
-                    lastname:this.addCustomerInfo.lastname,
                     email:this.addCustomerInfo.email,
-                    passwd:this.addCustomerInfo.passwd,
-                    birthday:this.addCustomerInfo.birthday,
+                    add_date:this.addCustomerInfo.birthday,
                     active:this.addCustomerInfo.active,
                     newsletter:this.addCustomerInfo.newsletter,
                     optin:this.addCustomerInfo.optin,
-                    customerId:this.addCustomerInfo.customerId,
+                    customer_id:this.addCustomerInfo.customerId,
                 }).then((reData)=>{
                     this.productListData=reData.data.dataList
                     this.pagination.currentPage = reData.data.page.currentPage
