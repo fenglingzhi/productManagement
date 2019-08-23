@@ -54,11 +54,11 @@ const columns = [
     dataIndex: "banner_url",
     align: "center"
   },
-  {
-    title: "图片类型",
-    dataIndex: "image_type",
-    align: "center"
-  },
+  // {
+  //   title: "图片类型",
+  //   dataIndex: "image_type",
+  //   align: "center"
+  // },
   {
     title: "title1",
     dataIndex: "title_1",
