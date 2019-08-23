@@ -69,13 +69,20 @@
     </a-layout-sider>
     <a-layout :style="{ marginLeft: '200px' }">
       <a-row style="    padding: 22px 16px 0px 16px;">
-        <a-col :span="12">
+        <a-col :span="20">
           <div class="modelName">{{$store.state.title}}</div>
         </a-col>
-        <a-col :span="12">
-          <div class="loginOut">
-            <loginOut></loginOut>
-          </div>
+        <a-col :span="3">
+          <a-col :span="12">
+            <div class="loginOut">
+              <!--<langChange></langChange>-->
+            </div>
+          </a-col>
+          <a-col :span="12">
+            <div class="loginOut">
+              <loginOut></loginOut>
+            </div>
+          </a-col>
         </a-col>
       </a-row>
 
@@ -106,13 +113,15 @@
     import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN';
     import moment from 'moment';
     import loginOut from '../components/loginOut'
+    import langChange from '../components/langChange'
+
     import 'moment/locale/zh-cn';
     moment.locale('zh-cn');
 
     export default {
         name: "",
         components: {
-            loginOut
+            loginOut,langChange
         },
         data() {
             return {
