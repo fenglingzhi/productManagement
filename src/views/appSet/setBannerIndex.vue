@@ -244,45 +244,38 @@ export default {
       // 数据
       attributeList: [
         {
-          key: "1",
           id: "1",
-          image_type: "1",
+          image_type: 1,
           content: "CAROUSEL BANNER(轮播图)"
         },
         {
-          key: "2",
           id: "2",
-          image_type: "2",
+          image_type: 2,
           content: "TRIPLE VERTICAL BANNER(3张)"
         },
         {
-          key: "3",
           id: "3",
-          image_type: "3",
+          image_type: 3,
           content: "DOUBLE SQUARE BANNER(2张)"
         },
         {
-          key: "4",
           id: "4",
-          image_type: "4",
+          image_type: 4,
           content: "LEFT ONE RIGHT TWO(左1)"
         },
         {
-          key: "5",
           id: "5",
-          image_type: "5",
+          image_type: 5,
           content: "LEFT ONE RIGHT TWO(右上)"
         },
         {
-          key: "6",
           id: "6",
-          image_type: "6",
+          image_type: 6,
           content: "LEFT ONE RIGHT TWO(右下)"
         },
         {
-          key: "7",
           id: "7",
-          image_type: "7",
+          image_type: 7,
           content: "QUARTETTE VERTICAL BANNER(四张)"
         }
       ],
@@ -505,7 +498,7 @@ export default {
       return true;
     },
     goChange(text) {
-      // console.log(text);
+      console.log(text);
       this.form_change.active = text.active == false ? "0" : "1";
       this.form_change.image_type = text.image_type;
       this.form_change.category_id = text.category_id;

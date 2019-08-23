@@ -17,7 +17,7 @@
             <a-form-item label="支付方式">
               <!-- <a-input placeholder="请输入支付方式" v-model.trim="form_search.payment" /> -->
               <a-select v-model="form_search.payment" style="width:174px;">
-                <a-select-option value="9">请选择</a-select-option>
+                <a-select-option value="9">请选择支付方式</a-select-option>
                 <a-select-option value="Cod">Cod</a-select-option>
                 <a-select-option value="Stripe">Stripe</a-select-option>
                 <a-select-option value="Paypal">Paypal</a-select-option>
@@ -52,8 +52,8 @@
         <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="国家">
-              <!-- <a-input placeholder="请输入国家" v-model="form_search.country_name" /> -->
-              <a-select v-model="form_search.country_name" style="width:174px;">
+              <!-- <a-input placeholder="请输入国家" v-model="form_search.country_id" /> -->
+              <a-select v-model="form_search.country_id" style="width:174px;">
                 <a-select-option value="999">请选择国家</a-select-option>
                 <a-select-option
                   :value="item.country_id"
@@ -76,7 +76,15 @@
           </a-col>
           <a-col :span="8">
             <a-form-item label="订单状态">
-              <a-input placeholder="输入订单状态" v-model="form_search.order_state_name" />
+              <!-- <a-input placeholder="输入订单状态" v-model="form_search.order_state_name" /> -->
+              <a-select v-model="form_search.order_state_name" style="width:174px;">
+                <a-select-option value="9">请选择订单状态</a-select-option>
+                <a-select-option
+                  :value="item.name"
+                  v-for="(item,index) in order_state_name"
+                  :key="index"
+                >{{item.name}}</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
         </a-row>
@@ -174,7 +182,7 @@
             <a-col :span="12">
             <p>下单时间：{{customerCartInfo.cartInfo.order_date}}</p>
             </a-col>
-          </a-row> -->
+          </a-row>-->
         </a-card>
       </a-modal>
     </div>
@@ -199,9 +207,9 @@ export default {
         total_paid: "", //支付金额
         iso_code: "9", //币种
         email: "", //邮箱
-        country_name: "999", //国家
+        country_id: "999", //国家
         add_date: null, //订单创建时间
-        order_state_name: "", //订单状态
+        order_state_name: "9", //订单状态
         valid: "9" //有效订单
       },
       productListData: [],
@@ -251,7 +259,8 @@ export default {
       orderListDetail: {},
       searchObj: {},
       iso_code_arr: [],
-      country_name_arr: []
+      country_name_arr: [],
+      order_state_name: []
     };
   },
   methods: {
@@ -293,9 +302,9 @@ export default {
         total_paid: "",
         iso_code: "9",
         email: "",
-        country_name: "999",
+        country_id: "999",
         add_date: null,
-        order_state_name: "",
+        order_state_name: "9",
         valid: "9"
       });
     },
@@ -335,7 +344,7 @@ export default {
     // 获取客户信息详情
     getListDetail(data) {
       this.$post("/order/getOrderDetailInfo", data).then(reData => {
-        console.log(reData)
+        console.log(reData);
         this.orderListDetail = reData.data;
       });
     },
@@ -379,6 +388,17 @@ export default {
         this.country_name_arr = res.data;
       } else {
         this.openNotification("error", "错误", "获取国家列表失败！");
+      }
+    });
+    // 获取订单状态的列表
+    this.$post("/orderState/getOrderStateInfoList", {
+      lang_id: this.$store.state.langId
+    }).then(res => {
+      if (res.code == "0") {
+        console.log(res)
+        this.order_state_name = res.data;
+      } else {
+        this.openNotification("error", "错误", "获取订单状态信息失败！");
       }
     });
   }
