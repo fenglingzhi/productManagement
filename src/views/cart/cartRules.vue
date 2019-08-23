@@ -14,8 +14,7 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :rowSelection="rowSelection" 
-                     :scroll="{ x: 2500 }">
+                     :scroll="{ x: 1500 }">
               <span slot="action" slot-scope="text, record">
                    <a @click="editCod(text.discount_id)">修改</a>
                    <a-divider type="vertical"></a-divider>
@@ -453,23 +452,22 @@
         { title: '编号', key: 'discount_id', dataIndex: 'discount_id', fixed: 'left'},
         { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
         { title: '名称', dataIndex: 'name', key: 'name'},
+        { title: '唯一折扣券码', dataIndex: 'code', key: 'code'},
         { title: '用户可用数量', dataIndex: 'quantity_per_user', key: 'quantity_per_user'},
         { title: '折扣劵总量', dataIndex: 'quantity', key: 'quantity'},
-        { title: '唯一折扣券码', dataIndex: 'code', key: 'code'},
-        { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
-        { title: '是否免运费', scopedSlots: { customRender: 'freight' }, key: 'free_shipping'},
-        { title: '详情', dataIndex: 'description', key: 'description'},
-        { title: '币种', dataIndex: 'minimum_amount_currency', key: 'minimum_amount_currency'},
-        { title: '金额是否包含税',scopedSlots: { customRender: 'includetax' }, key: 'minimum_amount_tax'},
-        { title: '百分比优惠值', dataIndex: 'reduction_percent', key: 'reduction_percent'},
+        // { title: '是否免运费', scopedSlots: { customRender: 'freight' }, key: 'free_shipping'},
+        // { title: '详情', dataIndex: 'description', key: 'description'},
+        // { title: '币种', dataIndex: 'minimum_amount_currency_name', key: 'minimum_amount_currency_name'},
+        // { title: '金额是否包含税',scopedSlots: { customRender: 'includetax' }, key: 'minimum_amount_tax'},
+        // { title: '百分比优惠值', dataIndex: 'reduction_percent', key: 'reduction_percent'},
         { title: '有效期起始', dataIndex: 'date_from', key: 'date_from'},
         { title: '有效期截止', dataIndex: 'date_to', key: 'date_to'},
-        { title: '满足金额使用', dataIndex: 'minimum_amount', key: 'minimum_amount'},
-        { title: '是否开启国家限制', scopedSlots: { customRender: 'countryRes' }, key: 'country_restriction'},
-        { title: '金额优惠值', dataIndex: 'reduction_amount', key: 'reduction_amount'},
-        { title: '是否开启产品限制', scopedSlots: { customRender: 'productRes' }, key: 'product_restriction'},
-        { title: '优惠券是否包含税', scopedSlots: { customRender: 'reductionTax' }, key: 'reduction_tax'},
-        { title: '金额是否包含运费', scopedSlots: { customRender: 'amount' }, key: 'minimum_amount_shipping'},
+        // { title: '满足金额使用', dataIndex: 'minimum_amount', key: 'minimum_amount'},
+        // { title: '是否开启国家限制', scopedSlots: { customRender: 'countryRes' }, key: 'country_restriction'},
+        // { title: '金额优惠值', dataIndex: 'reduction_amount', key: 'reduction_amount'},
+        // { title: '是否开启产品限制', scopedSlots: { customRender: 'productRes' }, key: 'product_restriction'},
+        // { title: '优惠券是否包含税', scopedSlots: { customRender: 'reductionTax' }, key: 'reduction_tax'},
+        // { title: '金额是否包含运费', scopedSlots: { customRender: 'amount' }, key: 'minimum_amount_shipping'},
         { title: '状态', key: 'active',scopedSlots: { customRender: 'active' },},
        
     ];
