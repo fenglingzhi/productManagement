@@ -236,8 +236,7 @@
             editCod(id){
                 var that = this;
                 this.$post('/employee/getEmployeeList',{employee_id:id}).then((reData)=>{
-                   console.log(reData)
-                   reData.data[0].role_id = this.addCod.role_id;
+                   console.log("1111",reData)
                    this.addCod = reData.data[0];
                    this.addCod.edit = true;
                    delete this.addCod.passwd;
