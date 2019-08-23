@@ -16,7 +16,6 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :rowSelection="rowSelection" 
                      :scroll="{ x: 1500 }">
                 <span slot="action" slot-scope="text, record">
                   <a @click="editCod(text.employee_id)">修改</a>
@@ -135,7 +134,7 @@
         { title: '名', dataIndex: 'first_name', key: 'first_name'},
         { title: '姓', dataIndex: 'last_name', key: 'last_name'},
         { title: '邮箱地址', dataIndex: 'email', key: 'email'},
-        { title: '默认语言id', dataIndex: 'lang_id', key: 'lang_id'},
+        { title: '默认语言', dataIndex: 'lang_name', key: 'lang_name'},
         { title: '是否禁用', key: 'active',scopedSlots: { customRender: 'active' },},
     ];
     const attributeList = [];
