@@ -62,7 +62,7 @@
                     <a-col class="gutter-row" :span="18">
                         <a-row>
                             <a-col class="gutter-row" :span="10">
-                                <a-button type="primary" @click="search_product(addCustomerInfo)">搜索</a-button>
+                                <a-button type="primary" @click="search_product(addCustomerAddressData)">搜索</a-button>
                             </a-col>
                         </a-row>
                     </a-col>
@@ -271,6 +271,7 @@
                 rowSelection,
                 loading: false,
                 pagination:{
+                    currentPage:'1',
                     defaultPageSize:10,
                     total:1,
                 }
@@ -289,7 +290,11 @@
                     state_id:'',
                     country_id:'',
                     other:'',
-                    address_id:''
+                    address_id:'',
+                    birthday:'',
+                    order_id:'',
+                    cart_id:'',
+                    total_amount:'',
                 }
                 ,country:[]
                 ,state:[]
@@ -312,6 +317,7 @@
                         order_id:'',
                         currency_id:'',
                         order_date:'',
+                        state_name:'',
                     },
                     customerDetail:{
                         valid_order_sum:'',
@@ -354,21 +360,16 @@
                 this.addCustomerInfo.birthday = dateString
             }
             //搜索产品
-            ,search_product(data){
+            ,search_product(){
                 this.$post('/cart/getCartInfoPage',{
                     lang_id:store.state.langId,
-                    currentPage:1,
-                    pageSize:this.pagination.defaultPageSize,
-                    genderId:this.addCustomerInfo.genderId,
-                    firstname:this.addCustomerInfo.firstname,
-                    lastname:this.addCustomerInfo.lastname,
-                    email:this.addCustomerInfo.email,
-                    passwd:this.addCustomerInfo.passwd,
-                    birthday:this.addCustomerInfo.birthday,
-                    active:this.addCustomerInfo.active,
-                    newsletter:this.addCustomerInfo.newsletter,
-                    optin:this.addCustomerInfo.optin,
-                    customerId:this.addCustomerInfo.customerId,
+                    currentPage:this.pagination.currentPage,
+                    pageSize:this.addCustomerAddressData.defaultPageSize,
+                    email:this.addCustomerAddressData.email,
+                    birthday:this.addCustomerAddressData.birthday,
+                    order_id:this.addCustomerAddressData.order_id,
+                    cart_id:this.addCustomerAddressData.cart_id,
+                    total_amount:this.addCustomerAddressData.total_amount,
                 }).then((reData)=>{
                     this.productListData=reData.data.dataList
                     this.pagination.currentPage = reData.data.page.currentPage

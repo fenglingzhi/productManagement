@@ -30,7 +30,8 @@
 
               </span>
               <span slot="redirect" slot-scope="text, record">
-                  <a @click="select_attribute_child(record.attribute_id)">{{record.attribute_name}}</a>
+                  <a @click="select_attribute_child(record.attribute_id)" v-if="addAttributeInfo.parent_id == '0'">{{record.attribute_name}}</a>
+                  <a class="" disabled v-if="addAttributeInfo.parent_id != '0'" style="color:#000000a6">{{record.attribute_name}}</a>
               </span>
                 <a slot="active" slot-scope="text, record" style="text-align: center">
                     <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
@@ -361,12 +362,13 @@
             //返回父属性列表
             ,returnAttribute(){
                 this.flag = 0;
-                this.addAttributeInfo.parent_id = 0;
+
                 this.getList({
                     parent_id:0,
                     pageSize:this.pagination.defaultPageSize,
                     lang_id:store.state.langId
                 })
+                this.addAttributeInfo.parent_id = 0;
             }
             //表单校验
             ,checkForm(obj){
