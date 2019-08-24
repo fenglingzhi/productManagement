@@ -174,7 +174,7 @@
                                             <div class="inputName">单一客户的限制：</div>
                                         </a-col>
                                         <a-col class="gutter-row" :span="16">
-                                            <a-input placeholder="" type="email" v-model="addCod.customer_id" />
+                                            <a-input placeholder="" type="email" v-model="addCod.customer_email" />
                                         </a-col>
                                     </div>
                                 </a-row>
@@ -455,19 +455,8 @@
         { title: '唯一折扣券码', dataIndex: 'code', key: 'code'},
         { title: '用户可用数量', dataIndex: 'quantity_per_user', key: 'quantity_per_user'},
         { title: '折扣劵总量', dataIndex: 'quantity', key: 'quantity'},
-        // { title: '是否免运费', scopedSlots: { customRender: 'freight' }, key: 'free_shipping'},
-        // { title: '详情', dataIndex: 'description', key: 'description'},
-        // { title: '币种', dataIndex: 'minimum_amount_currency_name', key: 'minimum_amount_currency_name'},
-        // { title: '金额是否包含税',scopedSlots: { customRender: 'includetax' }, key: 'minimum_amount_tax'},
-        // { title: '百分比优惠值', dataIndex: 'reduction_percent', key: 'reduction_percent'},
         { title: '有效期起始', dataIndex: 'date_from', key: 'date_from'},
         { title: '有效期截止', dataIndex: 'date_to', key: 'date_to'},
-        // { title: '满足金额使用', dataIndex: 'minimum_amount', key: 'minimum_amount'},
-        // { title: '是否开启国家限制', scopedSlots: { customRender: 'countryRes' }, key: 'country_restriction'},
-        // { title: '金额优惠值', dataIndex: 'reduction_amount', key: 'reduction_amount'},
-        // { title: '是否开启产品限制', scopedSlots: { customRender: 'productRes' }, key: 'product_restriction'},
-        // { title: '优惠券是否包含税', scopedSlots: { customRender: 'reductionTax' }, key: 'reduction_tax'},
-        // { title: '金额是否包含运费', scopedSlots: { customRender: 'amount' }, key: 'minimum_amount_shipping'},
         { title: '状态', key: 'active',scopedSlots: { customRender: 'active' },},
        
     ];
@@ -504,7 +493,7 @@
                   description:'',
                   code:'',
                   active:'1',
-                  customer_id:'',
+                  customer_email:'',
                   date_from:'2019-08-08 17:00:09',
                   date_to:'2019-08-09 17:00:09',
                   minimum_amount:'',
@@ -559,7 +548,7 @@
                         description:'',
                         code:'',
                         active:'1',
-                        customer_id:'',
+                        customer_email:'',
                         date_from:'2019-08-08 17:00:09',
                         date_to:'2019-08-09 17:00:09',
                         minimum_amount:'',
@@ -738,9 +727,10 @@
                    console.log(reData)
                    this.addCod = reData.data[0];
                    this.addCod.edit = true;
-                   if(this.addCod.customer_id == 0){
-                        this.addCod.customer_id = "";
+                   if(this.addCod.customer_email == 0){
+                        this.addCod.customer_email = "";
                    }
+
                    this.addCod.active= reData.data[0].active.toString()
                    this.addCod.minimum_amount_tax= reData.data[0].minimum_amount_tax.toString()
                    this.addCod.minimum_amount_shipping= reData.data[0].minimum_amount_shipping.toString()
@@ -748,6 +738,13 @@
                    this.addCod.reduction_tax= reData.data[0].reduction_tax.toString()
                    this.addCod.free_shipping= reData.data[0].free_shipping.toString()
                    this.addCod.country_restriction= reData.data[0].country_restriction.toString()
+                   if(this.addCod.reduction_percent != "" || this.addCod.reduction_percent != null){
+                       this.reductType = 1
+                   }else{
+                       this.reductType = 2
+                   }
+
+
                    this.addCodM(this.addCod.edit)
                 })
             },
@@ -768,8 +765,8 @@
                     }else{
                         delete this.addCod.reduction_percent;
                     }
-                    if(this.addCod.customer_id == ''){
-                        this.addCod.customer_id = 0;
+                    if(this.addCod.customer_email == ''){
+                        this.addCod.customer_email = 0;
                     }
                     this.$post('/discount/addDiscountInfo',this.addCod).then((reData)=>{
                         console.log("返回结果",reData)
@@ -789,7 +786,7 @@
                                 description:'',
                                 code:'',
                                 active:'1',
-                                customer_id:'',
+                                customer_email:'',
                                 date_from:'2019-08-08 17:00:09',
                                 date_to:'2019-08-09 17:00:09',
                                 minimum_amount:'',
@@ -837,8 +834,8 @@
                 }else{
                     delete this.addCod.reduction_percent;
                 }
-                if(this.addCod.customer_id == ''){
-                    this.addCod.customer_id = 0;
+                if(this.addCod.customer_email == ''){
+                    this.addCod.customer_email = 0;
                 }
                 this.$post('/discount/updateDiscountInfo',this.addCod).then((reData)=>{
                     console.log(reData)
@@ -858,7 +855,7 @@
                             description:'',
                             code:'',
                             active:'1',
-                            customer_id:'',
+                            customer_email:'',
                             date_from:'2019-08-08 17:00:09',
                             date_to:'2019-08-09 17:00:09',
                             minimum_amount:'',
