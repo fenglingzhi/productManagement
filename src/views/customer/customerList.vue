@@ -711,12 +711,11 @@
             }
             //搜索产品
             ,search_product(){
-
                 this.$post('/customer/getCustomerListPageInfo',{
                     lang_id:store.state.langId,
                     currentPage:this.pagination.currentPage,
                     pageSize:this.pagination.defaultPageSize,
-                    genderId:this.addCustomerInfo.genderId,
+                    gender_id:this.addCustomerInfo.genderId,
                     email:this.addCustomerInfo.email,
                     add_date:this.addCustomerInfo.birthday,
                     active:this.addCustomerInfo.active,
@@ -752,6 +751,7 @@
             ,deleteProduct(data){
                 this.$post('/customer/removeCustomerInfo',data).then((reData)=>{
                     if(reData.code === '0'){
+                        this.openNotification("success", "成功", "删除成功！");
                         this.getList({
                             lang_id:store.state.langId,
                             pageSize:this.pagination.defaultPageSize
