@@ -476,32 +476,32 @@
                 this.addCustomerAddressData.state_id='';
                 this.addCustomerAddressData.country_id='';
                 this.addCustomerAddressData.email='';
-                this.$post('/country/getCountryListPage',{lang_id:store.state.langId,pageSize:'10000'}).then((reData)=>{
-                    vm.country = reData.data.dataList.slice(0)
+                this.$post('/country/getCountryList',{lang_id:store.state.langId}).then((reData)=>{
+                    vm.country = reData.data.slice(0)
                 });
             }
             //国家选择
             ,handleChangeCountry(value) {
                 this.addCustomerAddressData.country_id = value
-                this.$post('/state/getStateListPage',{country_id:value,pageSize:'10000'}).then((reData)=>{
-                    if(reData.data.dataList == null){
+                this.$post('/state/getStateList',{country_id:value}).then((reData)=>{
+                    if(reData.data == null){
                         this.state_flag = true
                         this.city_flag = true
                     } else {
                         this.state_flag = false
-                        this.state = reData.data.dataList.slice(0)
+                        this.state = reData.data.slice(0)
                     }
                 });
             }
             //州选择
             ,handleChangeState(value) {
                 this.addCustomerAddressData.state_id = value
-                this.$post('/city/getCityListPage',{state_id:value,pageSize:'10000'}).then((reData)=>{
-                    if(reData.data.dataList == null){
+                this.$post('/city/getCityList',{state_id:value,country_id:this.addCustomerAddressData.country_id}).then((reData)=>{
+                    if(reData.data == null){
                         this.city_flag = true
                     } else {
                         this.city_flag = false
-                        this.city = reData.data.dataList.slice(0)
+                        this.city = reData.data.slice(0)
                     }
                 });
             }
