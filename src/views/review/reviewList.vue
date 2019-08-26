@@ -3,40 +3,40 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="8">
                         <div class="inputName">评论ID：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入评论ID" v-model="search_data.commentId" />
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="8">
                         <div class="inputName">Email ：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入email" v-model="search_data.email"/>
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="8">
                         <div class="inputName">SKU ：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入SKU" v-model="search_data.product_code"/>
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputName">评论状态：</div>
+                    <a-col class="gutter-row" :span="8">
+                        <div class="inputName">状态：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
                             <a-select-option value="">请选择</a-select-option>
                             <a-select-option value="1">显示</a-select-option>
@@ -49,9 +49,9 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="8">
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-row>
                             <a-col class="gutter-row" :span="6">
                                 <a-button type="primary" @click="search_product(search_data)">搜索</a-button>

@@ -3,40 +3,40 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputName"> 购物车ID：</div>
+                    <a-col class="gutter-row" :span="8">
+                        <div class="inputName"> Cart ID：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入购物车ID" v-model="addCustomerAddressData.cart_id" />
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputName"> 订单号ID：</div>
+                    <a-col class="gutter-row" :span="8">
+                        <div class="inputName"> 订单ID：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入订单号ID" v-model="addCustomerAddressData.order_id" />
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputName">客户email ：</div>
+                    <a-col class="gutter-row" :span="8">
+                        <div class="inputName">Email ：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入客户email" v-model="addCustomerAddressData.email"/>
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
-                        <div class="inputName">购物车金额 ：</div>
+                    <a-col class="gutter-row" :span="8">
+                        <div class="inputName">Cart 金额 ：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-input placeholder="请输入购物车金额" v-model="addCustomerAddressData.total_amount"/>
                     </a-col>
                 </div>
@@ -45,10 +45,10 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="8">
                         <div class="inputName"> 注册时间：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-range-picker @change="onChange" />
                     </a-col>
                 </div>
@@ -57,9 +57,9 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="6">
+                    <a-col class="gutter-row" :span="8">
                     </a-col>
-                    <a-col class="gutter-row" :span="18">
+                    <a-col class="gutter-row" :span="16">
                         <a-row>
                             <a-col class="gutter-row" :span="10">
                                 <a-button type="primary" @click="search_product(addCustomerAddressData)">搜索</a-button>

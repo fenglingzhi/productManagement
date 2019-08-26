@@ -38,7 +38,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">称呼：</div>
+                            <div class="inputName"><span style="color:red;">*</span>称呼：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input placeholder="请输入称呼" v-model="addCustomerGenderData.name" />
@@ -48,7 +48,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">状态：</div>
+                            <div class="inputName"><span style="color:red;">*</span>状态：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange" :value="addCustomerGenderData.genderId">
@@ -71,7 +71,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">称呼：</div>
+                            <div class="inputName"><span style="color:red;">*</span>称呼：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input placeholder="请输入称呼" v-model="addCustomerGenderData.name" />
@@ -81,7 +81,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">状态：</div>
+                            <div class="inputName"><span style="color:red;">*</span>状态：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="请选择"

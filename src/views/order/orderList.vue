@@ -18,9 +18,7 @@
               <!-- <a-input placeholder="请输入支付方式" v-model.trim="form_search.payment" /> -->
               <a-select v-model="form_search.payment" style="width:174px;">
                 <a-select-option value="9">请选择支付方式</a-select-option>
-                <a-select-option value="Cod">Cod</a-select-option>
-                <a-select-option value="Stripe">Stripe</a-select-option>
-                <a-select-option value="Paypal">Paypal</a-select-option>
+                <a-select-option :value="item.payment_method" v-for="(item,index) in payment_arr" :key="index">{{item.payment_method}}</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -77,11 +75,11 @@
           <a-col :span="8">
             <a-form-item label="订单状态">
               <!-- <a-input placeholder="输入订单状态" v-model="form_search.order_state_name" /> -->
-              <a-select v-model="form_search.order_state_name" style="width:174px;">
-                <a-select-option value="9">请选择订单状态</a-select-option>
+              <a-select v-model="form_search.current_state" style="width:174px;">
+                <a-select-option value="999">请选择订单状态</a-select-option>
                 <a-select-option
-                  :value="item.name"
-                  v-for="(item,index) in order_state_name"
+                  :value="item.order_state_id"
+                  v-for="(item,index) in current_state_arr"
                   :key="index"
                 >{{item.name}}</a-select-option>
               </a-select>
@@ -100,7 +98,7 @@
           </a-col>
           <a-col :span="8" :style="{ paddingLeft: '111px' }">
             <a-button type="primary" html-type="submit">搜索</a-button>
-            <a-button :style="{ marginLeft: '47px' }" @click="handleReset">清空</a-button>
+            <!-- <a-button :style="{ marginLeft: '47px' }" @click="handleReset">清空</a-button> -->
           </a-col>
         </a-row>
       </a-form>
@@ -209,7 +207,7 @@ export default {
         email: "", //邮箱
         country_id: "999", //国家
         add_date: null, //订单创建时间
-        order_state_name: "9", //订单状态
+        current_state: "999", //订单状态
         valid: "9" //有效订单
       },
       productListData: [],
@@ -253,14 +251,15 @@ export default {
       pagination: {
         pageSize: 10,
         total: 0,
-        currentPage: 1
+        current: 1
       },
       fabricList: [],
       orderListDetail: {},
       searchObj: {},
       iso_code_arr: [],
       country_name_arr: [],
-      order_state_name: []
+      current_state_arr: [],
+      payment_arr:[]
     };
   },
   methods: {
@@ -275,7 +274,6 @@ export default {
           this.form_search[key] != "9" &&
           this.form_search[key] != "999"
         ) {
-          // this.searchObj[key] = this.form_search[key];
           this.$set(this.searchObj, key, this.form_search[key]);
         }
       }
@@ -283,12 +281,11 @@ export default {
       if ("add_date" in this.searchObj) {
         this.searchObj.add_date = moment(this.searchObj.add_date).format("x");
       }
-      // console.log(this.searchObj);
       this.getList(
         {
-          currentPage: this.pagination.currentPage,
-          // currentPage: 1,
-          pageSize: this.pagination.pageSize
+          currentPage: 1,
+          pageSize: this.pagination.pageSize,
+          lang_id: this.$store.state.langId
         },
         this.searchObj
       );
@@ -304,7 +301,7 @@ export default {
         email: "",
         country_id: "999",
         add_date: null,
-        order_state_name: "9",
+        current_state: "999",
         valid: "9"
       });
     },
@@ -333,10 +330,12 @@ export default {
           this.productListData = dataList;
           // console.log(reData.data.page)
           this.pagination.total = reData.data.page.totalResultSize;
+          this.pagination.current = reData.data.page.currentPage;
           this.loading = false;
         } catch (err) {
           this.productListData = [];
           this.pagination.total = reData.data.page.totalResultSize;
+          this.pagination.current = 1;
           this.loading = false;
         }
       });
@@ -344,18 +343,18 @@ export default {
     // 获取客户信息详情
     getListDetail(data) {
       this.$post("/order/getOrderDetailInfo", data).then(reData => {
-        console.log(reData);
+        // console.log(reData);
         this.orderListDetail = reData.data;
       });
     },
     //表格分页事件
     handleTableChange(pagination) {
       // console.log(pagination);
-      this.pagination.currentPage = pagination.current;
       this.getList(
         {
           currentPage: pagination.current,
-          pageSize: pagination.pageSize
+          pageSize: pagination.pageSize,
+          lang_id: this.$store.state.langId //语言id
         },
         this.searchObj
       );
@@ -366,21 +365,20 @@ export default {
   },
   mounted() {
     // store.commit("changeStore", { key: "title", val: "产品列表" });
-    this.getList({ currentPage: 1, pageSize: this.pagination.pageSize });
-    // 获取币种
-    this.$post("/currency/getCurrencyListPage").then(res => {
+    this.getList({
+      currentPage: this.pagination.current,
+      pageSize: this.pagination.pageSize,
+      lang_id: this.$store.state.langId //语言id
+    });
+    // 获取激活的所有币种
+    this.$post("/currency/getCurrencyList").then(res => {
       if (res.code == "0") {
-        res.data.dataList.forEach(item => {
-          // 筛选激活的币种
-          if (item.active == "1") {
-            this.iso_code_arr.push(item);
-          }
-        });
+        this.iso_code_arr = res.data;
       } else {
         this.openNotification("error", "错误", "获取币种列表失败！");
       }
     });
-    // 获取激活的国家列表
+    // 获取激活的所有国家列表
     this.$post("/country/getCountryList", {
       lang_id: this.$store.state.langId
     }).then(res => {
@@ -395,10 +393,19 @@ export default {
       lang_id: this.$store.state.langId
     }).then(res => {
       if (res.code == "0") {
-        console.log(res)
-        this.order_state_name = res.data;
+        // console.log(res)
+        this.current_state_arr = res.data;
       } else {
         this.openNotification("error", "错误", "获取订单状态信息失败！");
+      }
+    });
+    // 获取支付方式
+    this.$post("/payment/getPaymentList").then(res => {
+      if (res.code == "0") {
+        // console.log(res);
+        this.payment_arr = res.data;
+      } else {
+        this.openNotification("error", "错误", "获取支付方式信息失败！");
       }
     });
   }

@@ -23,7 +23,7 @@
             </a-col>
         </a-row>
         <a-row class="row-padding">
-            <a-col :span="5">显示</a-col>
+            <a-col :span="5"><span style="color:red;">*</span>显示</a-col>
             <a-col :span="19">
                 <a-radio-group v-model="active" buttonStyle="solid">
                     <a-radio-button value="1">是</a-radio-button>
@@ -32,7 +32,7 @@
             </a-col>
         </a-row>
         <a-row class="row-padding" v-if="operation_name == 'add'">
-            <a-col :span="5">是否成为banner图</a-col>
+            <a-col :span="5"><span style="color:red;">*</span>是否成为banner图</a-col>
             <a-col :span="19">
                 <a-radio-group v-model="isBanner" buttonStyle="solid">
                     <a-radio-button value="1">是</a-radio-button>
@@ -41,7 +41,7 @@
             </a-col>
         </a-row>
         <a-row class="row-padding">
-            <a-col :span="5">上级分类</a-col>
+            <a-col :span="5"><span style="color:red;">*</span>上级分类</a-col>
             <a-col :span="19">
                 <a-tree-select
                     style="width: 300px"
@@ -66,13 +66,13 @@
             </a-col>
         </a-row>
         <a-row class="row-padding">
-            <a-col :span="5">描述</a-col>
+            <a-col :span="5"><span style="color:red;">*</span>描述</a-col>
             <a-col :span="19">
                 <tinymce-editor ref="editor" v-model="description"></tinymce-editor>
             </a-col>
         </a-row>
         <a-row class="row-padding">
-            <a-col :span="5">类目封面图片</a-col>
+            <a-col :span="5"><span style="color:red;">*</span>类目封面图片</a-col>
             <a-col :span="19">
                 <a-upload
                     name="avatar"
@@ -90,19 +90,19 @@
             </a-col>
         </a-row>
         <a-row class="row-padding">
-            <a-col :span="5">Meta标题</a-col>
+            <a-col :span="5"><span style="color:red;">*</span>Meta标题</a-col>
             <a-col :span="19">
                 <a-input placeholder="请输入Meta标题" v-model="metaTitle" />
             </a-col>
         </a-row>
         <a-row class="row-padding">
-            <a-col :span="5">Meta说明</a-col>
+            <a-col :span="5"><span style="color:red;">*</span>Meta说明</a-col>
             <a-col :span="19">
                 <a-textarea placeholder="Basic usage" :rows="4" v-model="metaDescription"/>
             </a-col>
         </a-row>
         <a-row class="row-padding">
-            <a-col :span="5">Meta关键词</a-col>
+            <a-col :span="5"><span style="color:red;">*</span>Meta关键词</a-col>
             <a-col :span="19">
                 <template v-for="(tag, index) in tags">
                     <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
@@ -133,7 +133,7 @@
             </a-col>
         </a-row>
         <a-row class="row-padding">
-            <a-col :span="5">Meta友好链接</a-col>
+            <a-col :span="5"><span style="color:red;">*</span>Meta友好链接</a-col>
             <a-col :span="19">
                 <a-input placeholder="请输入Meta友好链接" v-model="linkRewrite" />
             </a-col>
