@@ -110,7 +110,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*是否启用：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="1" style="width: 100%"   @change="handleChangeAdd">
@@ -123,7 +123,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*名字 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>名字 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -133,7 +133,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*国家：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="请选择国家" style="width: 100%"  @change="handleChangeZoneAdd">
@@ -169,7 +169,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*是否启用：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.active" style="width: 100%"  @change="handleChangeEdit">
@@ -182,7 +182,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*名字 ：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>名字 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder="" v-model="editCurrency.name" />
@@ -193,7 +193,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*国家：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select :defaultValue="editCurrency.country_id" style="width: 100%"  @change="handleChangeZoneEdit">

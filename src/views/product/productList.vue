@@ -211,6 +211,8 @@
                 store.commit('changeStore',{key:'goods_id',val:''});
                 router.push('/productAdd')
                 store.commit('changeStore',{key:'isEdit',val:false});
+                store.commit('changeStore',{key:'isEditCombin',val:false});
+
             }
             // 获取商品列表
             ,getList(data){
