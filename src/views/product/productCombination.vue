@@ -322,6 +322,10 @@
                 this.makeList()
             },
             getTabData(){
+                this.tabList=[]
+                this.colorList=[]
+                this.sizeList=[]
+
                 this.$post('/productUnit/getProductUnitList',{product_id:this.$store.state.goods_id}).then((reData)=>{
                     let dataF =  reData.data.dataList
                     let dataD= this.colorListO
@@ -536,6 +540,11 @@
         watch: {
             "$store.state.goods_id"() {
                 this.productId =  this.$store.state.goods_id;
+            },
+            "$store.state.isEdit"() {
+                if( this.$store.state.isEdit == true){
+                    this.getTabData()
+                }
             }
         },
     }
