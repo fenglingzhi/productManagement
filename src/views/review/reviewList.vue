@@ -14,20 +14,20 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">用户ID ：</div>
+                        <div class="inputName">Email ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input placeholder="请输入用户ID" v-model="search_data.customerId"/>
+                        <a-input placeholder="请输入email" v-model="search_data.email"/>
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="6">
-                        <div class="inputName">商品ID ：</div>
+                        <div class="inputName">SKU ：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-input placeholder="请输入用户ID" v-model="search_data.productId"/>
+                        <a-input placeholder="请输入SKU" v-model="search_data.product_code"/>
                     </a-col>
                 </div>
             </a-col>
@@ -97,9 +97,9 @@
     import store from '../../store'
     const columns = [
         { title: '评论ID', dataIndex: 'comment_id', key: 'comment_id'},
-        { title: '用户id', dataIndex: 'customer_id', key: 'customer_id'},
+        { title: 'Email', dataIndex: 'email', key: 'email'},
         { title: '标题', dataIndex: 'title', key: 'title'},
-        { title: '商品id', dataIndex: 'product_id', key: 'product_id'},
+        { title: 'SKU', dataIndex: 'product_code', key: 'product_code'},
         { title: '描述', dataIndex: 'description', key: 'description'},
         { title: '评分', dataIndex: 'score', key: 'score', align: 'center' ,scopedSlots: { customRender: 'score' },},
         { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
@@ -135,6 +135,8 @@
                     ,customerId:''
                     ,active:''
                     ,productId:''
+                    ,email:''
+                    ,
                 }
             }
         },

@@ -99,8 +99,8 @@
         { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
         { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
         { title: '是否默认', align: 'center' ,scopedSlots: { customRender: 'isDefault' },},
-        { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
-        { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
+        // { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
+        // { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
 
     ];
     export default {
@@ -262,8 +262,10 @@
                                     console.log('ok');
                                 },
                             })
-                            store.commit('changeStore',{key:'addProductContent',val:'productNum'});
-                            store.commit('changeStore',{key:'addProductCurrent',val:'6'});
+                            if(reData.code==0){
+                                store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
+                                store.commit('changeStore',{key:'addProductCurrent',val:'6'});
+                            }
                         } ,
 
                     });
@@ -317,6 +319,13 @@
                                     console.log('ok');
                                 },
                             })
+                            if(reData.code==0){
+                                // store.commit('changeStore',{key:'isEdit',val:true});
+
+                                store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
+                                store.commit('changeStore',{key:'addProductCurrent',val:'6'});
+
+                            }
                         } ,
 
                     });

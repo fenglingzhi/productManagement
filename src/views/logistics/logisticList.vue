@@ -60,6 +60,19 @@
             <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
           </span>
+          <span v-if="text.c_sign=='$'" slot="c_max" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_max}}
+          </span>
+            <span v-if="text.c_sign=='kg'" slot="c_max" slot-scope="text, record">
+              {{text.c_max}}{{text.c_sign}}
+          </span>
+            <span v-if="text.c_sign=='$'" slot="c_min" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_min}}
+          </span>
+            <span v-if="text.c_sign=='kg'" slot="c_min" slot-scope="text, record">
+              {{text.c_min}}{{text.c_sign}}
+          </span>
+
         </a-table>
         <div class="hrLine"></div>
         <div class="secondTitle">
@@ -91,6 +104,21 @@
           </span>
             <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
+          </span>
+            <span slot="shipping_price" slot-scope="text, record">
+              ${{text.shipping_price}}
+          </span>
+            <span v-if="text.c_sign=='$'" slot="c_max" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_max}}
+          </span>
+            <span v-if="text.c_sign=='kg'" slot="c_max" slot-scope="text, record">
+              {{text.c_max}}{{text.c_sign}}
+          </span>
+            <span v-if="text.c_sign=='$'" slot="c_min" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_min}}
+          </span>
+            <span v-if="text.c_sign=='kg'" slot="c_min" slot-scope="text, record">
+              {{text.c_min}}{{text.c_sign}}
           </span>
         </a-table>
 
@@ -136,6 +164,21 @@
                 <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
           </span>
+                <span slot="shipping_price" slot-scope="text, record">
+              ${{text.shipping_price}}
+          </span>
+                <span v-if="text.c_sign=='$'" slot="c_max" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_max}}
+          </span>
+                <span v-if="text.c_sign=='kg'" slot="c_max" slot-scope="text, record">
+              {{text.c_max}}{{text.c_sign}}
+          </span>
+                <span v-if="text.c_sign=='$'" slot="c_min" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_min}}
+          </span>
+                <span v-if="text.c_sign=='kg'" slot="c_min" slot-scope="text, record">
+              {{text.c_min}}{{text.c_sign}}
+          </span>
           <!--<span slot="c_min" slot-scope="text, record">-->
                 <!--<span v-if="text.c_type">{{text.c_min}}kg</span>-->
           <!--</span>-->
@@ -177,6 +220,21 @@
           </span>
                 <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
+          </span>
+                <span slot="shipping_price" slot-scope="text, record">
+              ${{text.shipping_price}}
+          </span>
+                <span v-if="text.c_sign=='$'" slot="c_max" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_max}}
+          </span>
+                <span v-if="text.c_sign=='kg'" slot="c_max" slot-scope="text, record">
+              {{text.c_max}}{{text.c_sign}}
+          </span>
+                <span v-if="text.c_sign=='$'" slot="c_min" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_min}}
+          </span>
+                <span v-if="text.c_sign=='kg'" slot="c_min" slot-scope="text, record">
+              {{text.c_min}}{{text.c_sign}}
           </span>
                 <!--<span slot="c_min" slot-scope="text, record">-->
                 <!--<span v-if="text.c_type">{{text.c_min}}kg</span>-->
@@ -221,7 +279,7 @@
                         <a-col class="gutter-row" :span="18">
                             <a-select  v-model="addZone.c_type" defaultValue="1" style="width: 100%"  @change="handleChange">
                                 <a-select-option  value="1">重量（kg）</a-select-option>
-                                <a-select-option  value="0">金额（$）</a-select-option>
+                                <a-select-option  value="2">金额（$）</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -324,7 +382,7 @@
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%" v-model="addOtherCountry.c_type" @change="handleChange">
                                 <a-select-option value="1">重量（kg）</a-select-option>
-                                <a-select-option value="0">金额（$）</a-select-option>
+                                <a-select-option value="2">金额（$）</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -398,7 +456,7 @@
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%"  v-model="addCountry.c_type">
                                 <a-select-option value="1">重量（kg）</a-select-option>
-                                <a-select-option value="0">金额（$）</a-select-option>
+                                <a-select-option value="2">金额（$）</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -516,7 +574,7 @@
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%"  v-model="addState.c_type" >
                                 <a-select-option value="1">重量（kg）</a-select-option>
-                                <a-select-option value="0">金额（$）</a-select-option>
+                                <a-select-option value="2">金额（$）</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -625,8 +683,11 @@
         { title: '编号', align:'center', dataIndex: 'carrier_id',width:120, key: 'carrier_id'},
         // { title: '国家', align:'center',dataIndex: 'country_name', key: 'country_name'},
         { title: '前台显示', align:'center',dataIndex: 'name', key: 'name'},
-        { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
-        { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
+        // { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
+        // { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
+        { title: '最小值', align:'center', key:'c_min', scopedSlots: { customRender: 'c_min' }},
+        { title: '最大值', align:'center', key:'c_max', scopedSlots: { customRender: 'c_max' }},
+
         // { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
         { title: '运费', align:'center', key:'shipping_price', scopedSlots: { customRender: 'shipping_price' }},
         // { title: '是否是其他', align:'center',dataIndex: 'c_other', key: 'c_other'},
@@ -637,8 +698,10 @@
         { title: '编号', align:'center', dataIndex: 'carrier_id',width:120, key: 'carrier_id'},
         // { title: '（省/州）名称', align:'center',dataIndex: 'state_name', key: 'state_name'},
         { title: '前台显示', align:'center',dataIndex: 'name', key: 'name'},
-        { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
-        { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
+        // { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
+        // { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
+        { title: '最小值', align:'center', key:'c_min', scopedSlots: { customRender: 'c_min' }},
+        { title: '最大值', align:'center', key:'c_max', scopedSlots: { customRender: 'c_max' }},
         // { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
         { title: '运费', align:'center', key:'shipping_price', scopedSlots: { customRender: 'shipping_price' }},
 
@@ -649,8 +712,10 @@
         {title: '操作', key: 'action',width:120, scopedSlots: { customRender: 'action' },},
         { title: '编号', align:'center', dataIndex: 'carrier_id',width:120, key: 'carrier_id'},
         { title: '前台显示', align:'center',dataIndex: 'name', key: 'name'},
-        { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
-        { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
+        // { title: '最小值', align:'center',dataIndex: 'c_min', key: 'c_min'},
+        // { title: '最大值', align:'center',dataIndex: 'c_max', key: 'c_max'},
+        { title: '最小值', align:'center', key:'c_min', scopedSlots: { customRender: 'c_min' }},
+        { title: '最大值', align:'center', key:'c_max', scopedSlots: { customRender: 'c_max' }},
         // { title: '运费', align:'center',dataIndex: 'shipping_price', key: 'shipping_price'},
         { title: '运费', align:'center', key:'shipping_price', scopedSlots: { customRender: 'shipping_price' }},
 
@@ -895,6 +960,8 @@
                     if(reData.code=="0"){
                         this.checkedList=reData.data.zone_id
                         this.addOtherCountry = reData.data
+                        this.addOtherCountry.c_type = reData.data.c_type.toString()
+
                         this.visible5 = true
                     }else {
                         this.$notification.open({

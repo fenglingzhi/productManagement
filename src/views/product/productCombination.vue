@@ -80,8 +80,8 @@
               <a-input v-model="text.good_qty" type="number" placeholder=""/>
           </span>
             <a slot="isDefault" slot-scope="text, record,index" style="text-align: center">
-                <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active('0',index)"></a-icon>
-                <a-icon type="close" style="color: red" v-if="text.is_default == '0'" @click="change_active('1',index)"></a-icon>
+                <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active1('0',index)"></a-icon>
+                <a-icon type="close" style="color: red" v-if="text.is_default == '0'" @click="change_active1('1',index)"></a-icon>
             </a>
         </a-table>
 
@@ -124,8 +124,8 @@
 
 
             <a slot="isDefault" slot-scope="text, record,index" style="text-align: center">
-                <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active('0',index)"></a-icon>
-                <a-icon type="close" style="color: red" v-if="text.is_default == '0'" @click="change_active('1',index)"></a-icon>
+                <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active2('0',index)"></a-icon>
+                <a-icon type="close" style="color: red" v-if="text.is_default == '0'" @click="change_active2('1',index)"></a-icon>
             </a>
         </a-table>
 
@@ -151,8 +151,8 @@
         { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
         { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
         { title: '是否默认', align: 'center' ,scopedSlots: { customRender: 'isDefault' },},
-        { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
-        { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
+        // { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
+        // { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
 
     ];
     const columns2 = [
@@ -164,8 +164,8 @@
         { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
         { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
         { title: '是否默认', align: 'center' ,scopedSlots: { customRender: 'isDefault' },},
-        { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
-        { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
+        // { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
+        // { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
 
     ];
     export default {
@@ -214,11 +214,23 @@
                 // this.colorList.push(checkedValues)
                 this.makeList()
             },
-            change_active(statu,index){
+            change_active1(statu,index){
+                this.tabList.forEach(function(val, index) {
+                    val.is_default="0"
+                });
                 this.tabListCopy.forEach(function(val, index) {
                     val.is_default="0"
                 });
                 this.tabListCopy[index].is_default=statu
+            },
+            change_active2(statu,index){
+                this.tabList.forEach(function(val, index) {
+                    val.is_default="0"
+                });
+                this.tabListCopy.forEach(function(val, index) {
+                    val.is_default="0"
+                });
+                this.tabList[index].is_default=statu
             },
             makeList(){
                 var vm = this
@@ -310,6 +322,10 @@
                 this.makeList()
             },
             getTabData(){
+                this.tabList=[]
+                this.colorList=[]
+                this.sizeList=[]
+
                 this.$post('/productUnit/getProductUnitList',{product_id:this.$store.state.goods_id}).then((reData)=>{
                     let dataF =  reData.data.dataList
                     let dataD= this.colorListO
@@ -426,10 +442,10 @@
                                     console.log('ok');
                                 },
                             })
-                            store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
-                            store.commit('changeStore',{key:'addProductCurrent',val:'6'});
-
-
+                            if(reData.code==0){
+                                store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
+                                store.commit('changeStore',{key:'addProductCurrent',val:'6'});
+                            }
                         } ,
 
                     });
@@ -524,6 +540,11 @@
         watch: {
             "$store.state.goods_id"() {
                 this.productId =  this.$store.state.goods_id;
+            },
+            "$store.state.isEdit"() {
+                if( this.$store.state.isEdit == true){
+                    this.getTabData()
+                }
             }
         },
     }

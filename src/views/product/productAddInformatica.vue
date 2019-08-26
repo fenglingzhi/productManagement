@@ -20,7 +20,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*商品编号：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>商品编号：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
                         <a-input v-model="postData.product_code"  maxlength="32" placeholder=""/>
@@ -30,7 +30,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*商品名称：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>商品名称：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
                         <a-input v-model="postData.name" placeholder=""/>
@@ -52,7 +52,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*商品类型：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>商品类型：</div>
                     </a-col>
                     <a-col class="gutter-row" v-if="this.$store.state.isEdit" :span="16">
                         <a-select  style="width: 100%" :defaultValue="this.$store.state.oldData.prdBase.product_type" @change="handleChangeSelect">
@@ -121,7 +121,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*是否启用：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16" style="line-height: 30px">
                         <a-radio-group @change="onChangeIsUse" name="radioGroup" v-model="postData.active" >
