@@ -344,7 +344,7 @@
         { title: '地址2', dataIndex: 'address2', key: 'address2'},
         { title: '邮政编码', dataIndex: 'postcode', key: 'postcode'},
         { title: '城市', dataIndex: 'city', key: 'city'},
-        { title: '省/州', dataIndex: 'state_name', key: 'state_name'},
+        { title: '省/州', dataIndex: 'stateid_name', key: 'stateid_name'},
         { title: '国家', dataIndex: 'country_name', key: 'country_name'},
         { title: '联系电话', dataIndex: 'phone', key: 'phone'},
 
