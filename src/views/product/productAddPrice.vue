@@ -16,7 +16,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*货币种类：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>货币种类：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
                         <a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">
@@ -32,7 +32,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*成本价格：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>成本价格：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
                         <a-input v-model="postData.cost_price" type="number" placeholder=""/>
@@ -44,7 +44,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*零售价格：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>零售价格：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
                         <a-input v-model="postData.retail_price" type="number" placeholder=""/>
@@ -56,7 +56,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*折扣价格：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>折扣价格：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
                         <a-input v-model="postData.sale_price" type="number" placeholder=""/>

@@ -16,7 +16,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*默认分类：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>默认分类：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
                         <a-select  style="width: 100%" defaultValue="1" @change="handleChangeSelect">
@@ -33,7 +33,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="8">
-                        <div class="inputName">*分类选择：</div>
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>分类选择：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
 

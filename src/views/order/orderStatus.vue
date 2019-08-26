@@ -31,7 +31,7 @@
           </a-col>
           <a-col :span="8" :style="{ paddingLeft: '100px'  }">
             <a-button type="primary" html-type="submit" :style="{ marginLeft: '42px' }">搜索</a-button>
-            <a-button :style="{ marginLeft: '46px' }" @click="handleReset">清空</a-button>
+            <!-- <a-button :style="{ marginLeft: '46px' }" @click="handleReset">清空</a-button> -->
           </a-col>
         </a-row>
       </a-form>
@@ -66,33 +66,46 @@
     </div>
 
     <div class="addCustomerGender">
-      <a-modal title="订单状态新增" v-model="visible_add" :destroyOnClose="true" @ok="submitAdd">
+      <a-modal
+        title="订单状态新增"
+        v-model="visible_add"
+        :destroyOnClose="true"
+        @ok="submitAdd"
+        width="650px"
+      >
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">状态名称：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>状态名称：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-input placeholder="请输入状态名称" v-model="addStatueInfo.name" />
             </a-col>
           </div>
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">颜色：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>颜色：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
-              <a-input placeholder="请输入颜色" v-model="addStatueInfo.color" />
+            <a-col class="gutter-row" :span="16">
+              <!-- <a-input placeholder="请输入颜色" v-model="addStatueInfo.color" /> -->
+              <chrome-picker v-model="addStatueInfo.color_obj"></chrome-picker>
             </a-col>
           </div>
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">是否可以删除：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>是否可以删除：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select defaultValue="请选择" style="width: 100%" @change="handleChange_status">
                 <a-select-option value="0">可删</a-select-option>
                 <a-select-option value="1">不可删</a-select-option>
@@ -102,10 +115,12 @@
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">标记为有效订单：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>标记为有效订单：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select defaultValue="请选择" style="width: 100%" @change="handleChange_order">
                 <a-select-option value="1">是</a-select-option>
                 <a-select-option value="0">否</a-select-option>
@@ -115,10 +130,12 @@
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">标记为运输状态：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>标记为运输状态：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select defaultValue="请选择" style="width: 100%" @change="handleChange_shipped">
                 <a-select-option value="1">是</a-select-option>
                 <a-select-option value="0">否</a-select-option>
@@ -128,10 +145,12 @@
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">标记为支付状态 ：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>标记为支付状态 ：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select defaultValue="请选择" style="width: 100%" @change="handleChange_pay">
                 <a-select-option value="1">是</a-select-option>
                 <a-select-option value="0">否</a-select-option>
@@ -141,10 +160,12 @@
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">发送邮件：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>发送邮件：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select defaultValue="请选择" style="width: 100%" @change="handleChange_sendEmail">
                 <a-select-option value="1">是</a-select-option>
                 <a-select-option value="0">否</a-select-option>
@@ -153,11 +174,13 @@
           </div>
         </a-row>
         <a-row>
-          <div class="inputPart" v-show="addStatueInfo.send_email">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">模板名称名称：</div>
+          <div class="inputPart" v-if="addStatueInfo.send_email=='1'">
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>模板名称名称：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-input placeholder="请输入模板名称名称" v-model="addStatueInfo.template" />
             </a-col>
           </div>
@@ -165,33 +188,46 @@
       </a-modal>
     </div>
     <div class="addCustomerGender">
-      <a-modal title="订单状态修改" v-model="visible_edit" :destroyOnClose="false" @ok="submitEdit">
+      <a-modal
+        title="订单状态修改"
+        v-model="visible_edit"
+        :destroyOnClose="false"
+        @ok="submitEdit"
+        width="650px"
+      >
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">状态名称：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>状态名称：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-input placeholder="请输入状态名称" v-model="addStatueInfo.name" />
             </a-col>
           </div>
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">颜色：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>颜色：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
-              <a-input placeholder="请输入颜色" v-model="addStatueInfo.color" />
+            <a-col class="gutter-row" :span="16">
+              <!-- <a-input placeholder="请输入颜色" v-model="addStatueInfo.color" /> -->
+              <chrome-picker v-model="addStatueInfo.color_obj"></chrome-picker>
             </a-col>
           </div>
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">是否可以删除：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>是否可以删除：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select
                 defaultValue="请选择"
                 style="width: 100%"
@@ -206,10 +242,12 @@
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">标记为有效订单：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>标记为有效订单：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select
                 defaultValue="请选择"
                 style="width: 100%"
@@ -224,10 +262,12 @@
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">标记为运输状态：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>标记为运输状态：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select
                 defaultValue="请选择"
                 style="width: 100%"
@@ -242,10 +282,12 @@
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">标记为支付状态 ：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>标记为支付状态 ：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select
                 defaultValue="请选择"
                 style="width: 100%"
@@ -260,10 +302,12 @@
         </a-row>
         <a-row>
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">发送邮件：</div>
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>发送邮件：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-select
                 defaultValue="请选择"
                 style="width: 100%"
@@ -277,11 +321,13 @@
           </div>
         </a-row>
         <a-row>
-          <div class="inputPart" v-if="addStatueInfo.send_email">
-            <a-col class="gutter-row" :span="6">
-              <div class="inputName">模板名称：</div>
+          <div class="inputPart" v-if="addStatueInfo.send_email=='1'">
+            <a-col class="gutter-row" :span="8">
+              <div class="inputName">
+                <span>*</span>模板名称：
+              </div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-input placeholder="请输入模板名称名称" v-model="addStatueInfo.template" />
             </a-col>
           </div>
@@ -294,6 +340,7 @@
 import router from "../../router";
 import store from "../../store";
 import moment from "moment";
+import { Chrome } from "vue-color";
 const columns = [
   {
     title: "操作",
@@ -337,7 +384,7 @@ export default {
       pagination: {
         pageSize: 10,
         total: 1,
-        currentPage: 1
+        current: 1
       },
       fabricList: [],
       genderIdList: [],
@@ -351,10 +398,14 @@ export default {
         paid: "",
         send_email: "",
         template: "",
-        order_state_id: ""
+        order_state_id: "",
+        color_obj: ""
       },
       searchObj: {}
     };
+  },
+  components: {
+    "chrome-picker": Chrome
   },
   methods: {
     moment,
@@ -399,7 +450,7 @@ export default {
           // console.log(this.addStatueInfo);
           this.addStatueInfo.lang_id = reData.data.lang_id;
           this.addStatueInfo.name = reData.data.name;
-          this.addStatueInfo.color = reData.data.color;
+          this.addStatueInfo.color_obj = reData.data.color;
           this.addStatueInfo.unremoveable = reData.data.unremoveable;
           this.addStatueInfo.logable = reData.data.logable;
           this.addStatueInfo.shipped = reData.data.shipped;
@@ -480,14 +531,18 @@ export default {
     //添加提交
     submitAdd() {
       this.addStatueInfo.lang_id = this.$store.state.langId;
-      //   console.log(this.addStatueInfo);
+      // 颜色赋值
+      try {
+        this.addStatueInfo.color = this.addStatueInfo.color_obj.hex8;
+      } catch (error) {}
+      // console.log(this.addStatueInfo);
       if (this.checking(this.addStatueInfo)) {
         this.$post("/orderState/addOrderStateInfo", this.addStatueInfo).then(
           reData => {
             if (reData.code === "0") {
               this.visible_add = false;
               this.getList({
-                currentPage: this.pagination.currentPage,
+                currentPage: this.pagination.current,
                 pageSize: this.pagination.pageSize,
                 lang_id: store.state.langId
               });
@@ -505,14 +560,18 @@ export default {
     },
     //修改提交
     submitEdit() {
-      console.log(this.addStatueInfo);
+      // 颜色赋值
+      try {
+        this.addStatueInfo.color = this.addStatueInfo.color_obj.hex8;
+      } catch (error) {}
+      // console.log(this.addStatueInfo);
       if (this.checking(this.addStatueInfo)) {
         this.$post("/orderState/updateOrderStateInfo", this.addStatueInfo).then(
           reData => {
             if (reData.code === "0") {
               this.visible_edit = false;
               this.getList({
-                currentPage: this.pagination.currentPage,
+                currentPage: this.pagination.current,
                 pageSize: this.pagination.pageSize,
                 lang_id: store.state.langId
               });
@@ -537,19 +596,19 @@ export default {
         if (reData.code == "0") {
           this.productListData = reData.data.dataList;
           this.pagination.total = reData.data.page.totalResultSize;
+          this.pagination.current = reData.data.page.currentPage;
           this.loading = false;
         } else {
           this.productListData = [];
           this.pagination.total = 0;
+          this.pagination.current = 1;
           this.loading = false;
         }
       });
     },
     //表格分页
     handleTableChange(pagination) {
-      console.log(pagination);
-      //   每次触发回调的时候将当前页数记录到pagination中,以便删除等事件完成后需要更新列表
-      this.pagination.currentPage = pagination.current;
+      // console.log(pagination);
       this.getList(
         {
           currentPage: pagination.current,
@@ -570,7 +629,7 @@ export default {
             if (reData.code === "0") {
               _this.openNotification("success", "成功", "删除成功");
               _this.getList({
-                currentPage: _this.pagination.currentPage,
+                currentPage: _this.pagination.current,
                 pageSize: _this.pagination.pageSize,
                 lang_id: store.state.langId
               });
@@ -584,7 +643,6 @@ export default {
     // 高级搜索
     handleSearch(e) {
       e.preventDefault();
-      // console.log("搜索事件！");
       this.searchObj = {};
       for (const key in this.form_search) {
         if (
@@ -592,14 +650,12 @@ export default {
           this.form_search[key] != null &&
           this.form_search[key] != "9"
         ) {
-          // this.searchObj[key] = this.form_search[key];
           this.$set(this.searchObj, key, this.form_search[key]);
         }
       }
       this.getList(
         {
-          // currentPage: this.pagination.currentPage,
-          currentPage: this.pagination.currentPage,
+          currentPage: 1,
           pageSize: this.pagination.pageSize,
           lang_id: store.state.langId
         },
@@ -608,7 +664,6 @@ export default {
     },
     //重置
     handleReset() {
-      // console.log("reset事件！");
       // 重置表单
       Object.assign(this.form_search, {
         order_state_id: "",
@@ -623,7 +678,7 @@ export default {
     this.getList({
       pageSize: this.pagination.pageSize,
       lang_id: store.state.langId,
-      currentPage: 1
+      currentPage: this.pagination.current
     });
   }
 };
@@ -661,5 +716,9 @@ export default {
 <style>
 #orderStatus-search .ant-form-item-label {
   width: 130px;
+}
+.inputName span {
+  color: red;
+  margin-right: 5px;
 }
 </style>

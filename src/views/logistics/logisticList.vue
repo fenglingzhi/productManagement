@@ -279,7 +279,7 @@
                         <a-col class="gutter-row" :span="18">
                             <a-select  v-model="addZone.c_type" defaultValue="1" style="width: 100%"  @change="handleChange">
                                 <a-select-option  value="1">重量（kg）</a-select-option>
-                                <a-select-option  value="0">金额（$）</a-select-option>
+                                <a-select-option  value="2">金额（$）</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -382,7 +382,7 @@
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%" v-model="addOtherCountry.c_type" @change="handleChange">
                                 <a-select-option value="1">重量（kg）</a-select-option>
-                                <a-select-option value="0">金额（$）</a-select-option>
+                                <a-select-option value="2">金额（$）</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -456,7 +456,7 @@
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%"  v-model="addCountry.c_type">
                                 <a-select-option value="1">重量（kg）</a-select-option>
-                                <a-select-option value="0">金额（$）</a-select-option>
+                                <a-select-option value="2">金额（$）</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -574,7 +574,7 @@
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%"  v-model="addState.c_type" >
                                 <a-select-option value="1">重量（kg）</a-select-option>
-                                <a-select-option value="0">金额（$）</a-select-option>
+                                <a-select-option value="2">金额（$）</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
