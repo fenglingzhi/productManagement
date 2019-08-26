@@ -132,7 +132,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*是否启用：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="1" style="width: 100%"  @change="handleChangeAdd">
@@ -145,7 +145,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*货币名称：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>货币名称：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" maxlength="32" v-model="addCurrency.name" />
@@ -156,7 +156,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*国家码 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国家码 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" maxlength="3" v-model="addCurrency.iso_code" />
@@ -166,7 +166,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*国际数字码 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国际数字码 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" maxlength="3" v-model="addCurrency.iso_code_num" />
@@ -176,7 +176,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*币种符号 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>币种符号 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" maxlength="8" v-model="addCurrency.sign" />
@@ -187,7 +187,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*是否启用小数：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用小数：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select :defaultValue="addCurrency.decimals" style="width: 100%"  @change="decimalsChangeAdd">
@@ -212,7 +212,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*汇率：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>汇率：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" type="number" v-model="addCurrency.conversion_rate" />
@@ -222,7 +222,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*位置序号：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>位置序号：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" type="number" v-model="addCurrency.position" />
@@ -244,7 +244,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*是否启用：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.active" style="width: 100%"  @change="handleChangeEdit">
@@ -257,7 +257,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*货币名称：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>货币名称：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder=""  maxlength="32" v-model="editCurrency.name" />
@@ -268,7 +268,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*国家码 ：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国家码 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder=""  maxlength="3" v-model="editCurrency.iso_code" />
@@ -278,7 +278,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*国际数字码 ：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国际数字码 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder=""  maxlength="3" v-model="editCurrency.iso_code_num" />
@@ -288,7 +288,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*币种符号 ：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>币种符号 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder=""  maxlength="8" v-model="editCurrency.sign" />
@@ -299,7 +299,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*是否启用小数：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用小数：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.decimals" style="width: 100%"  @change="decimalsChangeEdit">
@@ -324,7 +324,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*汇率：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>汇率：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder="" type="number" v-model="editCurrency.conversion_rate" />
@@ -334,7 +334,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*位置序号：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>位置序号：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder="" type="number" v-model="editCurrency.position" />

@@ -320,11 +320,9 @@
                                 },
                             })
                             if(reData.code==0){
-                                // store.commit('changeStore',{key:'isEdit',val:true});
-
+                                store.commit('changeStore',{key:'isEdit',val:true});
                                 store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
                                 store.commit('changeStore',{key:'addProductCurrent',val:'6'});
-
                             }
                         } ,
 

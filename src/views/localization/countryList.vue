@@ -115,7 +115,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*是否启用：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="1" style="width: 100%"  @change="handleChangeAdd">
@@ -128,7 +128,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*国家名字 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国家名字 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -138,7 +138,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*区域：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>区域：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="请选择区域" style="width: 100%"  @change="handleChangeZoneAdd">
@@ -151,7 +151,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">国际码 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国际码 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.iso_code" />
@@ -161,7 +161,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*国际区号 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国际区号 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" type="number" v-model="addCurrency.call_prefix" />
@@ -171,7 +171,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*位置顺序 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>位置顺序 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" type="number" v-model="addCurrency.position" />
@@ -181,7 +181,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*语言：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>语言：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="请选择语言" style="width: 100%"  @change="hangeLang_id">
@@ -203,7 +203,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*是否启用：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.active" style="width: 100%"  @change="handleChangeEdit">
@@ -216,7 +216,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*国家名字 ：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国家名字 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder="" type="email" v-model="editCurrency.name" />
@@ -226,7 +226,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*区域：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>区域：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select :defaultValue="editCurrency.zone_id " style="width: 100%"  @change="handleChangeZoneEdit">
@@ -238,7 +238,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*国际码 ：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国际码 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder="" v-model="editCurrency.iso_code" />
@@ -248,7 +248,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*国际区号 ：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国际区号 ：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder="" type="number" v-model="editCurrency.call_prefix" />
@@ -258,7 +258,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*位置顺序 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>位置顺序 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" type="number" v-model="editCurrency.position" />
@@ -268,7 +268,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">*语言：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>语言：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.lang_id" style="width: 100%"  @change="hangeLang_idEdit">
@@ -536,7 +536,7 @@
         },
         mounted() {
             var vm = this;
-            // store.commit('changeStore',{key:'title',val:'区域列表'});
+            store.commit('changeStore',{key:'title',val:'区域列表'});
             vm.getList({currentPage:1,pageSize:vm.pagination.defaultPageSize,lang_id:this.$store.state.langId})
             this.getZoneList()
             this.getLangeList()
