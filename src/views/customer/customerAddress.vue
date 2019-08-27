@@ -35,70 +35,70 @@
             >
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">联系电话：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>联系电话：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="请输联系电话" v-model="addCustomerAddressData.phone" />
                         </a-col>
                     </div>
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">客户邮箱：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>客户邮箱：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="请输客户邮箱" v-model="addCustomerAddressData.email" />
                         </a-col>
                     </div>
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">身份证：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>身份证：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="沙特身份证" v-model="addCustomerAddressData.national_id" />
                         </a-col>
                     </div>
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">名：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>名：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="请输名" v-model="addCustomerAddressData.firstname" />
                         </a-col>
                     </div>
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">姓：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>姓：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="请输姓" v-model="addCustomerAddressData.lastname" />
                         </a-col>
                     </div>
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
+                        <a-col class="gutter-row" :span="6">
                             <div class="inputName">公司：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="请输公司" v-model="addCustomerAddressData.company" />
                         </a-col>
                     </div>
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">国家id：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>国家：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-select defaultValue="请选择" style="width: 100%" @change="handleChangeCountry">
                                 <a-select-option v-for="item in country" :value=item.country_id>{{item.name}}{{item.country_id}}</a-select-option>
                             </a-select>
@@ -107,10 +107,10 @@
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">州id：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>省/州：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-select defaultValue="请选择" v-if="!state_flag" style="width: 100%" @change="handleChangeState">
                                 <a-select-option v-for="item in state" :value=item.state_id>{{item.name}}</a-select-option>
                             </a-select>
@@ -120,10 +120,10 @@
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">城市：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>城市：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-select defaultValue="请选择" v-if="!city_flag" style="width: 100%" @change="handleChangeCity">
                                 <a-select-option v-for="item in city" :value=item.city_id>{{item.name}}</a-select-option>
                             </a-select>
@@ -133,40 +133,40 @@
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">地址别名：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>地址别名：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="请输地址别名" v-model="addCustomerAddressData.alias" />
                         </a-col>
                     </div>
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">地址1：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>地址1：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="请输地址1" v-model="addCustomerAddressData.address1" />
                         </a-col>
                     </div>
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
+                        <a-col class="gutter-row" :span="6">
                             <div class="inputName">地址2：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="请输地址2" v-model="addCustomerAddressData.address2" />
                         </a-col>
                     </div>
                 </a-row>
                 <a-row>
                     <div class="inputPart">
-                        <a-col class="gutter-row" :span="4">
-                            <div class="inputName">邮件编码：</div>
+                        <a-col class="gutter-row" :span="6">
+                            <div class="inputName"><span style="color:red;">*</span>邮件编码：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="18">
+                        <a-col class="gutter-row" :span="16">
                             <a-input placeholder="请输邮件编码" v-model="addCustomerAddressData.postcode" />
                         </a-col>
                     </div>
@@ -344,7 +344,7 @@
         { title: '地址2', dataIndex: 'address2', key: 'address2'},
         { title: '邮政编码', dataIndex: 'postcode', key: 'postcode'},
         { title: '城市', dataIndex: 'city', key: 'city'},
-        { title: '省/州', dataIndex: 'state_name', key: 'state_name'},
+        { title: '省/州', dataIndex: 'stateid_name', key: 'stateid_name'},
         { title: '国家', dataIndex: 'country_name', key: 'country_name'},
         { title: '联系电话', dataIndex: 'phone', key: 'phone'},
 
@@ -433,26 +433,26 @@
                         // this.addCustomerAddressData.other=reData.data[0].other;
                     }
                 }).then(()=>{
-                    this.$post('/country/getCountryListPage',{lang_id:store.state.langId,pageSize:'10000'}).then((reData)=>{
-                        this.country = reData.data.dataList.slice(0)
+                    this.$post('/country/getCountryList',{lang_id:store.state.langId}).then((reData)=>{
+                        this.country = reData.data.slice(0)
                     })
                 }).then(()=>{
-                    this.$post('/state/getStateListPage',{country_id:this.addCustomerAddressData.country_id,pageSize:'10000'}).then((reData)=>{
-                        if(reData.data.dataList == null){
+                    this.$post('/state/getStateList',{country_id:this.addCustomerAddressData.country_id}).then((reData)=>{
+                        if(reData.data == ''){
                             this.state_flag = true;
                             this.city_flag = true;
                         } else {
                             this.state_flag = false;
-                            this.state = reData.data.dataList.slice(0)
+                            this.state = reData.data.slice(0)
                         }
                     });
                 }).then(()=>{
-                    this.$post('/city/getCityListPage',{state_id:this.addCustomerAddressData.state_id,pageSize:'10000'}).then((reData)=>{
-                        if(reData.data.dataList == null){
+                    this.$post('/city/getCityList',{state_id:this.addCustomerAddressData.state_id,country_id:this.addCustomerAddressData.country_id}).then((reData)=>{
+                        if(reData.data == ''){
                             this.city_flag = true;
                         } else {
                             this.city_flag = false;
-                            this.city = reData.data.dataList.slice(0)
+                            this.city = reData.data.slice(0)
                         }
                     });
                 });
@@ -484,7 +484,8 @@
             ,handleChangeCountry(value) {
                 this.addCustomerAddressData.country_id = value
                 this.$post('/state/getStateList',{country_id:value}).then((reData)=>{
-                    if(reData.data == null){
+                    console.log(reData)
+                    if(reData.data == ''){
                         this.state_flag = true
                         this.city_flag = true
                     } else {
@@ -497,7 +498,7 @@
             ,handleChangeState(value) {
                 this.addCustomerAddressData.state_id = value
                 this.$post('/city/getCityList',{state_id:value,country_id:this.addCustomerAddressData.country_id}).then((reData)=>{
-                    if(reData.data == null){
+                    if(reData.data == ''){
                         this.city_flag = true
                     } else {
                         this.city_flag = false
@@ -575,12 +576,6 @@
                         description: '请填写姓'
                     });
                     return false;
-                } else if(this.addCustomerAddressData.company === ''){
-                    this.$notification.open({
-                        message: '警告',
-                        description: '请填写公司'
-                    });
-                    return false;
                 } else if(this.addCustomerAddressData.country_id === ''){
                     this.$notification.open({
                         message: '警告',
@@ -609,12 +604,6 @@
                     this.$notification.open({
                         message: '警告',
                         description: '请填写地址1'
-                    });
-                    return false;
-                } else if(this.addCustomerAddressData.address2 === ''){
-                    this.$notification.open({
-                        message: '警告',
-                        description: '请填写地址2'
                     });
                     return false;
                 } else if(this.addCustomerAddressData.postcode === ''){

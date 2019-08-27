@@ -86,7 +86,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*税率名：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>税率名：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -97,7 +97,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*税率 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>税率 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.rate" />
@@ -108,7 +108,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*国家：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select 
@@ -147,7 +147,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*税率名：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>税率名：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addState.name" />
@@ -158,7 +158,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*税率 ：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>税率 ：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addState.rate" />
@@ -169,7 +169,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*国家：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>国家：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select 
@@ -184,7 +184,7 @@
                      <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">*省/州：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>省/州：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select 

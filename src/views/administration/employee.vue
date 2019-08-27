@@ -43,7 +43,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">*名：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>名：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" maxlength="32" v-model="addCod.first_name" />
@@ -53,7 +53,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">*姓：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>姓：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" maxlength="32" v-model="addCod.last_name" />
@@ -63,7 +63,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">*电子邮件：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>电子邮件：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-input placeholder="" v-model="addCod.email"/>
@@ -84,7 +84,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">*语言：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>语言：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.lang_id" style="width: 100%"  @change="getAddlang">
@@ -96,7 +96,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">*角色：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>角色：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.role_id" style="width: 100%"  @change="getAddRole">

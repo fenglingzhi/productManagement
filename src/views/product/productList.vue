@@ -121,7 +121,7 @@
               </a-popconfirm>
           </span>
         <span slot="img_" slot-scope="text, record">
-              <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
+              <img :src="text.image_url" @click="showPic(record.image_url)" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''" >
           </span>
         <a slot="active" slot-scope="text, record" style="text-align: center">
           <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
@@ -134,6 +134,9 @@
         </span>
       </a-table>
     </div>
+    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+      <img alt="example" style="width: 100%" :src="previewImage" />
+    </a-modal>
   </div>
 </template>
 <script>
@@ -196,6 +199,8 @@
                     ,image_url:''
                     ,good_qty:''
                 }
+                ,previewImage:''
+                ,previewVisible:false
             }
         },
         methods: {
@@ -203,6 +208,15 @@
             handleChange(value) {
                 console.log(`selected ${value}`);
                 this.search_data.active = value
+            }
+            //图片展示
+            ,showPic(url){
+                this.previewImage=url
+                this.previewVisible=true
+
+            }
+            ,handleCancel () {
+                this.previewVisible = false
             }
             //新增商品
             ,add_product(){

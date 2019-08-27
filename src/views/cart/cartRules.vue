@@ -78,7 +78,7 @@
                             <a-row>
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">*名称：</div>
+                                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>名称：</div>
                                     </a-col>
                                     <a-col class="gutter-row" :span="16">
                                         <a-input placeholder="" v-model="addCod.name" />
@@ -98,7 +98,7 @@
                             <a-row>
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">*唯一折扣卷码：</div>
+                                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>唯一折扣卷码：</div>
                                     </a-col>
                                     <a-col class="gutter-row" :span="16">
                                         <a-input placeholder="" v-model="addCod.code" />
@@ -108,7 +108,7 @@
                             <a-row>
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">*状态：</div>
+                                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>状态：</div>
                                     </a-col>
                                     <a-col class="gutter-row" :span="16">
                                         <a-select :defaultValue="addCod.active" style="width: 100%"  @change="getAddactive">
@@ -121,7 +121,7 @@
                             <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="8">
-                                    <div class="inputName">*有效期：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>有效期：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="16">
                                     <div class="date-pick">
@@ -146,7 +146,7 @@
                             <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="8">
-                                    <div class="inputName">*折扣卷总量：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>折扣卷总量：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="16">
                                     <a-input placeholder="" v-model="addCod.quantity" />
@@ -309,7 +309,7 @@
                                 <a-row>
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
-                                            <div class="inputName">*满足金额使用：</div>
+                                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>满足金额使用：</div>
                                         </a-col>
                                         <a-col class="gutter-row" :span="16">
                                             <a-input placeholder="" v-model="addCod.minimum_amount" />
@@ -319,7 +319,7 @@
                                 <a-row>
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
-                                            <div class="inputName">*金额是否包含税：</div>
+                                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>金额是否包含税：</div>
                                         </a-col>
                                         <a-col class="gutter-row" :span="16">
                                             <a-select :defaultValue="addCod.minimum_amount_tax" style="width: 100%"  @change="amountTax">
@@ -332,7 +332,7 @@
                                 <a-row>
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
-                                            <div class="inputName">*币种：</div>
+                                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>币种：</div>
                                         </a-col>
                                         <a-col class="gutter-row" :span="16">
                                             <a-select :defaultValue="addCod.minimum_amount_currency" style="width: 100%"  @change="selCurrency">
@@ -346,7 +346,7 @@
                                 <a-row>
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">*金额是否包运费：</div>
+                                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>金额是否包运费：</div>
                                         </a-col>
                                         <a-col class="gutter-row" :span="16">
                                             <a-select :defaultValue="addCod.minimum_amount_shipping" style="width: 100%"  @change="amountShipp">
