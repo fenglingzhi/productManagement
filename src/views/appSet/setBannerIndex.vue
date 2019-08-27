@@ -418,7 +418,7 @@ export default {
     submitAdd() {
       // 上传的文件转换
       let reader = new FileReader();
-      let allowImgFileSize = 2100000; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
+      let allowImgFileSize = 2100000*5; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
       let file = document.getElementById("image").files[0];
       let _this = this;
       if (file) {
@@ -429,7 +429,7 @@ export default {
             allowImgFileSize != 0 &&
             allowImgFileSize < reader.result.length
           ) {
-            _this.openNotification("warning", "警告", "请上传大要大于2m的图片");
+            _this.openNotification("warning", "警告", "请上传大要大于10m的图片");
           } else {
             //将编码写入表单
             _this.form_add.image_base_str = reader.result;
