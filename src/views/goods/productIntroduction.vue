@@ -100,14 +100,18 @@
 
         <form :action="$store.state.baseURL+'/import/importModifyProduct'" id="form3" method="post"  enctype="multipart/form-data">
             <div class="secondTitle">
-                <a-col class="gutter-row" :span="21" style="padding-top: 13px;">
+                <a-col class="gutter-row" :span="18" style="padding-top: 13px;">
                     更新产品表 ：
                 </a-col>
-                <a-col class="gutter-row" :span="3">
+                <a-col class="gutter-row" :span="6">
                     <a-row>
-                        <a-col class="gutter-row" :offset="12" :span="12">
+                        <a-col class="gutter-row" :offset="10" :span="8">
+                            <div  class="subForm" style="line-height: 30px;" @click="showProducts()">缓存商品</div>
+                        </a-col>
+                        <a-col class="gutter-row" :span="4">
                             <input type="submit" class="subForm" @click="subForm3()" value="上传">
                         </a-col>
+
                     </a-row>
                 </a-col>
             </div>
@@ -170,6 +174,25 @@
             </a-row>
         </form>
 
+
+        <a-modal
+                title="选择上传的商品"
+                width="1100px"
+                v-model="visible_post"
+                :pagination="pagination"
+                :loading="loading"
+
+                :destroyOnClose = "true"
+                @ok="submitEdit"
+        >
+            <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="data">
+                <span slot="name" slot-scope="text" >{{text}}</span>
+            </a-table>
+
+
+
+        </a-modal>
+
     </div>
 </template>
 <script>
@@ -181,10 +204,60 @@
     import  'jquery-form'
     const treeData = []
 
+
+    const columns = [{
+        title: 'Name',
+        dataIndex: 'name',
+        scopedSlots: { customRender: 'name' },
+    }, {
+        title: 'Age',
+        dataIndex: 'age',
+    }, {
+        title: 'Address',
+        dataIndex: 'address',
+    }];
+    const data = [{
+        key: '1',
+        name: 'John Brown',
+        age: 32,
+        address: 'New York No. 1 Lake Park',
+    }, {
+        key: '2',
+        name: 'Jim Green',
+        age: 42,
+        address: 'London No. 1 Lake Park',
+    }, {
+        key: '3',
+        name: 'Disabled',
+        age: 32,
+        address: 'Sidney No. 1 Lake Park',
+    }, {
+        key: '4',
+        name: 'Disabled Uer',
+        age: 99,
+        address: 'Sidney No. 1 Lake Park',
+    }];
+
+
     export default {
         components:{
         },
         methods: {
+            getTableList(data){
+            this.$post('/import/getImportTempPage',data).then((reData)=>{
+                if(reData.code=="0"){
+                    this.visible_post=true
+                    this.pagination.total=reData.data.page.totalResultSize
+                    this.loading = false
+                }else {
+                    this.$message.error(reData.message);
+                }
+            })
+
+        },
+            showProducts(){
+                this.getTableList()
+            },
             subForm1(){
                 if(this.categoryId ==''){
                     this.$message.error('请先选择分类');
@@ -302,6 +375,15 @@
         },
         data() {
             return {
+                loading: false,
+                pagination:{
+                    currentPage:1,
+                    defaultPageSize:10,
+                    total:1,
+                },
+                data,
+                columns,
+                visible_post:false,
                 tagList:[],
                 expandedKeys: [],
                 autoExpandParent: true,
@@ -312,6 +394,22 @@
                 ,tagId:''
             }
         } ,
+        computed: {
+            rowSelection() {
+                const { selectedRowKeys } = this;
+                return {
+                    onChange: (selectedRowKeys, selectedRows) => {
+                        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                    },
+                    getCheckboxProps: record => ({
+                        props: {
+                            disabled: record.name === 'Disabled User', // Column configuration not to be checked
+                            name: record.name,
+                        }
+                    }),
+                }
+            }
+        },
         watch: {
             "$store.state.goods_id"() {
 

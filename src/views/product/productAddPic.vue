@@ -26,18 +26,34 @@
                   </a-col>
                   <a-col class="gutter-row" :span="18">
                       <div class="clearfix">
-                          <a-upload
-                                  action="//jsonplaceholder.typicode.com/posts/"
-                                  listType="picture-card"
-                                  :fileList="fileList"
-                                  @preview="handlePreview"
-                                  @change="handleChange"
-                          >
-                              <div v-if="fileList.length < 1">
-                                  <a-icon type="plus" />
-                                  <div class="ant-upload-text">Upload</div>
-                              </div>
-                          </a-upload>
+                          <!--<a-upload-->
+                                  <!--action="//jsonplaceholder.typicode.com/posts/"-->
+                                  <!--listType="picture-card"-->
+                                  <!--:fileList="fileList"-->
+                                  <!--@preview="handlePreview"-->
+                                  <!--@change="handleChange"-->
+                          <!--&gt;-->
+                              <!--<div v-if="fileList.length < 1">-->
+                                  <!--<a-icon type="plus" />-->
+                                  <!--<div class="ant-upload-text">Upload</div>-->
+                              <!--</div>-->
+                          <!--</a-upload>-->
+
+                              <a-upload
+                                      name="avatar"
+                                      listType="picture-card"
+                                      class="avatar-uploader"
+                                      :showUploadList="false"
+                                      :beforeUpload="beforeUpload"
+                              >
+                                  <img v-if="imageUrl" :src="imageUrl" alt="avatar" style="width:100%;" />
+                                  <div v-else>
+                                      <a-icon :type="loading ? 'loading' : 'plus'" />
+                                      <div class="ant-upload-text">Upload</div>
+                                  </div>
+                              </a-upload>
+
+
                           <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                               <img alt="example" style="width: 100%" :src="previewImage" />
                           </a-modal>
@@ -112,7 +128,7 @@
               <!--<a @click="delPic(text.position)">删除</a>-->
            </span>
           <span slot="image" slot-scope="text, record">
-              <img @click="showPic(text.image_visit_url)" :src="text.image_visit_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_visit_url !== ''">
+              <img  @click="showPic(text.image_visit_url)" :src="text.image_visit_url" alt="" height="32px;" style="border:1px solid #ccc;height: 90px" v-if="text.image_visit_url !== ''">
           </span>
           <a slot="isShow" slot-scope="text, record" style="text-align: center">
               <!--{{record}}-->
@@ -145,6 +161,53 @@
 
     export default {
         methods: {
+
+            // 图片上传之前
+            beforeUpload (file) {
+                this.loading=true
+                const isJPG = file.type.indexOf("image") != -1 ;
+                if (!isJPG) {
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "只能上传图片",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                    this.loading=false
+
+                }
+
+                const isLt2M = file.size / 1024 / 1024 <10
+                if (!isLt2M) {
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "最大只能上传10M的图片",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                    this.loading=false
+                    // this.loading=true
+
+                }else {
+
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    let _that = this;
+                    reader.onloadend = function () {
+                        _that.imageUrl = reader.result;
+                    }
+                    this.loading=false
+                    return false;
+                }
+
+            },
+
+
+
             showPic(url){
                this.previewImage=url
                 this.previewVisible=true
@@ -203,80 +266,146 @@
 
                 })
             }
+            // ,save(){
+            //
+            //     this.postData.langId=this.$store.state.langId
+            //     this.postData.productId=this.$store.state.goods_id
+            //
+            //         if(this.fileList==''){
+            //             this.$notification.open({
+            //                 message: '提醒',
+            //                 duration: 2,
+            //                 description: "请选择图片",
+            //                 onClick: () => {
+            //                     console.log('ok');
+            //                 },
+            //             })
+            //         }else if(this.postData.legend==''){
+            //             this.$notification.open({
+            //                 message: '提醒',
+            //                 duration: 2,
+            //                 description: "请填写Caption",
+            //                 onClick: () => {
+            //                     console.log('ok');
+            //                 },
+            //             })
+            //         }else {
+            //             this.postData.imageBaseStr=this.fileList[0].thumbUrl
+            //             if(this.fileList[0].size>5242880){
+            //                 this.$notification.open({
+            //                     message: '图片超出5M',
+            //                     description: "请选择小于5M的图片上传",
+            //                     duration: 2,
+            //                     onClick: () => {
+            //                         console.log('ok');
+            //                     },
+            //                 })
+            //                 store.commit('changeStore',{key:'loading',val:false });
+            //
+            //             }else {
+            //                 store.commit('changeStore',{key:'loading',val:true });
+            //
+            //                 this.$post('/productImage/addProductImage',this.postData).then((reData)=>{
+            //                     console.log(reData)
+            //                     store.commit('changeStore',{key:'loading',val:false });
+            //                     this.getdata()
+            //                     if(reData.code == 0){
+            //                         this.fileList=[]
+            //                         this.postData={
+            //                             productId:'',
+            //                             position:'0',
+            //                             imageBaseStr:'',
+            //                             cover:'1',
+            //                             legend:'',
+            //                             langId:''
+            //                         }
+            //                         this.$notification.open({
+            //                             message: '提醒',
+            //                             description: reData.message,
+            //                             onClick: () => {
+            //                                 console.log('ok');
+            //                             },
+            //                         })
+            //
+            //                     }else {
+            //                         this.$notification.open({
+            //                             message: '提醒',
+            //                             description: reData.message,
+            //                             onClick: () => {
+            //                                 console.log('ok');
+            //                             },
+            //                         })
+            //                     }
+            //                     store.commit('changeStore',{key:'loading',val:false});
+            //                 })
+            //             }
+            //         }
+            //
+            //
+            //
+            // }
             ,save(){
 
                 this.postData.langId=this.$store.state.langId
                 this.postData.productId=this.$store.state.goods_id
+                this.postData.imageBaseStr=this.imageUrl
+                if(this.imageUrl==''){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请选择图片",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                }else if(this.postData.legend==''){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请填写Caption",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                }else {
 
-                    if(this.fileList==''){
-                        this.$notification.open({
-                            message: '提醒',
-                            duration: 2,
-                            description: "请选择图片",
-                            onClick: () => {
-                                console.log('ok');
-                            },
-                        })
-                    }else if(this.postData.legend==''){
-                        this.$notification.open({
-                            message: '提醒',
-                            duration: 2,
-                            description: "请填写Caption",
-                            onClick: () => {
-                                console.log('ok');
-                            },
-                        })
-                    }else {
-                        this.postData.imageBaseStr=this.fileList[0].thumbUrl
-                        if(this.fileList[0].size>5242880){
-                            this.$notification.open({
-                                message: '图片超出5M',
-                                description: "请选择小于5M的图片上传",
-                                duration: 2,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
-                            })
+                        store.commit('changeStore',{key:'loading',val:true });
+
+                        this.$post('/productImage/addProductImage',this.postData).then((reData)=>{
+                            console.log(reData)
                             store.commit('changeStore',{key:'loading',val:false });
-
-                        }else {
-                            store.commit('changeStore',{key:'loading',val:true });
-
-                            this.$post('/productImage/addProductImage',this.postData).then((reData)=>{
-                                console.log(reData)
-                                store.commit('changeStore',{key:'loading',val:false });
-                                this.getdata()
-                                if(reData.code == 0){
-                                    this.fileList=[]
-                                    this.postData={
-                                        productId:'',
-                                        position:'0',
-                                        imageBaseStr:'',
-                                        cover:'1',
-                                        legend:'',
-                                        langId:''
-                                    }
-                                    this.$notification.open({
-                                        message: '提醒',
-                                        description: reData.message,
-                                        onClick: () => {
-                                            console.log('ok');
-                                        },
-                                    })
-
-                                }else {
-                                    this.$notification.open({
-                                        message: '提醒',
-                                        description: reData.message,
-                                        onClick: () => {
-                                            console.log('ok');
-                                        },
-                                    })
+                            this.getdata()
+                            if(reData.code == 0){
+                                this.imageUrl=''
+                                this.postData={
+                                    productId:'',
+                                    position:'0',
+                                    imageBaseStr:'',
+                                    cover:'1',
+                                    legend:'',
+                                    langId:''
                                 }
-                                store.commit('changeStore',{key:'loading',val:false});
-                            })
-                        }
-                    }
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+
+                            }else {
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                            }
+                            store.commit('changeStore',{key:'loading',val:false});
+                        })
+
+                }
 
 
 
@@ -293,6 +422,10 @@
         },
         data() {
             return {
+
+                imageUrl: '',     //图片base64码
+
+
                 productListData,
                 columns,
                 selectData:[],

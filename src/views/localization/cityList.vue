@@ -31,7 +31,7 @@
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="7">
-                        <div class="inputName">状态：</div>
+                        <div class="inputName">是否启用：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="16">
                         <a-select defaultValue="" style="width: 100%"  v-model="search_data.active">
@@ -246,7 +246,7 @@
                     name:'',
                     city_id:'',
                     country_id:'',
-                    active:'1'
+                    active:''
                 },
                 stateList:[],
                 countryList:[],
