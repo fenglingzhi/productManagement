@@ -39,7 +39,6 @@
 
                         <template>
                             <a-tree
-
                                     checkable
                                     @expand="onExpand"
                                     :expandedKeys="expandedKeys"
@@ -49,7 +48,7 @@
                                     @select="onSelect"
                                     :selectedKeys="selectedKeys"
                                     :treeData="treeData"
-                                    :defaultExpandAll="true"
+                                    :defaultExpandAll='true'
                             />
                         </template>
                     </a-col>

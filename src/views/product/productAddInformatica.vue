@@ -19,30 +19,30 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="8">
+                    <a-col class="gutter-row" :span="9">
                         <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>商品编号：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="16">
+                    <a-col class="gutter-row" :span="15">
                         <a-input v-model="postData.product_code"  maxlength="32" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="8">
+                    <a-col class="gutter-row" :span="9">
                         <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>商品名称：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="16">
+                    <a-col class="gutter-row" :span="15">
                         <a-input v-model="postData.name" placeholder=""/>
                     </a-col>
                 </div>
             </a-col>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="8">
+                    <a-col class="gutter-row" :span="9">
                         <div class="inputName">UPC码：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="16">
+                    <a-col class="gutter-row" :span="15">
                         <a-input v-model="postData.upc"  maxlength="12" placeholder=""/>
                     </a-col>
                 </div>
@@ -51,7 +51,7 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="8">
+                    <a-col class="gutter-row" :span="9">
                         <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>商品类型：</div>
                     </a-col>
                     <!--<a-col class="gutter-row" v-if="this.$store.state.isEdit" :span="16">-->
@@ -70,7 +70,7 @@
                         <!--</a-select>-->
                     <!--</a-col>-->
 
-                    <a-col class="gutter-row"  :span="16">
+                    <a-col class="gutter-row"  :span="15">
                         <a-select  style="width: 100%" v-model="postData.product_type"  >
                             <a-select-option value="0">一般商品</a-select-option>
                             <a-select-option value="1">已存在商品组合</a-select-option>
@@ -81,12 +81,12 @@
             </a-col>
         </a-row>
         <a-row>
-            <a-col class="gutter-row" :span="12">
+            <a-col class="gutter-row" :span="13">
                 <div class="inputPart">
                     <a-col class="gutter-row" :span="4">
                         <div class="inputName">商品标签 ：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="20">
+                    <a-col class="gutter-row" :span="15">
                         <!--<a-input v-model="postData.product_label" placeholder=""/>-->
 
                         <template>
@@ -128,10 +128,10 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="8">
+                    <a-col class="gutter-row" :span="9">
                         <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="16" style="line-height: 30px">
+                    <a-col class="gutter-row" :span="15" style="line-height: 30px">
                         <a-radio-group @change="onChangeIsUse" name="radioGroup" v-model="postData.active" >
                             <a-radio :value="1">启用</a-radio>
                             <a-radio :value="0">禁止</a-radio>
@@ -147,10 +147,10 @@
         <a-row>
             <a-col class="gutter-row" :span="6">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="8">
+                    <a-col class="gutter-row" :span="9">
                         <div class="inputName">商品简介：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="16">
+                    <a-col class="gutter-row" :span="15">
                         <a-textarea v-model="postData.description_short" placeholder="Basic usage" :rows="4"/>
                     </a-col>
                 </div>
@@ -158,12 +158,12 @@
         </a-row>
 
         <a-row>
-            <a-col class="gutter-row" :span="16">
+            <a-col class="gutter-row" :span="13">
                 <div class="inputPart">
-                    <a-col class="gutter-row" :span="3">
+                    <a-col class="gutter-row" :span="4">
                         <div class="inputName">产品详情：</div>
                     </a-col>
-                    <a-col class="gutter-row" :span="21">
+                    <a-col class="gutter-row" :span="20">
                         <tinymce-editor v-model="postData.description"
                                         :disabled="disabled"
                                         ref="editor"></tinymce-editor>
@@ -274,7 +274,7 @@
                                 })
                                 if(reData.code == 0){
                                     store.commit('changeStore',{key:'goods_id',val:reData.data.product_id });
-                                    this.isFirstSave=false
+                                    this.isFirstSave
                                     setTimeout(function () {
                                         store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
                                         store.commit('changeStore',{key:'addProductCurrent',val:'1'});
