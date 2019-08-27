@@ -20,8 +20,8 @@
                             <div class="inputName">语言：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
-                            <a-select defaultValue="1" style="width: 100%"  @change="handleChange">
-                                <a-select-option v-for="item in langList" :value="item.lang_id">{{item.name}}</a-select-option>
+                            <a-select :defaultValue="defaultLang" style="width: 100%"  @change="handleChange">
+                                <a-select-option v-for="item in langList" :value="item.lang_id" :name="item.name">{{item.name}}</a-select-option>
                             </a-select>
                         </a-col>
                     </div>
@@ -35,7 +35,7 @@
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <div style="line-height: 33px;text-indent: 3px;color: red;">
-                                切换语言前请保存先在页面的信息，切换语将刷新页面
+                                切换语言前请保存已打开页面的信息，切换语将刷新页面
                             </div>
                         </a-col>
                     </div>
@@ -55,6 +55,8 @@
         name: "loginOut",
         data(){
             return{
+                defaultLang:'',
+                name:'',
                 langeName:'',
                 langId:'',
                 isShow:false,
@@ -66,13 +68,10 @@
         },
         watch: {},
         mounted() {
-            alert(1)
             var vm = this
             this.getLangList()
 
-            if(sessionStorage.getItem('langId')){
-                store.commit('changeStore',{key:'langId',val:sessionStorage.getItem('langId')});
-            }
+
             setTimeout(function () {
                 vm.langList.forEach(function(val) {
                     if(val.lang_id==vm.$store.state.langId){
@@ -86,15 +85,12 @@
 
             handleOk(){
                 var vm=this
-                var id= this.$store.state.langId
                 sessionStorage.setItem('langId',this.langId);
                 store.commit('changeStore',{key:'langId',val:this.langId});
                 this.isShow=false
-                this.langList.forEach(function(val) {
-                    if(val.lang_id==id){
-                        vm.langeName = val.name
-                    }
-                });
+                vm.langeName = vm.name
+                this.defaultLang= Number(this.langId)
+
                 // setTimeout(function () {
                 //     location.reload();
                 // },500)
@@ -102,12 +98,19 @@
             getLangList(){
                 this.$post('/lang/getLangList').then((reData)=>{
                     this.langList=reData.data
-                    console.log( this.langList)
-
+                    if(sessionStorage.getItem('langId')){
+                        store.commit('changeStore',{key:'langId',val:sessionStorage.getItem('langId')});
+                        this.defaultLang=Number(sessionStorage.getItem('langId'))
+                    }else {
+                        store.commit('changeStore',{key:'langId',val:this.langList[0].lang_id.toString()});
+                        sessionStorage.setItem('langId',this.langList[0].lang_id.toString());
+                        this.defaultLang=Number(this.langList[0].lang_id)
+                    }
                 })
             },
-            handleChange(value){
+            handleChange(value,name){
                 this.langId=value
+                this.name = name.data.attrs.name
             },
             handleCancel(){
                 this.isShow=false
