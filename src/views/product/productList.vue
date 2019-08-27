@@ -3,30 +3,30 @@
     <a-row>
       <a-col class="gutter-row" :span="6">
           <div class="inputPart">
-            <a-col class="gutter-row" :span="6">
+            <a-col class="gutter-row" :span="8">
               <div class="inputName">产品编号：</div>
             </a-col>
-            <a-col class="gutter-row" :span="18">
+            <a-col class="gutter-row" :span="16">
               <a-input placeholder="请输入产品编号" v-model="search_data.product_code" />
             </a-col>
           </div>
       </a-col>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
+          <a-col class="gutter-row" :span="8">
             <div class="inputName">产品名称 ：</div>
           </a-col>
-          <a-col class="gutter-row" :span="18">
+          <a-col class="gutter-row" :span="16">
             <a-input placeholder="请输入产品名称" v-model="search_data.name"/>
           </a-col>
         </div>
       </a-col>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
+          <a-col class="gutter-row" :span="8">
             <div class="inputName">状态：</div>
           </a-col>
-          <a-col class="gutter-row" :span="18">
+          <a-col class="gutter-row" :span="16">
             <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
               <a-select-option value="">请选择</a-select-option>
               <a-select-option value="1">是</a-select-option>
@@ -39,42 +39,42 @@
     <a-row>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
+          <a-col class="gutter-row" :span="8">
             <div class="inputName"> 创建时间：</div>
           </a-col>
-          <a-col class="gutter-row" :span="18">
+          <a-col class="gutter-row" :span="16">
             <a-range-picker @change="onChange" />
           </a-col>
         </div>
       </a-col>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
+          <a-col class="gutter-row" :span="8">
             <div class="inputName"> 成本价：</div>
           </a-col>
-          <a-col class="gutter-row" :span="8">
+          <a-col class="gutter-row" :span="7">
             <a-input placeholder="最大成本价" v-model="search_data.costPiceMax"/>
           </a-col>
           <a-col class="gutter-row" :span="2" style="text-align: center">
             —
           </a-col>
-          <a-col class="gutter-row" :span="8">
+          <a-col class="gutter-row" :span="7">
             <a-input placeholder="最小成本价" v-model="search_data.costPiceMin"/>
           </a-col>
         </div>
       </a-col>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
+          <a-col class="gutter-row" :span="8">
             <div class="inputName"> 零售价：</div>
           </a-col>
-          <a-col class="gutter-row" :span="8">
+          <a-col class="gutter-row" :span="7">
             <a-input placeholder="最大零售价" v-model="search_data.retailPriceMax"/>
           </a-col>
           <a-col class="gutter-row" :span="2" style="text-align: center">
             —
           </a-col>
-          <a-col class="gutter-row" :span="8">
+          <a-col class="gutter-row" :span="7">
             <a-input placeholder="最小零售价" v-model="search_data.retailPriceMin"/>
           </a-col>
         </div>
@@ -83,14 +83,14 @@
     <a-row>
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
-          <a-col class="gutter-row" :span="6">
+          <a-col class="gutter-row" :span="8">
           </a-col>
-          <a-col class="gutter-row" :span="18">
+          <a-col class="gutter-row" :span="16">
             <a-row>
-              <a-col class="gutter-row" :span="6">
+              <a-col class="gutter-row" :span="10">
                 <a-button type="primary" @click="add_product()">新增</a-button>
               </a-col>
-              <a-col class="gutter-row" :span="6">
+              <a-col class="gutter-row" :span="10">
                 <a-button type="primary" @click="search_product(search_data)">搜索</a-button>
               </a-col>
               <a-col class="gutter-row" :span="6">
@@ -121,7 +121,7 @@
               </a-popconfirm>
           </span>
         <span slot="img_" slot-scope="text, record">
-              <img :src="text.image_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''">
+              <img :src="text.image_url" @click="showPic(record.image_url)" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''" >
           </span>
         <a slot="active" slot-scope="text, record" style="text-align: center">
           <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
@@ -134,6 +134,9 @@
         </span>
       </a-table>
     </div>
+    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+      <img alt="example" style="width: 100%" :src="previewImage" />
+    </a-modal>
   </div>
 </template>
 <script>
@@ -196,6 +199,8 @@
                     ,image_url:''
                     ,good_qty:''
                 }
+                ,previewImage:''
+                ,previewVisible:false
             }
         },
         methods: {
@@ -204,6 +209,15 @@
                 console.log(`selected ${value}`);
                 this.search_data.active = value
             }
+            //图片展示
+            ,showPic(url){
+                this.previewImage=url
+                this.previewVisible=true
+
+            }
+            ,handleCancel () {
+                this.previewVisible = false
+            }
             //新增商品
             ,add_product(){
                 store.commit('changeStore',{key:'addProductContent',val:'productAddInformatica'});
@@ -211,6 +225,8 @@
                 store.commit('changeStore',{key:'goods_id',val:''});
                 router.push('/productAdd')
                 store.commit('changeStore',{key:'isEdit',val:false});
+                store.commit('changeStore',{key:'isEditCombin',val:false});
+
             }
             // 获取商品列表
             ,getList(data){

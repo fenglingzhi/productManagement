@@ -3,30 +3,30 @@
       <a-row>
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
+                  <a-col class="gutter-row" :span="8">
                       <div class="inputName">客户ID：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="18">
+                  <a-col class="gutter-row" :span="16">
                       <a-input placeholder="请输入客户ID" v-model="addCustomerInfo.customerId" />
                   </a-col>
               </div>
           </a-col>
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">email ：</div>
+                  <a-col class="gutter-row" :span="8">
+                      <div class="inputName">Email ：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="18">
+                  <a-col class="gutter-row" :span="16">
                       <a-input placeholder="请输入email" v-model="addCustomerInfo.email"/>
                   </a-col>
               </div>
           </a-col>
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
+                  <a-col class="gutter-row" :span="8">
                       <div class="inputName">称呼：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="18">
+                  <a-col class="gutter-row" :span="16">
                       <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
                           <a-select-option value="">请选择</a-select-option>
                           <a-select-option value="1">男</a-select-option>
@@ -38,10 +38,10 @@
           </a-col>
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">是否启用：</div>
+                  <a-col class="gutter-row" :span="8">
+                      <div class="inputName">启用：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="18">
+                  <a-col class="gutter-row" :span="16">
                       <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_s">
                           <a-select-option value="">请选择</a-select-option>
                           <a-select-option value="1">禁用</a-select-option>
@@ -55,10 +55,10 @@
       <a-row>
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">接受简报：</div>
+                  <a-col class="gutter-row" :span="8">
+                      <div class="inputName">简报：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="18">
+                  <a-col class="gutter-row" :span="16">
                       <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_e">
                           <a-select-option value="">请选择</a-select-option>
                           <a-select-option value="1">是</a-select-option>
@@ -69,10 +69,10 @@
           </a-col>
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
-                      <div class="inputName">接受推销：</div>
+                  <a-col class="gutter-row" :span="8">
+                      <div class="inputName">推销：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="18">
+                  <a-col class="gutter-row" :span="16">
                       <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_p">
                           <a-select-option value="">请选择</a-select-option>
                           <a-select-option value="1">是</a-select-option>
@@ -83,10 +83,10 @@
           </a-col>
           <a-col class="gutter-row" :span="6">
               <div class="inputPart">
-                  <a-col class="gutter-row" :span="6">
+                  <a-col class="gutter-row" :span="8">
                       <div class="inputName"> 注册时间：</div>
                   </a-col>
-                  <a-col class="gutter-row" :span="18">
+                  <a-col class="gutter-row" :span="16">
                       <a-range-picker @change="onChange" />
                   </a-col>
               </div>
@@ -133,16 +133,16 @@
 
           </span>
         <a slot="newsletter" slot-scope="text, record" style="text-align: center">
-          <a-icon type="check" style="color: green" v-if="text === '1'"></a-icon>
-          <a-icon type="close" style="color: red" v-if="text === '0'"></a-icon>
+          <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({customer_id:record.customer_id,newsletter:'0'})"></a-icon>
+          <a-icon type="close" style="color: red" v-if="text === '0'" @click="change_active({customer_id:record.customer_id,newsletter:'1'})"></a-icon>
         </a>
           <a slot="active" slot-scope="text, record" style="text-align: center">
-              <a-icon type="check" style="color: green" v-if="text === '1'"></a-icon>
-              <a-icon type="close" style="color: red" v-if="text === '0'"></a-icon>
+              <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({customer_id:record.customer_id,active:'0'})"></a-icon>
+              <a-icon type="close" style="color: red" v-if="text === '0'" @click="change_active({customer_id:record.customer_id,active:'1'})"></a-icon>
           </a>
         <a slot="optin" slot-scope="text, record" style="text-align: center">
-          <a-icon type="check" style="color: green" v-if="text === '1'"></a-icon>
-          <a-icon type="close" style="color: red" v-if="text === '0'"></a-icon>
+          <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({customer_id:record.customer_id,optin:'0'})"></a-icon>
+          <a-icon type="close" style="color: red" v-if="text === '0'" @click="change_active({customer_id:record.customer_id,optin:'1'})"></a-icon>
         </a>
       </a-table>
       <div class="addCustomerGender">
@@ -155,7 +155,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">称呼：</div>
+                          <div class="inputName"><span style="color:red;">*</span>称呼：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange">
@@ -167,7 +167,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">名：</div>
+                          <div class="inputName"><span style="color:red;">*</span>名：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-input placeholder="请输入名" v-model="addCustomerInfo.firstname" />
@@ -177,7 +177,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">姓：</div>
+                          <div class="inputName"><span style="color:red;">*</span>姓：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-input placeholder="请输入姓" v-model="addCustomerInfo.lastname" />
@@ -187,7 +187,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">邮箱地址：</div>
+                          <div class="inputName"><span style="color:red;">*</span>邮箱：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-input placeholder="请输入邮箱地址" type="email" v-model="addCustomerInfo.email" />
@@ -197,7 +197,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">密码：</div>
+                          <div class="inputName"><span style="color:red;">*</span>密码：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-input placeholder="请输入密码" type="password" v-model="addCustomerInfo.passwd" />
@@ -207,7 +207,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">生日：</div>
+                          <div class="inputName"><span style="color:red;">*</span>生日：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-date-picker @change="onChange" />
@@ -217,7 +217,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">状态：</div>
+                          <div class="inputName"><span style="color:red;">*</span>状态：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_s">
@@ -230,7 +230,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">接受电子订阅：</div>
+                          <div class="inputName"><span style="color:red;">*</span>订阅：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_e">
@@ -243,7 +243,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">接受推销：</div>
+                          <div class="inputName"><span style="color:red;">*</span>推销：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_p">
@@ -265,7 +265,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">称呼：</div>
+                          <div class="inputName"><span style="color:red;">*</span>称呼：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange" :value="addCustomerInfo.genderId">
@@ -277,7 +277,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">名：</div>
+                          <div class="inputName"><span style="color:red;">*</span>名：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-input placeholder="请输入名" v-model="addCustomerInfo.firstname" />
@@ -287,7 +287,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">姓：</div>
+                          <div class="inputName"><span style="color:red;">*</span>姓：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-input placeholder="请输入姓" v-model="addCustomerInfo.lastname" />
@@ -297,7 +297,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">邮箱地址：</div>
+                          <div class="inputName"><span style="color:red;">*</span>邮箱：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-input placeholder="请输入邮箱地址" v-model="addCustomerInfo.email" />
@@ -307,7 +307,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">密码：</div>
+                          <div class="inputName"><span style="color:red;">*</span>密码：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-input placeholder="请输入密码" type="password" v-model="addCustomerInfo.passwd" />
@@ -317,7 +317,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">生日：</div>
+                          <div class="inputName"><span style="color:red;">*</span>生日：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-date-picker
@@ -331,7 +331,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">状态：</div>
+                          <div class="inputName"><span style="color:red;">*</span>状态：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_s" v-model="addCustomerInfo.active">
@@ -344,7 +344,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">接受电子订阅：</div>
+                          <div class="inputName"><span style="color:red;">*</span>订阅：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_e" :value="addCustomerInfo.newsletter">
@@ -357,7 +357,7 @@
               <a-row>
                   <div class="inputPart">
                       <a-col class="gutter-row" :span="6">
-                          <div class="inputName">接受推销：</div>
+                          <div class="inputName"><span style="color:red;">*</span>推销：</div>
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-select defaultValue="请选择" style="width: 100%"  @change="handleChange_p" :value="addCustomerInfo.optin">
@@ -736,7 +736,7 @@
             }
             //更改商品状态
             ,change_active(data){
-                this.$post('/product/editDisableProduct',data).then((reData)=>{
+                this.$post('/customer/setCustomerStatus',data).then((reData)=>{
                     if(reData.code === '0'){
                         this.getList({
                             lang_id:store.state.langId,

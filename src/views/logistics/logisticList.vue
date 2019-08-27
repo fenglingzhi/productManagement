@@ -60,18 +60,20 @@
             <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
           </span>
-          <span v-if="text.c_sign=='$'" slot="c_max" slot-scope="text, record">
-              {{text.c_sign}}{{text.c_max}}
-          </span>
+
             <span v-if="text.c_sign=='kg'" slot="c_max" slot-scope="text, record">
               {{text.c_max}}{{text.c_sign}}
-          </span>
-            <span v-if="text.c_sign=='$'" slot="c_min" slot-scope="text, record">
-              {{text.c_sign}}{{text.c_min}}
-          </span>
+            </span>
+            <span v-else slot="c_max" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_max}}
+           </span>
+
             <span v-if="text.c_sign=='kg'" slot="c_min" slot-scope="text, record">
               {{text.c_min}}{{text.c_sign}}
           </span>
+            <span v-else slot="c_min" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_min}}
+            </span>
 
         </a-table>
         <div class="hrLine"></div>
@@ -108,17 +110,19 @@
             <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
           </span>
-            <span v-if="text.c_sign=='$'" slot="c_max" slot-scope="text, record">
-              {{text.c_sign}}{{text.c_max}}
-          </span>
+
             <span v-if="text.c_sign=='kg'" slot="c_max" slot-scope="text, record">
               {{text.c_max}}{{text.c_sign}}
           </span>
-            <span v-if="text.c_sign=='$'" slot="c_min" slot-scope="text, record">
-              {{text.c_sign}}{{text.c_min}}
+            <span v-else slot="c_max" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_max}}
           </span>
+
             <span v-if="text.c_sign=='kg'" slot="c_min" slot-scope="text, record">
               {{text.c_min}}{{text.c_sign}}
+          </span>
+            <span v-else slot="c_min" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_min}}
           </span>
         </a-table>
 
@@ -164,20 +168,20 @@
                 <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
           </span>
-                <span slot="shipping_price" slot-scope="text, record">
-              ${{text.shipping_price}}
-          </span>
-                <span v-if="text.c_sign=='$'" slot="c_max" slot-scope="text, record">
-              {{text.c_sign}}{{text.c_max}}
-          </span>
+
+
                 <span v-if="text.c_sign=='kg'" slot="c_max" slot-scope="text, record">
               {{text.c_max}}{{text.c_sign}}
           </span>
-                <span v-if="text.c_sign=='$'" slot="c_min" slot-scope="text, record">
-              {{text.c_sign}}{{text.c_min}}
+                <span v-else slot="c_max" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_max}}
           </span>
+
                 <span v-if="text.c_sign=='kg'" slot="c_min" slot-scope="text, record">
               {{text.c_min}}{{text.c_sign}}
+          </span>
+                <span v-else slot="c_min" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_min}}
           </span>
           <!--<span slot="c_min" slot-scope="text, record">-->
                 <!--<span v-if="text.c_type">{{text.c_min}}kg</span>-->
@@ -221,20 +225,20 @@
                 <span slot="shipping_price" slot-scope="text, record">
               ${{text.shipping_price}}
           </span>
-                <span slot="shipping_price" slot-scope="text, record">
-              ${{text.shipping_price}}
-          </span>
-                <span v-if="text.c_sign=='$'" slot="c_max" slot-scope="text, record">
-              {{text.c_sign}}{{text.c_max}}
-          </span>
+
+
                 <span v-if="text.c_sign=='kg'" slot="c_max" slot-scope="text, record">
               {{text.c_max}}{{text.c_sign}}
           </span>
-                <span v-if="text.c_sign=='$'" slot="c_min" slot-scope="text, record">
-              {{text.c_sign}}{{text.c_min}}
+                <span v-else slot="c_max" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_max}}
           </span>
+
                 <span v-if="text.c_sign=='kg'" slot="c_min" slot-scope="text, record">
               {{text.c_min}}{{text.c_sign}}
+          </span>
+                <span v-else slot="c_min" slot-scope="text, record">
+              {{text.c_sign}}{{text.c_min}}
           </span>
                 <!--<span slot="c_min" slot-scope="text, record">-->
                 <!--<span v-if="text.c_type">{{text.c_min}}kg</span>-->
@@ -262,7 +266,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 前台显示内容 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 前台显示内容 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addZone.name" placeholder="" />
@@ -274,7 +278,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 类型：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 类型：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select  v-model="addZone.c_type" defaultValue="1" style="width: 100%"  @change="handleChange">
@@ -289,7 +293,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 最大值 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 最大值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addZone.c_max" placeholder="" />
@@ -301,7 +305,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 最小值 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 最小值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addZone.c_min" placeholder="" />
@@ -313,7 +317,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 运费 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 运费 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addZone.shipping_price" placeholder="" />
@@ -325,7 +329,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart" style="padding: 0px 8px 6px 22px">
                         <a-col class="gutter-row" :span=3>
-                            <div class="inputName">* 选择区域 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 选择区域 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
 
@@ -365,7 +369,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 前台显示内容 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 前台显示内容 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addOtherCountry.name" placeholder="" />
@@ -377,7 +381,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 类型：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 类型：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%" v-model="addOtherCountry.c_type" @change="handleChange">
@@ -392,7 +396,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 最大值 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 最大值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addOtherCountry.c_max" placeholder="" />
@@ -404,7 +408,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 最小值 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 最小值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addOtherCountry.c_min" placeholder="" />
@@ -416,7 +420,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 运费 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 运费 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addOtherCountry.shipping_price" placeholder="" />
@@ -439,7 +443,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 前台显示内容 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 前台显示内容 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addCountry.name" placeholder="" />
@@ -451,7 +455,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 类型：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 类型：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%"  v-model="addCountry.c_type">
@@ -466,7 +470,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 最大值 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 最大值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addCountry.c_max" placeholder="" />
@@ -478,7 +482,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 最小值 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 最小值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addCountry.c_min" placeholder="" />
@@ -490,7 +494,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 运费 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 运费 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addCountry.shipping_price" placeholder="" />
@@ -502,7 +506,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart" style="padding: 0px 8px 6px 22px">
                         <a-col class="gutter-row" :span=3>
-                            <div class="inputName">* 选择国家 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 选择国家 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
 
@@ -543,7 +547,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 前台显示内容 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 前台显示内容 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addState.name" placeholder="" />
@@ -555,7 +559,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 国家：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 国家：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select :defaultValue="countryDefault" style="width: 100%"  @change="handleChange">
@@ -569,7 +573,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 类型：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 类型：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="1" style="width: 100%"  v-model="addState.c_type" >
@@ -584,7 +588,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 最大值 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 最大值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addState.c_max" placeholder="" />
@@ -596,7 +600,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 最小值 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 最小值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addState.c_min" placeholder="" />
@@ -608,7 +612,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="4">
-                            <div class="inputName">* 运费 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 运费 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input v-model="addState.shipping_price" placeholder="" />
@@ -620,7 +624,7 @@
                 <a-col class="gutter-row" :span="24">
                     <div class="inputPart" style="padding: 0px 8px 6px 22px">
                         <a-col class="gutter-row" :span=3>
-                            <div class="inputName">* 选择省/州 ：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span> 选择省/州 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
 
@@ -1281,8 +1285,8 @@
             }
         //表格分页
         ,handleTableChange(pagination){
-            this.pagination.currentPage = pagination.current
-            this.getList({currentPage:pagination.current,pageSize:this.pagination.defaultPageSize,active:1})
+            // this.pagination.currentPage = pagination.current
+            // this.getList({currentPage:pagination.current,pageSize:this.pagination.defaultPageSize,active:1})
         },
             onChange (checkedList) {
                 this.indeterminate = !!checkedList.length && (checkedList.length < this.countryList.length)

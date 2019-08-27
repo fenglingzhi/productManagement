@@ -323,14 +323,19 @@
             },
             getTabData(){
                 this.tabList=[]
-                this.colorList=[]
+              this.colorList=[]
                 this.sizeList=[]
 
                 this.$post('/productUnit/getProductUnitList',{product_id:this.$store.state.goods_id}).then((reData)=>{
                     let dataF =  reData.data.dataList
                     let dataD= this.colorListO
                     let dataE= this.sizeListO
-
+                    dataD.forEach(function(val, indexc) {
+                        dataD[indexc].disabled=false
+                    });
+                    dataE.forEach(function(val, indexc) {
+                        dataE[indexc].disabled=false
+                    });
                     for(let i=0;i<dataF.length;i++){
                         // this.colorList.push({val:dataF[i].color_id,status:true})
                         // this.sizeList.push({val:dataF[i].sizeList,status:true})

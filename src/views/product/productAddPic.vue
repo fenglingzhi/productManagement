@@ -22,7 +22,7 @@
           <a-col class="gutter-row" :span="8">
               <div class="inputPart">
                   <a-col class="gutter-row" :span="6">
-                      <div class="inputName">研发样图：</div>
+                      <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>研发样图：</div>
                   </a-col>
                   <a-col class="gutter-row" :span="18">
                       <div class="clearfix">
@@ -51,7 +51,7 @@
         <a-col class="gutter-row" :span="6">
           <div class="inputPart">
             <a-col class="gutter-row" :span="8">
-              <div class="inputName">*位置：</div>
+              <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>位置：</div>
             </a-col>
             <a-col class="gutter-row" :span="16">
               <a-select  style="width: 100%" defaultValue="0" @change="handleChangeSelect">
@@ -66,7 +66,7 @@
       <a-col class="gutter-row" :span="6">
         <div class="inputPart">
           <a-col class="gutter-row" :span="8">
-            <div class="inputName">*是否展示：</div>
+            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否展示：</div>
           </a-col>
           <a-col class="gutter-row" :span="16">
             <a-select  style="width: 100%" defaultValue="1" @change="handleChangeCoverSelect">
@@ -82,7 +82,7 @@
           <a-col class="gutter-row" :span="6">
             <div class="inputPart">
               <a-col class="gutter-row" :span="8">
-                <div class="inputName">*Caption：</div>
+                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>Caption：</div>
               </a-col>
               <a-col class="gutter-row" :span="16">
                 <a-input  v-model="postData.legend" placeholder=""/>
@@ -103,7 +103,13 @@
                align="center"
                >
           <span slot="action" slot-scope="text, record">
-              <a @click="delPic(text.position)">删除{{text.position}}</a>
+               <a-popconfirm
+                       v-if="productListData.length"
+                       title="请确认删除"
+                       @confirm="() => delPic(text.position)">
+                <a>删除</a>
+              </a-popconfirm>
+              <!--<a @click="delPic(text.position)">删除</a>-->
            </span>
           <span slot="image" slot-scope="text, record">
               <img @click="showPic(text.image_visit_url)" :src="text.image_visit_url" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_visit_url !== ''">

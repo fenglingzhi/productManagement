@@ -18,7 +18,7 @@
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="8">
-                            <div class="inputName">*分类：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>分类：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="16">
                             <a-select  style="width: 100%" defaultValue="请选择分类" @change="handleChangeSelect">
@@ -32,7 +32,7 @@
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="8">
-                            <div class="inputName">*选择文件：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
                                 <input type="file" class="file1" name="myFile" ><br/>
@@ -62,7 +62,7 @@
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="8">
-                            <div class="inputName">*选择分类：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>选择分类：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="16">
                             <template>
@@ -83,7 +83,7 @@
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="8">
-                            <div class="inputName">*选择文件：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
                             <input type="file" class="file2" name="myFile" ><br/>
@@ -115,7 +115,7 @@
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="8">
-                            <div class="inputName">*选择文件：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
                             <input type="file" class="file3" name="myFile"><br/>
@@ -144,7 +144,7 @@
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="8">
-                            <div class="inputName">*Tag标签：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>Tag标签：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="16">
                             <a-select  style="width: 100%" defaultValue="请选择标签" @change="handleChangeSelect4">
@@ -158,7 +158,7 @@
                 <a-col class="gutter-row" :span="6">
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="8">
-                            <div class="inputName">*选择文件：</div>
+                            <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>选择文件：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="12">
                             <input type="file" class="file1" name="myFile" ><br/>
@@ -259,31 +259,41 @@
             var vm =this
             /** 验证文件是否导入成功  */
             $("#form1").ajaxForm(function(data){
-                if(data.code=='0'){
-                    vm.$message.success(data.message);
-                }else {
-                    vm.$message.error(data.message);
+                if(vm.categoryId!=''){
+                    if(data.code=='0'){
+                        vm.$message.success(data.message);
+                    }else {
+                        vm.$message.error(data.message);
+                    }
                 }
+
             });
             $("#form2").ajaxForm(function(data){
-                if(data.code=='0'){
-                    vm.$message.success(data.message);
-                }else {
-                    vm.$message.error(data.message);
+                if(vm.selectedKeys!=''){
+                    if(data.code=='0'){
+                        vm.$message.success(data.message);
+                    }else {
+                        vm.$message.error(data.message);
+                    }
                 }
+
+
             });
             $("#form3").ajaxForm(function(data){
-                if(data.code=='0'){
-                    vm.$message.success(data.message);
-                }else {
-                    vm.$message.error(data.message);
-                }
+                    if(data.code=='0'){
+                        vm.$message.success(data.message);
+                    }else {
+                        vm.$message.error(data.message);
+                    }
+
             });
             $("#form4").ajaxForm(function(data){
-                if(data.code=='0'){
-                    vm.$message.success(data.message);
-                }else {
-                    vm.$message.error(data.message);
+                if(vm.tagId!=''){
+                    if(data.code=='0'){
+                        vm.$message.success(data.message);
+                    }else {
+                        vm.$message.error(data.message);
+                    }
                 }
             });
             this.getCategoryAllList({lang_id:this.$store.state.langId,is_banner:1})

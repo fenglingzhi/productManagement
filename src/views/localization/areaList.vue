@@ -44,7 +44,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">是否启用：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-select defaultValue="1" style="width: 100%"  @change="handleChangeAdd">
@@ -57,7 +57,7 @@
                     <a-row>
                         <div class="inputPart">
                             <a-col class="gutter-row" :span="6">
-                                <div class="inputName">区域名称：</div>
+                                <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>区域名称：</div>
                             </a-col>
                             <a-col class="gutter-row" :span="18">
                                 <a-input placeholder="" v-model="addCurrency.name" />
@@ -77,7 +77,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">是否启用：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否启用：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-select :defaultValue="editCurrency.active" style="width: 100%"  @change="handleChangeEdit">
@@ -90,7 +90,7 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="6">
-                                    <div class="inputName">区域名称：</div>
+                                    <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>区域名称：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="18">
                                     <a-input placeholder="" v-model="editCurrency.name" />

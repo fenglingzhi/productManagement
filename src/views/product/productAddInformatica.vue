@@ -54,16 +54,24 @@
                     <a-col class="gutter-row" :span="8">
                         <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>商品类型：</div>
                     </a-col>
-                    <a-col class="gutter-row" v-if="this.$store.state.isEdit" :span="16">
-                        <a-select  style="width: 100%" :defaultValue="this.$store.state.oldData.prdBase.product_type" @change="handleChangeSelect">
-                            <a-select-option value="0">一般商品</a-select-option>
-                            <a-select-option value="1">已存在商品组合</a-select-option>
-                            <a-select-option value="2">虚拟商品（服务，订票，下载的产品，等等）</a-select-option>
-                        </a-select>
-                    </a-col>
+                    <!--<a-col class="gutter-row" v-if="this.$store.state.isEdit" :span="16">-->
+                        <!--<a-select  style="width: 100%" :defaultValue="this.$store.state.oldData.prdBase.product_type" @change="handleChangeSelect">-->
+                            <!--<a-select-option value="0">一般商品</a-select-option>-->
+                            <!--<a-select-option value="1">已存在商品组合</a-select-option>-->
+                            <!--<a-select-option value="2">虚拟商品（服务，订票，下载的产品，等等）</a-select-option>-->
+                        <!--</a-select>-->
+                    <!--</a-col>-->
 
-                    <a-col class="gutter-row"  v-if="!this.$store.state.isEdit":span="16">
-                        <a-select  style="width: 100%" defaultValue="0" @change="handleChangeSelect">
+                    <!--<a-col class="gutter-row"  v-if="!this.$store.state.isEdit":span="16">-->
+                        <!--<a-select  style="width: 100%" defaultValue="0" @change="handleChangeSelect">-->
+                            <!--<a-select-option value="0">一般商品</a-select-option>-->
+                            <!--<a-select-option value="1">已存在商品组合</a-select-option>-->
+                            <!--<a-select-option value="2">虚拟商品（服务，订票，下载的产品，等等）</a-select-option>-->
+                        <!--</a-select>-->
+                    <!--</a-col>-->
+
+                    <a-col class="gutter-row"  :span="16">
+                        <a-select  style="width: 100%" v-model="postData.product_type"  >
                             <a-select-option value="0">一般商品</a-select-option>
                             <a-select-option value="1">已存在商品组合</a-select-option>
                             <a-select-option value="2">虚拟商品（服务，订票，下载的产品，等等）</a-select-option>
@@ -193,7 +201,7 @@
             },
 
             handleChangeSelect(value) {
-                // this.postData.product_type=value
+                this.postData.product_type=value
             },
             onChangeIsUse(e){
                 this.postData.active=e.target.value
@@ -253,25 +261,49 @@
                         })
 
                     }else {
-                        delete this.postData.product_id
-                        this.$post('/product/addProduct',this.postData).then((reData)=>{
-                            console.log(reData)
-                            this.$notification.open({
-                                message: '提醒',
-                                description: reData.message,
-                                onClick: () => {
-                                    console.log('ok');
-                                },
+                        if(this.isFirstSave){
+                            delete this.postData.product_id
+                            this.$post('/product/addProduct',this.postData).then((reData)=>{
+                                console.log(reData)
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                                if(reData.code == 0){
+                                    store.commit('changeStore',{key:'goods_id',val:reData.data.product_id });
+                                    this.isFirstSave=false
+                                    setTimeout(function () {
+                                        store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
+                                        store.commit('changeStore',{key:'addProductCurrent',val:'1'});
+                                    },1000)
+                                }
+                                store.commit('changeStore',{key:'loading',val:false});
                             })
-                            if(reData.code == 0){
-                                store.commit('changeStore',{key:'goods_id',val:reData.data.product_id });
-                                setTimeout(function () {
-                                    store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
-                                    store.commit('changeStore',{key:'addProductCurrent',val:'1'});
-                                },1000)
-                            }
-                            store.commit('changeStore',{key:'loading',val:false});
-                        })
+                        }else {
+                            this.$post('/product/editProduct',this.postData).then((reData)=>{
+                                console.log(reData)
+                                this.$notification.open({
+                                    message: '提醒',
+                                    description: reData.message,
+                                    onClick: () => {
+                                        console.log('ok');
+                                    },
+                                })
+                                if(reData.code == 0){
+
+                                    setTimeout(function () {
+                                        store.commit('changeStore',{key:'addProductContent',val:'productAddPrice'});
+                                        store.commit('changeStore',{key:'addProductCurrent',val:'1'});
+                                    },1000)
+                                }
+                                store.commit('changeStore',{key:'loading',val:false});
+                            })
+
+                        }
+
 
                     }
 
@@ -340,6 +372,7 @@
         },
         data() {
             return {
+                isFirstSave:true,
                 previewVisible: false,
                 previewImage: '',
                 fileList: [],
@@ -353,7 +386,7 @@
                 inputValue: ''
                 ,disabled: false
                 ,postData:{
-                    product_type:"1",
+                    product_type:"0",
                     name:"",
                     product_id:"",
                     upc:"",
