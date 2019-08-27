@@ -451,6 +451,7 @@ export default {
           this.addStatueInfo.lang_id = reData.data.lang_id;
           this.addStatueInfo.name = reData.data.name;
           this.addStatueInfo.color_obj = reData.data.color;
+          this.addStatueInfo.color = reData.data.color;
           this.addStatueInfo.unremoveable = reData.data.unremoveable;
           this.addStatueInfo.logable = reData.data.logable;
           this.addStatueInfo.shipped = reData.data.shipped;
@@ -561,9 +562,11 @@ export default {
     //修改提交
     submitEdit() {
       // 颜色赋值
-      try {
+      if (typeof this.addStatueInfo.color_obj == "string") {
+        this.addStatueInfo.color = this.addStatueInfo.color_obj;
+      } else {
         this.addStatueInfo.color = this.addStatueInfo.color_obj.hex8;
-      } catch (error) {}
+      }
       // console.log(this.addStatueInfo);
       if (this.checking(this.addStatueInfo)) {
         this.$post("/orderState/updateOrderStateInfo", this.addStatueInfo).then(

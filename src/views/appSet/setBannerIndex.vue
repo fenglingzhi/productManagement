@@ -277,6 +277,21 @@ export default {
           id: "7",
           image_type: 7,
           content: "QUARTETTE VERTICAL BANNER(四张)"
+        },
+        {
+          id: "8",
+          image_type: 8,
+          content: "横banner1（倒计时下面）"
+        },
+        {
+          id: "9",
+          image_type: 9,
+          content: "横banner2（左一右二图下面1）"
+        },
+        {
+          id: "10",
+          image_type: 10,
+          content: "横banner3（左一右二图下面2）"
         }
       ],
       // detail数据
@@ -418,7 +433,7 @@ export default {
     submitAdd() {
       // 上传的文件转换
       let reader = new FileReader();
-      let allowImgFileSize = 2100000*5; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
+      let allowImgFileSize = 2100000 * 5; //上传图片最大值(单位字节)（ 2 M = 2097152 B ）超过2M上传失败
       let file = document.getElementById("image").files[0];
       let _this = this;
       if (file) {
@@ -429,7 +444,11 @@ export default {
             allowImgFileSize != 0 &&
             allowImgFileSize < reader.result.length
           ) {
-            _this.openNotification("warning", "警告", "请上传大要大于10m的图片");
+            _this.openNotification(
+              "warning",
+              "警告",
+              "请上传大要大于10m的图片"
+            );
           } else {
             //将编码写入表单
             _this.form_add.image_base_str = reader.result;
