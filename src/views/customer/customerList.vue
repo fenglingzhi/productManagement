@@ -261,6 +261,7 @@
                   v-model="visible_edit"
                   @ok="submitEdit"
                   :destroyOnClose="true"
+                  @cancel="edit_cancel"
           >
               <a-row>
                   <div class="inputPart">
@@ -321,9 +322,10 @@
                       </a-col>
                       <a-col class="gutter-row" :span="18">
                           <a-date-picker
-                                  :defaultValue="moment('2019-6-9', dateFormat)"
-                                  @change="onChange"
-                                  :format="dateFormat" />
+                                  format="YYYY-MM-DD"
+                                  :value="moment(addCustomerInfo.birthday)"
+                                  @change="onChange">
+                          </a-date-picker>
                           <!--<a-date-picker :defaultValue="moment(addCustomerInfo.birthday, dateFormat)" :format="dateFormat" />-->
                       </a-col>
                   </div>
@@ -565,8 +567,8 @@
                     this.addCustomerInfo.firstname=reData.data[0].firstname;
                     this.addCustomerInfo.lastname=reData.data[0].lastname;
                     this.addCustomerInfo.email=reData.data[0].email;
-                    this.addCustomerInfo.passwd=reData.data[0].passwd;
-                    this.addCustomerInfo.birthday=reData.data[0].birthday.toString();
+                    this.addCustomerInfo.passwd='';
+                    this.addCustomerInfo.birthday=Date.parse(reData.data[0].birthday);
                     this.addCustomerInfo.active=reData.data[0].active;
                     this.addCustomerInfo.newsletter=reData.data[0].newsletter;
                     this.addCustomerInfo.optin=reData.data[0].optin;
@@ -661,6 +663,13 @@
                 this.$post('/customer/updateCustomerInfo',this.addCustomerInfo).then((reData)=>{
                     if(reData.code === '0'){
                         this.visible_edit = false
+                        this.addCustomerInfo.customerId = '';
+                        this.addCustomerInfo.email = '';
+                        this.addCustomerInfo.genderId = '';
+                        this.addCustomerInfo.active = '';
+                        this.addCustomerInfo.newsletter = '';
+                        this.addCustomerInfo.optin = '';
+                        this.addCustomerInfo.birthday = '';
                         this.getList({
                             lang_id:store.state.langId,
                             currentPage:this.pagination.currentPage,
@@ -709,6 +718,16 @@
                     page_size:pagination.defaultPageSize
                 })
             }
+            //取消修改
+            ,edit_cancel(){
+                this.addCustomerInfo.customerId = '';
+                this.addCustomerInfo.email = '';
+                this.addCustomerInfo.genderId = '';
+                this.addCustomerInfo.active = '';
+                this.addCustomerInfo.newsletter = '';
+                this.addCustomerInfo.optin = '';
+                this.addCustomerInfo.birthday = '';
+            }
             //搜索产品
             ,search_product(){
                 this.$post('/customer/getCustomerListPageInfo',{
@@ -728,6 +747,7 @@
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
                 })
+
             }
             //时间选择
             ,onChange(date, dateString) {

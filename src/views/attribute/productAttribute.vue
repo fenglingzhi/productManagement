@@ -49,7 +49,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">属性名称：</div>
+                            <div class="inputName"><span style="color:red;">*</span>属性名称：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input placeholder="请输入属性名称" v-model="addAttributeInfo.attribute_name" />
@@ -59,7 +59,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">属性值 ：</div>
+                            <div class="inputName"><span style="color:red;">*</span>属性值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input placeholder="请输入属性值" v-model="addAttributeInfo.attribute_val"/>
@@ -69,7 +69,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">属性排序 ：</div>
+                            <div class="inputName"><span style="color:red;">*</span>属性排序 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input placeholder="请输入属性排序" v-model="addAttributeInfo.attribute_seq"/>
@@ -79,7 +79,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">属性状态：</div>
+                            <div class="inputName"><span style="color:red;">*</span>属性状态：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="请选择" style="width: 100%"  @change="handleChangeadd">
@@ -100,7 +100,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">属性名称：</div>
+                            <div class="inputName"><span style="color:red;">*</span>属性名称：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input placeholder="请输入属性名称" v-model="addAttributeInfo.attribute_name" />
@@ -110,7 +110,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">属性值 ：</div>
+                            <div class="inputName"><span style="color:red;">*</span>属性值 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input placeholder="请输入属性值" v-model="addAttributeInfo.attribute_val"/>
@@ -120,7 +120,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">属性排序 ：</div>
+                            <div class="inputName"><span style="color:red;">*</span>属性排序 ：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-input placeholder="请输入属性排序" v-model="addAttributeInfo.attribute_seq"/>
@@ -130,7 +130,7 @@
                 <a-row>
                     <div class="inputPart">
                         <a-col class="gutter-row" :span="6">
-                            <div class="inputName">属性状态：</div>
+                            <div class="inputName"><span style="color:red;">*</span>属性状态：</div>
                         </a-col>
                         <a-col class="gutter-row" :span="18">
                             <a-select defaultValue="请选择" style="width: 100%"  @change="handleChangeEdit" :value="addAttributeInfo.status">
