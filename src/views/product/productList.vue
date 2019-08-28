@@ -4,7 +4,7 @@
       <a-col class="gutter-row" :span="6">
           <div class="inputPart">
             <a-col class="gutter-row" :span="8">
-              <div class="inputName">产品编号：</div>
+              <div class="inputName">产品SKU：</div>
             </a-col>
             <a-col class="gutter-row" :span="16">
               <a-input placeholder="请输入产品编号" v-model="search_data.product_code" />
