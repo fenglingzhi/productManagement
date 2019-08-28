@@ -71,7 +71,7 @@
       </div>
 
       <div class="changeClassify">
-        <a-modal title="新增热门分类" v-model="visible_change" :destroyOnClose="true" @ok="submitChange">
+        <a-modal title="修改热门分类" v-model="visible_change" :destroyOnClose="true" @ok="submitChange">
           <a-row>
             <div class="inputPart">
               <a-col class="gutter-row" :span="6">
