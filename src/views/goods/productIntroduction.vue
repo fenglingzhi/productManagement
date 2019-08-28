@@ -183,7 +183,21 @@
                 :destroyOnClose = "true"
                 @ok="submitAddProducts"
         >
-            <a-table :rowSelection="rowSelection"      @change="handleTableChange"  :pagination="pagination" :scroll="{ x: 5000 }":columns="columns"  :dataSource="data">
+
+            <!--<a-row>-->
+                <!--<div class="inputPart">-->
+                    <!--<a-col class="gutter-row" :span="3">-->
+                        <!--<div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否已上传：</div>-->
+                    <!--</a-col>-->
+                    <!--<a-col class="gutter-row" :span="9">-->
+                        <!--<a-select v-model="isPast" style="width: 100%"   @change="makeChange">-->
+                            <!--<a-select-option value="0">是</a-select-option>-->
+                            <!--<a-select-option value="1">否</a-select-option>-->
+                        <!--</a-select>-->
+                    <!--</a-col>-->
+                <!--</div>-->
+            <!--</a-row>-->
+            <a-table :rowSelection="rowSelection"  rowKey="import_id"  @change="handleTableChange"  :pagination="pagination" :scroll="{ x: 5000 }":columns="columns"  :dataSource="data">
                 <span slot="active" v-if="text!=0" slot-scope="text" >已上传</span>
                 <span slot="active" v-else slot-scope="text" >未上传</span>
             </a-table>
@@ -290,7 +304,10 @@
         components:{
         },
         methods: {
-
+            makeChange(){
+                this.pagination.currentPage=1
+                this.getTableList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize})
+            },
             submitAddProducts(){
                 if(this.choseRow.length==0){
                     this.$notification.open({
@@ -317,7 +334,7 @@
                             console.log('ok');
                         },
                     })
-                    this.getTableList({currentPage:this.pagination.current,pageSize:this.pagination.defaultPageSize})
+                    this.getTableList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize})
 
                         }else {
                             this.$notification.open({
@@ -471,6 +488,7 @@
         },
         data() {
             return {
+                isPast:"1",
                 choseRow:[],
                 loading: false,
                 pagination:{
@@ -493,16 +511,17 @@
         } ,
         computed: {
             rowSelection() {
+
                 const { selectedRowKeys } = this;
                 console.log(this)
                 return {
-                    onChange: (selectedRowKeys, selectedRows) => {
+                onChange: (selectedRowKeys, selectedRows) => {
                         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                         this.choseRow=selectedRows
                     },
                     getCheckboxProps: record => ({
                         props: {
-                            // disabled: record.active == '1', // Column configuration not to be checked
+                            disabled: record.active == '1', // Column configuration not to be checked
                             // name: record.name,
                         }
                     }),
