@@ -292,6 +292,16 @@ export default {
           return false;
         }
       }
+      if ("start_stamp" in obj && "end_stamp" in obj) {
+        if (obj.start_stamp >= obj.end_stamp) {
+          this.openNotification(
+            "warning",
+            "警告",
+            "结束时间必须晚于开始时间！"
+          );
+          return false;
+        }
+      }
       if ("active" in obj) {
         if (obj.active == "") {
           this.openNotification("warning", "警告", "请选择是否显示！");
