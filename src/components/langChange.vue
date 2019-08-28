@@ -91,9 +91,9 @@
                 vm.langeName = vm.name
                 this.defaultLang= Number(this.langId)
 
-                // setTimeout(function () {
-                //     location.reload();
-                // },500)
+                setTimeout(function () {
+                    location.reload();
+                },500)
             },
             getLangList(){
                 this.$post('/lang/getLangList').then((reData)=>{

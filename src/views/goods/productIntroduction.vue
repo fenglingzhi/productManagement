@@ -179,14 +179,13 @@
                 title="选择上传的商品"
                 width="1100px"
                 v-model="visible_post"
-                :pagination="pagination"
                 :loading="loading"
-
                 :destroyOnClose = "true"
                 @ok="submitAddProducts"
         >
-            <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="data">
-                <span slot="name" slot-scope="text" >{{text}}</span>
+            <a-table :rowSelection="rowSelection"      @change="handleTableChange"  :pagination="pagination" :scroll="{ x: 5000 }":columns="columns"  :dataSource="data">
+                <span slot="active" v-if="text!=0" slot-scope="text" >已上传</span>
+                <span slot="active" v-else slot-scope="text" >未上传</span>
             </a-table>
 
 
@@ -205,61 +204,144 @@
     const treeData = []
 
 
-    const columns = [{
-        title: 'Name',
+    const columns = [
+        {
+        title: '状态',
+        dataIndex: 'active',
+        scopedSlots: { customRender: 'active' },
+    },{
+        title: '产品名称',
         dataIndex: 'name',
-        scopedSlots: { customRender: 'name' },
     }, {
-        title: 'product_code',
+        title: '产品code码',
         dataIndex: 'product_code',
     }, {
-        title: 'unit_code',
+        title: 'SKU',
         dataIndex: 'unit_code',
     }, {
-        title: 'price',
+        title: '价格($)',
         dataIndex: 'price',
     }, {
-        title: 'unit_weight',
+        title: '属性产品重量(kg)',
         dataIndex: 'unit_weight',
     }, {
-        title: 'unit_code',
-        dataIndex: 'unit_code',
+        title: '产品库存数量',
+        dataIndex: 'good_qty',
+    }, {
+        title: '颜色',
+        dataIndex: 'color',
+    }, {
+        title: 'ean码',
+        dataIndex: 'ean13',
+    }, {
+        title: '产品简述',
+        dataIndex: 'description_short',
+    }, {
+        title: '描述',
+        dataIndex: 'description',
+    }, {
+        title: '前台尺寸',
+        dataIndex: 'size_guide',
+    }, {
+        title: 'meta_keywords',
+        dataIndex: 'meta_keywords',
+    }, {
+        title: 'meta_descprition',
+        dataIndex: 'meta_descprition',
+    }, {
+        title: 'tag标签',
+        dataIndex: 'tag',
+    }, {
+        title: 'cost price',
+        dataIndex: 'cost_price',
+    }, {
+        title: '优惠开始时间',
+        dataIndex: 'discount_start_time',
+    }, {
+        title: '优惠结束时间',
+        dataIndex: 'discount_end_time',
+    }, {
+        title: '新品优惠折扣',
+        dataIndex: 'product_discount',
+    }, {
+        title: 'meta title',
+        dataIndex: 'meta_title',
+    }, {
+        title: '一级分类',
+        dataIndex: 'category_one',
+    }, {
+        title: '二级分类',
+        dataIndex: 'category_two',
+    }, {
+        title: '三级分类',
+        dataIndex: 'category_three',
+    }, {
+        title: '属性产品upc',
+        dataIndex: 'upc',
+    }, {
+        title: '属性产品size',
+        dataIndex: 'size',
+    }, {
+        title: '中东站SKU',
+        dataIndex: 'dolor_unit_code',
     }];
-    const data = [{
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-    }, {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-    }, {
-        key: '3',
-        name: 'Disabled',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-    }, {
-        key: '4',
-        name: 'Disabled User',
-        age: 99,
-        address: 'Sidney No. 1 Lake Park',
-    }];
-
-
+    const data = [];
     export default {
         components:{
         },
         methods: {
-            submitAddProducts(){
 
+            submitAddProducts(){
+                if(this.choseRow.length==0){
+                    this.$notification.open({
+                        message: '提醒',
+                        duration: 2,
+                        description: "请先选择要上传的商品！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                }else {
+                    let import_ids=''
+                    this.choseRow.forEach(function (value) {
+                        import_ids=import_ids+value.import_id+','
+                    })
+                    this.$post('/import/importOfficialData',{import_ids:import_ids}).then((reData)=>{
+                        if(reData.code=="0"){
+
+                    this.$notification.open({
+                        message: '成功',
+                        duration: 2,
+                        description: "成功上传商品！",
+                        onClick: () => {
+                            console.log('ok');
+                        },
+                    })
+                    this.getTableList({currentPage:this.pagination.current,pageSize:this.pagination.defaultPageSize})
+
+                        }else {
+                            this.$notification.open({
+                                message: '提醒',
+                                duration: 2,
+                                description:reData.message,
+                                onClick: () => {
+                                    console.log('ok');
+                                },
+                            })
+                        }
+                    })
+
+                }
+            }
+            ,handleTableChange(pagination){
+                this.pagination.currentPage = pagination.current
+                this.getTableList({currentPage:pagination.current,pageSize:this.pagination.defaultPageSize})
             },
             getTableList(data){
             this.$post('/import/getImportTempPage',data).then((reData)=>{
                 if(reData.code=="0"){
                     this.visible_post=true
-                    this.data=reData.data
+                    this.data=reData.data.dataList
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
                 }else {
@@ -269,7 +351,8 @@
 
         },
             showProducts(){
-                this.getTableList()
+
+                this.getTableList({currentPage:1,pageSize:this.pagination.defaultPageSize})
             },
             subForm1(){
                 if(this.categoryId ==''){
@@ -388,10 +471,11 @@
         },
         data() {
             return {
+                choseRow:[],
                 loading: false,
                 pagination:{
                     currentPage:1,
-                    defaultPageSize:10,
+                    defaultPageSize:7,
                     total:1,
                 },
                 data,
@@ -410,14 +494,16 @@
         computed: {
             rowSelection() {
                 const { selectedRowKeys } = this;
+                console.log(this)
                 return {
                     onChange: (selectedRowKeys, selectedRows) => {
                         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                        this.choseRow=selectedRows
                     },
                     getCheckboxProps: record => ({
                         props: {
-                            disabled: record.active === 1, // Column configuration not to be checked
-                            name: record.active,
+                            // disabled: record.active == '1', // Column configuration not to be checked
+                            // name: record.name,
                         }
                     }),
                 }
