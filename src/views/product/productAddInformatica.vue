@@ -151,7 +151,7 @@
                         <div class="inputName">商品简介：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="15">
-                        <a-textarea v-model="postData.description_short" placeholder="Basic usage" :rows="4"/>
+                        <a-textarea v-model="postData.description_short" placeholder="" :rows="4"/>
                     </a-col>
                 </div>
             </a-col>

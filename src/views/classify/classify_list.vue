@@ -183,7 +183,7 @@ export default {
     // 初始化获取分类数据
     classify_data_init(value) {
       let data = {
-        lang_id: 1
+        lang_id:this.$store.state.langId
       };
       this.$fetch("/category/getAllCategoryTree", data).then(reData => {
         if (reData.code == 0) {
