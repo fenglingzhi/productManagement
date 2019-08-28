@@ -123,7 +123,7 @@
                         </a-col>
                         <a-col class="gutter-row" :span="12">
                             <input type="file" class="file3" name="myFile"><br/>
-                            <a target="_blank" href="http://ar-test.kapeixi.cn/admincpx2018/import/product_import.xls">csv文件模板下载</a>
+                            <a target="_blank" href="http://192.168.0.18:82/import/product_import.xls">文件模板下载</a>
                         </a-col>
                     </div>
                 </a-col>
@@ -183,7 +183,7 @@
                 :loading="loading"
 
                 :destroyOnClose = "true"
-                @ok="submitEdit"
+                @ok="submitAddProducts"
         >
             <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="data">
                 <span slot="name" slot-scope="text" >{{text}}</span>
@@ -210,11 +210,20 @@
         dataIndex: 'name',
         scopedSlots: { customRender: 'name' },
     }, {
-        title: 'Age',
-        dataIndex: 'age',
+        title: 'product_code',
+        dataIndex: 'product_code',
     }, {
-        title: 'Address',
-        dataIndex: 'address',
+        title: 'unit_code',
+        dataIndex: 'unit_code',
+    }, {
+        title: 'price',
+        dataIndex: 'price',
+    }, {
+        title: 'unit_weight',
+        dataIndex: 'unit_weight',
+    }, {
+        title: 'unit_code',
+        dataIndex: 'unit_code',
     }];
     const data = [{
         key: '1',
@@ -233,7 +242,7 @@
         address: 'Sidney No. 1 Lake Park',
     }, {
         key: '4',
-        name: 'Disabled Uer',
+        name: 'Disabled User',
         age: 99,
         address: 'Sidney No. 1 Lake Park',
     }];
@@ -243,10 +252,14 @@
         components:{
         },
         methods: {
+            submitAddProducts(){
+
+            },
             getTableList(data){
             this.$post('/import/getImportTempPage',data).then((reData)=>{
                 if(reData.code=="0"){
                     this.visible_post=true
+                    this.data=reData.data
                     this.pagination.total=reData.data.page.totalResultSize
                     this.loading = false
                 }else {
@@ -403,8 +416,8 @@
                     },
                     getCheckboxProps: record => ({
                         props: {
-                            disabled: record.name === 'Disabled User', // Column configuration not to be checked
-                            name: record.name,
+                            disabled: record.active === 1, // Column configuration not to be checked
+                            name: record.active,
                         }
                     }),
                 }

@@ -69,7 +69,7 @@
                         <div class="inputName">meta详情：</div>
                     </a-col>
                     <a-col class="gutter-row" :span="18">
-                        <a-textarea v-model="postData.metaDescription" placeholder="Basic usage" :rows="4"/>
+                        <a-textarea v-model="postData.metaDescription" placeholder="" :rows="4"/>
                     </a-col>
                 </div>
             </a-col>
