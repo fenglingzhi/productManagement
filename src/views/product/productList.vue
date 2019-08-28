@@ -35,6 +35,24 @@
           </a-col>
         </div>
       </a-col>
+      <a-col class="gutter-row" :span="6">
+        <div class="inputPart">
+          <a-col class="gutter-row" :span="8">
+            <div class="inputName">分类：</div>
+          </a-col>
+          <a-col :span="16">
+            <a-tree-select
+                    style="width: 100%"
+                    :dropdownStyle="{ maxHeight: '400px', overflow: 'auto' }"
+                    :treeData="treeData"
+                    placeholder='选择分类'
+                    treeDefaultExpandAll
+                    allowClear
+                    @change="selectTreeValue"
+            ></a-tree-select>
+          </a-col>
+        </div>
+      </a-col>
     </a-row>
     <a-row>
       <a-col class="gutter-row" :span="6">
@@ -121,7 +139,7 @@
               </a-popconfirm>
           </span>
         <span slot="img_" slot-scope="text, record">
-              <img :src="text.image_url" @click="showPic(record.image_url)" alt="" height="32px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''" >
+              <img :src="text.image_url" @click="showPic(record.image_url)" alt="" height="60px;" style="border:1px solid #ccc;" v-if="text.image_url !== ''" >
           </span>
         <a slot="active" slot-scope="text, record" style="text-align: center">
           <a-icon type="check" style="color: green" v-if="text === '1'" @click="change_active({product_id:record.product_id,active:'0'})"></a-icon>
@@ -131,6 +149,11 @@
           <span v-if="text === '0'">一般商品</span>
           <span v-if="text === '1'">已存在商品</span>
           <span v-if="text === '2'">虚拟商品</span>
+        </span>
+        <span slot="position" slot-scope="text, record" style="text-align: center">
+          <a-input v-model="record.position"
+                   @blur="change_position({position:record.position,product_id:record.product_id,category_id:search_data.category_id})"
+                   style="text-align: center;width: 100px;"></a-input>
         </span>
       </a-table>
     </div>
@@ -156,6 +179,7 @@
         { title: '折扣价格', dataIndex: 'sale_price', key: 'sale_price'},
         { title: '零售价格', dataIndex: 'retail_price', key: 'retail_price'},
         { title: '原价', dataIndex: 'cost_price', key: 'cost_price'},
+        { title: '排序', dataIndex: 'position', key: 'position', align: 'center' ,scopedSlots: { customRender: 'position' },},
     ];
     const productListData = [];
     //表格复选框
@@ -198,9 +222,11 @@
                     ,cost_price:''
                     ,image_url:''
                     ,good_qty:''
+                    ,category_id: '1'
                 }
                 ,previewImage:''
                 ,previewVisible:false
+                ,treeData:[]
             }
         },
         methods: {
@@ -209,14 +235,42 @@
                 console.log(`selected ${value}`);
                 this.search_data.active = value
             }
+            //商品排序
+            ,change_position(data){
+                this.$post('/productCategory/updateProductCategoryPosition',data).then((reData)=>{
+                    console.log(reData)
+                    if(reData.code == '0'){
+                        this.getList({currentPage:this.pagination.current,page_size:this.pagination.defaultPageSize,category_id:this.search_data.category_id})
+                    }
+                })
+            }
             //图片展示
             ,showPic(url){
                 this.previewImage=url
                 this.previewVisible=true
 
             }
+            //图片展示取消
             ,handleCancel () {
                 this.previewVisible = false
+            }
+            //选择树values
+            ,selectTreeValue(value){
+                this.search_data.category_id = value
+                console.log(value)
+            }
+            //获取树形分类
+            ,getTreeList(){
+                this.$post('/category/getAllCategoryTree',{lang_id:store.state.langId}).then((reData)=>{
+                    this.treeData = reData.data
+                    // this.treeData = JSON.parse(JSON.stringify(reData.data).toString())
+                    this.treeData.forEach(function (v,i) {
+                        v.value = v.value.toString();
+                        v.children.forEach(function (value) {
+                            value.value = value.value.toString();
+                        })
+                    });
+                })
             }
             //新增商品
             ,add_product(){
@@ -240,7 +294,7 @@
             //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
-                this.getList({currentPage:pagination.current,page_size:pagination.defaultPageSize})
+                this.getList({currentPage:pagination.current,page_size:pagination.defaultPageSize,category_id:this.search_data.category_id})
             }
             //搜索产品
             ,search_product(data){
@@ -283,7 +337,7 @@
             ,change_active(data){
                 this.$post('/product/editDisableProduct',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList({page:1,page_size:this.pagination.defaultPageSize});
+                        this.getList({currentPage:this.pagination.current,page_size:this.pagination.defaultPageSize,category_id:this.search_data.category_id});
                     }
                 })
             }
@@ -291,7 +345,7 @@
             ,deleteProduct(data){
                 this.$post('/product/deleteProduct',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.getList(data);
+                        this.getList({currentPage:this.pagination.current,page_size:this.pagination.defaultPageSize,category_id:this.search_data.category_id});
                         this.$notification.open({
                             message: reData.message,
                         });
@@ -306,7 +360,8 @@
         mounted() {
             var vm = this
             // store.commit('changeStore',{key:'title',val:'产品列表'});
-            vm.getList({currentPage:1,page_size:vm.pagination.defaultPageSize})
+            vm.getList({currentPage:1,page_size:vm.pagination.defaultPageSize,category_id:this.search_data.category_id})
+            vm.getTreeList();
         },
 
     }
