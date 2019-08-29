@@ -5,7 +5,7 @@
         <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="状态id">
-              <a-input placeholder="请输入订单id" v-model.trim="form_search.order_state_id" />
+              <a-input placeholder="请输入状态id" v-model.trim="form_search.order_state_id" />
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -24,11 +24,11 @@
           </a-col>
         </a-row>
         <a-row :gutter="24">
-          <a-col :span="8">
+          <!-- <a-col :span="8">
             <a-form-item label="邮件模板">
-              <a-input placeholder="请输入" v-model.trim="form_search.template" />
+              <a-input placeholder="请输入模板名称" v-model.trim="form_search.template" />
             </a-form-item>
-          </a-col>
+          </a-col> -->
           <a-col :span="8" :style="{ paddingLeft: '100px'  }">
             <a-button type="primary" html-type="submit" :style="{ marginLeft: '42px' }">搜索</a-button>
             <!-- <a-button :style="{ marginLeft: '46px' }" @click="handleReset">清空</a-button> -->
