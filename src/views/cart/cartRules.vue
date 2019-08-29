@@ -156,19 +156,18 @@
                             <a-row>
                                 <div class="inputPart">
                                     <a-col class="gutter-row" :span="8">
-                                        <div class="inputName">*每个用户可用数量：</div>
+                                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>每个用户可用数量：</div>
                                     </a-col>
                                     <a-col class="gutter-row" :span="16">
                                         <a-input placeholder="" v-model="addCod.quantity_per_user" />
                                     </a-col>
                                 </div>
                             </a-row>
-                           
                         </div>
                         </a-tab-pane>
                         <a-tab-pane tab="条件" key="2" forceRender>
                             <div style="width:80%;margin:0 auto">
-                                <a-row>
+                                <a-row v-if="addCod.customer_id !=0">
                                     <div class="inputPart">
                                         <a-col class="gutter-row" :span="8">
                                             <div class="inputName">单一客户的限制：</div>
@@ -225,7 +224,7 @@
                                         <div class="inputPart" style="display: flex;justify-content: flex-end;align-items: center;">
                                             <a-col class="gutter-row" :span="16">
                                                 <span>购物车必须至少包含</span>
-                                                <a-input type="text" style="width:100px" v-model="limitPN"/>
+                                                <a-input type="text" style="width:100px" v-model="limitPN" @blur="limitNum"/>
                                                 <span>个符合以下规则的产品</span>
                                             </a-col>
                                         </div>
@@ -449,8 +448,8 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        { title: '编号', key: 'discount_id', dataIndex: 'discount_id', fixed: 'left'},
-        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
+        { title: '操作', key: 'action',scopedSlots: { customRender: 'action' }, fixed: 'left'},
+        { title: '编号', key: 'discount_id', dataIndex: 'discount_id'},
         { title: '名称', dataIndex: 'name', key: 'name'},
         { title: '唯一折扣券码', dataIndex: 'code', key: 'code'},
         { title: '用户可用数量', dataIndex: 'quantity_per_user', key: 'quantity_per_user'},
@@ -583,6 +582,12 @@
             reductChange(e){
                 this.reductType = e.target.value;
             },
+            // 购物车限制数量
+            limitNum(e){
+                let vm = this;
+                vm.addCod.products_quantity = vm.limitPN;
+                vm.addCod.categories_quantity = vm.limitPN;
+            },
             // 关闭弹框
             closeModle(){
                 this.limitType = []
@@ -666,12 +671,12 @@
                     if(value[0] === '0'){
                         vm.limitProductf = true;
                         vm.limitPtype = false;
-                        vm.addCod.products_quantity = vm.limitPN;
                     }else if(value[0] === '1'){
                         vm.limitPtype = true;
                         vm.limitProductf = false;
-                        vm.addCod.categories_quantity = vm.limitPN;
                     }
+                    vm.addCod.products_quantity = vm.limitPN;
+                    vm.addCod.categories_quantity = vm.limitPN;
                 }else if(value.length == 2){
                     vm.limitPtype = true;
                     vm.limitProductf = true;
@@ -724,13 +729,30 @@
             editCod(id){
                 var that = this;
                 this.$post('/discount/getDiscountList',{discount_id:id}).then((reData)=>{
-                   console.log(reData)
-                   this.addCod = reData.data[0];
-                   this.addCod.edit = true;
-                   if(this.addCod.customer_email == 0){
-                        this.addCod.customer_email = "";
-                   }
-
+                    console.log(reData)
+                    this.addCod = reData.data[0];
+                    this.addCod.edit = true;
+                    if(this.addCod.product_restriction_list.length > 0){
+                        this.limitType = ['0'];
+                    }else if(this.addCod.category_restriction_list > 0){
+                        this.limitType = ['1'];
+                    }else if(this.addCod.product_restriction_list.length > 0 && this.addCod.category_restriction_list > 0){
+                        this.limitType = ['0','1'];
+                    }
+                    this.limitPN = this.addCod.products_quantity
+                    this.checKLimitPtyoe(this.limitType)
+                    this.addCod.products_ids = [];
+                    this.addCod.countries_ids = [];
+                    this.addCod.categories_ids = [];
+                    for(var i=0;i<reData.data[0].product_restriction_list.length;i++){
+                       this.addCod.products_ids.push(reData.data[0].product_restriction_list[i].product_id)
+                    }
+                     for(var j=0;j<reData.data[0].country_restriction_list.length;j++){
+                       this.addCod.countries_ids.push(reData.data[0].country_restriction_list[j].country_id)
+                    }
+                     for(var c=0;c<reData.data[0].category_restriction_list.length;c++){
+                       this.addCod.categories_ids.push(reData.data[0].category_restriction_list[c].category_id)
+                    }
                    this.addCod.active= reData.data[0].active.toString()
                    this.addCod.minimum_amount_tax= reData.data[0].minimum_amount_tax.toString()
                    this.addCod.minimum_amount_shipping= reData.data[0].minimum_amount_shipping.toString()
@@ -759,7 +781,12 @@
                 if (edit) {
                     this.submitEdit()
                 } else {
-                    if(this.reductType === '' || this.reductType == 1){
+                    if(this.reductType === ''){
+                        delete this.addCod.reduction_amount;
+                        delete this.addCod.reduction_currency;
+                        delete this.addCod.reduction_percent;
+                    }
+                    if(this.reductType == 1){
                         delete this.addCod.reduction_amount;
                         delete this.addCod.reduction_currency;
                     }else{
@@ -768,6 +795,7 @@
                     if(this.addCod.customer_email == ''){
                         this.addCod.customer_email = 0;
                     }
+                    console.log('添加',this.addCod)
                     this.$post('/discount/addDiscountInfo',this.addCod).then((reData)=>{
                         console.log("返回结果",reData)
                         if(reData.code === '0'){
@@ -828,7 +856,12 @@
             //修改提交
             ,submitEdit() {
                 var vm = this;
-                if(this.reductType === '' || this.reductType == 1){
+                if(this.reductType === ''){
+                    delete this.addCod.reduction_amount;
+                    delete this.addCod.reduction_currency;
+                    delete this.addCod.reduction_percent;
+                }
+                if(this.reductType == 1){
                     delete this.addCod.reduction_amount;
                     delete this.addCod.reduction_currency;
                 }else{
@@ -837,6 +870,13 @@
                 if(this.addCod.customer_email == ''){
                     this.addCod.customer_email = 0;
                 }
+                console.log("修改",this.addCod)
+                this.addCod.products_ids = this.addCod.products_ids.join(',')
+                this.addCod.products_ids.toString();
+                this.addCod.categories_ids = this.addCod.categories_ids.join(',')
+                this.addCod.categories_ids.toString();
+                this.addCod.countries_ids = this.addCod.countries_ids.join(',')
+                this.addCod.countries_ids.toString();
                 this.$post('/discount/updateDiscountInfo',this.addCod).then((reData)=>{
                     console.log(reData)
                     if(reData.code === '0'){
