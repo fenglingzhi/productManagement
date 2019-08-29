@@ -16,7 +16,7 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :scroll="{ x: 1500 }">
+                     :scroll="{ x: 1100 }">
                 <span slot="action" slot-scope="text, record">
                    <a @click="editCod(text.role_id)">修改</a>
                    <a-divider type="vertical"></a-divider>
@@ -60,8 +60,8 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        { title: '角色id', key: 'role_id', dataIndex: 'role_id', fixed: 'left'},
         { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
+        { title: '角色id', key: 'role_id', dataIndex: 'role_id'},
         { title: '角色名称', dataIndex: 'role_name', key: 'role_name'},
         { title: '添加时间', dataIndex: 'add_date', key: 'add_date'},
         { title: '更新时间', dataIndex: 'upd_date', key: 'upd_date'},

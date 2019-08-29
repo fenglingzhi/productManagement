@@ -353,6 +353,7 @@
             ,handleTableChange(pagination){
                 this.pagination.currentPage = pagination.current
                 this.getTableList({currentPage:pagination.current,pageSize:this.pagination.defaultPageSize})
+                console.log("121212",rowSelection({},[]))
             },
             getTableList(data){
             this.$post('/import/getImportTempPage',data).then((reData)=>{
@@ -436,9 +437,9 @@
                 })
             }
             ,getCollection(){
-                    this.$fetch('/category/getAllCategoryTree',{lang_id:this.$store.state.langId}).then((reData)=>{
-                        this.treeData = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/categoryId/g,"key"))
-                     })
+                this.$fetch('/category/getAllCategoryTree',{lang_id:this.$store.state.langId}).then((reData)=>{
+                    this.treeData = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/categoryId/g,"key"))
+                })
             }
         } ,
         mounted() {

@@ -18,7 +18,11 @@
               <!-- <a-input placeholder="请输入支付方式" v-model.trim="form_search.payment" /> -->
               <a-select v-model="form_search.payment" style="width:174px;">
                 <a-select-option value="9">请选择支付方式</a-select-option>
-                <a-select-option :value="item.payment_method" v-for="(item,index) in payment_arr" :key="index">{{item.payment_method}}</a-select-option>
+                <a-select-option
+                  :value="item.payment_method"
+                  v-for="(item,index) in payment_arr"
+                  :key="index"
+                >{{item.payment_method}}</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -64,12 +68,7 @@
           <a-col :span="8">
             <a-form-item label="订单创建时间">
               <!-- <a-input placeholder="输入订单创建时间" v-model="form_search.add_date" /> -->
-              <a-date-picker
-                format="YYYY-MM-DD hh:mm:ss"
-                showTime
-                v-model="form_search.add_date"
-                style="width:174px"
-              ></a-date-picker>
+              <a-range-picker v-model="form_search.add_date" style="width:174px" />
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -208,7 +207,9 @@ export default {
         country_id: "999", //国家
         add_date: null, //订单创建时间
         current_state: "999", //订单状态
-        valid: "9" //有效订单
+        valid: "9", //有效订单
+        start_time: "",
+        end_time: ""
       },
       productListData: [],
       columns: [
@@ -259,7 +260,7 @@ export default {
       iso_code_arr: [],
       country_name_arr: [],
       current_state_arr: [],
-      payment_arr:[]
+      payment_arr: []
     };
   },
   methods: {
@@ -279,8 +280,19 @@ export default {
       }
       // 序列时间
       if ("add_date" in this.searchObj) {
-        this.searchObj.add_date = moment(this.searchObj.add_date).format("x");
+        this.$set(
+          this.searchObj,
+          "start_time",
+          moment(this.searchObj.add_date[0]).format("YYYY-MM-DD")
+        );
+        this.$set(
+          this.searchObj,
+          "end_time",
+          moment(this.searchObj.add_date[1]).format("YYYY-MM-DD")
+        );
+        this.searchObj.add_date = "";
       }
+      // console.log(this.searchObj);
       this.getList(
         {
           currentPage: 1,
@@ -302,7 +314,9 @@ export default {
         country_id: "999",
         add_date: null,
         current_state: "999",
-        valid: "9"
+        valid: "9",
+        start_time: "",
+        end_time: ""
       });
     },
     moment,

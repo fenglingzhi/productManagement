@@ -16,7 +16,7 @@
                      :loading="loading"
                      align="center"
                      @change="handleTableChange"
-                     :scroll="{ x: 1500 }">
+                     :scroll="{ x: 1100 }">
                 <span slot="action" slot-scope="text, record">
                   <a @click="editCod(text.employee_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
@@ -27,8 +27,8 @@
                    </a-popconfirm>
                 </span>
                 <a slot="active" slot-scope="text, record" style="text-align: center">
-                    <a-icon type="check" style="color: green" v-if="text.active == '1'"></a-icon>
-                    <a-icon type="close" style="color: red" v-if="text.active == '0'"></a-icon>
+                    <a-icon type="check" style="color: green" v-if="text.active == '0'"></a-icon>
+                    <a-icon type="close" style="color: red" v-if="text.active == '1'"></a-icon>
                 </a>
             </a-table>
 
@@ -109,12 +109,12 @@
                         <a-row>
                             <div class="inputPart">
                                 <a-col class="gutter-row" :span="9">
-                                    <div class="inputName">是否禁用：</div>
+                                    <div class="inputName">是否启用：</div>
                                 </a-col>
                                 <a-col class="gutter-row" :span="15">
                                     <a-select :defaultValue="addCod.active" style="width: 100%"  @change="getAddactive">
-                                        <a-select-option value="1">是</a-select-option>
-                                        <a-select-option value="0">否</a-select-option>
+                                        <a-select-option value="1">否</a-select-option>
+                                        <a-select-option value="0">是</a-select-option>
                                     </a-select>
                                 </a-col>
                             </div>
@@ -129,13 +129,13 @@
     import router from '../../router';
     import store from '../../store'
     const columns = [
-        { title: '雇员id', key: 'employee_id', dataIndex: 'employee_id', fixed: 'left'},
         { title: '操作', key: 'action',scopedSlots: { customRender: 'action' },},
+        { title: '雇员id', key: 'employee_id', dataIndex: 'employee_id'},
         { title: '名', dataIndex: 'first_name', key: 'first_name'},
         { title: '姓', dataIndex: 'last_name', key: 'last_name'},
         { title: '邮箱地址', dataIndex: 'email', key: 'email'},
         { title: '默认语言', dataIndex: 'lang_name', key: 'lang_name'},
-        { title: '是否禁用', key: 'active',scopedSlots: { customRender: 'active' },},
+        { title: '是否启用', key: 'active',scopedSlots: { customRender: 'active' },},
     ];
     const attributeList = [];
     //表格复选框
