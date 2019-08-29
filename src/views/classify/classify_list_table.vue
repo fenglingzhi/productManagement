@@ -138,6 +138,7 @@ export default {
             this.$post("/category/update", data).then(reData => {
                 if (reData.code == 0) {
                     this.$message.success("修改成功");
+                    this.select_classify_table_init()
                      this.loading = false;
                     this.$emit("update_classify","delete");
                 } else {
@@ -181,6 +182,7 @@ export default {
             }
             this.$post("/category/update", data).then(reData => {
                 if (reData.code == 0) {
+
                     if(value.active){
                         value.active = 0;
                     }else{
