@@ -9,8 +9,7 @@
                      :pagination="pagination"
                      :loading="loading"
                      align="center"
-                     @change="handleTableChange"
-                     :scroll="{ x: 1400 }">
+                     @change="handleTableChange">
               <span slot="action" slot-scope="text, record">
                   <a @click="searchFun({address_id:record.address_id,lang_id:$store.state.langId})">修改</a>
                   <a-divider type="vertical"></a-divider>
@@ -411,7 +410,6 @@
             }
         },
         methods: {
-            //更新地址详情
             searchFun(data){
                 this.addCustomerAddressData.address_id = data.address_id
                 this.$post('/address/getAddressInfoList',data).then((reData)=>{
@@ -458,7 +456,6 @@
                 });
                 this.visible_update = true;
             }
-            //新增地址
             ,add_product(){
                 let vm = this;
                 this.visible_add = true
@@ -480,7 +477,6 @@
                     vm.country = reData.data.slice(0)
                 });
             }
-            //国家选择
             ,handleChangeCountry(value) {
                 this.addCustomerAddressData.country_id = value
                 this.$post('/state/getStateList',{country_id:value}).then((reData)=>{
@@ -494,7 +490,6 @@
                     }
                 });
             }
-            //州选择
             ,handleChangeState(value) {
                 this.addCustomerAddressData.state_id = value
                 this.$post('/city/getCityList',{state_id:value,country_id:this.addCustomerAddressData.country_id}).then((reData)=>{
@@ -506,12 +501,10 @@
                     }
                 });
             }
-            //城市选择
             ,handleChangeCity(value) {
                 console.log(`selected ${value}`);
                 this.addCustomerAddressData.city = value
             }
-            //编辑
             ,editFun(langId,genderId) {
                 this.$post('/gender/getGenderList',{langId:langId,genderId:genderId}).then((reData)=>{
                     this.addCustomerGenderData.name = reData.data[0].name;
@@ -521,7 +514,6 @@
                 console.log(this.addCustomerGenderData)
                 this.visible_edit = true;
             }
-            //获取地址列表
             ,getList(data){
                 this.loading = true;
                 this.$post('/address/getAddressPage',data).then((reData)=>{
@@ -530,12 +522,10 @@
                     this.loading = false
                 })
             }
-            //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.getList({currentPage:pagination.current,page_size:pagination.defaultPageSize})
             }
-            //删除商品
             ,deleteFun(data){
                 this.$post('/address/removeAddressInfo',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -543,7 +533,6 @@
                     }
                 })
             }
-            //提交新增地址
             ,submitAddress() {
                 console.log(this.addCustomerAddressData)
                 if(this.addCustomerAddressData.phone === ''){
@@ -625,7 +614,6 @@
                 }
 
             },
-            //提交更新地址
             submitAddressUpdate() {
                 let vm = this;
                 console.log(this.addCustomerGenderData)

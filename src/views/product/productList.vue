@@ -126,8 +126,7 @@
                :pagination="pagination"
                :loading="loading"
                align="center"
-               @change="handleTableChange"
-               :scroll="{ x: 1500 }">
+               @change="handleTableChange">
           <span slot="action" slot-scope="text, record">
               <a @click="edit(record.product_id)">修改</a>
               <a-divider type="vertical"></a-divider>
@@ -182,7 +181,6 @@
         { title: '排序', dataIndex: 'position', key: 'position', align: 'center' ,scopedSlots: { customRender: 'position' },},
     ];
     const productListData = [];
-    //表格复选框
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
@@ -230,12 +228,10 @@
             }
         },
         methods: {
-            //状态选择
             handleChange(value) {
                 console.log(`selected ${value}`);
                 this.search_data.active = value
             }
-            //商品排序
             ,change_position(data){
                 this.$post('/productCategory/updateProductCategoryPosition',data).then((reData)=>{
                     console.log(reData)
@@ -244,22 +240,18 @@
                     }
                 })
             }
-            //图片展示
             ,showPic(url){
                 this.previewImage=url
                 this.previewVisible=true
 
             }
-            //图片展示取消
             ,handleCancel () {
                 this.previewVisible = false
             }
-            //选择树values
             ,selectTreeValue(value){
                 this.search_data.category_id = value
                 console.log(value)
             }
-            //获取树形分类
             ,getTreeList(){
                 this.$post('/category/getAllCategoryTree',{lang_id:store.state.langId}).then((reData)=>{
                     this.treeData = reData.data
@@ -272,7 +264,6 @@
                     });
                 })
             }
-            //新增商品
             ,add_product(){
                 store.commit('changeStore',{key:'addProductContent',val:'productAddInformatica'});
                 store.commit('changeStore',{key:'addProductCurrent',val:'0'});
@@ -282,7 +273,6 @@
                 store.commit('changeStore',{key:'isEditCombin',val:false});
 
             }
-            // 获取商品列表
             ,getList(data){
                 this.loading = true;
                 this.$post('/product/getProductListPage',data).then((reData)=>{
@@ -291,12 +281,10 @@
                     this.loading = false
                 })
             }
-            //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.getList({currentPage:pagination.current,page_size:pagination.defaultPageSize,category_id:this.search_data.category_id})
             }
-            //搜索产品
             ,search_product(data){
                 this.$post('/product/getProductListPage',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -313,7 +301,6 @@
                     }
                 })
             }
-            //编辑
             ,edit(id) {
                 store.commit('changeStore',{key:'addProductContent',val:'productAddInformatica'});
                 store.commit('changeStore',{key:'addProductCurrent',val:'0'});
@@ -329,11 +316,9 @@
 
                 })
             }
-            //时间选择
             ,onChange(date, dateString) {
                 this.search_data.createTime = dateString.slice(0,2)
             }
-            //更改商品状态
             ,change_active(data){
                 this.$post('/product/editDisableProduct',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -341,7 +326,6 @@
                     }
                 })
             }
-            //删除商品
             ,deleteProduct(data){
                 this.$post('/product/deleteProduct',data).then((reData)=>{
                     if(reData.code === '0'){

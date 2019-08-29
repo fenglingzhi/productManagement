@@ -75,8 +75,7 @@
                      :pagination="pagination"
                      :loading="loading"
                      align="center"
-                     @change="handleTableChange"
-                     :scroll="{ x: 1000 }">
+                     @change="handleTableChange">
               <span slot="action" slot-scope="text, record">
                   <a @click="searchFun({cart_id:record.cart_id,lang_id:$store.state.langId})">查看</a>
               </span>

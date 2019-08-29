@@ -141,12 +141,10 @@
             }
         },
         methods: {
-            //状态选择
             handleChange(value) {
                 console.log(`selected ${value}`);
                 this.search_data.active = value
             }
-            // 获取评论列表
             ,getList(data){
                 this.loading = true;
                 this.$post('/productComment/getProductCommentPage',data).then((reData)=>{
@@ -155,12 +153,10 @@
                     this.loading = false
                 })
             }
-            //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.getList({currentPage:pagination.current,page_size:pagination.defaultPageSize})
             }
-            //搜索评论
             ,search_product(data){
                 this.$post('/productComment/getProductCommentPage',data).then((reData)=>{
                     this.productListData=reData.data.result
@@ -168,7 +164,6 @@
                     this.loading = false
                 })
             }
-            //更改评论状态
             ,change_active(data){
                 this.$post('/productComment/updateProductCommentActive',data).then((reData)=>{
                     if(reData.code === '0'){

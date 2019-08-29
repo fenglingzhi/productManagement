@@ -15,8 +15,7 @@
                      :pagination="pagination"
                      :loading="loading"
                      align="center"
-                     @change="handleTableChange"
-                     :scroll="{ x: 1500 }">
+                     @change="handleTableChange">
               <span slot="action" slot-scope="text, record">
                   <a @click="editAttribute(record.attribute_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
@@ -196,7 +195,6 @@
             }
         },
         methods: {
-            //新增属性
             addAttribute(){
                 this.visible_add = true;
                 this.addAttributeInfo.attribute_name = '';
@@ -204,15 +202,12 @@
                 this.addAttributeInfo.attribute_val = '';
                 this.addAttributeInfo.status = '';
             }
-            //新增属性选择
             ,handleChangeadd(value) {
                 this.addAttributeInfo.status = value
             }
-            //编辑属性选择
             ,handleChangeEdit(value){
                 this.addAttributeInfo.status = value
             }
-            //提交属性新增
             ,addAttributeCommit(data){
                 if(data.attribute_name === ''){
                     this.$notification.open({
@@ -271,7 +266,6 @@
 
 
             }
-            //修改属性
             ,editAttribute(data){
                 this.visible_edit = true;
                 this.$post('/property/getPropertyById',{
@@ -295,7 +289,6 @@
                     }
                 })
             }
-            //提交修改属性
             ,editAttributeCommit(data){
                 this.$post('/property/updateProperty',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -311,7 +304,6 @@
                     }
                 })
             }
-            // 获取属性列表
             ,getList(data){
                 this.loading = true;
                 this.$post('/property/getPropertyListPage',data).then((reData)=>{
@@ -320,7 +312,6 @@
                     this.loading = false
                 })
             }
-            //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.getList({
@@ -330,7 +321,6 @@
                     lang_id:store.state.langId
                 })
             }
-            //删除商品
             ,deleteProduct(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -346,7 +336,6 @@
                     }
                 })
             }
-            //选择子属性
             ,select_attribute_child(data){
                 this.addAttributeInfo.parent_id = data;
                 console.log(data)
@@ -359,7 +348,6 @@
                     this.flag = 1;
                 }
             }
-            //返回父属性列表
             ,returnAttribute(){
                 this.flag = 0;
 
@@ -370,7 +358,6 @@
                 })
                 this.addAttributeInfo.parent_id = 0;
             }
-            //表单校验
             ,checkForm(obj){
 
             }
