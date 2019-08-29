@@ -184,19 +184,19 @@
                 @ok="submitAddProducts"
         >
 
-            <!--<a-row>-->
-                <!--<div class="inputPart">-->
-                    <!--<a-col class="gutter-row" :span="3">-->
-                        <!--<div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否已上传：</div>-->
-                    <!--</a-col>-->
-                    <!--<a-col class="gutter-row" :span="9">-->
-                        <!--<a-select v-model="isPast" style="width: 100%"   @change="makeChange">-->
-                            <!--<a-select-option value="0">是</a-select-option>-->
-                            <!--<a-select-option value="1">否</a-select-option>-->
-                        <!--</a-select>-->
-                    <!--</a-col>-->
-                <!--</div>-->
-            <!--</a-row>-->
+            <a-row>
+                <div class="inputPart">
+                    <a-col class="gutter-row" :span="3">
+                        <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>是否已上传：</div>
+                    </a-col>
+                    <a-col class="gutter-row" :span="9">
+                        <a-select v-model="isPast" style="width: 100%"   @change="makeChange">
+                            <a-select-option value="0">是</a-select-option>
+                            <a-select-option value="1">否</a-select-option>
+                        </a-select>
+                    </a-col>
+                </div>
+            </a-row>
             <a-table :rowSelection="rowSelection"  rowKey="import_id"  @change="handleTableChange"  :pagination="pagination" :scroll="{ x: 5000 }":columns="columns"  :dataSource="data">
                 <span slot="active" v-if="text!=0" slot-scope="text" >已上传</span>
                 <span slot="active" v-else slot-scope="text" >未上传</span>
@@ -306,7 +306,7 @@
         methods: {
             makeChange(){
                 this.pagination.currentPage=1
-                this.getTableList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize})
+                this.getTableList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,active:this.isPast})
             },
             submitAddProducts(){
                 if(this.choseRow.length==0){
@@ -334,7 +334,7 @@
                             console.log('ok');
                         },
                     })
-                    this.getTableList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize})
+                    this.getTableList({currentPage:this.pagination.currentPage,pageSize:this.pagination.defaultPageSize,active:this.isPast})
 
                         }else {
                             this.$notification.open({
@@ -352,7 +352,7 @@
             }
             ,handleTableChange(pagination){
                 this.pagination.currentPage = pagination.current
-                this.getTableList({currentPage:pagination.current,pageSize:this.pagination.defaultPageSize})
+                this.getTableList({currentPage:pagination.current,pageSize:this.pagination.defaultPageSize,active:this.isPast})
             },
             getTableList(data){
             this.$post('/import/getImportTempPage',data).then((reData)=>{
@@ -369,7 +369,7 @@
         },
             showProducts(){
 
-                this.getTableList({currentPage:1,pageSize:this.pagination.defaultPageSize})
+                this.getTableList({currentPage:1,pageSize:this.pagination.defaultPageSize,active:this.isPast})
             },
             subForm1(){
                 if(this.categoryId ==''){
