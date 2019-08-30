@@ -117,8 +117,7 @@
                :pagination="pagination"
                :loading="loading"
                align="center"
-               @change="handleTableChange"
-               :scroll="{ x: 1000 }">
+               @change="handleTableChange">
           <span slot="action" slot-scope="text, record">
               <a @click="searchFun({customer_id:record.customer_id})">查看</a>
               <a-divider type="vertical"></a-divider>
@@ -526,27 +525,22 @@
         },
         methods: {
             moment,
-            //性别
             handleChange(value) {
                 console.log(`selected ${value}`);
                 this.addCustomerInfo.genderId = value
             }
-            //状态
             ,handleChange_s(value) {
                 console.log(`selected ${value}`);
                 this.addCustomerInfo.active = value
             }
-            //接受电子订阅
             ,handleChange_e(value) {
                 console.log(`selected ${value}`);
                 this.addCustomerInfo.newsletter = value
             }
-            //接受推销
             ,handleChange_p(value) {
                 console.log(`selected ${value}`);
                 this.addCustomerInfo.optin = value
             }
-            //新增商品
             ,add_product(){
                 this.visible_add = true
                 this.addCustomerInfo.active = "";
@@ -560,7 +554,6 @@
                 this.addCustomerInfo.optin = "";
                 this.addCustomerInfo.passwd = "";
             }
-            //编辑
             ,editFun(data) {
                 this.$post('/customer/getCustomerList',data).then((reData)=>{
                     this.addCustomerInfo.genderId=reData.data[0].gender_id;
@@ -578,12 +571,10 @@
                 })
 
             }
-            //查看详情
             ,searchFun(data){
                 this.getListDetail(data);
                 this.visible_search = true;
             }
-            //添加提交
             ,submitAdd() {
                 console.log(this.addCustomerInfo)
                 if(this.addCustomerInfo.genderId === ''){
@@ -657,7 +648,6 @@
                 }
 
             }
-            //修改提交
             ,submitEdit() {
                 console.log(this.addCustomerInfo);
                 this.$post('/customer/updateCustomerInfo',this.addCustomerInfo).then((reData)=>{
@@ -684,7 +674,6 @@
             ,submitSearch(){
                 this.visible_search = false
             }
-            // 获取客户信息列表
             ,getList(data){
                 this.loading = true;
                 this.$post('/customer/getCustomerListPageInfo',data).then((reData)=>{
@@ -694,7 +683,6 @@
                     this.loading = false
                 })
             }
-            // 获取客户信息详情
             ,getListDetail(data){
                 this.$post('/customer/getCustomerList',data).then((reData)=>{
                     this.addCustomerInfo.genderId=reData.data[0].gender_id;
@@ -709,7 +697,6 @@
                     console.log(this.addCustomerInfo.birthday)
                 })
             }
-            //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.getList({
@@ -718,7 +705,6 @@
                     page_size:pagination.defaultPageSize
                 })
             }
-            //取消修改
             ,edit_cancel(){
                 this.addCustomerInfo.customerId = '';
                 this.addCustomerInfo.email = '';
@@ -728,7 +714,6 @@
                 this.addCustomerInfo.optin = '';
                 this.addCustomerInfo.birthday = '';
             }
-            //搜索产品
             ,search_product(){
                 this.$post('/customer/getCustomerListPageInfo',{
                     lang_id:store.state.langId,
@@ -749,12 +734,10 @@
                 })
 
             }
-            //时间选择
             ,onChange(date, dateString) {
                 console.log(dateString)
                 this.addCustomerInfo.birthday = dateString
             }
-            //更改商品状态
             ,change_active(data){
                 this.$post('/customer/setCustomerStatus',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -767,7 +750,6 @@
                     }
                 })
             }
-            //删除商品
             ,deleteProduct(data){
                 this.$post('/customer/removeCustomerInfo',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -779,7 +761,6 @@
                     }
                 })
             }
-            //获取性别列表
             ,getGender(){
                 this.$post('/gender/getGenderList',{langId:store.state.langId}).then((reData)=>{
                     this.genderIdList=reData.data.slice(0)

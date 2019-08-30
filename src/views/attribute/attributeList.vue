@@ -73,17 +73,14 @@
             }
         },
         methods: {
-            //新增属性
             addAttribute(data){
                 store.commit('changeStore',{key:'attribute_parent_id',val:data});
                 router.push('/addAttribute')
             }
-            //修改属性
             ,editAttribute(data){
                 store.commit('changeStore',{key:'attribute_id',val:data});
                 router.push('/editAttribute')
             }
-            // 获取商品列表
             ,getList(data){
                 this.loading = true;
                 this.$post('/property/getPropertyListPage',data).then((reData)=>{
@@ -92,12 +89,10 @@
                     this.loading = false
                 })
             }
-            //表格分页
             ,handleTableChange(pagination){
                 this.getList({page:pagination.current,page_size:pagination.defaultPageSize})
             }
 
-            //更改商品状态
             ,change_active(data){
                 this.$post('/product/editDisableProduct',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -105,7 +100,6 @@
                     }
                 })
             }
-            //删除商品
             ,deleteProduct(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -115,7 +109,6 @@
                     }
                 })
             }
-            //批量删除
             ,deleteAllAttribute(data){
                 this.$post('/property/deleteProperty',data).then((reData)=>{
                     if(reData.code === '0'){

@@ -64,7 +64,7 @@
                         <a-col class="gutter-row" :span="8">
                             <div class="inputName"><span style="color: red;margin-right: 5px;">*</span>选择分类：</div>
                         </a-col>
-                        <a-col class="gutter-row" :span="16">
+                        <a-col class="gutter-row" :offset='1' :span="14">
                             <template>
                                 <a-tree
                                         @expand="onExpand"
@@ -353,6 +353,7 @@
             ,handleTableChange(pagination){
                 this.pagination.currentPage = pagination.current
                 this.getTableList({currentPage:pagination.current,pageSize:this.pagination.defaultPageSize,active:this.isPast})
+
             },
             getTableList(data){
             this.$post('/import/getImportTempPage',data).then((reData)=>{
@@ -436,9 +437,9 @@
                 })
             }
             ,getCollection(){
-                    this.$fetch('/category/getAllCategoryTree',{lang_id:this.$store.state.langId}).then((reData)=>{
-                        this.treeData = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/categoryId/g,"key"))
-                     })
+                this.$fetch('/category/getAllCategoryTree',{lang_id:this.$store.state.langId}).then((reData)=>{
+                    this.treeData = JSON.parse(JSON.stringify(reData.data).replace(/name/g,"title").replace(/categoryId/g,"key"))
+                })
             }
         } ,
         mounted() {

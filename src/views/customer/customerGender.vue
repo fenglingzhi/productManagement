@@ -11,8 +11,7 @@
                      :pagination="pagination"
                      :loading="loading"
                      align="center"
-                     @change="handleTableChange"
-                     :scroll="{ x: 1500 }">
+                     @change="handleTableChange">
               <span slot="action" slot-scope="text, record">
                   <a @click="editFun(record.lang_id,record.gender_id)">修改</a>
                   <a-divider type="vertical"></a-divider>
@@ -143,18 +142,15 @@
             }
         },
         methods: {
-            //状态选择
             handleChange(value) {
                 console.log(`selected ${value}`);
                 this.addCustomerGenderData.genderId = value
             }
-            //新增商品
             ,add_product(){
                 this.visible_add = true;
                 this.addCustomerGenderData.name = '';
                 this.addCustomerGenderData.genderId = '';
             }
-            //编辑
             ,editFun(langId,genderId) {
                 this.$post('/gender/getGenderList',{langId:langId,genderId:genderId}).then((reData)=>{
                     this.addCustomerGenderData.name = reData.data[0].name;
@@ -164,7 +160,6 @@
                 console.log(this.addCustomerGenderData)
                 this.visible_edit = true;
             }
-            // 获取商品列表
             ,getList(data){
                 this.loading = true;
                 this.$post('/gender/getGenderList',data).then((reData)=>{
@@ -173,12 +168,10 @@
                     this.loading = false
                 })
             }
-            //表格分页
             ,handleTableChange(pagination){
                 console.log(pagination.defaultPageSize)
                 this.getList({currentPage:pagination.current,page_size:pagination.defaultPageSize})
             }
-            //删除商品
             ,deleteFun(data){
                 this.$post('/gender/deleteGenderInfo',data).then((reData)=>{
                     if(reData.code === '0'){
@@ -186,7 +179,6 @@
                     }
                 })
             }
-            //提交称呼
             ,submitGender(e) {
                 console.log(this.addCustomerGenderData)
                 if(this.addCustomerGenderData.name === ''){

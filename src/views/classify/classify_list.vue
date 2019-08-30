@@ -161,11 +161,11 @@ export default {
       searchValue: "",
       autoExpandParent: true,
       classify_list: [
-        {
-          title: "home",
-          key: "0",
-          children: []
-        }
+        // {
+        //   title: "home",
+        //   key: "0",
+        //   children: []
+        // }
       ],
       select_classify: [],
       select_classify_key:0,
@@ -187,9 +187,11 @@ export default {
       };
       this.$fetch("/category/getAllCategoryTree", data).then(reData => {
         if (reData.code == 0) {
-            let homeData = [{title:"home",key:0,children:[]}];
+            let homeData = [
+                // {title:"home",key:0,children:[]}
+                ];
             reData.data.forEach(function(item){
-                homeData[0].children.push(item)
+                homeData.push(item)
             })
             this.classify_list = homeData;
             if(value == "init"){
