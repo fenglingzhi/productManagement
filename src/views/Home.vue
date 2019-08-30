@@ -75,7 +75,7 @@
         <a-col :span="3">
           <a-col :span="12">
             <div class="loginOut">
-              <!--<langChange></langChange>-->
+              <langChange></langChange>
             </div>
           </a-col>
           <a-col :span="12">
