@@ -134,7 +134,7 @@ export default {
             let data ={};
             data.categoryId = value.categoryId
             data.position = value.position;
-            data.langId = 1;
+            data.langId = this.$store.state.langId;
             this.$post("/category/update", data).then(reData => {
                 if (reData.code == 0) {
                     this.$message.success("修改成功");
@@ -174,7 +174,7 @@ export default {
             this.loading = true;
             let data ={};
             data.categoryId = value.categoryId;
-            data.langId = 1;
+            data.langId = this.$store.state.langId;
             if(value.active){
                 data.active = 0;
             }else{
@@ -202,7 +202,7 @@ export default {
             this.loading = true;
             let data ={};
             data.categoryId = value.categoryId;
-            data.langId = 1;
+            data.langId = this.$store.state.langId;
             if(value.isBanner){
                 data.isBanner = 0;
             }else{

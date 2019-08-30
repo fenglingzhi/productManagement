@@ -248,7 +248,7 @@ export default {
             let data = {};
             data.categoryId = this.select_classify_all.key;
             data.parentId = this.value;
-            data.langId = 1;
+            data.langId = this.$store.state.langId;
             data.name = this.name;
             data.description = this.description;
             data.linkRewrite = this.linkRewrite;
@@ -271,7 +271,7 @@ export default {
         add_classify(){
             let data = {};
             data.parentId = this.value;
-            data.langId = 1;
+            data.langId = this.$store.state.langId;
             data.name = this.name;
             data.description = this.description;
             data.linkRewrite = this.linkRewrite;
