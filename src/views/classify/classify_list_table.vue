@@ -113,7 +113,7 @@ export default {
     methods: {
         select_classify_table_init(){
             let data ={
-                lang_id:1,
+                lang_id:this.$store.state.langId,
                 parent_id:this.select_classify_key,
             };
             this.$post("/category/getCategoryList", data).then(reData => {
