@@ -134,9 +134,10 @@
                     this.$fetch('/productCategory/updateProductCategory',this.postData).then((reData)=>{
                         console.log(reData)
                         store.commit('changeStore',{key:'loading',val:false});
-                        store.commit('changeStore',{key:'addProductContent',val:'productCombination'});
+                        // store.commit('changeStore',{key:'addProductContent',val:'productCombination'});
+                        // store.commit('changeStore',{key:'addProductCurrent',val:'4'});
+                        store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
                         store.commit('changeStore',{key:'addProductCurrent',val:'4'});
-
                         this.$notification.open({
                             message: '提醒',
                             description: reData.message,

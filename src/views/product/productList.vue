@@ -202,6 +202,7 @@
                 pagination:{
                     defaultPageSize:10,
                     total:1,
+                    current:"1"
                 }
                 ,fabricList:[]
                 ,search_data:{
@@ -282,6 +283,7 @@
                 })
             }
             ,handleTableChange(pagination){
+                this.pagination.current = pagination.current
                 console.log(pagination.defaultPageSize)
                 this.getList({currentPage:pagination.current,page_size:pagination.defaultPageSize,category_id:this.search_data.category_id})
             }

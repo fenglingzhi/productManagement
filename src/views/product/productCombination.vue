@@ -55,7 +55,7 @@
         <a-table :columns="columns"
                  :dataSource="tabListCopy"
                  align="center"
-                 :scroll="{ x: 1000 }">
+                 >
           <span slot="action" slot-scope="text, record,index">
               <span v-show="!text.unit_id" style="color: #1890ff;cursor: pointer" @click="del(index)">删除</span>
           </span>
@@ -78,6 +78,12 @@
           </span>
             <span slot="good_qty" slot-scope="text, record">
               <a-input v-model="text.good_qty" type="number" placeholder=""/>
+          </span>
+            <span slot="img" slot-scope="text, record,index">
+              <img width="40" height="30" @click="showPic(text.image_visit_url)" :src="text.image_visit_url"  alt="">
+              <span v-if="text.image_visit_url==''" style="color: rgb(24, 144, 255);cursor: pointer;position: absolute;margin: 0;" @click="addPIc(index)">选择图片</span>
+              <span v-else style="color: rgb(24, 144, 255);cursor: pointer;position: absolute;margin: 6px 6px;"  @click="addPIc(index)">选择图片</span>
+
           </span>
             <a slot="isDefault" slot-scope="text, record,index" style="text-align: center">
                 <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active1('0',index)"></a-icon>
@@ -121,7 +127,10 @@
             <span slot="good_qty" slot-scope="text, record">
               <a-input v-model="text.good_qty" type="number" placeholder=""/>
           </span>
-
+            <span slot="img" slot-scope="text, record,index">
+              <img width="40" height="30" @click="showPic(text.image_url)" v-if="text.image_url!=''" :src="text.image_url" alt="">
+              <span  style="color: rgb(24, 144, 255);cursor: pointer;position: absolute;margin: 6px 6px;" @click="addPIcOld(index)">选择图片</span>
+          </span>
 
             <a slot="isDefault" slot-scope="text, record,index" style="text-align: center">
                 <a-icon type="check" style="color: green" v-if="text.is_default == '1'" @click="change_active2('0',index)"></a-icon>
@@ -129,9 +138,32 @@
             </a>
         </a-table>
 
+        <a-modal :visible="previewVisible" :footer="null"  @cancel="handleCancel">
+            <img alt="example" style="width: 100%" :src="previewImage" />
+        </a-modal>
 
 
 
+        <a-modal     title="选择图片"
+                     :destroyOnClose = "true"
+                     :footer="null"
+                     width="1000px"
+                     :visible="choseVisible"
+                     @cancel="handleCancel">
+
+            <img class="showChoseImg" @click="choseImg(item.image_id,item.image_visit_url)" v-for="item in imgList" alt="example" :src="item.image_visit_url" />
+        </a-modal>
+
+
+        <a-modal     title="选择图片"
+                     :destroyOnClose = "true"
+                     :footer="null"
+                     width="1000px"
+                     :visible="choseVisibleOld"
+                     @cancel="handleCancel">
+
+            <img  class="showChoseImg" @click="choseImgOld(item.image_id,item.image_visit_url)" v-for="item in imgList" alt="example"  :src="item.image_visit_url" />
+        </a-modal>
 
     </div>
 </template>
@@ -150,6 +182,8 @@
         { title: 'ean13', key: 'ean13', scopedSlots: { customRender: 'ean13' }},
         { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
         { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
+        { title: '图片', align: 'center' ,width:120,scopedSlots: { customRender: 'img' },},
+
         { title: '是否默认', align: 'center' ,scopedSlots: { customRender: 'isDefault' },},
         // { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
         // { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
@@ -163,6 +197,8 @@
         { title: 'ean13', key: 'ean13', scopedSlots: { customRender: 'ean13' }},
         { title: 'upc码', key: 'upc', scopedSlots: { customRender: 'upc' }},
         { title: '数量', key: 'good_qty', scopedSlots: { customRender: 'good_qty' }},
+        { title: '图片', align: 'center' ,width:120,scopedSlots: { customRender: 'img' },},
+
         { title: '是否默认', align: 'center' ,scopedSlots: { customRender: 'isDefault' },},
         // { title: '颜色ID', dataIndex: 'color_id', key: 'color_id'},
         // { title: '尺码ID', dataIndex: 'size_id', key: 'size_id'},
@@ -259,6 +295,8 @@
                                     ean13:'',
                                     upc:'',
                                     good_qty:'',
+                                    image_id:'',
+                                    image_visit_url:'',
                                     is_default:'0',
                                     color_id:valc.value,
                                     size_id:val.value,
@@ -299,7 +337,6 @@
                 // this.colorList = this.unique1(this.colorList)
                 // this.sizeList = this.unique1(this.sizeList)
             },
-
             getData(){
                 var vm = this
                 this.$fetch('/property/getPropertyListById',{property_id:1,parent_id:1,lang_id:this.$store.state.langId}).then((reData)=>{
@@ -381,6 +418,9 @@
                             unit_weight:dataF[i].unit_weight,
                             unit_id: dataF[i].unit_id,
                             size_id:dataF[i].size_id,
+                            image_url:dataF[i].image_url,
+                            image_id:dataF[i].image_id,
+
                             good_qty:dataF[i].good_qty,
                             color_id:dataF[i].color_id,
                             upc: dataF[i].upc,
@@ -448,8 +488,8 @@
                                 },
                             })
                             if(reData.code==0){
-                                store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
-                                store.commit('changeStore',{key:'addProductCurrent',val:'6'});
+                                // store.commit('changeStore',{key:'addProductContent',val:'productAddPic'});
+                                // store.commit('changeStore',{key:'addProductCurrent',val:'6'});
                             }
                         } ,
 
@@ -465,8 +505,7 @@
                         },
                     })
                 }
-            }
-            ,
+            },
             saveProductInfor(){
                 // store.commit('changeStore',{key:'loading',val:true});
                 let isAll = true
@@ -509,15 +548,62 @@
                         },
                     })
                 }
+            },
+            getImgdata(){
+                this.$post('/productImage/getProductImage',{productId:this.$store.state.goods_id,langId:this.$store.state.langId}).then((reData)=>{
+                    console.log(reData)
+                    this.imgList=reData.data
+
+
+                })
+            },
+            showPic(url){
+                this.previewImage=url
+                this.previewVisible=true
+            },
+            handleCancel(){
+                this.previewVisible=false
+                this.choseVisible=false
+                this.choseVisibleOld=false
+            },
+            addPIc(index){
+                this.imgIndex = index
+                this.choseVisible = true
+                // this.tabListCopy[index].image_id=data
+            },
+            addPIcOld(index){
+                this.imgIndex = index
+                this.choseVisibleOld = true
+            },
+            choseImg(image_id,image_visit_url){
+                this.tabListCopy[this.imgIndex].image_id = image_id
+                this.tabListCopy[this.imgIndex].image_visit_url = image_visit_url
+                this.choseVisible = false
+
+            },
+            choseImgOld(image_id,image_url){
+                this.tabList[this.imgIndex].image_id = image_id
+                this.tabList[this.imgIndex].image_url = image_url
+                this.choseVisibleOld = false
+
             }
+
+
         } ,
         mounted() {
             // alert(this.$store.state.goods_id)
             // this.postData.productId = this.$store.state.goods_id
             this.getData()
+            this.getImgdata()
+
         },
         data() {
             return {
+                imgList:[],
+                imgIndex:'',
+                choseVisibleOld:false,
+                choseVisible:false,
+                previewVisible:false,
                 columns,columns2,
                 productId:'',
                 sizeListO:[],
@@ -543,6 +629,17 @@
             }
         } ,
         watch: {
+
+
+
+            "$store.state.addProductCurrent"() {
+                console.log(this.$store.state.addProductContent)
+                if(this.$store.state.addProductContent=='productCombination'){
+                    this.getImgdata()
+                    this.getTabData()
+
+                }
+            },
             "$store.state.goods_id"() {
                 this.productId =  this.$store.state.goods_id;
             },
@@ -555,6 +652,11 @@
     }
 </script>
 <style scoped>
+    .showChoseImg{
+        width: 15%;
+        margin: 10px;
+        border: 2px solid #adadaa;
+    }
     .inputName{
         text-align: right;
         line-height: 34px;
