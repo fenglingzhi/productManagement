@@ -4,13 +4,13 @@
       <a-form class="ant-advanced-search-form" @submit="handleSearch" id="orderStatus-search">
         <a-row :gutter="24">
           <a-col :span="8">
-            <a-form-item label="状态id">
-              <a-input placeholder="请输入状态id" v-model.trim="form_search.order_state_id" />
+            <a-form-item label="状态编号">
+              <a-input placeholder="请输入状态编号" v-model.trim="form_search.order_state_id" />
             </a-form-item>
           </a-col>
           <a-col :span="8">
-            <a-form-item label="名字">
-              <a-input placeholder="请输入名字" v-model.trim="form_search.name" />
+            <a-form-item label="状态名称">
+              <a-input placeholder="请输入状态名称" v-model.trim="form_search.name" />
             </a-form-item>
           </a-col>
           <a-col :span="8">
@@ -348,9 +348,9 @@ const columns = [
     key: "action",
     scopedSlots: { customRender: "action" }
   },
-  { title: "状态id", dataIndex: "order_state_id", key: "order_state_id" },
+  { title: "状态编号", dataIndex: "order_state_id", key: "order_state_id" },
   {
-    title: "名字",
+    title: "状态名称",
     dataIndex: "name",
     key: "name",
     scopedSlots: { customRender: "name" }
