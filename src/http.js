@@ -19,7 +19,6 @@ axios.interceptors.request.use(
         // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
         // config.data = JSON.stringify(config.data);
         config.data = qs.stringify(config.data);
-
         // config.headers = {
         //     'Content-Type':'application/x-www-form-urlencoded'
         // }
