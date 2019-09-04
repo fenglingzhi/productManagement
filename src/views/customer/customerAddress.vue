@@ -113,7 +113,7 @@
                             <a-select defaultValue="请选择" v-if="!state_flag" style="width: 100%" @change="handleChangeState">
                                 <a-select-option v-for="item in state" :value=item.state_id>{{item.name}}</a-select-option>
                             </a-select>
-                            <a-input placeholder="请输城省/州" v-model="addCustomerAddressData.state_id" v-if="state_flag" />
+                            <a-input placeholder="请输城省/州" v-model="addCustomerAddressData.state_name" v-if="state_flag" />
                         </a-col>
                     </div>
                 </a-row>
@@ -400,7 +400,8 @@
                     state_id:'',
                     country_id:'',
                     // other:'',
-                    address_id:'1'
+                    address_id:'1',
+                    state_name:''
                 }
                 ,country:[]
                 ,state:[]
@@ -473,6 +474,7 @@
                 this.addCustomerAddressData.state_id='';
                 this.addCustomerAddressData.country_id='';
                 this.addCustomerAddressData.email='';
+                this.addCustomerAddressData.state_name='';
                 this.$post('/country/getCountryList',{lang_id:store.state.langId}).then((reData)=>{
                     vm.country = reData.data.slice(0)
                 });
