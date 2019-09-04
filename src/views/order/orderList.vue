@@ -15,14 +15,13 @@
           </a-col>
           <a-col :span="8">
             <a-form-item label="支付方式">
-              <!-- <a-input placeholder="请输入支付方式" v-model.trim="form_search.payment" /> -->
               <a-select v-model="form_search.payment" style="width:174px;">
                 <a-select-option value="9">请选择支付方式</a-select-option>
                 <a-select-option
-                  :value="item.payment_method"
+                  :value="item.payment"
                   v-for="(item,index) in payment_arr"
                   :key="index"
-                >{{item.payment_method}}</a-select-option>
+                >{{item.payment}}</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -54,26 +53,23 @@
         <a-row :gutter="24">
           <a-col :span="8">
             <a-form-item label="国家">
-              <!-- <a-input placeholder="请输入国家" v-model="form_search.country_id" /> -->
               <a-select v-model="form_search.country_id" style="width:174px;">
-                <a-select-option value="999">请选择国家</a-select-option>
+                <a-select-option value="选择国家">请选择国家</a-select-option>
                 <a-select-option
                   :value="item.country_id"
-                  v-for="item in country_name_arr"
-                  :key="item.name"
+                  v-for="(item,index) in country_name_arr"
+                  :key="index"
                 >{{item.name}}</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
           <a-col :span="8">
             <a-form-item label="订单创建时间">
-              <!-- <a-input placeholder="输入订单创建时间" v-model="form_search.add_date" /> -->
               <a-range-picker v-model="form_search.add_date" style="width:174px" />
             </a-form-item>
           </a-col>
           <a-col :span="8">
             <a-form-item label="订单状态">
-              <!-- <a-input placeholder="输入订单状态" v-model="form_search.order_state_name" /> -->
               <a-select v-model="form_search.current_state" style="width:174px;">
                 <a-select-option value="999">请选择订单状态</a-select-option>
                 <a-select-option
@@ -204,7 +200,7 @@ export default {
         total_paid: "", //支付金额
         iso_code: "9", //币种
         email: "", //邮箱
-        country_id: "999", //国家
+        country_id: "选择国家", //国家
         add_date: null, //订单创建时间
         current_state: "999", //订单状态
         valid: "9", //有效订单
@@ -273,7 +269,8 @@ export default {
           this.form_search[key] != "" &&
           this.form_search[key] != null &&
           this.form_search[key] != "9" &&
-          this.form_search[key] != "999"
+          this.form_search[key] != "999" &&
+          this.form_search[key] != "选择国家"
         ) {
           this.$set(this.searchObj, key, this.form_search[key]);
         }
@@ -311,7 +308,7 @@ export default {
         total_paid: "",
         iso_code: "9",
         email: "",
-        country_id: "999",
+        country_id: "选择国家",
         add_date: null,
         current_state: "999",
         valid: "9",
@@ -375,6 +372,12 @@ export default {
     },
     add_date_onchange(date, dateString) {
       this.form_search.add_date = Date.parse(dateString);
+    },
+    openNotification(type, title, txt) {
+      this.$notification[type]({
+        message: title,
+        description: txt
+      });
     }
   },
   mounted() {
@@ -414,9 +417,9 @@ export default {
       }
     });
     // 获取支付方式
-    this.$post("/payment/getPaymentList").then(res => {
+    this.$post("/payment/getPaymentTypeInfoList").then(res => {
+      console.log(res);
       if (res.code == "0") {
-        // console.log(res);
         this.payment_arr = res.data;
       } else {
         this.openNotification("error", "错误", "获取支付方式信息失败！");

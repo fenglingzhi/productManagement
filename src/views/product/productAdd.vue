@@ -132,9 +132,10 @@
                     {title:'价格',key:'productAddPrice'},
                     {title:'搜索引擎优化',key:'productEngineOptimization'},
                     {title:'分类',key:'productAddCollection'},
-                    {title:'组合',key:'productCombination'},
                     // {title:'数量',key:'productNum'},
                     {title:'图片',key:'productAddPic'},
+                    {title:'组合',key:'productCombination'},
+
                 ]
                 ,disabled: false
 
