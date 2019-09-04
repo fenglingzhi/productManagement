@@ -107,11 +107,11 @@
 
                         </a-col>
                         <a-col :span="12">
-                            <p>收货地址id：{{customerCartInfo.cartInfo.address_delivery_id}}</p>
+                            <p>收货地址：{{customerCartInfo.cartInfo.address_delivery_id}}</p>
 
                         </a-col>
                         <a-col :span="12">
-                            <p>物流id：{{customerCartInfo.cartInfo.carrier_id}}</p>
+                            <p>物流：{{customerCartInfo.cartInfo.carrier_id}}</p>
 
                         </a-col>
                         <a-col :span="12">
