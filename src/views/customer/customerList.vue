@@ -753,11 +753,12 @@
             ,deleteProduct(data){
                 this.$post('/customer/removeCustomerInfo',data).then((reData)=>{
                     if(reData.code === '0'){
-                        this.openNotification("success", "成功", "删除成功！");
                         this.getList({
                             lang_id:store.state.langId,
+                            currentPage:this.pagination.currentPage,
                             pageSize:this.pagination.defaultPageSize
                         });
+                        this.openNotification("success", "成功", "删除成功！");
                     }
                 })
             }
